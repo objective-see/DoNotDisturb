@@ -1,0 +1,23 @@
+//
+//  file: AlertMonitor.h
+//  project: DnD (login item)
+//  description: monitor for alerts from daemon (header)
+//
+//  created by Patrick Wardle
+//  copyright (c) 2017 Objective-See. All rights reserved.
+//
+
+@import Foundation;
+
+@interface AlertMonitor : NSObject <NSUserNotificationCenterDelegate>
+
+/* PROPERTIES */
+@property(nonatomic, retain)NSDate* lastAlert;
+
+/* METHODS */
+
+//forever,
+// ->wait for & display alerts
+-(void)monitor;
+
+@end
