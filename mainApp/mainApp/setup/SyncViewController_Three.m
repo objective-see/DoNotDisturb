@@ -6,6 +6,7 @@
 //  Copyright © 2018 Objective-See. All rights reserved.
 //
 
+#import "Consts.h"
 #import "AppDelegate.h"
 #import "SyncViewController_Three.h"
 
@@ -23,12 +24,21 @@
     [super viewDidLoad];
     
     //set phone #
-    // TODO: const
-    self.phoneNumber.stringValue = self.parameters[@"phone"];
+    self.phoneNumber.stringValue = self.parameters[KEY_PHONE_NUMBER];
     
     //set host name
     // TODO: pass this in from daemon?
     self.hostName.stringValue = [[NSHost currentHost] localizedName];
+    
+    return;
+}
+
+//view loaded
+// make 'next' button first responder
+-(void)viewDidAppear
+{
+    //first responder
+    [self.view.window makeFirstResponder:[self.view viewWithTag:1]];
     
     return;
 }

@@ -14,6 +14,7 @@
 
 #import <signal.h>
 
+
 //script name
 #define CONF_SCRIPT @"configure.sh"
 
@@ -44,7 +45,7 @@ void sigTerm(int signum)
     
     //dbg msg
     #ifndef NDEBUG
-    syslog(LOG_NOTICE, "XPC: got SIGTERM, deleting plist & self");
+    logMsg(LOG_DEBUG, @"XPC: got SIGTERM, deleting plist & self");
     #endif
     
     //init path to plist
@@ -54,7 +55,7 @@ void sigTerm(int signum)
     if(YES != [[NSFileManager defaultManager] removeItemAtPath:helperPlist error:&error])
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to delete %s (%s)", helperPlist.UTF8String, error.description.UTF8String);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"ERROR: failed to delete %@ (%@)", helperPlist, error.description]);
         
         //set error
         noErrors = NO;
@@ -67,19 +68,19 @@ void sigTerm(int signum)
     if(YES != [[NSFileManager defaultManager] removeItemAtPath:helperBinary error:&error])
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to delete %s (%s)", helperBinary.UTF8String, error.description.UTF8String);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"ERROR: failed to delete %@ (%@)", helperBinary, error.description]);
         
         //set error
         noErrors = NO;
     }
     
     //no errors?
-    //display dbg msg
+    // display dbg msg
     #ifndef NDEBUG
     if(YES == noErrors)
     {
         //dbg msg
-        syslog(LOG_NOTICE, "removed %s and %s", helperPlist.UTF8String, helperBinary.UTF8String);
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"removed %@ and %@", helperPlist, helperBinary]);
     }
     #endif
     
@@ -95,14 +96,38 @@ void sigTerm(int signum)
     //results
     NSNumber* result = nil;
     
+    //console user
+    NSNumber* consoleUser = 0;
+    
+    //init result
+    result = @(-1);
+    
     //dbg msg
     #ifndef NDEBUG
-    syslog(LOG_NOTICE, "XPC-request: install (%s)", app.UTF8String);
+    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"XPC-request: install (%@)", app]);
+    #endif
+    
+    //get console uid
+    consoleUser = getConsoleUID();
+    if(nil == consoleUser)
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to determine console user");
+        
+        //bail
+        goto bail;
+    }
+    
+    //dbg msg
+    #ifndef NDEBUG
+    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"console user: %@", consoleUser]);
     #endif
     
     //configure
-    // pass in 'install' flag
-    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-install"]]];
+    // pass in 'install' flag and console user
+    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-install", consoleUser.stringValue]]];
+    
+bail:
     
     //reply to client
     reply(result);
@@ -117,14 +142,38 @@ void sigTerm(int signum)
     //results
     NSNumber* result = nil;
     
+    //console user
+    NSNumber* consoleUser = 0;
+    
+    //init result
+    result = @(-1);
+    
     //dbg msg
     #ifndef NDEBUG
-    syslog(LOG_NOTICE, "XPC-request: uninstall");
+    logMsg(LOG_DEBUG, @"XPC-request: uninstall");
+    #endif
+    
+    //get console uid
+    consoleUser = getConsoleUID();
+    if(nil == consoleUser)
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to determine console user");
+        
+        //bail
+        goto bail;
+    }
+    
+    //dbg msg
+    #ifndef NDEBUG
+    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"console user: %@", consoleUser]);
     #endif
     
     //configure
-    // pass in 'uninstall' flag
-    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-uninstall"]]];
+    // pass in 'install' flag and console user
+    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-uninstall", consoleUser.stringValue]]];
+    
+bail:
     
     //reply to client
     reply(result);
@@ -147,21 +196,23 @@ void sigTerm(int signum)
     if(nil == validatedApp)
     {
         //err msg
-        syslog(LOG_ERR, "failed to validate %s", app.UTF8String);
+        logMsg(LOG_ERR, @"failed to validate copy of app");
         
         //bail
         goto bail;
     }
     
     //dbg msg
-    syslog(LOG_NOTICE, "validated app: %s", validatedApp.UTF8String);
+    #ifndef NDEBUG
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"validated %@", app]);
+    #endif
     
     //exec script
     result = [self execScript:validatedApp arguments:args];
     if(noErr != result)
     {
         //err msg
-        syslog(LOG_ERR, "failed to execute config script %s (%d)", CONF_SCRIPT.UTF8String, result);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute config script %@ (%d)", CONF_SCRIPT, result]);
         
         //bail
         goto bail;
@@ -176,7 +227,7 @@ bail:
     if(YES != [[NSFileManager defaultManager] removeItemAtPath:validatedApp error:nil])
     {
         //err msg
-        syslog(LOG_ERR, "failed to remove validated app %s", validatedApp.UTF8String);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to remove validated app %@", validatedApp]);
         
         //set err
         result = -1;
@@ -224,6 +275,9 @@ bail:
     //copy of app
     NSString* appCopy = nil;
     
+    //file manager
+    NSFileManager* defaultManager = nil;
+    
     //path to (now) validated app
     NSString* validatedApp = nil;
     
@@ -232,26 +286,63 @@ bail:
     
     //dbg msg
     #ifndef NDEBUG
-    syslog(LOG_NOTICE, "validating %s", app.UTF8String);
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"validating %@", app]);
     #endif
+    
+    //grab default file manager
+    defaultManager = [NSFileManager defaultManager];
     
     //init path to app copy
     // *root-owned* tmp directory
     appCopy = [NSTemporaryDirectory() stringByAppendingPathComponent:app.lastPathComponent];
     
-    //copy app bundle to *root-owned*  directory
-    if(YES != [[NSFileManager defaultManager] copyItemAtPath:app toPath:appCopy error:&error])
+    //delete if old copy is there
+    if(YES == [defaultManager fileExistsAtPath:appCopy])
+    {
+        //delete
+        if(YES != [defaultManager removeItemAtPath:appCopy error:&error])
+        {
+            //err msg
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to delete %@ (error: %@)", appCopy, error.description]);
+        }
+    }
+    
+    //copy app bundle to *root-owned* directory
+    if(YES != [defaultManager copyItemAtPath:app toPath:appCopy error:&error])
     {
         //err msg
-        syslog(LOG_ERR, "failed to copy %s to %s (error: %s)", app.UTF8String, appCopy.UTF8String, error.description.UTF8String);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to copy %@ to %@ (error: %@)", app, appCopy, error.description]);
         
         //bail
         goto bail;
     }
     
-    //TODO: chown
+    //set group/owner to root/wheel
+    if(YES != setFileOwner(appCopy, @0, @0, YES))
+    {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to set %@ to be owned by root", appCopy]);
+        
+        //bail
+        goto bail;
+    }
     
-    //TODO: verify app
+    //TODO: re-enable
+    
+    /*
+    
+    //verify app
+    // make sure it's signed, and by our signing auth
+    if(noErr != verifyApp(appCopy, SIGNING_AUTH))
+    {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to validate %@", appCopy]);
+        
+        //bail
+        goto bail;
+    }
+     
+    */
     
     //happy
     validatedApp = appCopy;
@@ -290,7 +381,7 @@ bail:
     if(nil == appBundle)
     {
         //err msg
-        syslog(LOG_ERR, "failed to load app bundle for %s", validatedApp.UTF8String);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to load app bundle for %@", validatedApp]);
         
         //bail
         goto bail;
@@ -301,7 +392,7 @@ bail:
     if(nil == script)
     {
         //err msg
-        syslog(LOG_ERR, "failed to find config script %s", CONF_SCRIPT.UTF8String);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to find config script %@", CONF_SCRIPT]);
         
         //bail
         goto bail;

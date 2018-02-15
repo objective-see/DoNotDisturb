@@ -23,11 +23,10 @@ int main(int argc, const char * argv[])
     if(YES == isAppRunning([[NSBundle mainBundle] bundleIdentifier]))
     {
         //dbg msg
-        logMsg(LOG_DEBUG, @"an instance of DnD (helper app) is already running");
+        logMsg(LOG_DEBUG, @"an instance of DnD (helper app) is already running, will exit");
         
         //no error per se
         iReturn = 0;
-        
         
         //bail
         goto bail;

@@ -17,9 +17,11 @@
 		7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF671F1DC42700B33214 /* Utilities.m */; };
 		7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */; };
 		7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF751F1E9CE700B33214 /* Queue.m */; };
+		CD3307AC2033D35000F10D71 /* Monitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307AB2033D35000F10D71 /* Monitor.m */; };
+		CD4B7056202BDB4D007DB5A7 /* AuthEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4B7055202BDB4D007DB5A7 /* AuthEvent.m */; };
 		CDAAC23E202027310032F2E6 /* UserAuthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAAC23D202027310032F2E6 /* UserAuthMonitor.m */; };
 		CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */ = {isa = PBXBuildFile; fileRef = CE60F9C81FC9BBE500EFFDDA /* Lid.m */; };
-		CE85D4011FDC921200E116A5 /* Monitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CE85D4001FDC921200E116A5 /* Monitor.m */; };
+		CE85D4011FDC921200E116A5 /* USBMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CE85D4001FDC921200E116A5 /* USBMonitor.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -56,13 +58,17 @@
 		7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		7DD2BF741F1E9CE700B33214 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
 		7DD2BF751F1E9CE700B33214 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
-		CDAAC23C202027310032F2E6 /* UserAuthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserAuthMonitor.h; path = ../../mainApp/mainApp/UserAuthMonitor.h; sourceTree = "<group>"; };
-		CDAAC23D202027310032F2E6 /* UserAuthMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UserAuthMonitor.m; path = ../../mainApp/mainApp/UserAuthMonitor.m; sourceTree = "<group>"; };
+		CD3307AA2033D35000F10D71 /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
+		CD3307AB2033D35000F10D71 /* Monitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Monitor.m; sourceTree = "<group>"; };
+		CD4B7054202BDB4D007DB5A7 /* AuthEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthEvent.h; sourceTree = "<group>"; };
+		CD4B7055202BDB4D007DB5A7 /* AuthEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthEvent.m; sourceTree = "<group>"; };
+		CDAAC23C202027310032F2E6 /* UserAuthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAuthMonitor.h; sourceTree = "<group>"; };
+		CDAAC23D202027310032F2E6 /* UserAuthMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAuthMonitor.m; sourceTree = "<group>"; };
 		CDAAC245202259B50032F2E6 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = ../../shared/Consts.h; sourceTree = "<group>"; };
 		CE60F9C71FC9BBE500EFFDDA /* Lid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lid.h; sourceTree = "<group>"; };
 		CE60F9C81FC9BBE500EFFDDA /* Lid.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lid.m; sourceTree = "<group>"; };
-		CE85D3FF1FDC921200E116A5 /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
-		CE85D4001FDC921200E116A5 /* Monitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Monitor.m; sourceTree = "<group>"; };
+		CE85D3FF1FDC921200E116A5 /* USBMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = USBMonitor.h; sourceTree = "<group>"; };
+		CE85D4001FDC921200E116A5 /* USBMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = USBMonitor.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,8 +119,12 @@
 				7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */,
 				CE60F9C71FC9BBE500EFFDDA /* Lid.h */,
 				CE60F9C81FC9BBE500EFFDDA /* Lid.m */,
-				CE85D3FF1FDC921200E116A5 /* Monitor.h */,
-				CE85D4001FDC921200E116A5 /* Monitor.m */,
+				CD3307AA2033D35000F10D71 /* Monitor.h */,
+				CD3307AB2033D35000F10D71 /* Monitor.m */,
+				CD4B7054202BDB4D007DB5A7 /* AuthEvent.h */,
+				CD4B7055202BDB4D007DB5A7 /* AuthEvent.m */,
+				CE85D3FF1FDC921200E116A5 /* USBMonitor.h */,
+				CE85D4001FDC921200E116A5 /* USBMonitor.m */,
 				7DD2BF741F1E9CE700B33214 /* Queue.h */,
 				7DD2BF751F1E9CE700B33214 /* Queue.m */,
 				7D7755D31F02DF9500D0017D /* main.m */,
@@ -208,10 +218,12 @@
 				7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */,
 				7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */,
 				7D4FF8C91F0E1770001A4A68 /* ProcListener.m in Sources */,
+				CD3307AC2033D35000F10D71 /* Monitor.m in Sources */,
 				CDAAC23E202027310032F2E6 /* UserAuthMonitor.m in Sources */,
-				CE85D4011FDC921200E116A5 /* Monitor.m in Sources */,
+				CE85D4011FDC921200E116A5 /* USBMonitor.m in Sources */,
 				7D7755D41F02DF9500D0017D /* main.m in Sources */,
 				7D4FF8CD1F0EF2F9001A4A68 /* UserComms.m in Sources */,
+				CD4B7056202BDB4D007DB5A7 /* AuthEvent.m in Sources */,
 				7D7755FC1F02EBBE00D0017D /* Logging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

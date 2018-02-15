@@ -47,6 +47,9 @@
     //generate QRC
     [qrcObj generateQRC:qrcSize reply:^(NSImage* qrcImage)
     {
+        //nap to allow 'generating' msg to show up
+        [NSThread sleepForTimeInterval:1.0f];
+        
         //show QRC
         // on main thread since it's UI-related
         dispatch_sync(dispatch_get_main_queue(), ^{

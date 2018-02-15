@@ -6,13 +6,11 @@
 //  created by Patrick Wardle
 //  copyright (c) 2017 Objective-See. All rights reserved.
 //
-
-
 #import "Consts.h"
 #import "Logging.h"
 #import "ProcListener.h"
 
-@implementation ProcessListener
+@implementation ProcessMonitor
 
 @synthesize procMon;
 @synthesize processes;
@@ -34,9 +32,13 @@
     return self;
 }
 
-//setup/start process monitoring
--(void)monitor:(NSUInteger)timeout
+//start
+// tell proc info lib to start
+-(BOOL)start
 {
+    //flag
+    BOOL started = NO;
+    
     //callback block
     ProcessCallbackBlock block = ^(Process* process)
     {
@@ -49,21 +51,25 @@
     };
     
     //start
-    [self.procMon start:block];
-    
-    //timeout?
-    if(0 != timeout)
+    if(YES != [self.procMon start:block])
     {
-        //invoke stop after specified timeout
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, timeout * NSEC_PER_SEC), dispatch_get_main_queue(),
-        ^{
-            //dbg/log msg
-            logMsg(LOG_DEBUG|LOG_TO_FILE, @"stopping process monitoring, as timeout was hit");
-            
-            //stop
-            [self.procMon stop];
-        });
+        //bail
+        goto bail;
     }
+    
+    //happy
+    started = YES;
+    
+bail:
+    
+    return started;
+}
+
+//tell proc info lib to stop
+-(void)stop
+{
+    //stop
+    [self.procMon stop];
     
     return;
 }
@@ -72,8 +78,8 @@
 // just log that fact
 -(void)processStart:(Process*)process
 {
-    //dbg msg
-    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"process start: %@ (%d)\n", process.path, process.pid]);
+    //dbg msg & log
+    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: process start: (%d: %@)", process.pid, process.path]);
     
     return;
 }

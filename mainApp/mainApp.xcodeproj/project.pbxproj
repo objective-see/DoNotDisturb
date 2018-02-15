@@ -32,10 +32,7 @@
 		CD17D56E20178DFC00F798D7 /* mobilePhone.png in Resources */ = {isa = PBXBuildFile; fileRef = CD17D56D20178DFC00F798D7 /* mobilePhone.png */; };
 		CD17D57020178EB500F798D7 /* one.png in Resources */ = {isa = PBXBuildFile; fileRef = CD17D56F20178EB500F798D7 /* one.png */; };
 		CD17D574201790EE00F798D7 /* SyncViewController_One.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D572201790EE00F798D7 /* SyncViewController_One.m */; };
-		CD17D575201790EE00F798D7 /* SyncViewController_One.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D573201790EE00F798D7 /* SyncViewController_One.xib */; };
 		CD17D5772017941C00F798D7 /* laptop.png in Resources */ = {isa = PBXBuildFile; fileRef = CD17D5762017941C00F798D7 /* laptop.png */; };
-		CD17D57C20179AFF00F798D7 /* SyncViewController_Three.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D57A20179AFE00F798D7 /* SyncViewController_Three.xib */; };
-		CD17D57D20179AFF00F798D7 /* SyncViewController_Two.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D57B20179AFF00F798D7 /* SyncViewController_Two.xib */; };
 		CD17D58220179B0B00F798D7 /* SyncViewController_Two.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D57E20179B0A00F798D7 /* SyncViewController_Two.m */; };
 		CD17D58320179B0B00F798D7 /* SyncViewController_Three.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58120179B0B00F798D7 /* SyncViewController_Three.m */; };
 		CD17D58520179BC700F798D7 /* two.png in Resources */ = {isa = PBXBuildFile; fileRef = CD17D58420179BC700F798D7 /* two.png */; };
@@ -43,6 +40,7 @@
 		CD17D58B201A7F8500F798D7 /* LinkWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D589201A7F8500F798D7 /* LinkWindowController.m */; };
 		CD17D58C201A7F8500F798D7 /* Link.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D58A201A7F8500F798D7 /* Link.xib */; };
 		CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58E201A827A00F798D7 /* QuickResponseCode.m */; };
+		CD4B705B202BFE2C007DB5A7 /* SyncViewController_Zero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4B7059202BFE2C007DB5A7 /* SyncViewController_Zero.m */; };
 		CDAAC213201D0CD90032F2E6 /* three.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC212201D0CD80032F2E6 /* three.png */; };
 		CDAAC215201D2DD30032F2E6 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC214201D2DD30032F2E6 /* checkbox.png */; };
 		CDAAC217201D54C30032F2E6 /* prefsLink.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC216201D54C20032F2E6 /* prefsLink.png */; };
@@ -50,6 +48,10 @@
 		CDAAC21C201D77390032F2E6 /* connected.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC21A201D77390032F2E6 /* connected.png */; };
 		CDAAC21D201D77390032F2E6 /* unconnected.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC21B201D77390032F2E6 /* unconnected.png */; };
 		CDAAC238201FD4660032F2E6 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDAAC237201FD4660032F2E6 /* LocalAuthentication.framework */; };
+		CDAB4AAC202D24720098AE13 /* SyncViewController_Three.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAB4AA8202D24720098AE13 /* SyncViewController_Three.xib */; };
+		CDAB4AAD202D24720098AE13 /* SyncViewController_One.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAB4AA9202D24720098AE13 /* SyncViewController_One.xib */; };
+		CDAB4AAE202D24720098AE13 /* SyncViewController_Zero.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAB4AAA202D24720098AE13 /* SyncViewController_Zero.xib */; };
+		CDAB4AAF202D24720098AE13 /* SyncViewController_Two.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDAB4AAB202D24720098AE13 /* SyncViewController_Two.xib */; };
 		CE0F559C1FD408BB00529259 /* dndText.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0F559B1FD408BB00529259 /* dndText.png */; };
 		CE133C5F1FD756CC00A29D67 /* dndIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE133C5E1FD756CC00A29D67 /* dndIcon.png */; };
 		CE85D3FE1FDB47B200E116A5 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = CE85D3FD1FDB47B200E116A5 /* settings.png */; };
@@ -108,10 +110,7 @@
 		CD17D56F20178EB500F798D7 /* one.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = one.png; sourceTree = "<group>"; };
 		CD17D571201790EE00F798D7 /* SyncViewController_One.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SyncViewController_One.h; sourceTree = "<group>"; };
 		CD17D572201790EE00F798D7 /* SyncViewController_One.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SyncViewController_One.m; sourceTree = "<group>"; };
-		CD17D573201790EE00F798D7 /* SyncViewController_One.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SyncViewController_One.xib; sourceTree = "<group>"; };
 		CD17D5762017941C00F798D7 /* laptop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = laptop.png; sourceTree = "<group>"; };
-		CD17D57A20179AFE00F798D7 /* SyncViewController_Three.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SyncViewController_Three.xib; sourceTree = "<group>"; };
-		CD17D57B20179AFF00F798D7 /* SyncViewController_Two.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SyncViewController_Two.xib; sourceTree = "<group>"; };
 		CD17D57E20179B0A00F798D7 /* SyncViewController_Two.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncViewController_Two.m; sourceTree = "<group>"; };
 		CD17D57F20179B0A00F798D7 /* SyncViewController_Two.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncViewController_Two.h; sourceTree = "<group>"; };
 		CD17D58020179B0B00F798D7 /* SyncViewController_Three.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncViewController_Three.h; sourceTree = "<group>"; };
@@ -123,6 +122,8 @@
 		CD17D58A201A7F8500F798D7 /* Link.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Link.xib; sourceTree = "<group>"; };
 		CD17D58D201A827A00F798D7 /* QuickResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickResponseCode.h; sourceTree = "<group>"; };
 		CD17D58E201A827A00F798D7 /* QuickResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickResponseCode.m; sourceTree = "<group>"; };
+		CD4B7059202BFE2C007DB5A7 /* SyncViewController_Zero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncViewController_Zero.m; sourceTree = "<group>"; };
+		CD4B705A202BFE2C007DB5A7 /* SyncViewController_Zero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncViewController_Zero.h; sourceTree = "<group>"; };
 		CDAAC212201D0CD80032F2E6 /* three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = three.png; sourceTree = "<group>"; };
 		CDAAC214201D2DD30032F2E6 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		CDAAC216201D54C20032F2E6 /* prefsLink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefsLink.png; sourceTree = "<group>"; };
@@ -130,6 +131,10 @@
 		CDAAC21A201D77390032F2E6 /* connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = connected.png; sourceTree = "<group>"; };
 		CDAAC21B201D77390032F2E6 /* unconnected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unconnected.png; sourceTree = "<group>"; };
 		CDAAC237201FD4660032F2E6 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		CDAB4AA8202D24720098AE13 /* SyncViewController_Three.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SyncViewController_Three.xib; path = setup/SyncViewController_Three.xib; sourceTree = "<group>"; };
+		CDAB4AA9202D24720098AE13 /* SyncViewController_One.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SyncViewController_One.xib; path = setup/SyncViewController_One.xib; sourceTree = "<group>"; };
+		CDAB4AAA202D24720098AE13 /* SyncViewController_Zero.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SyncViewController_Zero.xib; path = setup/SyncViewController_Zero.xib; sourceTree = "<group>"; };
+		CDAB4AAB202D24720098AE13 /* SyncViewController_Two.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SyncViewController_Two.xib; path = setup/SyncViewController_Two.xib; sourceTree = "<group>"; };
 		CE0F559B1FD408BB00529259 /* dndText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dndText.png; path = ../../../shared/images/dndText.png; sourceTree = "<group>"; };
 		CE133C5E1FD756CC00A29D67 /* dndIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dndIcon.png; path = ../../../shared/images/dndIcon.png; sourceTree = "<group>"; };
 		CE85D3FD1FDB47B200E116A5 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
@@ -151,11 +156,12 @@
 		7D46FEFC1F5E129700FEB0F8 /* XIBs */ = {
 			isa = PBXGroup;
 			children = (
+				CDAB4AAA202D24720098AE13 /* SyncViewController_Zero.xib */,
+				CDAB4AA9202D24720098AE13 /* SyncViewController_One.xib */,
+				CDAB4AAB202D24720098AE13 /* SyncViewController_Two.xib */,
+				CDAB4AA8202D24720098AE13 /* SyncViewController_Three.xib */,
 				7D564DC71F18441500B8AAD6 /* AboutWindow.xib */,
 				7D564DB41F18434F00B8AAD6 /* MainMenu.xib */,
-				CD17D573201790EE00F798D7 /* SyncViewController_One.xib */,
-				CD17D57B20179AFF00F798D7 /* SyncViewController_Two.xib */,
-				CD17D57A20179AFE00F798D7 /* SyncViewController_Three.xib */,
 				7D75537E1F22E40E0010FE88 /* Preferences.xib */,
 				CD17D58A201A7F8500F798D7 /* Link.xib */,
 			);
@@ -193,12 +199,7 @@
 				7D564DAD1F18434F00B8AAD6 /* AppDelegate.m */,
 				7D75537C1F22E40E0010FE88 /* PrefsWindowController.h */,
 				7D75537D1F22E40E0010FE88 /* PrefsWindowController.m */,
-				CD17D571201790EE00F798D7 /* SyncViewController_One.h */,
-				CD17D572201790EE00F798D7 /* SyncViewController_One.m */,
-				CD17D57F20179B0A00F798D7 /* SyncViewController_Two.h */,
-				CD17D57E20179B0A00F798D7 /* SyncViewController_Two.m */,
-				CD17D58020179B0B00F798D7 /* SyncViewController_Three.h */,
-				CD17D58120179B0B00F798D7 /* SyncViewController_Three.m */,
+				CDAB4AA7202D24270098AE13 /* setup */,
 				7D564DBF1F18441500B8AAD6 /* Assets.xcassets */,
 				7D564DCC1F18441500B8AAD6 /* 3rdParty */,
 				7D564DC41F18441500B8AAD6 /* Base.lproj */,
@@ -292,6 +293,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CDAB4AA7202D24270098AE13 /* setup */ = {
+			isa = PBXGroup;
+			children = (
+				CD4B705A202BFE2C007DB5A7 /* SyncViewController_Zero.h */,
+				CD4B7059202BFE2C007DB5A7 /* SyncViewController_Zero.m */,
+				CD17D571201790EE00F798D7 /* SyncViewController_One.h */,
+				CD17D572201790EE00F798D7 /* SyncViewController_One.m */,
+				CD17D57F20179B0A00F798D7 /* SyncViewController_Two.h */,
+				CD17D57E20179B0A00F798D7 /* SyncViewController_Two.m */,
+				CD17D58020179B0B00F798D7 /* SyncViewController_Three.h */,
+				CD17D58120179B0B00F798D7 /* SyncViewController_Three.m */,
+			);
+			path = setup;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -357,6 +373,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDAB4AAF202D24720098AE13 /* SyncViewController_Two.xib in Resources */,
 				CD17D56E20178DFC00F798D7 /* mobilePhone.png in Resources */,
 				CD17D58C201A7F8500F798D7 /* Link.xib in Resources */,
 				CE0F559C1FD408BB00529259 /* dndText.png in Resources */,
@@ -365,11 +382,9 @@
 				CD17D58720179CD800F798D7 /* scan.png in Resources */,
 				CDAAC215201D2DD30032F2E6 /* checkbox.png in Resources */,
 				CDAAC21C201D77390032F2E6 /* connected.png in Resources */,
-				CD17D575201790EE00F798D7 /* SyncViewController_One.xib in Resources */,
 				CE85D3FE1FDB47B200E116A5 /* settings.png in Resources */,
 				CDAAC213201D0CD90032F2E6 /* three.png in Resources */,
 				CDAAC219201D72780032F2E6 /* linked.png in Resources */,
-				CD17D57C20179AFF00F798D7 /* SyncViewController_Three.xib in Resources */,
 				7DD2BF481F1C2B4200B33214 /* logoOver.png in Resources */,
 				7D7553801F22E40E0010FE88 /* Preferences.xib in Resources */,
 				7D7553831F23199A0010FE88 /* prefsGeneral.png in Resources */,
@@ -378,11 +393,13 @@
 				7D564DD61F18441500B8AAD6 /* Assets.xcassets in Resources */,
 				CD17D57020178EB500F798D7 /* one.png in Resources */,
 				7D7553841F23199A0010FE88 /* prefsUpdate.png in Resources */,
-				CD17D57D20179AFF00F798D7 /* SyncViewController_Two.xib in Resources */,
 				7D564DDC1F18441500B8AAD6 /* AboutWindow.xib in Resources */,
+				CDAB4AAC202D24720098AE13 /* SyncViewController_Three.xib in Resources */,
 				7D564DB61F18434F00B8AAD6 /* MainMenu.xib in Resources */,
 				CDAAC21D201D77390032F2E6 /* unconnected.png in Resources */,
 				CE968A9F1FCC66A300AD6B78 /* prefsAction.png in Resources */,
+				CDAB4AAE202D24720098AE13 /* SyncViewController_Zero.xib in Resources */,
+				CDAB4AAD202D24720098AE13 /* SyncViewController_One.xib in Resources */,
 				7D564DDB1F18441500B8AAD6 /* MainMenu.xib in Resources */,
 				CDAAC217201D54C30032F2E6 /* prefsLink.png in Resources */,
 				CE133C5F1FD756CC00A29D67 /* dndIcon.png in Resources */,
@@ -429,6 +446,7 @@
 				7DD2BF651F1DC41600B33214 /* Utilities.m in Sources */,
 				CD17D58320179B0B00F798D7 /* SyncViewController_Three.m in Sources */,
 				7D75537F1F22E40E0010FE88 /* PrefsWindowController.m in Sources */,
+				CD4B705B202BFE2C007DB5A7 /* SyncViewController_Zero.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

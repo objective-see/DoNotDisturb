@@ -1,20 +1,16 @@
 //
 //  Configure.h
-//  WhatsYourSign
+//  DoNotDisturb
 //
 //  Created by Patrick Wardle on 7/7/16.
 //  Copyright (c) 2016 Objective-See. All rights reserved.
 //
 
-#ifndef __WYS_Configure_h
-#define __WYS_Configure_h
+#ifndef DND_Configure_h
+#define DND_Configure_h
 
 #import "HelperComms.h"
 #import <Foundation/Foundation.h>
-
-//TODO: consts?
-
-
 
 @interface Configure : NSObject
 {
@@ -41,7 +37,7 @@
 -(BOOL)install;
 
 //uninstall
-//-(BOOL)uninstall:(BOOL)relaunchFinder;
+-(BOOL)uninstall;
 
 //remove helper (daemon)
 -(void)removeHelper;

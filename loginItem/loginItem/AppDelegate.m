@@ -34,7 +34,7 @@
     AlertMonitor* alertMonitor = nil;
     
     //dbg msg
-    #ifdef DEBUG
+    #ifndef NDEBUG
     logMsg(LOG_DEBUG, @"starting login item app logic");
     #endif
     
@@ -49,11 +49,11 @@
         statusBarMenuController = [[StatusBarMenu alloc] init:self.statusMenu];
         
         //dbg msg
-        #ifdef DEBUG
+        #ifndef NDEBUG
         logMsg(LOG_DEBUG, @"initialized/loaded status bar (icon/menu)");
         #endif
     }
-    #ifdef DEBUG
+    #ifndef NDEBUG
     else
     {
         //dbg msg
@@ -70,7 +70,7 @@
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 30 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
         {
             //dbg msg
-            #ifdef DEBUG
+            #ifndef NDEBUG
             logMsg(LOG_DEBUG, @"checking for update");
             #endif
            
@@ -78,7 +78,7 @@
             [self check4Update];
         });
     }
-    #ifdef DEBUG
+    #ifndef NDEBUG
     else
     {
         //dbg msg
@@ -138,18 +138,17 @@ bail:
         case 0:
             
             //dbg msg
-            #ifdef DEBUG
+            #ifndef NDEBUG
             logMsg(LOG_DEBUG, @"no updates available");
             #endif
             
             break;
             
-            
         //new version
         case 1:
             
             //dbg msg
-            #ifdef DEBUG
+            #ifndef NDEBUG
             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"a new version (%@) is available", newVersion]);
             #endif
      

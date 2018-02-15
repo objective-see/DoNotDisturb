@@ -1,78 +1,123 @@
 //
 //  Monitor.m
-//  
+//  launchDaemon
 //
-//  Created by user on 12/9/17.
+//  Created by Patrick Wardle on 2/13/18.
+//  Copyright © 2018 Objective-See. All rights reserved.
 //
 
-#import <IOKit/usb/IOUSBLib.h>
-
+#import "Consts.h"
 #import "Logging.h"
 #import "Monitor.h"
+#import "USBMonitor.h"
+#import "ProcListener.h"
+#import "UserAuthMonitor.h"
+//#import "ThunderboltMonitor.h"
 
 @implementation Monitor
 
-//callback for USB devices
-void usbDeviceAppeared(void *refCon, io_iterator_t iterator)
+//init
+-(id)init:(NSUInteger)timeout
 {
-    //dbg msg
-    logMsg(LOG_DEBUG, @"usb device detected");
+    //super
+    self = [super init];
+    if(nil != self)
+    {
+        //self.timeout = timeout;
+    }
     
-    //TODO:
-    // log or do something with this event
-    //Monitor *monitor = (__bridge Monitor *)refCon;
-    
-    return;
+    return self;
 }
 
-//initialize USB monitoring
--(BOOL)initUSBMonitoring
+//start all monitoring
+// processes, auth events, hardware insertions, etc
+-(BOOL)start:(NSUInteger)timeout
 {
-    //status
-    BOOL initialized = NO;
+    //flag
+    BOOL started = NO;
     
-    //status
-    kern_return_t status = kIOReturnError;
+    //process listener obj
+    ProcessMonitor* processMonitor = nil;
     
-    //notification port
-    IONotificationPortRef notificationPort = 0;
+    //usb monitor
+    USBMonitor* usbMonitor = nil;
     
-    //run loop source
-    CFRunLoopSourceRef runLoopSource = 0;
+    //user auth events monitor
+    UserAuthMonitor* userAuthMonitor = nil;
     
-    //iterator
-    io_iterator_t iterator = 0;
+    //alloc/init process listener obj
+    processMonitor = [[ProcessMonitor alloc] init];
     
-    //create notification port
-    notificationPort = IONotificationPortCreate(kIOMasterPortDefault);
-    
-    //get run loop source
-    runLoopSource = IONotificationPortGetRunLoopSource(notificationPort);
-    
-    //add source
-    CFRunLoopAddSource(CFRunLoopGetMain(), runLoopSource, kCFRunLoopDefaultMode);
-    
-    //add notification
-    // pass in 'self' so can access obj-c methods in callbacks
-    status = IOServiceAddMatchingNotification(notificationPort, kIOMatchedNotification, IOServiceMatching(kIOUSBDeviceClassName), usbDeviceAppeared,(__bridge void *)self, &iterator);
-    if(kIOReturnSuccess != status)
+    //start
+    if(YES != [processMonitor start])
     {
-        //err
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"IOServiceAddMatchingNotification() failed with %d", status]);
+        //err msg
+        logMsg(LOG_ERR, @"failed to start process monitoring");
         
         //bail
         goto bail;
     }
     
-    //drain iterator
-    while(IOIteratorNext(iterator)) {};
+    //alloc/init usb monitor obj
+    usbMonitor = [[USBMonitor alloc] init];
+    
+    //start monitoring
+    if(YES != [usbMonitor start])
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to start USB monitoring");
+        
+        //bail
+        goto bail;
+    }
+    
+    //alloc/init user auth monitor
+    userAuthMonitor = [[UserAuthMonitor alloc] init];
+    
+    //start user auth monitoring
+    if(YES != [userAuthMonitor start])
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to start user auth monitoring");
+        
+        //bail
+        goto bail;
+    }
+    
+    //dbg msg
+    #ifndef NDEBUG
+    logMsg(LOG_DEBUG, @"initialize all monitoring");
+    #endif
+    
+    //timeout?
+    // stop everything
+    if(0 != timeout)
+    {
+        //invoke stop after specified timeout
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, timeout * NSEC_PER_SEC), dispatch_get_main_queue(),
+        ^{
+            //dbg/log msg
+            logMsg(LOG_DEBUG|LOG_TO_FILE, @"stopping all monitoring, as timeout was hit");
+           
+            //stop process monitor
+            [processMonitor stop];
+           
+            //stop usb monitor
+            [usbMonitor stop];
+            
+            //stop user auth monitoring
+            [userAuthMonitor stop];
+           
+        });
+    }
     
     //happy
-    initialized = YES;
+    started = YES;
     
 bail:
     
-    return initialized;
+    return started;
 }
+
 
 @end

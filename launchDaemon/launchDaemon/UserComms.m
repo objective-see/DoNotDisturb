@@ -80,7 +80,7 @@ extern Queue* eventQueue;
     logMsg(LOG_DEBUG, @"XPC request: recv registration ACK");
     
     //TODO: call into framework
-    registrationInfo = @{@"phone" : @"+1 123-456-789"};
+    registrationInfo = @{KEY_PHONE_NUMBER : @"+1 123-456-789"};
     
     //return registration framework
     reply(registrationInfo);
@@ -96,6 +96,9 @@ extern Queue* eventQueue;
     
     //save to disk
     [preferences writeToFile:PREFS_FILE atomically:YES];
+    
+    //log
+    logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"saving (updated) preferences: %@", preferences]);
     
 bail:
     
@@ -120,7 +123,7 @@ bail:
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"found alert on queue: %@", self.dequeuedAlert]);
     
     //log to file
-    logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to login item to display to user: %@", self.dequeuedAlert]);
+    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to login item to display to user: %@", self.dequeuedAlert]);
 
     //return alert
     reply(self.dequeuedAlert);

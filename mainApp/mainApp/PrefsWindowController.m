@@ -27,9 +27,11 @@
 @synthesize updateMode;
 @synthesize updateView;
 @synthesize daemonComms;
+@synthesize emailAction;
 @synthesize executePath;
 @synthesize generalView;
 @synthesize passiveMode;
+@synthesize emailAddress;
 @synthesize headlessMode;
 @synthesize executeAction;
 @synthesize monitorAction;
@@ -182,7 +184,6 @@
     
     return;
 }
-
 
 //invoked when user toggles button
 // update preferences for that button, and possibly perform immediate action
@@ -451,7 +452,7 @@
         case 0:
             
             //dbg msg
-            #ifdef DEBUG
+            #ifndef NDEBUG
             logMsg(LOG_DEBUG, @"no updates available");
             #endif
             
@@ -465,7 +466,7 @@
         case 1:
             
             //dbg msg
-            #ifdef DEBUG
+            #ifndef NDEBUG
             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"a new version (%@) is available", newVersion]);
             #endif
             

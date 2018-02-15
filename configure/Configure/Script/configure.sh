@@ -30,6 +30,9 @@ then
     #install main app/helper app
     mv "Do Not Disturb.app" /Applications
 
+    #kick off main app w/ install flag as user
+    launchctl asuser "${2}" "/Applications/Do Not Disturb.app/Contents/MacOS/Do Not Disturb" "-install"
+
     echo "install complete"
 
     exit 0
@@ -44,8 +47,10 @@ then
 
     echo "unloaded launch daemon"
 
+    #kick off main app w/ uninstall flag as user
+    launchctl asuser "${2}" "/Applications/Do Not Disturb.app/Contents/MacOS/Do Not Disturb" "-uninstall"
+
     #uninstall & remove main app/helper app
-    /Applications/Do\ Not\ Disturb.app/Contents/MacOS/Do\ Not\ Disturb "-uninstall"
     rm -rf "/Applications/Do Not Disturb.app"
 
     #delete DnD's folder

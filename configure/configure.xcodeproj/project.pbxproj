@@ -26,6 +26,7 @@
 		CD17D55320104EE700F798D7 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D54B20104EE700F798D7 /* AboutWindowController.m */; };
 		CD17D55E201148F900F798D7 /* configure.sh in Resources */ = {isa = PBXBuildFile; fileRef = CD17D55D201148F900F798D7 /* configure.sh */; };
 		CD17D56320116C3800F798D7 /* com.objective-see.dnd.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD17D56220116C3800F798D7 /* com.objective-see.dnd.plist */; };
+		CD3307AE203567D500F10D71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD3307AD203567D400F10D71 /* Assets.xcassets */; };
 		CD73DA912004629D001FFC84 /* HelperInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA902004629D001FFC84 /* HelperInterface.m */; };
 		CD73DA942004633A001FFC84 /* HelperListener.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA9220046339001FFC84 /* HelperListener.m */; };
 		CD73DA9520046548001FFC84 /* HelperInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA902004629D001FFC84 /* HelperInterface.m */; };
@@ -74,7 +75,7 @@
 		4BE4905D10445E0A006BE471 /* com.objective-see.dnd.helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "com.objective-see.dnd.helper"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BE4906310445F2F006BE471 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4BE4906710445F36006BE471 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		8D1107320486CEB800E47090 /* DnD_Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DnD_Installer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* DoNotDisturb_Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoNotDisturb_Installer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF04235411C0531400431286 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BF04235511C0531400431286 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		BF65C19011B985C0007C20AB /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
@@ -97,6 +98,7 @@
 		CD17D55D201148F900F798D7 /* configure.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = configure.sh; sourceTree = "<group>"; };
 		CD17D56220116C3800F798D7 /* com.objective-see.dnd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "com.objective-see.dnd.plist"; path = "../launchDaemon/launchDaemon/com.objective-see.dnd.plist"; sourceTree = "<group>"; };
 		CD18D64C200DA301005609F9 /* XPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCProtocol.h; path = Shared/XPCProtocol.h; sourceTree = SOURCE_ROOT; };
+		CD3307AD203567D400F10D71 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD73DA8F2004629D001FFC84 /* HelperInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperInterface.h; sourceTree = "<group>"; };
 		CD73DA902004629D001FFC84 /* HelperInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperInterface.m; sourceTree = "<group>"; };
 		CD73DA9220046339001FFC84 /* HelperListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperListener.m; sourceTree = "<group>"; };
@@ -135,7 +137,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* DnD_Installer.app */,
+				8D1107320486CEB800E47090 /* DoNotDisturb_Installer.app */,
 				4BE4905D10445E0A006BE471 /* com.objective-see.dnd.helper */,
 			);
 			name = Products;
@@ -168,6 +170,7 @@
 		4BE4904710445D49006BE471 /* Configure */ = {
 			isa = PBXGroup;
 			children = (
+				CD3307AD203567D400F10D71 /* Assets.xcassets */,
 				CD17D54420104EE700F798D7 /* AboutWindow.xib */,
 				CD17D54220104EE600F798D7 /* AboutWindowController.h */,
 				CD17D54B20104EE700F798D7 /* AboutWindowController.m */,
@@ -179,7 +182,6 @@
 				CD17D54C20104EE700F798D7 /* ErrorWindowController.h */,
 				CD17D54A20104EE700F798D7 /* ErrorWindowController.m */,
 				CD17D54320104EE600F798D7 /* ErrorWindowController.xib */,
-				CD73DA9F2004A8B2001FFC84 /* UI */,
 				CD73DA98200490B4001FFC84 /* HelperComms.h */,
 				CD73DA97200490B4001FFC84 /* HelperComms.m */,
 				4BE4904C10445D49006BE471 /* Info.plist */,
@@ -238,13 +240,6 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		CD73DA9F2004A8B2001FFC84 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = UI;
-			sourceTree = "<group>";
-		};
 		CDAAC24620226D400032F2E6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -293,7 +288,7 @@
 			name = configure;
 			productInstallPath = "$(HOME)/Applications";
 			productName = SMJobBless;
-			productReference = 8D1107320486CEB800E47090 /* DnD_Installer.app */;
+			productReference = 8D1107320486CEB800E47090 /* DoNotDisturb_Installer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -346,6 +341,7 @@
 				CDAAC24D20226DFB0032F2E6 /* dndIcon.png in Resources */,
 				CDAAC24E20226DFB0032F2E6 /* dndText.png in Resources */,
 				CD17D54E20104EE700F798D7 /* AboutWindow.xib in Resources */,
+				CD3307AE203567D500F10D71 /* Assets.xcassets in Resources */,
 				CD17D55120104EE700F798D7 /* ConfigureWindowController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,15 +466,17 @@
 		C01FCF4B08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
 				INFOPLIST_FILE = configure/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer";
-				PRODUCT_NAME = DnD_Installer;
+				PRODUCT_NAME = DoNotDisturb_Installer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = x86_64;
 			};
@@ -487,15 +485,17 @@
 		C01FCF4C08A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
 				INFOPLIST_FILE = configure/Info.plist;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer";
-				PRODUCT_NAME = DnD_Installer;
+				PRODUCT_NAME = DoNotDisturb_Installer;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = x86_64;
 			};

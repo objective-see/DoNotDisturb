@@ -10,6 +10,7 @@
 #import "LinkWindowController.h"
 #import "SyncViewController_One.h"
 #import "SyncViewController_Two.h"
+#import "SyncViewController_Zero.h"
 #import "SyncViewController_Three.h"
 
 @interface LinkWindowController ()
@@ -40,9 +41,9 @@
     }
     
     //show first view
-    [self switchView:SYNC_VIEW_ONE parameters:nil];
+    [self switchView:SYNC_VIEW_ZERO parameters:nil];
     
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+    return;
 }
 
 
@@ -51,6 +52,14 @@
 {
     switch(view)
     {
+        //show 0st view
+        case SYNC_VIEW_ZERO:
+            
+            //init sync view controller
+            syncViewController = [[SyncViewController_Zero alloc] initWithNibName:@"SyncViewController_Zero" bundle:nil];
+            
+            break;
+            
         //show 1st view
         case SYNC_VIEW_ONE:
             

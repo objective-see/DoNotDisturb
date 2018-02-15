@@ -95,7 +95,6 @@
 //update window controller
 @property(nonatomic, retain)UpdateWindowController* updateWindowController;
 
-
 /* METHODS */
 
 //toolbar button handler

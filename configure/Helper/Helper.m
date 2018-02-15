@@ -44,7 +44,7 @@ int main(int argc, const char * argv[])
         }
         
         //dbg msg
-        #ifdef DEBUG
+        #ifndef NDEBUG
         syslog(LOG_NOTICE, "listening for client XPC connections...");
         #endif
     

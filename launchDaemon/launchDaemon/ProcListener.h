@@ -12,7 +12,7 @@
 
 #import "procInfo.h"
 
-@interface ProcessListener : NSObject
+@interface ProcessMonitor : NSObject
 {
     
 }
@@ -30,7 +30,10 @@
 //init
 -(id)init;
 
-//setup/start process monitoring
--(void)monitor:(NSUInteger)timeout;
+//start
+-(BOOL)start;
+
+//stop
+-(void)stop;
 
 @end

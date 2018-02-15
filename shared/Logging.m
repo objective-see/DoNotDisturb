@@ -54,8 +54,13 @@ void logMsg(int level, NSString* msg)
     
     #endif
     
-    //log to syslog
-    syslog(level, "%s: %s", [logPrefix UTF8String], [msg UTF8String]);
+    //dump to syslog?
+    // function can be invoked just to log to file...
+    if(0 != level)
+    {
+        //syslog
+        syslog(level, "%s: %s", [logPrefix UTF8String], [msg UTF8String]);
+    }
     
     //when a message is to be logged to file
     // ->log it, when logging is enabled
@@ -158,7 +163,7 @@ BOOL initLogging()
     }
     
     //dbg msg
-    #ifdef DEBUG
+    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"opened log file; %@", logPath]);
     #endif
     

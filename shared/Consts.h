@@ -35,7 +35,7 @@
 #define SIGNING_AUTH @"Developer ID Application: Objective-See, LLC (VBG97UB4TA)"
 
 //print macros
-#ifdef DEBUG
+#ifndef NDEBUG
 # define DEBUG_PRINT(x) printf x
 #else
 # define DEBUG_PRINT(x) do {} while (0)
@@ -108,12 +108,19 @@
 //path to log
 #define LOG @"/usr/bin/log"
 
+//path to mail
+#define MAIL @"/usr/bin/mail"
+
+//path to open
+#define OPEN @"/usr/bin/open"
+
 //apps folder
 #define APPS_FOLDER @"/Applications"
 
-//log to file flag
-#define LOG_TO_FILE 0x10
+//console
+#define PATH_CONSOLE "/dev/console"
 
+//install directory
 #define INSTALL_DIRECTORY @"/Library/Objective-See/DnD"
 
 //preferences file
@@ -163,7 +170,7 @@
 
 //prefs
 // status
-#define PREF_STATUS_DISABLED @"statusDisabled"
+#define PREF_STATUS @"status"
 
 //prefs
 // passive mode
@@ -254,6 +261,9 @@
 //key for error sub msg
 #define KEY_ERROR_SUB_MSG @"errorSubMsg"
 
+//0st sync view
+#define SYNC_VIEW_ZERO 0
+
 //1st sync view
 #define SYNC_VIEW_ONE 1
 
@@ -262,6 +272,15 @@
 
 //3rd sync view
 #define SYNC_VIEW_THREE 3
+
+//key for QRC dictionary
+#define KEY_PHONE_NUMBER @"phone#"
+
+//auth event notification
+#define AUTH_NOTIFICATION @"com.objective-see.dnd.authNotification"
+
+//monitoring timeout
+#define MONITORING_TIMEOUT 60
 
 #endif
 

@@ -66,7 +66,7 @@
     else
     {
         //init status msg
-        [self.statusMsg setStringValue:@"evil maids, keep out! 🛡️☠️"];
+        [self.statusMsg setStringValue:@"evil maids; stay out! 🛡️☠️"];
     }
     
     //enable 'uninstall' button when app is installed already
@@ -117,7 +117,7 @@
     NSInteger action = 0;
     
     //dbg msg
-    #ifdef DEBUG
+    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"handling action click: %@", ((NSButton*)sender).title]);
     #endif
     

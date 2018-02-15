@@ -34,6 +34,9 @@ enum menuItems
 // set some intial flags, init daemon comms, etc.
 -(id)init:(NSMenu*)menu;
 {
+    //prefs
+    NSDictionary* preferences = nil;
+    
     //load from nib
     self = [super init];
     if(self != nil)
@@ -66,9 +69,24 @@ enum menuItems
             [self.statusItem.menu itemWithTag:i].target = self;
         }
         
-        //set state based on preferences
-        // invert logic, since when no prefs, want to default to enabled
-        self.isEnabled = ![[[NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE] objectForKey:PREF_STATUS_DISABLED] boolValue];
+        //load prefs
+        preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
+        
+        //no prefs?
+        // default to status: enabled
+        if(nil == preferences)
+        {
+            //enable
+            self.isEnabled = YES;
+        }
+        
+        //got prefs
+        // set status
+        else
+        {
+            //set status
+            self.isEnabled = [preferences[PREF_STATUS] boolValue];
+        }
         
         //set initial menu state
         [self setState];
@@ -90,7 +108,7 @@ enum menuItems
     NSError* error = nil;
     
     //dbg msg
-    #ifdef DEBUG
+    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"user clicked %ld", (long)((NSMenuItem*)sender).tag]);
     #endif
     
@@ -120,8 +138,8 @@ enum menuItems
         // show it!
         case viewLog:
         {
-            //open
-            system([NSString stringWithFormat:@"/usr/bin/open %@", logFilePath()].UTF8String);
+            //show
+            [self showLog];
             
             break;
         }
@@ -146,6 +164,53 @@ enum menuItems
         default:
             break;
     }
+    
+bail:
+    
+    return;
+}
+
+//check if log file is present
+// and then open its (via 'open') so Console.app pops
+-(void)showLog
+{
+    //log file
+    NSString* logFile = nil;
+ 
+    //alert
+    NSAlert *alert = nil;
+    
+    //init path
+    logFile = logFilePath();
+    
+    //check if it exists
+    if(YES != [[NSFileManager defaultManager] fileExistsAtPath:logFile])
+    {
+        //init alert
+        alert = [[NSAlert alloc] init];
+        
+        //set main text
+        alert.messageText = @"Log File Not Found";
+        
+        //set informative text
+        alert.informativeText = [NSString stringWithFormat:@"path: %@", logFile];
+
+        //add button
+        [alert addButtonWithTitle:@"Ok"];
+        
+        //set style
+        alert.alertStyle = NSWarningAlertStyle;
+        
+        //show it
+        [alert runModal];
+        
+        //bail
+        goto bail;
+
+    }
+    
+    //open log
+    execTask(OPEN, @[logFile], NO);
     
 bail:
     
@@ -191,7 +256,7 @@ bail:
     }
     
     //set preference
-    preferences[PREF_STATUS_DISABLED] = [NSNumber numberWithBool:!self.isEnabled];
+    preferences[PREF_STATUS] = [NSNumber numberWithBool:self.isEnabled];
 
     //send to daemon
     // will update preferences

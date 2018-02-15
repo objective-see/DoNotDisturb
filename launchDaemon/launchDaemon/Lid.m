@@ -3,7 +3,7 @@
 //  launchDaemon
 //
 //  Created by user on 11/25/17.
-//  Copyright © 2017 Objective-See. All rights reserved.
+//  Copyright (c) 2017 Objective-See. All rights reserved.
 //
 
 // code inspired by:
@@ -20,11 +20,11 @@
 #import "Consts.h"
 #import "Queue.h"
 #import "Logging.h"
-#import "Monitor.h"
-#import "ProcListener.h"
+#import "AuthEvent.h"
+#import "Utilities.h"
 #import "UserAuthMonitor.h"
 
-#import <CoreTelephony/CoreTelephonyDefines.h>
+#import "Monitor.h"
 
 /* GLOBALS */
 
@@ -67,7 +67,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     
     //if user has disabled
     // bail here to ignore everything
-    if(YES == [preferences[PREF_STATUS_DISABLED] boolValue])
+    if(0 == [preferences[PREF_STATUS] intValue])
     {
         //dbg msg
         logMsg(LOG_DEBUG, @"client disabled DnD, so ignoring lid open event");
@@ -109,9 +109,15 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
                 //dbg msg
                 // log to file
                 logMsg(LOG_DEBUG|LOG_TO_FILE, @"user authenticated via touchID, so ignoring event");
+                
+                //bail
+                // will ignore the event
+                goto bail;
             }
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"no touchID auth event found, so will process event");
         }
-        
         
         //process event
         // report to user, send email, etc.
@@ -142,18 +148,41 @@ BOOL authViaTouchID()
     //result
     BOOL touchIDAuth = NO;
     
+    //user auth events monitor
+    UserAuthMonitor* userAuthMonitor = nil;
+    
+    //auth event
+    AuthEvent* authEvent = nil;
+    
+    //init user auth monitor
+    userAuthMonitor = [[UserAuthMonitor alloc] init];
+    
+    //kick off monitor for user auth events
+    // do in background as it should never return
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //monitor
+        if(YES != [userAuthMonitor start])
+        {
+            //err msg
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to initialize user auth monitoring (for touchID events)"]);
+        }
+        
+    });
+    
     //check up to 5 seconds
     for(int i=0; i<=5; i++)
     {
-        //auth event within 5 secs?
-        if( (nil != userAuthMonitor.lastEvent) &&
-            ([userAuthMonitor.lastEvent timeIntervalSinceNow] >= -5) )
+        //try grab
+        authEvent = userAuthMonitor.authEvent;
+        if( (nil != authEvent) &&
+            ([authEvent.timestamp timeIntervalSinceNow] >= -5) )
         {
             //dbg msg
-            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"user auth'd: %@", userAuthMonitor.lastEvent]);
+            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"user auth'd: %@", userAuthMonitor.authEvent]);
             
             //touch ID?
-            if(YES == userAuthMonitor.wasTouchID)
+            if(YES == authEvent.wasTouchID)
             {
                 //happy
                 touchIDAuth =  YES;
@@ -167,6 +196,9 @@ BOOL authViaTouchID()
         //nap 1 second
         [NSThread sleepForTimeInterval:1.0];
     }
+    
+    //tell user auth monitor to sleep
+    [userAuthMonitor stop];
            
 bail:
       
@@ -361,11 +393,8 @@ bail:
 // report to user, send sms, etc
 -(void)processEvent:(NSDictionary*)preferences
 {
-    //process listener obj
-    ProcessListener* processListener = nil;
-    
-    //usb/etc monitor
-    Monitor* usbMonitor = nil;
+    //monitor obj
+    Monitor* monitor = nil;
     
     //only add events to queue
     // when client is not running in passive mode
@@ -383,22 +412,25 @@ bail:
         // also log to file
         logMsg(LOG_DEBUG|LOG_TO_FILE, @"client in passive mode, so won't display");
     }
-
-    //send email?
-    if( (YES == [preferences[PREF_EMAIL_ACTION] boolValue]) &&
-        (0 != [preferences[PREF_EMAIL_ADDRESS] length] ) )
+    
+    //monitor
+    // start with first, as other actions might take a bit...
+    if(YES == [preferences[PREF_MONITOR_ACTION] boolValue])
     {
         //dbg msg
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to: %@", preferences[PREF_EMAIL_ADDRESS]]);
+        logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling monitoring");
         
-        //send email
-        if(YES != [self sendAlertViaEmail:preferences[PREF_EMAIL_ADDRESS]])
+        //alloc/init
+        monitor = [[Monitor alloc] init];
+        
+        //kick off monitoring
+        if(YES != [monitor start:MONITORING_TIMEOUT])
         {
             //err msg
-            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to send alert to %@", preferences[PREF_EMAIL_ADDRESS]]);
+            logMsg(LOG_ERR|LOG_TO_FILE, @"failed to start monitoring");
         }
     }
-    
+
     //execute cmd?
     if( (YES == [preferences[PREF_EXECUTE_ACTION] boolValue]) &&
         (0 != [preferences[PREF_EXECUTION_PATH] length] ) )
@@ -414,41 +446,19 @@ bail:
         }
     }
     
-    //monitor?
-    // processes, usb
-    // TODO: add thunderbolt
-    if(YES == [preferences[PREF_MONITOR_ACTION] boolValue])
+    //send email?
+    if( (YES == [preferences[PREF_EMAIL_ACTION] boolValue]) &&
+        (0 != [preferences[PREF_EMAIL_ADDRESS] length] ) )
     {
         //dbg msg
-        logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling monitoring");
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to: %@", preferences[PREF_EMAIL_ADDRESS]]);
         
-        //alloc/init process listener obj
-        processListener = [[ProcessListener alloc] init];
-        
-        //start listening for process events
-        // but only up to a minute, then will stop
-        // TODO: longer?
-        [processListener monitor:60];
-        
-        //alloc init usb monitor obj
-        usbMonitor = [[Monitor alloc] init];
-        
-        //start monitoring
-        // TODO: stop?
-        if(YES != [usbMonitor initUSBMonitoring])
+        //send email
+        if(YES != [self sendAlertViaEmail:preferences[PREF_EMAIL_ADDRESS]])
         {
             //err msg
-            logMsg(LOG_ERR, @"failed to kick off USB monitoring");
+            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to send alert to %@", preferences[PREF_EMAIL_ADDRESS]]);
         }
-        
-        //dbg msg
-        #ifdef DEBUG
-        else
-        {
-            //dbg msg
-            logMsg(LOG_DEBUG, @"initialize USB monitoring");
-        }
-        #endif
     }
     
 bail:
@@ -457,51 +467,25 @@ bail:
     
 }
 
-//TODO: try/except
+//send an email via 'mail'
 -(BOOL)sendAlertViaEmail:(NSString*)emailAddresss
 {
     //sent
     BOOL sent = NO;
     
-    //task
-    NSTask* task = nil;
+    //results
+    NSMutableDictionary* results = nil;
     
-    //pipe
-    NSPipe* pipe = nil;
+    //kick off main app w/ install flag
+    // don't wait for it to return though...
+    results = execTask(MAIL, @[@"-s", @"[Do Not Disturb Alert]", emailAddresss], YES);
     
-    //alloc task
-    task = [[NSTask alloc] init];
-    
-    //alloc pipe
-    pipe = [[NSPipe alloc] init];
-    
-    //set path
-    task.launchPath = @"/usr/bin/mail";
-    
-    //set args
-    task.arguments = @[@"-s", @"[Do Not Disturb Alert]", emailAddresss];
-    
-    //init pipe
-    [task setStandardInput:pipe];
-    
-    //launch task
-    [task launch];
-    
-    //add email body
-    // TODO: more details
-    [[pipe fileHandleForWriting] writeData:[@"lid opened" dataUsingEncoding:NSUTF8StringEncoding]];
-
-    //close pipe
-    [[pipe fileHandleForWriting] closeFile];
-    
-    //wait
-    [task waitUntilExit];
-    
-    //check exit code
-    if(0 != task.terminationStatus)
+    //grab result
+    if( (nil != results) &&
+        (0 != [results[EXIT_CODE] intValue]) )
     {
         //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"sending alert email failed with %d", task.terminationStatus]);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"sending alert email failed with %@", results[EXIT_CODE]]);
         
         //bail
         goto bail;

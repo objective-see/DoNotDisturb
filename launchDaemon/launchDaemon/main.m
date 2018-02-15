@@ -59,6 +59,9 @@ int main(int argc, const char * argv[])
             goto bail;
         }
         
+        //log to file
+        logMsg(LOG_TO_FILE, @"launch daemon started");
+        	
         //register for shutdown
         // allows to close logging, etc.
         register4Shutdown();
@@ -80,26 +83,6 @@ int main(int argc, const char * argv[])
 
         //dbg msg
         logMsg(LOG_DEBUG, @"initialized global queue");
-        
-        //on touchID systems user can supress alerts via touchID auths
-        // so only enable user auth monitoring on systems that support touchID
-        if(YES == hasTouchID())
-        {
-            //init user auth monitor
-            userAuthMonitor = [[UserAuthMonitor alloc] init];
-        
-            //kick off monitor for user auth events
-            // do in background as it never returns!
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                
-                //monitor
-                [userAuthMonitor monitor];
-                
-            });
-            
-            //dbg msg
-            logMsg(LOG_DEBUG, @"listening for user auth events");
-        }
         
         //alloc/init user comms XPC obj
         userCommsListener = [[UserCommsListener alloc] init];

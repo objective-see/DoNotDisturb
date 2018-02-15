@@ -24,6 +24,14 @@ NSString* getAppVersion(void);
 // note: this uses macOS 10.10+ methods
 NSOperatingSystemVersion getOSVersion(void);
 
+//get console user id
+NSNumber* getConsoleUID(void);
+
+//verify that an app bundle is
+// a) signed
+// b) signed with signing auth
+OSStatus verifyApp(NSString* path, NSString* signingAuth);
+
 //get process name
 // ->either via app bundle, or path
 NSString* getProcessName(NSString* path);

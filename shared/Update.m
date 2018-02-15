@@ -97,7 +97,7 @@
     latestVersion = [[productsVersionDictionary objectForKey:@"DnD"] objectForKey:@"version"];
     
     //dbg msg
-    #ifdef DEBUG
+    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"latest version: %@", latestVersion]);
     #endif
     

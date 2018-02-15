@@ -40,6 +40,113 @@ NSOperatingSystemVersion getOSVersion()
     return [[NSProcessInfo processInfo] operatingSystemVersion];
 }
 
+//get console user id
+NSNumber* getConsoleUID()
+{
+    //console user
+    NSNumber* consoleUser = nil;
+    
+    //stat info
+    struct stat statInfo = {0};
+    
+    //clear
+    bzero(&statInfo, sizeof(struct stat));
+    
+    //get console owner
+    if(0 != lstat(PATH_CONSOLE, &statInfo))
+    {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"lstat('%s') failed with %d", PATH_CONSOLE, errno]);
+        
+        //bail
+        goto bail;
+    }
+    
+    //extract owner
+    consoleUser = @(statInfo.st_uid);
+    
+bail:
+    
+    return consoleUser;
+}
+
+//verify that an app bundle is
+// a) signed
+// b) signed with signing auth
+OSStatus verifyApp(NSString* path, NSString* signingAuth)
+{
+    //status
+    OSStatus status = !noErr;
+    
+    //signing req string
+    NSString *requirementString = nil;
+    
+    //code
+    SecStaticCodeRef staticCode = NULL;
+    
+    //signing reqs
+    SecRequirementRef requirementRef = NULL;
+    
+    //init requirement string
+    requirementString = [NSString stringWithFormat:@"anchor trusted and certificate leaf [subject.CN] = \"%@\"", signingAuth];
+    
+    //create static code
+    status = SecStaticCodeCreateWithPath((__bridge CFURLRef)([NSURL fileURLWithPath:path]), kSecCSDefaultFlags, &staticCode);
+    if(noErr != status)
+    {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"SecStaticCodeCreateWithPath failed w/ %d", status]);
+        
+        //bail
+        goto bail;
+    }
+    
+    //create req string
+    status = SecRequirementCreateWithString((__bridge CFStringRef _Nonnull)(requirementString), kSecCSDefaultFlags, &requirementRef);
+    if( (noErr != status) ||
+        (requirementRef == NULL) )
+    {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"SecRequirementCreateWithString failed w/ %d", status]);
+        
+        //bail
+        goto bail;
+    }
+    
+    //check if file is signed w/ apple dev id by checking if it conforms to req string
+    status = SecStaticCodeCheckValidity(staticCode, kSecCSDefaultFlags, requirementRef);
+    if(noErr != status)
+    {
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"SecStaticCodeCheckValidity failed w/ %d", status]);
+        
+        //bail
+        goto bail;
+    }
+    
+    //happy
+    status = noErr;
+    
+bail:
+    
+    //free req reference
+    if(NULL != requirementRef)
+    {
+        //free
+        CFRelease(requirementRef);
+        requirementRef = NULL;
+        
+    }
+    
+    //free static code
+    if(NULL != staticCode)
+    {
+        //free
+        CFRelease(staticCode);
+        staticCode = NULL;
+    }
+    
+    return status;
+}
 
 //set dir's|file's group/owner
 BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL recursive)
@@ -71,9 +178,9 @@ BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL rec
     }
     
     //dbg msg
-#ifdef DEBUG
+    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"set ownership for %@ (%@)", path, fileOwner]);
-#endif
+    #endif
     
     //do it recursively
     if(YES == recursive)
@@ -108,7 +215,6 @@ BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL rec
     //no errors
     bRet = YES;
     
-    //bail
 bail:
     
     return bRet;
@@ -264,7 +370,6 @@ NSMutableDictionary* execTask(NSString* binaryPath, NSArray* arguments, BOOL sho
     //only setup pipes if wait flag is set
     if(YES == shouldWait)
     {
-    
         //init stdout pipe
         stdOutPipe = [NSPipe pipe];
         
@@ -294,7 +399,11 @@ NSMutableDictionary* execTask(NSString* binaryPath, NSArray* arguments, BOOL sho
     task.launchPath = binaryPath;
     
     //set task's args
-    task.arguments = arguments;
+    if(nil != arguments)
+    {
+        //set
+        task.arguments = arguments;
+    }
     
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"execing task, %@ (arguments: %@)", task.launchPath, task.arguments]);

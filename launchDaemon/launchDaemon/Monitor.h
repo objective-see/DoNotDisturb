@@ -1,20 +1,17 @@
 //
 //  Monitor.h
-//  
+//  launchDaemon
 //
-//  Created by user on 12/9/17.
+//  Created by Patrick Wardle on 2/13/18.
+//  Copyright © 2018 Objective-See. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 @interface Monitor : NSObject
 
-/* METHODS */
-
-//initialize USB monitoring
--(BOOL)initUSBMonitoring;
-
-//callback for USB devices
-void usbDeviceAppeared(void *refCon, io_iterator_t iterator);
+//start all monitoring
+// processes, auth events, hardware insertions, etc
+-(BOOL)start:(NSUInteger)timeout;
 
 @end

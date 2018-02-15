@@ -16,10 +16,14 @@
 
 @implementation SyncViewController_One
 
-
--(void)viewDidLoad {
-    [super viewDidLoad];
-    // Do view setup here.
+//view loaded
+// make 'next' button first responder
+-(void)viewDidAppear
+{
+    //first responder
+    [self.view.window makeFirstResponder:[self.view viewWithTag:1]];
+    
+    return;
 }
 
 //button handler

@@ -110,17 +110,22 @@ bail:
     //launch daemon plist
     NSString* launchDaemonPlist = nil;
     
+    //app path
+    NSString* appPath = nil;
+    
     //init path to launch daemon
     launchDaemon = [INSTALL_DIRECTORY stringByAppendingPathComponent:LAUNCH_DAEMON_BINARY];
     
     //init path to launch daemon plist
     launchDaemonPlist = [@"/Library/LaunchDaemons" stringByAppendingPathComponent:LAUNCH_DAEMON_PLIST];
     
-    //first check launch daemon
-    installed = ( (YES == [[NSFileManager defaultManager] fileExistsAtPath:launchDaemon]) ||
-                  (YES == [[NSFileManager defaultManager] fileExistsAtPath:launchDaemonPlist]) );
+    //init path to app
+    appPath = [@"/Applications" stringByAppendingPathComponent:APP_NAME];
     
-    //TODO also check for app?
+    //check for installed components
+    installed = ( (YES == [[NSFileManager defaultManager] fileExistsAtPath:appPath]) ||
+                  (YES == [[NSFileManager defaultManager] fileExistsAtPath:launchDaemon]) ||
+                  (YES == [[NSFileManager defaultManager] fileExistsAtPath:launchDaemonPlist]) );
     
     return installed;
 }
@@ -302,10 +307,6 @@ bail:
     //wait for install to be completed by XPC
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
 
-    //kick off main app w/ install flag
-    // don't wait for it to return though...
-    execTask([NSString stringWithFormat:@"/Applications/%@/Contents/MacOS/%@", APP_NAME, [APP_NAME stringByDeletingPathExtension]], @[@"-install"], NO);
-    
     return wasInstalled;
 }
 
@@ -343,9 +344,6 @@ bail:
     
     //wait for install to be completed by XPC
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    
-    //kick off main app w/ uninstall flag
-    execTask([NSString stringWithFormat:@"/Applications/%@/Contents/MacOS/%@", APP_NAME, [APP_NAME stringByDeletingPathExtension]], @[@"-uninstall"], NO);
     
     return wasUninstalled;
 }

@@ -16,8 +16,6 @@
 #import "SyncViewController_Two.h"
 #import "SyncViewController_Three.h"
 
-
-
 @implementation AppDelegate
 
 @synthesize window;
@@ -59,19 +57,18 @@
     return;
 }
 
-
 //app interface
 // init user interface
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     //dbg msg
-    #ifdef DEBUG
+    #ifndef NDEBUG
     logMsg(LOG_DEBUG, @"main (config) app launched");
     #endif
 
     //start login item in background
     // method checks first to make sure only single instance is running
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
     ^{
         //start
         [self startLoginItem:NO];
@@ -95,9 +92,6 @@
     //login item's pid
     NSNumber* loginItemPID = nil;
     
-    //error
-    NSError* error = nil;
-    
     //init path to login item app
     loginItem = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"/Contents/Library/LoginItems/%@.app", LOGIN_ITEM_NAME]];
                  
@@ -108,7 +102,7 @@
     loginItemPID = [getProcessIDs(loginItemBinary, getuid()) firstObject];
     
     //didn't find it?
-    // ->try lookup bundle as login items sometimes show up as that
+    // try lookup bundle as login items sometimes show up as that
     if(nil == loginItemPID)
     {
         //lookup via bundle
@@ -120,7 +114,7 @@
         (YES != shouldRestart) )
     {
         //dbg msg
-        #ifdef DEBUG
+        #ifndef NDEBUG
         logMsg(LOG_DEBUG, @"login item already running and 'shouldRestart' not set, so no need to start it");
         #endif
         
@@ -139,7 +133,7 @@
         kill(loginItemPID.unsignedShortValue, SIGKILL);
         
         //dbg msg
-        #ifdef DEBUG
+        #ifndef NDEBUG
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"killed login item (%@)", loginItemPID]);
         #endif
         
@@ -147,7 +141,7 @@
         [NSThread sleepForTimeInterval:0.5];
     }
     
-    #ifdef DEBUG
+    #ifndef NDEBUG
     else
     {
         //dbg msg
@@ -156,20 +150,12 @@
     #endif
     
     //dbg msg
-    #ifdef DEBUG
+    #ifndef NDEBUG
     logMsg(LOG_DEBUG, @"starting (helper) login item\n");
     #endif
     
-    //launch it
-    [[NSWorkspace sharedWorkspace] launchApplicationAtURL:[NSURL fileURLWithPath:loginItem] options:NSWorkspaceLaunchWithoutActivation configuration:@{} error:&error];
-    if(nil != error)
-    {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to start login item, %@/%@", loginItem, error]);
-        
-        //bail
-        goto bail;
-    }
+    //start (helper) login item
+    execTask(loginItemBinary, nil, NO);
     
     //happy
     result = YES;

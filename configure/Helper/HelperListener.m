@@ -10,6 +10,7 @@
 @import Foundation;
 
 #import "Consts.h"
+#import "Logging.h"
 #import "XPCProtocol.h"
 #import "HelperListener.h"
 #import "HelperInterface.h"
@@ -82,8 +83,8 @@ bail:
     }
     
     //dbg msg
-    #ifdef DEBUG
-    syslog(LOG_NOTICE, "created mach service %s", HELPER_ID.UT8String);
+    #ifndef NDEBUG
+    syslog(LOG_NOTICE, "created mach service %s", HELPER_ID.UTF8String);
     #endif
     
     //set delegate
@@ -150,8 +151,8 @@ bail:
     [newConnection resume];
     
     //dbg msg
-    #ifdef DEBUG
-    syslog(LOG_NOTICE, "allowed XPC connection: %s", newConnection.exportedObject.description.UTF8String);
+    #ifndef NDEBUG
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"allowed XPC connection: %@", newConnection]);
     #endif
     
     //happy
