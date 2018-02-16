@@ -189,13 +189,8 @@
     //preferences
     NSMutableDictionary* preferences = nil;
     
-    //load preferences from disk
-    preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-    if(nil == preferences)
-    {
-        //default to blank
-        preferences = [NSMutableDictionary dictionary];
-    }
+    //init prefs
+    preferences = [NSMutableDictionary dictionary];
     
     //passiveMode
     if(sender == self.passiveMode)
@@ -330,28 +325,19 @@
 // save values that were entered in text field
 -(void)controlTextDidEndEditing:(NSNotification *)notification
 {
-    //preferences
-    NSMutableDictionary* preferences = nil;
-    
-    //load preferences from disk
-    preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-    if(nil == preferences)
-    {
-        //default to blank
-        preferences = [NSMutableDictionary dictionary];
-    }
-    
     //execute path?
-    else if([notification object] == self.executePath)
+    if([notification object] != self.executePath)
     {
-        //set
-        preferences[PREF_EXECUTION_PATH] = self.executePath.stringValue;
+        //bail
+        goto bail;
     }
     
     //send to daemon
     // will update preferences
-    [daemonComms updatePreferences:preferences];
+    [self.daemonComms updatePreferences:@{PREF_EXECUTION_PATH:self.executePath.stringValue}];
     
+bail:
+
     return;
 }
 
@@ -359,18 +345,9 @@
 // so always capture/save the all values from text fields here...
 -(void)windowWillClose:(NSNotification *)notification
 {
-    //preferences
-    NSMutableDictionary* preferences = nil;
-    
-    //load preferences from disk
-    preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-    
-    //save execute path
-    preferences[PREF_EXECUTION_PATH] = self.executePath.stringValue;
-    
     //send to daemon
     // will update preferences
-    [daemonComms updatePreferences:preferences];
+    [self.daemonComms updatePreferences:@{PREF_EXECUTION_PATH:self.executePath.stringValue}];
  
     return;
 }
