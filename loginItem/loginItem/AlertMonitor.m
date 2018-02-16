@@ -52,7 +52,7 @@
             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got alert from daemon: %@", alert]);
             
             //tell daemon we got it
-            // allows it to be discarded
+            // allows it to be discarded from queue
             [daemonComms alertResponse];
             
             //signal alert
@@ -71,7 +71,7 @@
             //update
             self.lastAlert = alert[ALERT_TIMESTAMP];
             
-            //show alert window on main thread
+            //show alert on main thread
             dispatch_async(dispatch_get_main_queue(), ^{
                      
                  //show notification
@@ -86,6 +86,64 @@
     
         }//pool
             
+    }//forevers
+    
+    return;
+}
+
+//forever
+// wait for alert dismiss XPC msg from dameon
+// note: currently, will dismiss all alerts shown...
+-(void)dismissAlerts
+{
+    //daemon comms object
+    DaemonComms* daemonComms = nil;
+    
+    //wait semaphore
+    dispatch_semaphore_t semaphore = 0;
+    
+    //init daemon
+    // use local var here, as we need to block
+    daemonComms = [[DaemonComms alloc] init];
+    
+    //init sema
+    semaphore = dispatch_semaphore_create(0);
+    
+    //dimisss alerts
+    // call daemon and block, then dismiss/repeat
+    while(YES)
+    {
+        //pool
+        @autoreleasepool
+        {
+            //dbg msg
+            logMsg(LOG_DEBUG, @"requesting alert dismiss message(s) from daemon, will block");
+            
+            //wait for alert dismiss from daemon via XPC
+            [daemonComms alertDismiss:^(NSDictionary* alert)
+             {
+                 //dbg msg
+                 logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got alert dismiss message from daemon: %@", alert]);
+                 
+                 //dismiss alerts on main thread
+                 dispatch_async(dispatch_get_main_queue(), ^{
+                     
+                     //show notification
+                     [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+                     
+                 });
+                 
+                 //signal alert
+                 // indicates it was processed
+                 dispatch_semaphore_signal(semaphore);
+                 
+             }];
+            
+            //wait for alert dismiss msg to be received
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+            
+        }//pool
+        
     }//forevers
     
     return;
@@ -140,5 +198,21 @@
 {
     return YES;
 }
+
+/*
+ 
+do we want to do anything if user dismisses? (tell daemon?)
+ note: this doesn't actually getted called for 'ok'/dismiss:(
+ 
+//delegate method
+// automatically invoked when user interacts w/ the notification popup
+-(void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
+{
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"user interacted w/ alert: %ld", (long)notification.activationType]);
+    
+    return;
+}
+*/
 
 @end

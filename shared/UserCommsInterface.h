@@ -24,11 +24,14 @@
 //update preferences
 -(void)updatePreferences:(NSDictionary*)preferences;
 
-//process alert request from client
+//ask (and block) alert request from daemon
 -(void)alertRequest:(void (^)(NSDictionary* alert))reply;
 
 //process alert response from client
 -(void)alertResponse;
+
+//ask (and block) for alert dismiss msg from daemon
+-(void)alertDismiss:(void (^)(NSDictionary* alert))reply;
 
 @end
 

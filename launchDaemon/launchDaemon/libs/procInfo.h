@@ -7,8 +7,6 @@
 //  License:    Creative Commons Attribution-NonCommercial 4.0 International License
 //
 
-//TODO: update to latest!
-
 #ifndef procInfo_h
 #define procInfo_h
 
@@ -41,8 +39,12 @@ typedef void (^ProcessCallbackBlock)(Process* _Nonnull);
 
 @interface ProcInfo : NSObject
 
+//init
+// flag dictates if CPU intensive signing checks should be performed
+-(id _Nullable )init:(BOOL)skipSigningInfo;
+
 //start monitoring
--(BOOL)start:(ProcessCallbackBlock _Nonnull )callback;
+-(void)start:(ProcessCallbackBlock _Nonnull )callback;
 
 //stop monitoring
 -(void)stop;
@@ -145,6 +147,16 @@ typedef void (^ProcessCallbackBlock)(Process* _Nonnull);
 
 //init w/ an info dictionary
 -(id _Nonnull )init:(NSString* _Nonnull)path;
+
+//generate signing info
+// also classifies if Apple/from App Store/etc.
+// note: called automatically if proc monitor is run without 'goEasy' option
+-(void)generateSigningInfo;
+
+//get an icon for a process
+// for apps, this will be app's icon, otherwise just a standard system one
+// note: called automatically if proc monitor is run without 'goEasy' option
+-(void)getIcon;
 
 @end
 

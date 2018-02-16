@@ -32,19 +32,15 @@
 
 @synthesize shouldStop;
 
-//thread function
-// monitor to audit events related to user auth
--(BOOL)start
+//open/config/init audit pipe
+-(FILE*)initAuditPipe
 {
-    //flag
-    BOOL monitoring = NO;
+    //handle to audit pipe
+    FILE* auditFile = NULL;
     
     //event mask
     // what event classes to watch for
     u_int eventClasses = AUDIT_CLASS_LO | AUDIT_CLASS_AA;
-    
-    //file pointer to audit pipe
-    FILE* auditFile = NULL;
     
     //file descriptor for audit pipe
     int auditFileDescriptor = -1;
@@ -58,30 +54,12 @@
     //queue length
     int maxQueueLength = -1;
     
-    //record buffer
-    u_char* recordBuffer = NULL;
-    
-    //token struct
-    tokenstr_t tokenStruct = {0};
-    
-    //total length of record
-    int recordLength = -1;
-    
-    //amount of record left to process
-    int recordBalance = -1;
-    
-    //amount currently processed
-    int processedLength = -1;
-    
-    //auth event obj
-    AuthEvent* authEvent = nil;
-    
     //open audit pipe for reading
     auditFile = fopen(AUDIT_PIPE, "r");
     if(auditFile == NULL)
     {
         //err msg
-        NSLog(@"ERROR: failed to open audit pipe %s", AUDIT_PIPE);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to open audit pipe %s", AUDIT_PIPE]);
         
         //bail
         goto bail;
@@ -115,7 +93,6 @@
     {
         //bail
         goto bail;
-        
     }
     
     //set preselect flags
@@ -136,8 +113,82 @@
         goto bail;
     }
     
+    //happy
+    status = noErr;
+    
+bail:
+    
+    //any errors
+    // close pipe if opened
+    if( (noErr != status) &&
+        (NULL != auditFile) )
+    {
+        //close
+        fclose(auditFile);
+        
+        //unset
+        auditFile = NULL;
+    }
+    
+    return auditFile;
+}
+
+//monitor audit events related to user auth
+-(BOOL)start
+{
+    //flag
+    BOOL monitoring = NO;
+    
+    //handle to audit pipe
+    FILE* auditFile = NULL;
+    
+    //open/config audit pipe
+    auditFile = [self initAuditPipe];
+    if(NULL != auditFile)
+    {
+        //kick off monitoring
+        // run in background since this never returns
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            //monitor
+            [self monitor:auditFile];
+            
+        });
+        
+        //happy
+        monitoring =  YES;
+    }
+    
+    return monitoring;
+}
+
+//read events of audit pipe
+// process/save any auth events
+-(void)monitor:(FILE*)auditFile
+{
+    //record buffer
+    u_char* recordBuffer = NULL;
+    
+    //token struct
+    tokenstr_t tokenStruct = {0};
+    
+    //total length of record
+    int recordLength = -1;
+    
+    //amount of record left to process
+    int recordBalance = -1;
+    
+    //amount currently processed
+    int processedLength = -1;
+    
+    //auth event obj
+    AuthEvent* authEvent = nil;
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"reading off audit pipe for user auth events");
+    
     //forever
-    // ->read/parse/process audit records
+    // read/parse/process audit records
     while(YES)
     {
         @autoreleasepool
@@ -145,9 +196,6 @@
             //first check termination flag/condition
             if(YES == self.shouldStop)
             {
-                //happy
-                monitoring = YES;
-                
                 //bail
                 goto bail;
             }
@@ -183,7 +231,7 @@
             processedLength = 0;
             
             //parse record
-            // ->read all tokens/process
+            // read all tokens/process
             while(0 != recordBalance)
             {
                 //extract token
@@ -191,7 +239,7 @@
                 if(-1  == au_fetch_tok(&tokenStruct, recordBuffer + processedLength, recordBalance))
                 {
                     //error
-                    // ->skip record
+                    // skip record
                     break;
                 }
                 
@@ -201,13 +249,9 @@
                     (YES != [self shouldProcessRecord:authEvent.type]) )
                 {
                     //bail
-                    // ->skips rest of record
+                    // skips rest of record
                     break;
                 }
-                
-                if( (nil != authEvent) &&
-                    (20 != authEvent.type) )
-                    NSLog(@"token: %d/0x%x", tokenStruct.id, tokenStruct.id);
                 
                 //process token(s)
                 // create auth event object, etc
@@ -254,7 +298,7 @@
                         
                         break;
                     }
-                     
+                        
                     //return
                     case AUT_RETURN:
                     {
@@ -316,7 +360,7 @@ bail:
         auditFile = NULL;
     }
     
-    return monitoring;
+    return;
 }
 
 //stop

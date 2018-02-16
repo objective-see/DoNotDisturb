@@ -26,7 +26,7 @@
 
 
 //get app's version
-// ->extracted from Info.plist
+// extracted from Info.plist
 NSString* getAppVersion()
 {
     //read and return 'CFBundleVersion' from bundle
@@ -161,7 +161,7 @@ BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL rec
     NSArray *subPaths = nil;
     
     //full path
-    // ->for recursive
+    // for recursive
     NSString* fullPath = nil;
     
     //init permissions dictionary
@@ -186,7 +186,7 @@ BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL rec
     if(YES == recursive)
     {
         //sanity check
-        // ->make sure root starts with '/'
+        // make sure root starts with '/'
         if(YES != [path hasSuffix:@"/"])
         {
             //add '/'
@@ -259,11 +259,11 @@ NSString* getProcessPath(pid_t pid)
         processPath = [NSString stringWithUTF8String:pathBuffer];
     }
     //otherwise
-    // ->try via task's args ('KERN_PROCARGS2')
+    // try via task's args ('KERN_PROCARGS2')
     else
     {
         //init mib
-        // ->want system's size for max args
+        // want system's size for max args
         mib[0] = CTL_KERN;
         mib[1] = KERN_ARGMAX;
         
@@ -286,7 +286,7 @@ NSString* getProcessPath(pid_t pid)
         }
         
         //init mib
-        // ->want process args
+        // want process args
         mib[0] = CTL_KERN;
         mib[1] = KERN_PROCARGS2;
         mib[2] = pid;
@@ -302,7 +302,7 @@ NSString* getProcessPath(pid_t pid)
         }
         
         //sanity check
-        // ->ensure buffer is somewhat sane
+        // ensure buffer is somewhat sane
         if(size <= sizeof(int))
         {
             //bail
@@ -310,11 +310,11 @@ NSString* getProcessPath(pid_t pid)
         }
         
         //extract number of args
-        // ->at start of buffer
+        // at start of buffer
         memcpy(&numberOfArgs, taskArgs, sizeof(numberOfArgs));
         
         //extract task's name
-        // ->follows # of args (int) and is NULL-terminated
+        // follows # of args (int) and is NULL-terminated
         processPath = [NSString stringWithUTF8String:taskArgs + sizeof(int)];
     }
     
@@ -515,7 +515,7 @@ NSMutableArray* getProcessIDs(NSString* processPath, int userID)
     }
     
     //iterate over all pids
-    // ->get name for each process
+    // get name for each process
     for(int i = 0; i < numberOfProcesses; i++)
     {
         //skip blank pids
@@ -556,7 +556,7 @@ NSMutableArray* getProcessIDs(NSString* processPath, int userID)
         }
         
         //got match
-        // ->add to list
+        // add to list
         [processIDs addObject:[NSNumber numberWithInt:pids[i]]];
     }
     
@@ -580,7 +580,7 @@ bail:
 void makeModal(NSWindowController* windowController)
 {
     //wait up to 1 second window to be non-nil
-    // ->then make modal
+    // then make modal
     for(int i=0; i<20; i++)
     {
         //can make it modal once we have a window

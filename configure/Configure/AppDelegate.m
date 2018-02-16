@@ -30,7 +30,7 @@
     #pragma unused(notification)
     
     //first thing...
-    // ->install exception handlers
+    // install exception handlers
     installExceptionHandlers();
     
     //alloc/init Config obj
@@ -69,7 +69,7 @@
     configureWindowController = [[ConfigureWindowController alloc] initWithWindowNibName:@"ConfigureWindowController"];
     
     //display it
-    // ->call this first to so that outlets are connected
+    // call this first to so that outlets are connected
     [self.configureWindowController display];
     
     //configure it
@@ -85,22 +85,22 @@
     errorWindowController = [[ErrorWindowController alloc] initWithWindowNibName:@"ErrorWindowController"];
     
     //main thread
-    // ->just show UI alert, unless its fatal (then load URL)
+    // just show UI alert, unless its fatal (then load URL)
     if(YES == [NSThread isMainThread])
     {
         //non-fatal errors
-        // ->show error error popup
+        // show error error popup
         if(YES != [errorInfo[KEY_ERROR_URL] isEqualToString:FATAL_ERROR_URL])
         {
             //display it
-            // ->call this first to so that outlets are connected
+            // call this first to so that outlets are connected
             [self.errorWindowController display];
             
             //configure it
             [self.errorWindowController configure:errorInfo];
         }
         //fatal error
-        // ->launch browser to go to fatal error page, then exit
+        // launch browser to go to fatal error page, then exit
         else
         {
             //launch browser
@@ -111,15 +111,15 @@
         }
     }
     //background thread
-    // ->have to show error window on main thread
+    // have to show error window on main thread
     else
     {
         //show alert
-        // ->in main UI thread
+        // in main UI thread
         dispatch_sync(dispatch_get_main_queue(), ^{
             
             //display it
-            // ->call this first to so that outlets are connected
+            // call this first to so that outlets are connected
             [self.errorWindowController display];
             
             //configure it

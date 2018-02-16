@@ -10,6 +10,7 @@
 @import Cocoa;
 
 #import "Logging.h"
+#import "Exception.h"
 #import "Utilities.h"
 
 //main
@@ -18,6 +19,10 @@ int main(int argc, const char * argv[])
 {
     //return var
     int iReturn = -1;
+    
+    //first thing...
+    // install exception handlers
+    installExceptionHandlers();
     
     //already running?
     if(YES == isAppRunning([[NSBundle mainBundle] bundleIdentifier]))

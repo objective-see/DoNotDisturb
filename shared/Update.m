@@ -17,7 +17,7 @@
 @implementation Update
 
 //check for an update
-// ->will invoke app delegate method to update UI when check completes
+// will invoke app delegate method to update UI when check completes
 -(void)checkForUpdate:(void (^)(NSUInteger result, NSString* latestVersion))completionHandler
 {
     //version string
@@ -44,7 +44,7 @@
         }
         
         //invoke app delegate method
-        // ->will update UI/show popup if necessart
+        // will update UI/show popup if necessart
         dispatch_async(dispatch_get_main_queue(),
         ^{
             completionHandler(result, latestVersion);
@@ -76,7 +76,7 @@
     }
     
     //convert JSON to dictionary
-    // ->wrap as may throw exception
+    // wrap as may throw exception
     @try
     {
         //convert
@@ -94,7 +94,7 @@
     }
     
     //extract latest version
-    latestVersion = [[productsVersionDictionary objectForKey:@"DnD"] objectForKey:@"version"];
+    latestVersion = [[productsVersionDictionary objectForKey:@"Do Not Disturb"] objectForKey:@"version"];
     
     //dbg msg
     #ifndef NDEBUG

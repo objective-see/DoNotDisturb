@@ -18,6 +18,8 @@
 		7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */; };
 		7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF751F1E9CE700B33214 /* Queue.m */; };
 		CD3307AC2033D35000F10D71 /* Monitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307AB2033D35000F10D71 /* Monitor.m */; };
+		CD3307D420365CCC00F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D220365CCB00F10D71 /* Exception.m */; };
+		CD3307DD2036A87500F10D71 /* DownloadMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307DC2036A87500F10D71 /* DownloadMonitor.m */; };
 		CD4B7056202BDB4D007DB5A7 /* AuthEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4B7055202BDB4D007DB5A7 /* AuthEvent.m */; };
 		CDAAC23E202027310032F2E6 /* UserAuthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAAC23D202027310032F2E6 /* UserAuthMonitor.m */; };
 		CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */ = {isa = PBXBuildFile; fileRef = CE60F9C81FC9BBE500EFFDDA /* Lid.m */; };
@@ -46,7 +48,6 @@
 		7D4FF8CB1F0EF2F9001A4A68 /* UserComms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserComms.h; sourceTree = "<group>"; };
 		7D4FF8CC1F0EF2F9001A4A68 /* UserComms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserComms.m; sourceTree = "<group>"; };
 		7D4FF8CE1F0EF360001A4A68 /* UserCommsInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserCommsInterface.h; path = ../../shared/UserCommsInterface.h; sourceTree = "<group>"; };
-		7D6E876E1F3AE5E900D6BD7C /* procInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = procInfo.h; sourceTree = "<group>"; };
 		7D6E876F1F3AE6FA00D6BD7C /* libprocInfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprocInfo.a; path = launchDaemon/libs/libprocInfo.a; sourceTree = "<group>"; };
 		7D7755D01F02DF9500D0017D /* Do Not Disturb */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Do Not Disturb"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D7755D31F02DF9500D0017D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -60,6 +61,12 @@
 		7DD2BF751F1E9CE700B33214 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		CD3307AA2033D35000F10D71 /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
 		CD3307AB2033D35000F10D71 /* Monitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Monitor.m; sourceTree = "<group>"; };
+		CD3307C5203639AD00F10D71 /* procInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = procInfo.h; path = launchDaemon/libs/procInfo.h; sourceTree = "<group>"; };
+		CD3307C82036518400F10D71 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
+		CD3307D220365CCB00F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../../shared/Exception.m; sourceTree = "<group>"; };
+		CD3307D320365CCC00F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../../shared/Exception.h; sourceTree = "<group>"; };
+		CD3307DB2036A87500F10D71 /* DownloadMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DownloadMonitor.h; sourceTree = "<group>"; };
+		CD3307DC2036A87500F10D71 /* DownloadMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadMonitor.m; sourceTree = "<group>"; };
 		CD4B7054202BDB4D007DB5A7 /* AuthEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthEvent.h; sourceTree = "<group>"; };
 		CD4B7055202BDB4D007DB5A7 /* AuthEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthEvent.m; sourceTree = "<group>"; };
 		CDAAC23C202027310032F2E6 /* UserAuthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAuthMonitor.h; sourceTree = "<group>"; };
@@ -96,7 +103,7 @@
 		7D7755C71F02DF9400D0017D = {
 			isa = PBXGroup;
 			children = (
-				7D2582591F1A872400D28B95 /* com.objective-see.dnd.plist */,
+				CD3307C42036399900F10D71 /* Supporting Files */,
 				7D7755D21F02DF9500D0017D /* src */,
 				7D4FF8BF1F0E12F1001A4A68 /* Frameworks */,
 				7D7755D11F02DF9500D0017D /* Products */,
@@ -119,6 +126,8 @@
 				7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */,
 				CE60F9C71FC9BBE500EFFDDA /* Lid.h */,
 				CE60F9C81FC9BBE500EFFDDA /* Lid.m */,
+				CD3307DB2036A87500F10D71 /* DownloadMonitor.h */,
+				CD3307DC2036A87500F10D71 /* DownloadMonitor.m */,
 				CD3307AA2033D35000F10D71 /* Monitor.h */,
 				CD3307AB2033D35000F10D71 /* Monitor.m */,
 				CD4B7054202BDB4D007DB5A7 /* AuthEvent.h */,
@@ -128,6 +137,7 @@
 				7DD2BF741F1E9CE700B33214 /* Queue.h */,
 				7DD2BF751F1E9CE700B33214 /* Queue.m */,
 				7D7755D31F02DF9500D0017D /* main.m */,
+				CD3307C82036518400F10D71 /* main.h */,
 				7D4FF8C51F0E14E8001A4A68 /* ProcListener.h */,
 				7D4FF8C81F0E1770001A4A68 /* ProcListener.m */,
 				CDAAC23C202027310032F2E6 /* UserAuthMonitor.h */,
@@ -144,8 +154,9 @@
 		7D7756071F05D62E00D0017D /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				CD3307D320365CCC00F10D71 /* Exception.h */,
+				CD3307D220365CCB00F10D71 /* Exception.m */,
 				CDAAC245202259B50032F2E6 /* Consts.h */,
-				7D6E876E1F3AE5E900D6BD7C /* procInfo.h */,
 				7DD2BF661F1DC42700B33214 /* Utilities.h */,
 				7DD2BF671F1DC42700B33214 /* Utilities.m */,
 				7D7755FA1F02EBBE00D0017D /* Logging.m */,
@@ -153,6 +164,15 @@
 				7D4FF8CE1F0EF360001A4A68 /* UserCommsInterface.h */,
 			);
 			name = shared;
+			sourceTree = "<group>";
+		};
+		CD3307C42036399900F10D71 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CD3307C5203639AD00F10D71 /* procInfo.h */,
+				7D2582591F1A872400D28B95 /* com.objective-see.dnd.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,7 +240,9 @@
 				7D4FF8C91F0E1770001A4A68 /* ProcListener.m in Sources */,
 				CD3307AC2033D35000F10D71 /* Monitor.m in Sources */,
 				CDAAC23E202027310032F2E6 /* UserAuthMonitor.m in Sources */,
+				CD3307DD2036A87500F10D71 /* DownloadMonitor.m in Sources */,
 				CE85D4011FDC921200E116A5 /* USBMonitor.m in Sources */,
+				CD3307D420365CCC00F10D71 /* Exception.m in Sources */,
 				7D7755D41F02DF9500D0017D /* main.m in Sources */,
 				7D4FF8CD1F0EF2F9001A4A68 /* UserComms.m in Sources */,
 				CD4B7056202BDB4D007DB5A7 /* AuthEvent.m in Sources */,
@@ -336,6 +358,10 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -353,6 +379,10 @@
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/Mac",
+				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

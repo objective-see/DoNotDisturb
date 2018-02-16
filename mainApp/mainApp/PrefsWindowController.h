@@ -56,12 +56,6 @@
 //action view
 @property (weak) IBOutlet NSView *actionView;
 
-//email button
-@property (weak) IBOutlet NSButton *emailAction;
-
-//email address
-@property (weak) IBOutlet NSTextField *emailAddress;
-
 //execute action button
 @property (weak) IBOutlet NSButton *executeAction;
 

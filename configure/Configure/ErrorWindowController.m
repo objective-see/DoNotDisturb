@@ -20,7 +20,7 @@
 @synthesize closeButton;
 
 //automatically called when nib is loaded
-// ->center window
+// center window
 -(void)awakeFromNib
 {
     //center
@@ -49,7 +49,7 @@
     }
     
     //when exiting
-    // ->change 'close' to 'exit'
+    // change 'close' to 'exit'
     if(YES == self.shouldExit)
     {
         //change title
@@ -57,7 +57,7 @@
     }
     
     //for fatal errors
-    // ->change 'Info' to 'help fix'
+    // change 'Info' to 'help fix'
     if(YES == [[self.errorURL absoluteString] isEqualToString:FATAL_ERROR_URL])
     {
         //change title
@@ -97,24 +97,24 @@
 }
 
 //invoked when user clicks '?' (help button)
-// ->open url with more info about the error(s)
+// open url with more info about the error(s)
 -(IBAction)help:(id)sender
 {
     #pragma unused(sender)
     
     //if a url was specified
-    // ->use that one
+    // use that one
     if(nil != self.errorURL)
     {
         //open URL
-        // ->invokes user's default browser
+        // invokes user's default browser
         [[NSWorkspace sharedWorkspace] openURL:self.errorURL];
     }
     //use default URL
     else
     {
         //open URL
-        // ->invokes user's default browser
+        // invokes user's default browser
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:FATAL_ERROR_URL]];
     }
     
@@ -122,7 +122,7 @@
 }
 
 //invoked when user clicks 'close'
-// ->just close window
+// just close window
 -(IBAction)close:(id)sender
 {
     #pragma unused(sender)
@@ -134,13 +134,13 @@
 }
 
 //automatically invoked when window is closing
-// ->exit the app if specified...
+// exit the app if specified...
 -(void)windowWillClose:(NSNotification *)notification
 {
     #pragma unused(notification)
     
     //check if should exit process
-    // ->e.g. an error during install, etc
+    // e.g. an error during install, etc
     if(YES == self.shouldExit)
     {
         //dbg msg

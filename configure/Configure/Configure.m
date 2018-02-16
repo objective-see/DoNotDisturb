@@ -98,7 +98,7 @@ bail:
 }
 
 //determine if installed
-// ->simply checks if extension binary exists
+// simply checks if extension binary exists
 -(BOOL)isInstalled
 {
     //flag

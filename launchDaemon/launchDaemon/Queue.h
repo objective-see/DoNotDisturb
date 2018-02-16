@@ -30,11 +30,11 @@
 -(void)enqueue:(id)anObject;
 
 //wait until queue has item
-// ->then pull if off, and return it
+// then pull if off, and return it
 -(id)dequeue;
 
 //wait until queue has item
-// ->and return it, w/o removing it
+// and return it, w/o removing it
 -(id)peek;
 
 @end

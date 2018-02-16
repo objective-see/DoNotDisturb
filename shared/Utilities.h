@@ -17,7 +17,7 @@
 /* FUNCTIONS */
 
 //get app's version
-// ->extracted from Info.plist
+// extracted from Info.plist
 NSString* getAppVersion(void);
 
 //get OS version
@@ -33,7 +33,7 @@ NSNumber* getConsoleUID(void);
 OSStatus verifyApp(NSString* path, NSString* signingAuth);
 
 //get process name
-// ->either via app bundle, or path
+// either via app bundle, or path
 NSString* getProcessName(NSString* path);
 
 //given a pid
@@ -41,11 +41,11 @@ NSString* getProcessName(NSString* path);
 NSString* getProcessPath(pid_t pid);
 
 //given a process path and user
-// ->return array of all matching pids
+// return array of all matching pids
 NSMutableArray* getProcessIDs(NSString* processPath, int userID);
 
 //wait until a window is non nil
-// ->then make it modal
+// then make it modal
 void makeModal(NSWindowController* windowController);
 
 //check if an instance of an app is already running

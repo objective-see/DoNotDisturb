@@ -34,11 +34,8 @@
 
 //start
 // tell proc info lib to start
--(BOOL)start
+-(void)start
 {
-    //flag
-    BOOL started = NO;
-    
     //callback block
     ProcessCallbackBlock block = ^(Process* process)
     {
@@ -50,19 +47,9 @@
         }
     };
     
-    //start
-    if(YES != [self.procMon start:block])
-    {
-        //bail
-        goto bail;
-    }
+    [self.procMon start:block];
     
-    //happy
-    started = YES;
-    
-bail:
-    
-    return started;
+    return;
 }
 
 //tell proc info lib to stop
@@ -79,7 +66,7 @@ bail:
 -(void)processStart:(Process*)process
 {
     //dbg msg & log
-    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: process start: (%d: %@)", process.pid, process.path]);
+    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: process start: (%d: %@ (args: %@))", process.pid, process.path, process.arguments]);
     
     return;
 }

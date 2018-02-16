@@ -16,7 +16,7 @@
 #define LOG_TO_FILE 0x10
 
 //log a msg to syslog
-// ->also disk, if error
+// also disk, if error
 void logMsg(int level, NSString* msg);
 
 //prep/open log file

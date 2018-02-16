@@ -19,7 +19,7 @@
 @synthesize moreInfoButton;
 
 //automatically called when nib is loaded
-// ->just center window
+// just center window
 -(void)awakeFromNib
 {
     //center
@@ -167,7 +167,7 @@
     helpURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@#errors", PRODUCT_URL]];
     
     //open URL
-    // ->invokes user's default browser
+    // invokes user's default browser
     [[NSWorkspace sharedWorkspace] openURL:helpURL];
     
     return;
@@ -181,7 +181,7 @@
     BOOL status = NO;
     
     //begin event
-    // ->updates ui on main thread
+    // updates ui on main thread
     dispatch_sync(dispatch_get_main_queue(),
     ^{
         //complete
@@ -193,7 +193,7 @@
     [NSThread sleepForTimeInterval:0.5];
   
     //perform action (install | uninstall)
-    // ->perform background actions
+    // perform background actions
     if(YES == [((AppDelegate*)[[NSApplication sharedApplication] delegate]).configureObj configure:event])
     {
         //set flag
@@ -208,7 +208,7 @@
     }
     
     //complet event
-    // ->updates ui on main thread
+    // updates ui on main thread
     dispatch_async(dispatch_get_main_queue(),
     ^{
         //complete
@@ -219,7 +219,7 @@
 }
 
 //begin event
-// ->basically just update UI
+// basically just update UI
 -(void)beginEvent:(NSInteger)event
 {
     //status msg frame
@@ -229,7 +229,7 @@
     statusMsgFrame = self.statusMsg.frame;
     
     //avoid activity indicator
-    // ->shift frame shift delta
+    // shift frame shift delta
     statusMsgFrame.origin.x += FRAME_SHIFT;
     
     //update frame to align
@@ -267,7 +267,7 @@
 }
 
 //complete event
-// ->update UI after background event has finished
+// update UI after background event has finished
 -(void)completeEvent:(BOOL)success event:(NSInteger)event
 {
     //status msg frame

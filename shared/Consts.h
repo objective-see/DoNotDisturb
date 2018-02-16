@@ -48,31 +48,31 @@
 #define CMD_UNINSTALL "-uninstall"
 
 //action to install
-// ->also button title
+// also button title
 #define ACTION_INSTALL @"Install"
 
 //action to uninstall
-// ->also button title
+// also button title
 #define ACTION_UNINSTALL @"Uninstall"
 
 //button title
-// ->close
+// close
 #define ACTION_CLOSE @"Close"
 
 //button title
-// ->next
+// next
 #define ACTION_NEXT @"Next »"
 
 //button title
-// ->no
+// no
 #define ACTION_NO @"No"
 
 //button title
-// ->yes
+// yes
 #define ACTION_YES @"Yes!"
 
 //frame shift
-// ->for status msg to avoid activity indicator
+// for status msg to avoid activity indicator
 #define FRAME_SHIFT 45
 
 //flag to close
@@ -107,9 +107,6 @@
 
 //path to log
 #define LOG @"/usr/bin/log"
-
-//path to mail
-#define MAIL @"/usr/bin/mail"
 
 //path to open
 #define OPEN @"/usr/bin/open"
@@ -183,14 +180,6 @@
 //prefs
 // touchID mode
 #define PREF_TOUCHID_MODE @"touchIDMode"
-
-//prefs
-// email action
-#define PREF_EMAIL_ACTION @"emailAction"
-
-//prefs
-// email address
-#define PREF_EMAIL_ADDRESS @"emailAddress"
 
 //pref
 // execute action

@@ -19,7 +19,7 @@
 @synthesize xpcServiceConnection;
 
 //init
-// ->create XPC connection & set remote obj interface
+// create XPC connection & set remote obj interface
 -(id)init
 {
     //super

@@ -25,7 +25,7 @@
 @synthesize progressIndicator;
 
 //automatically called when nib is loaded
-// ->center window
+// center window
 -(void)awakeFromNib
 {
     //center
@@ -35,7 +35,7 @@
 }
 
 //automatically invoked when window is loaded
-// ->set to white
+// set to white
 -(void)windowDidLoad
 {
     //super
@@ -59,7 +59,7 @@
     self.actionButton.title = self.actionButtonTitle;
 
     //hide first button when action is 'update'
-    // ->don't need update check button ;)
+    // don't need update check button ;)
     if(YES == [self.actionButton.title isEqualToString:@"update"])
     {
         //hide
@@ -79,7 +79,7 @@
 }
 
 //automatically invoked when window is closing
-// ->make ourselves unmodal
+// make ourselves unmodal
 -(void)windowWillClose:(NSNotification *)notification
 {
     //make un-modal
@@ -89,7 +89,7 @@
 }
 
 //save the main label's & button title's text
-// ->invoked before window is loaded (and thus buttons, etc are nil)
+// invoked before window is loaded (and thus buttons, etc are nil)
 -(void)configure:(NSString*)label buttonTitle:(NSString*)buttonTitle
 {
     //save label's string
@@ -106,11 +106,11 @@
 -(IBAction)buttonHandler:(id)sender
 {
     //handle 'update' / 'more info', etc
-    // ->open DnD's webpage, if they *didn't* click 'close'
+    // open DnD's webpage, if they *didn't* click 'close'
     if(YES != [((NSButton*)sender).title isEqualToString:@"close"])
     {
         //open URL
-        // ->invokes user's default browser
+        // invokes user's default browser
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:PRODUCT_URL]];
     }
     

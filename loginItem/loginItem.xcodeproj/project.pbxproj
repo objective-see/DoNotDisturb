@@ -21,6 +21,7 @@
 		7DD260131F25307B00277EC4 /* HyperlinkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD260121F25307B00277EC4 /* HyperlinkTextField.m */; };
 		7DD2BF6E1F1DDF1F00B33214 /* AlertMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF6D1F1DDF1F00B33214 /* AlertMonitor.m */; };
 		7DD2BF7A1F1EAC9C00B33214 /* DaemonComms.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF791F1EAC9C00B33214 /* DaemonComms.m */; };
+		CD3307DA20365D1900F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D820365D1900F10D71 /* Exception.m */; };
 		CE968A9C1FCC590200AD6B78 /* statusIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE968A9A1FCC590200AD6B78 /* statusIcon.png */; };
 		CE968A9D1FCC590200AD6B78 /* statusIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE968A9B1FCC590200AD6B78 /* statusIcon@2x.png */; };
 /* End PBXBuildFile section */
@@ -53,6 +54,8 @@
 		7DD2BF6D1F1DDF1F00B33214 /* AlertMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertMonitor.m; sourceTree = "<group>"; };
 		7DD2BF781F1EAC9C00B33214 /* DaemonComms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaemonComms.h; path = ../shared/DaemonComms.h; sourceTree = "<group>"; };
 		7DD2BF791F1EAC9C00B33214 /* DaemonComms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaemonComms.m; path = ../shared/DaemonComms.m; sourceTree = "<group>"; };
+		CD3307D820365D1900F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../shared/Exception.m; sourceTree = "<group>"; };
+		CD3307D920365D1900F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../shared/Exception.h; sourceTree = "<group>"; };
 		CE968A9A1FCC590200AD6B78 /* statusIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIcon.png; sourceTree = "<group>"; };
 		CE968A9B1FCC590200AD6B78 /* statusIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusIcon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -88,6 +91,8 @@
 		7D3B75201F13356900568828 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				CD3307D920365D1900F10D71 /* Exception.h */,
+				CD3307D820365D1900F10D71 /* Exception.m */,
 				7D16D68F1F64E43300DB3161 /* Update.h */,
 				7D16D6901F64E43300DB3161 /* Update.m */,
 				7D16D6911F64E43300DB3161 /* UpdateWindow.xib */,
@@ -241,6 +246,7 @@
 			files = (
 				7D16D6961F64E43300DB3161 /* UpdateWindowController.m in Sources */,
 				7D3B75141F13354900568828 /* StatusBarMenu.m in Sources */,
+				CD3307DA20365D1900F10D71 /* Exception.m in Sources */,
 				7D7755EB1F02E05B00D0017D /* main.m in Sources */,
 				7DD260131F25307B00277EC4 /* HyperlinkTextField.m in Sources */,
 				7D3B75251F13357D00568828 /* Logging.m in Sources */,

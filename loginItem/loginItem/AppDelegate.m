@@ -24,7 +24,7 @@
 @synthesize statusBarMenuController;
 
 //app's main interface
-// ->load status bar (unless prefs say otherwise) and kick off monitor
+// load status bar (unless prefs say otherwise) and kick off monitor
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     //app preferences
@@ -91,7 +91,23 @@
     
     //in background
     // monitor / process alerts from daemon
-    [alertMonitor performSelectorInBackground:@selector(monitor) withObject:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //monitor
+        [alertMonitor monitor];
+        
+    });
+    
+    //in background
+    // wait for alert dimiss msgs from daemon
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //monitor
+        [alertMonitor dismissAlerts];
+        
+    });
+    
+    
     
 bail:
     
@@ -120,7 +136,7 @@ bail:
 }
 
 //process update response
-// ->error, no update, update/new version
+// error, no update, update/new version
 -(void)updateResponse:(NSInteger)result newVersion:(NSString*)newVersion
 {
     //handle response

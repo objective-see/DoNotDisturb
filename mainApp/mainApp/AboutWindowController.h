@@ -25,7 +25,7 @@
 /* METHODS */
 
 //automatically invoked when user clicks any of the buttons
-// ->perform actions, such as loading patreon or products URL
+// perform actions, such as loading patreon or products URL
 -(IBAction)buttonHandler:(id)sender;
 
 @end

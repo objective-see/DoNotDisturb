@@ -126,7 +126,7 @@
     }
     
     //running?
-    // ->kill, as restart flag set
+    // kill, as restart flag set
     else if(nil != loginItemPID)
     {
         //kill it
@@ -155,7 +155,8 @@
     #endif
     
     //start (helper) login item
-    execTask(loginItemBinary, nil, NO);
+    // 'open -g' prevents focus loss!
+    execTask(OPEN, @[@"-g", loginItem], NO);
     
     //happy
     result = YES;
@@ -196,7 +197,7 @@ bail:
 }
 
 //'about' menu item handler
-// ->alloc/show about window
+// alloc/show about window
 -(IBAction)showAbout:(id)sender
 {
     //alloc/init settings window

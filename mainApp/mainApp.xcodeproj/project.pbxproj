@@ -40,6 +40,7 @@
 		CD17D58B201A7F8500F798D7 /* LinkWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D589201A7F8500F798D7 /* LinkWindowController.m */; };
 		CD17D58C201A7F8500F798D7 /* Link.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D58A201A7F8500F798D7 /* Link.xib */; };
 		CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58E201A827A00F798D7 /* QuickResponseCode.m */; };
+		CD3307D720365CF500F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D520365CF500F10D71 /* Exception.m */; };
 		CD4B705B202BFE2C007DB5A7 /* SyncViewController_Zero.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4B7059202BFE2C007DB5A7 /* SyncViewController_Zero.m */; };
 		CDAAC213201D0CD90032F2E6 /* three.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC212201D0CD80032F2E6 /* three.png */; };
 		CDAAC215201D2DD30032F2E6 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC214201D2DD30032F2E6 /* checkbox.png */; };
@@ -122,6 +123,8 @@
 		CD17D58A201A7F8500F798D7 /* Link.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Link.xib; sourceTree = "<group>"; };
 		CD17D58D201A827A00F798D7 /* QuickResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickResponseCode.h; sourceTree = "<group>"; };
 		CD17D58E201A827A00F798D7 /* QuickResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickResponseCode.m; sourceTree = "<group>"; };
+		CD3307D520365CF500F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../shared/Exception.m; sourceTree = "<group>"; };
+		CD3307D620365CF500F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../shared/Exception.h; sourceTree = "<group>"; };
 		CD4B7059202BFE2C007DB5A7 /* SyncViewController_Zero.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncViewController_Zero.m; sourceTree = "<group>"; };
 		CD4B705A202BFE2C007DB5A7 /* SyncViewController_Zero.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncViewController_Zero.h; sourceTree = "<group>"; };
 		CDAAC212201D0CD80032F2E6 /* three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = three.png; sourceTree = "<group>"; };
@@ -268,6 +271,8 @@
 		7D564DE21F18445400B8AAD6 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				CD3307D620365CF500F10D71 /* Exception.h */,
+				CD3307D520365CF500F10D71 /* Exception.m */,
 				7D564DE31F18446200B8AAD6 /* Consts.h */,
 				7D2582551F19FAD700D28B95 /* DaemonComms.h */,
 				7D2582561F19FAD700D28B95 /* DaemonComms.m */,
@@ -433,6 +438,7 @@
 			files = (
 				7D564DEA1F1855E900B8AAD6 /* UpdateWindowController.m in Sources */,
 				CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */,
+				CD3307D720365CF500F10D71 /* Exception.m in Sources */,
 				7D2582571F19FAD700D28B95 /* DaemonComms.m in Sources */,
 				7D564DE61F18446200B8AAD6 /* Logging.m in Sources */,
 				7D16D69A1F65EF9900DB3161 /* Update.m in Sources */,

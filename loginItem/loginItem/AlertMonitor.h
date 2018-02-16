@@ -17,7 +17,12 @@
 /* METHODS */
 
 //forever,
-// ->wait for & display alerts
+// wait for & display alerts
 -(void)monitor;
+
+//forever
+// wait for dismiss XPC msg from dameon
+// note: currently, will dismiss all alerts...
+-(void)dismissAlerts;
 
 @end

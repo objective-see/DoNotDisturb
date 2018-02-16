@@ -37,6 +37,9 @@
 // for now, it's just an 'ack' that it was recieved/shown
 -(void)alertResponse;
 
+//ask (and then block) for an alert dismiss
+-(void)alertDismiss:(void (^)(NSDictionary* alert))reply;
+
 //close/cleanup connection
 -(void)close;
 

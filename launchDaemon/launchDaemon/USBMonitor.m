@@ -19,15 +19,12 @@
 //callback for USB devices
 void usbDeviceAppeared(void *refCon, io_iterator_t iterator)
 {
-    //TODO: get name?
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"monitor event: usb device inserted"]);
     
-    //dbg msg & log
-    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: usb device inserted"]);
-    
-    //TODO: if not, need, clean up code below too
-    // log or do something with this event
-    //Monitor *monitor = (__bridge Monitor *)refCon;
-    
+    //process new device
+    [(__bridge USBMonitor *)refCon handleNewDevice:iterator];
+
     return;
 }
 
@@ -102,20 +99,47 @@ bail:
     return;
 }
 
-//init notification handler for auth events
-// user auth monitor will broadcast such events!
--(void)initAuthMonitoring
+//process new USB insertion
+// get info about device and log
+-(void)handleNewDevice:(io_iterator_t)iterator
 {
-    //register listener for notification events
-    // on event; just log to the log file for now...
-    [[NSNotificationCenter defaultCenter] addObserverForName:AUTH_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue]
-    usingBlock:^(NSNotification *notification)
+    //usb device
+    io_service_t device;
+    
+    //device name
+    io_name_t deviceName = {0};
+    
+    //device properties
+    CFMutableDictionaryRef deviceProperties = NULL;
+    
+    //process
+    while ((device = IOIteratorNext(iterator)))
     {
-        //dbg msg & log
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: user authentication %@", notification.userInfo[AUTH_NOTIFICATION]]);
+        //log msg
+        logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: usb device inserted"]);
         
-    }];
+        //get device name
+        if(KERN_SUCCESS == IORegistryEntryGetName(device, deviceName))
+        {
+            //dbg msg & log
+            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"USB device name: %s", deviceName]);
+        }
+        
+        if( (kIOReturnSuccess == IORegistryEntryCreateCFProperties(device, &deviceProperties, kCFAllocatorDefault, kNilOptions)) &&
+            (NULL != deviceProperties) )
+        {
+            //dbg msg & log
+            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"USB device properties: %@", deviceProperties]);
+            
+            //release
+            CFRelease(deviceProperties);
+        }
+        
+        //release
+        IOObjectRelease(device);
+    }
     
     return;
 }
+
 @end

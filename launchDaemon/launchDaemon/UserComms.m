@@ -98,7 +98,7 @@ extern Queue* eventQueue;
     [preferences writeToFile:PREFS_FILE atomically:YES];
     
     //log
-    logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"saving (updated) preferences: %@", preferences]);
+    //logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"saving (updated) preferences: %@", preferences]);
     
 bail:
     
@@ -146,6 +146,30 @@ bail:
     
     //dbg msg
     logMsg(LOG_DEBUG, @"removed alert, as it's been consumed by the user");
+}
+
+//process alert dismiss request from client
+// blocks until framework calls it?
+-(void)alertDismiss:(void (^)(NSDictionary* alert))reply
+{
+    //alert details
+    NSMutableDictionary* alert = nil;
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"XPC request: alert dismiss");
+    
+    //TODO:
+    // a) call into framework to block
+    // b) init alert dismiss dictionary
+    [NSThread sleepForTimeInterval:100000];
+    
+    //log to file
+    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert dimisss to login item to display to user: %@", alert]);
+    
+    //return alert
+    reply(alert);
+    
+    return;
 }
 
 @end

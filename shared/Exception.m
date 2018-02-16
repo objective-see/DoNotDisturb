@@ -16,7 +16,7 @@
 #endif
 
 //global
-// ->only report an fatal exception once
+// only report an fatal exception once
 BOOL wasReported = NO;
 
 //install exception/signal handlers
@@ -92,7 +92,7 @@ void exceptionHandler(NSException *exception)
     errorInfo[KEY_ERROR_URL] = FATAL_ERROR_URL;
     
     //fatal error
-    // ->agent should exit
+    // agent should exit
     errorInfo[KEY_ERROR_SHOULD_EXIT] = [NSNumber numberWithBool:YES];
     
     //display error msg
@@ -173,7 +173,7 @@ void signalHandler(int signal, siginfo_t *info, void *context)
     errorInfo[KEY_ERROR_URL] = FATAL_ERROR_URL;
     
     //fatal error
-    // ->agent should exit
+    // agent should exit
     errorInfo[KEY_ERROR_SHOULD_EXIT] = [NSNumber numberWithBool:YES];
     
     //display error msg

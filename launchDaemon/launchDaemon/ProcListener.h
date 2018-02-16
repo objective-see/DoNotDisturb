@@ -31,7 +31,7 @@
 -(id)init;
 
 //start
--(BOOL)start;
+-(void)start;
 
 //stop
 -(void)stop;

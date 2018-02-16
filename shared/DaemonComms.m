@@ -17,7 +17,7 @@
 @synthesize xpcServiceConnection;
 
 //init
-// ->create XPC connection & set remote obj interface
+// create XPC connection & set remote obj interface
 -(id)init
 {
     //super
@@ -130,11 +130,32 @@
     
     //respond to alert
     [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
-      {
+    {
           //err msg
           logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'alertResponse' method on launch daemon (error: %@)", proxyError]);
           
-      }] alertResponse];
+    }] alertResponse];
+    
+    return;
+}
+
+//ask (and then block) for an alert dismiss
+-(void)alertDismiss:(void (^)(NSDictionary* alert))reply
+{
+    //dbg msg
+    logMsg(LOG_DEBUG, @"sending request, via XPC, for alert dismiss events");
+
+    //request alert
+    [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+    {
+          //err msg
+          logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'alertDismiss' method on launch daemon (error: %@)", proxyError]);
+          
+    }] alertDismiss:^(NSDictionary* alert)
+    {
+         //respond with alert
+         reply(alert);
+    }];
     
     return;
 }

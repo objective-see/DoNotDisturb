@@ -19,7 +19,7 @@
 
 
 //check for an update
-// ->will invoke app delegate method to update UI when check completes
+// will invoke app delegate method to update UI when check completes
 -(void)checkForUpdate:(void (^)(NSUInteger result, NSString* latestVersion))completionHandler;
 
 @end

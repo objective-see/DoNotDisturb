@@ -12,6 +12,7 @@
 
 #import "Consts.h"
 #import "Logging.h"
+#import "Exception.h"
 #import "Utilities.h"
 
 int main(int argc, const char * argv[])
@@ -21,6 +22,10 @@ int main(int argc, const char * argv[])
     
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"starting config/pref's app (args: %@)", [[NSProcessInfo processInfo] arguments]]);
+    
+    //first thing...
+    // install exception handlers
+    installExceptionHandlers();
     
     //install
     // enable login item

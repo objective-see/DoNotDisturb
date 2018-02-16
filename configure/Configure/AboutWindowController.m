@@ -17,7 +17,7 @@
 @synthesize versionLabel;
 
 //automatically called when nib is loaded
-// ->center window
+// center window
 -(void)awakeFromNib
 {
     //center
@@ -25,7 +25,7 @@
 }
 
 //automatically invoked when window is loaded
-// ->set to white
+// set to white
 -(void)windowDidLoad
 {
     //super
@@ -56,7 +56,7 @@
 }
 
 //automatically invoked when window is closing
-// ->make ourselves unmodal
+// make ourselves unmodal
 -(void)windowWillClose:(NSNotification *)notification
 {
     #pragma unused(notification)
@@ -68,14 +68,14 @@
 }
 
 //automatically invoked when user clicks any of the buttons
-// ->load patreon or products webpage in user's default browser
+// load patreon or products webpage in user's default browser
 -(IBAction)buttonHandler:(id)sender
 {
     //support us button
     if(((NSButton*)sender).tag == BUTTON_SUPPORT_US)
     {
         //open URL
-        // ->invokes user's default browser
+        // invokes user's default browser
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:PATREON_URL]];
     }
     
@@ -83,7 +83,7 @@
     else if(((NSButton*)sender).tag == BUTTON_MORE_INFO)
     {
         //open URL
-        // ->invokes user's default browser
+        // invokes user's default browser
         [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:PRODUCT_URL]];
     }
 

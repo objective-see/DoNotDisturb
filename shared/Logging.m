@@ -14,7 +14,7 @@
 NSFileHandle* logFileHandle = nil;
 
 //log a msg
-// ->default to syslog, and if an err msg, to disk
+// default to syslog, and if an err msg, to disk
 void logMsg(int level, NSString* msg)
 {
     //flag for logging
@@ -27,11 +27,11 @@ void logMsg(int level, NSString* msg)
     shouldLog = (LOG_TO_FILE == (level & LOG_TO_FILE));
     
     //then remove it
-    // ->make sure syslog is happy
+    // make sure syslog is happy
     level &= ~LOG_TO_FILE;
     
     //alloc/init
-    // ->always start w/ name + pid
+    // always start w/ name + pid
     logPrefix = [NSMutableString stringWithFormat:@"DoNotDisturb(%d)", getpid()];
     
     //if its error, add error to prefix
@@ -45,7 +45,7 @@ void logMsg(int level, NSString* msg)
     #ifndef NDEBUG
     
     //in debug mode promote debug msgs to LOG_NOTICE
-    // ->OS X only shows LOG_NOTICE and above
+    // OS X only shows LOG_NOTICE and above
     if(LOG_DEBUG == level)
     {
         //promote
@@ -63,7 +63,7 @@ void logMsg(int level, NSString* msg)
     }
     
     //when a message is to be logged to file
-    // ->log it, when logging is enabled
+    // log it, when logging is enabled
     if(YES == shouldLog)
     {
         //but only when logging is enable
@@ -87,7 +87,7 @@ NSString* logFilePath()
 void log2File(NSString* msg)
 {
     //append timestamp
-    // ->write msg out to disk
+    // write msg out to disk
     [logFileHandle writeData:[[NSString stringWithFormat:@"%@: %@\n", [NSDate date], msg] dataUsingEncoding:NSUTF8StringEncoding]];
     
     return;
@@ -97,7 +97,7 @@ void log2File(NSString* msg)
 void deinitLogging()
 {
     //dbg msg
-    // ->and to file
+    // and to file
     logMsg(LOG_DEBUG|LOG_TO_FILE, @"logging ending");
     
     //close file handle
@@ -144,7 +144,7 @@ BOOL initLogging()
     }
     
     //first time
-    // ->create
+    // create
     if(YES != [[NSFileManager defaultManager] fileExistsAtPath:logPath])
     {
         //create
@@ -171,7 +171,7 @@ BOOL initLogging()
     [logFileHandle seekToEndOfFile];
     
     //dbg msg
-    // ->and to file
+    // and to file
     logMsg(LOG_DEBUG|LOG_TO_FILE, @"logging intialized");
     
     //happy

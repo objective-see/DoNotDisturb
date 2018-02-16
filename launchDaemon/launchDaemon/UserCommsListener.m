@@ -23,7 +23,7 @@
 extern Queue* eventQueue;
 
 //interface for 'extension' to NSXPCConnection
-// ->allows us to access the 'private' auditToken iVar
+// allows us to access the 'private' auditToken iVar
 @interface ExtendedNSXPCConnection : NSXPCConnection
 {
     //private iVar
@@ -35,7 +35,7 @@ extern Queue* eventQueue;
 @end
 
 //implementation for 'extension' to NSXPCConnection
-// ->allows us to access the 'private' auditToken iVar
+// allows us to access the 'private' auditToken iVar
 @implementation ExtendedNSXPCConnection
 
 //private iVar
@@ -55,7 +55,7 @@ extern Queue* eventQueue;
 @synthesize listener;
 
 //init
-// ->create XPC listener
+// create XPC listener
 -(id)init
 {
     //init super
@@ -233,7 +233,7 @@ bail:
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"found undelivered alert, will (re)enqueue"]);
     
     //have alert
-    // ->requeue it up
+    // requeue it up
     [eventQueue enqueue:userComms.dequeuedAlert];
 
 bail:

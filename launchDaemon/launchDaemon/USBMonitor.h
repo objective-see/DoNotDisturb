@@ -14,6 +14,9 @@
 //notification port
 @property(nonatomic) IONotificationPortRef notificationPort;
 
+//callback for USB devices
+void usbDeviceAppeared(void *refCon, io_iterator_t iterator);
+
 //run loop source
 @property(nonatomic)CFRunLoopSourceRef runLoopSource;
 
@@ -26,7 +29,8 @@
 //stop
 -(void)stop;
 
-//callback for USB devices
-void usbDeviceAppeared(void *refCon, io_iterator_t iterator);
+//process new USB insertion
+// get info about device and log
+-(void)handleNewDevice:(io_iterator_t)iterator;
 
 @end

@@ -43,7 +43,7 @@
 -(void)configure:(NSString*)label buttonTitle:(NSString*)buttonTitle;
 
 //invoked when user clicks button
-// ->trigger action such as opening product website, updating, etc
+// trigger action such as opening product website, updating, etc
 -(IBAction)buttonHandler:(id)sender;
 
 @end

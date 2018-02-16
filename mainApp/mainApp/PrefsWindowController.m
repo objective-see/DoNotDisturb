@@ -27,11 +27,9 @@
 @synthesize updateMode;
 @synthesize updateView;
 @synthesize daemonComms;
-@synthesize emailAction;
 @synthesize executePath;
 @synthesize generalView;
 @synthesize passiveMode;
-@synthesize emailAddress;
 @synthesize headlessMode;
 @synthesize executeAction;
 @synthesize monitorAction;
@@ -52,6 +50,15 @@
     
     //make 'general' selected
     [self.toolbar setSelectedItemIdentifier:TOOLBAR_GENERAL_ID];
+    
+    //disable touchID mode option
+    // if: no touch bar || < 10.13.4
+    if( (YES != hasTouchID()) ||
+        (YES != [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 13, 4}]) )
+    {
+        //disable
+        self.touchIDMode.enabled = NO;
+    }
     
     //load/serialize preferences
     [self loadPreferences];
@@ -116,21 +123,11 @@
     //set execute path field state to match
     self.executePath.enabled = self.executeAction.state;
     
-    //disable touchID mode if computer doesn't support it
-    if(YES != hasTouchID())
-    {
-        //disable
-        self.touchIDMode.enabled = NO;
-        
-        //set label
-        self.touchIDLabel.stringValue = [NSString stringWithFormat:@"%@ (disabled)", self.touchIDLabel.stringValue];
-    }
-    
     return;
 }
 
 //toolbar view handler
-// ->toggle view based on user selection
+// toggle view based on user selection
 -(IBAction)toolbarButtonHandler:(id)sender
 {
     //view
@@ -222,16 +219,6 @@
         preferences[PREF_TOUCHID_MODE] = [NSNumber numberWithBool:self.touchIDMode.state];
     }
 
-    //email alert
-    else if(sender == self.emailAction)
-    {
-        //set
-        preferences[PREF_EMAIL_ACTION] = [NSNumber numberWithBool:self.emailAction.state];
-        
-        //set address field state to match
-        self.emailAddress.enabled = self.emailAction.state;
-    }
-    
     //execute action
     else if(sender == self.executeAction)
     {
@@ -311,7 +298,7 @@
          [daemonComms recvRegistrationACK:^(NSDictionary* registrationInfo)
           {
               //TODO: remove
-              [NSThread sleepForTimeInterval:3.0f];
+              [NSThread sleepForTimeInterval:2.0f];
               
               dispatch_sync(dispatch_get_main_queue(), ^{
                   
@@ -354,13 +341,6 @@
         preferences = [NSMutableDictionary dictionary];
     }
     
-    //email address
-    else if([notification object] == self.emailAddress)
-    {
-        //set
-        preferences[PREF_EMAIL_ADDRESS] = self.emailAddress.stringValue;
-    }
-    
     //execute path?
     else if([notification object] == self.executePath)
     {
@@ -384,9 +364,6 @@
     
     //load preferences from disk
     preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-    
-    //save email address
-    preferences[PREF_EMAIL_ADDRESS] = self.emailAddress.stringValue;
     
     //save execute path
     preferences[PREF_EXECUTION_PATH] = self.executePath.stringValue;
@@ -417,7 +394,7 @@
     update = [[Update alloc] init];
     
     //check for update
-    // ->'updateResponse newVersion:' method will be called when check is done
+    // 'updateResponse newVersion:' method will be called when check is done
     [update checkForUpdate:^(NSUInteger result, NSString* newVersion) {
         
         //process response
@@ -429,7 +406,7 @@
 }
 
 //process update response
-// ->error, no update, update/new version
+// error, no update, update/new version
 -(void)updateResponse:(NSInteger)result newVersion:(NSString*)newVersion
 {
     //re-enable button

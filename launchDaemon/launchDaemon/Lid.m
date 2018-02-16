@@ -10,8 +10,6 @@
 //  https://github.com/zarigani/ClamshellWake/blob/master/ClamshellWake.cpp
 //  https://github.com/dustinrue/ControlPlane/blob/master/Source/LaptopLidEvidenceSource.m
 
-// TODO: test external monitor w/ laptop shut?
-
 // note: manually get state from terminal via:
 //       ioreg -r -k AppleClamshellState -d 4 | grep AppleClamshellState
 
@@ -29,7 +27,7 @@
 /* GLOBALS */
 
 //last state
-// ->sometimes multiple notifications are delivered!?
+// sometimes multiple notifications are delivered!?
 LidState lastLidState;
 
 //lid obj
@@ -86,7 +84,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     sleepState = !!(((int)messageArgument & kClamshellSleepBit));
     
     //dbg msg
-    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"lid state: %@ (sleep bit: %d)", (lidState) ? @"closed" : @"open", sleepState]);
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"lid state: %@ (sleep bit: %d)", (lidState) ? @"closed" : @"open", sleepState]);
     
     //(new) open?
     if( (stateOpen == lidState) &&
@@ -120,7 +118,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         }
         
         //process event
-        // report to user, send email, etc.
+        // report to user, execute actions, etc
         [lidObj processEvent:preferences];
     }
     
@@ -418,7 +416,7 @@ bail:
     if(YES == [preferences[PREF_MONITOR_ACTION] boolValue])
     {
         //dbg msg
-        logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling monitoring");
+        logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling monitoring (processes, usb, logins, etc.)");
         
         //alloc/init
         monitor = [[Monitor alloc] init];
@@ -446,57 +444,9 @@ bail:
         }
     }
     
-    //send email?
-    if( (YES == [preferences[PREF_EMAIL_ACTION] boolValue]) &&
-        (0 != [preferences[PREF_EMAIL_ADDRESS] length] ) )
-    {
-        //dbg msg
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to: %@", preferences[PREF_EMAIL_ADDRESS]]);
-        
-        //send email
-        if(YES != [self sendAlertViaEmail:preferences[PREF_EMAIL_ADDRESS]])
-        {
-            //err msg
-            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to send alert to %@", preferences[PREF_EMAIL_ADDRESS]]);
-        }
-    }
-    
 bail:
     
     return;
-    
-}
-
-//send an email via 'mail'
--(BOOL)sendAlertViaEmail:(NSString*)emailAddresss
-{
-    //sent
-    BOOL sent = NO;
-    
-    //results
-    NSMutableDictionary* results = nil;
-    
-    //kick off main app w/ install flag
-    // don't wait for it to return though...
-    results = execTask(MAIL, @[@"-s", @"[Do Not Disturb Alert]", emailAddresss], YES);
-    
-    //grab result
-    if( (nil != results) &&
-        (0 != [results[EXIT_CODE] intValue]) )
-    {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"sending alert email failed with %@", results[EXIT_CODE]]);
-        
-        //bail
-        goto bail;
-    }
-    
-    //happy
-    sent = YES;
-    
-bail:
-    
-    return sent;
 }
 
 //execute action
@@ -529,8 +479,5 @@ bail:
 }
 
 //unregister for notifications?
-
-
-
 
 @end

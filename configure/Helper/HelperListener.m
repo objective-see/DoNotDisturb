@@ -25,7 +25,7 @@
 @end
 
 //implementation for 'extension' to NSXPCConnection
-// ->allows us to access the 'private' auditToken iVar
+// allows us to access the 'private' auditToken iVar
 @implementation ExtendedNSXPCConnection
 
 //private iVar
@@ -41,7 +41,7 @@
 @synthesize listener;
 
 //init
-// ->create XPC listener
+// create XPC listener
 -(id)init
 {
     //init super

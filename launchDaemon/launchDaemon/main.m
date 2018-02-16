@@ -8,9 +8,11 @@
 //
 
 #import "Lid.h"
+#import "main.h"
 #import "Consts.h"
 #import "Queue.h"
 #import "Logging.h"
+#import "Exception.h"
 #import "Utilities.h"
 #import "UserAuthMonitor.h"
 #import "UserCommsListener.h"
@@ -22,7 +24,7 @@
 Lid* lid = nil;
 
 //queue object
-// ->contains watch items that should be processed
+// contains watch items that should be processed
 Queue* eventQueue = nil;
 
 //user auth event listener
@@ -30,12 +32,6 @@ UserAuthMonitor* userAuthMonitor = nil;
 
 //'rule changed' semaphore
 dispatch_semaphore_t rulesChanged = 0;
-
-/* FUNCTIONS */
-
-//init a handler for SIGTERM
-// can perform actions such as disabling firewall and closing logging
-void register4Shutdown(void);
 
 //main
 // init & kickoff stuffz
@@ -48,6 +44,10 @@ int main(int argc, const char * argv[])
         
         //dbg msg
         logMsg(LOG_DEBUG, @"DnD launch daemon started");
+        
+        //first thing...
+        // install exception handlers
+        installExceptionHandlers();
         
         //init logging
         if(YES != initLogging())
