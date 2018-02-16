@@ -24,8 +24,8 @@
 //daemom comms object
 @property (nonatomic, retain)DaemonComms* daemonComms;
 
-//enabled flag
-@property BOOL isEnabled;
+//disabled flag
+@property BOOL isDisabled;
 
 /* METHODS */
 

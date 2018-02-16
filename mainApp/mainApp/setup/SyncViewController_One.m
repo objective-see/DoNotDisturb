@@ -16,16 +16,6 @@
 
 @implementation SyncViewController_One
 
-//view loaded
-// make 'next' button first responder
--(void)viewDidAppear
-{
-    //first responder
-    [self.view.window makeFirstResponder:[self.view viewWithTag:1]];
-    
-    return;
-}
-
 //button handler
 // call into app delegate to show next view
 - (IBAction)next:(id)sender

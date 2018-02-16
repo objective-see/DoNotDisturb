@@ -33,16 +33,6 @@
     return;
 }
 
-//view loaded
-// make 'next' button first responder
--(void)viewDidAppear
-{
-    //first responder
-    [self.view.window makeFirstResponder:[self.view viewWithTag:1]];
-    
-    return;
-}
-
 //button handler
 // close app, as we're done
 - (IBAction)next:(id)sender

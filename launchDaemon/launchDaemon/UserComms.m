@@ -80,7 +80,7 @@ extern Queue* eventQueue;
     logMsg(LOG_DEBUG, @"XPC request: recv registration ACK");
     
     //TODO: call into framework
-    registrationInfo = @{KEY_PHONE_NUMBER : @"+1 123-456-789"};
+    registrationInfo = @{KEY_PHONE_NUMBER : @"+1 123-456-7890"};
     
     //return registration framework
     reply(registrationInfo);

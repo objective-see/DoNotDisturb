@@ -28,7 +28,7 @@ enum menuItems
 
 @implementation StatusBarMenu
 
-@synthesize isEnabled;
+@synthesize isDisabled;
 @synthesize statusItem;
 @synthesize daemonComms;
 
@@ -75,7 +75,7 @@ enum menuItems
         preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
         
         //set status
-        self.isEnabled = [preferences[PREF_STATUS] boolValue];
+        self.isDisabled = [preferences[PREF_STATUS] boolValue];
         
         //set initial menu state
         [self setState];
@@ -193,7 +193,7 @@ enum menuItems
         case toggleStatus:
         {
             //invert since toggling
-            self.isEnabled = !self.isEnabled;
+            self.isDisabled = !self.isDisabled;
             
             //set menu state
             [self setState];
@@ -289,20 +289,10 @@ bail:
 -(void)setState
 {
     //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"setting state to: %@", (self.isEnabled) ? @"enabled" : @"disabled"]);
-    
-    //set to enabled
-    if(YES == self.isEnabled)
-    {
-        //update status
-        [self.statusItem.menu itemWithTag:status].title = @"DnD: enabled";
-        
-        //change text
-        [self.statusItem.menu itemWithTag:toggleStatus].title = @"Disable";
-    }
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"setting state to: %@", (self.isDisabled) ? @"disabled" : @"enabled"]);
     
     //set to disabled
-    else
+    if(YES == self.isDisabled)
     {
         //update status
         [self.statusItem.menu itemWithTag:status].title = @"DnD: disabled";
@@ -311,9 +301,19 @@ bail:
         [self.statusItem.menu itemWithTag:toggleStatus].title = @"Enable";
     }
     
+    //set to enabled
+    else
+    {
+        //update status
+        [self.statusItem.menu itemWithTag:status].title = @"DnD: enabled";
+        
+        //change text
+        [self.statusItem.menu itemWithTag:toggleStatus].title = @"Disable";
+    }
+    
     //send to daemon
     // will update preferences
-    [self.daemonComms updatePreferences:@{PREF_STATUS: [NSNumber numberWithBool:self.isEnabled]}];
+    [self.daemonComms updatePreferences:@{PREF_STATUS: [NSNumber numberWithBool:self.isDisabled]}];
     
     return;
 }
