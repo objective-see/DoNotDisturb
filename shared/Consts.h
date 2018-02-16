@@ -166,6 +166,10 @@
 #define LOGIN_ITEM_NAME @"Do Not Disturb Helper"
 
 //prefs
+// displayed popover
+#define PREF_SHOWED_POPOVER @"popover"
+
+//prefs
 // status
 #define PREF_STATUS @"status"
 
@@ -189,7 +193,8 @@
 // execution path
 #define PREF_EXECUTION_PATH @"executePath"
 
-//pref monitor
+//pref
+// monitor stuffz
 #define PREF_MONITOR_ACTION @"monitorAction"
 
 //prefs

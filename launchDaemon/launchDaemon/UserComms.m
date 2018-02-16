@@ -91,16 +91,32 @@ extern Queue* eventQueue;
 //update preferences
 -(void)updatePreferences:(NSDictionary *)preferences
 {
+    //existing preferences
+    NSMutableDictionary* existingPreferences = nil;
+    
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"XPC request: UPDATE PREFERENCES (%@)", preferences]);
     
-    //save to disk
-    [preferences writeToFile:PREFS_FILE atomically:YES];
+    //load current preferences
+    existingPreferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
     
-    //log
-    //logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"saving (updated) preferences: %@", preferences]);
-    
-bail:
+    //merge in new prefs and save
+    if(nil != existingPreferences)
+    {
+        //update
+        // merge in
+        [existingPreferences addEntriesFromDictionary:preferences];
+        
+        //save
+        [existingPreferences writeToFile:PREFS_FILE atomically:YES];
+    }
+    //no existing ones
+    // just saved passed in ones
+    else
+    {
+        //save
+        [preferences writeToFile:PREFS_FILE atomically:YES];
+    }
     
     return;
 }

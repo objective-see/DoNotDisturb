@@ -35,7 +35,7 @@
     
     //dbg msg
     #ifndef NDEBUG
-    logMsg(LOG_DEBUG, @"starting login item app logic");
+    logMsg(LOG_DEBUG, @"starting DnD login item");
     #endif
     
     //load preferences
@@ -106,8 +106,6 @@
         [alertMonitor dismissAlerts];
         
     });
-    
-    
     
 bail:
     

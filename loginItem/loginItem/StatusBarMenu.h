@@ -10,13 +10,16 @@
 #import "DaemonComms.h"
 #import <Cocoa/Cocoa.h>
 
-@interface StatusBarMenu : NSObject
+@interface StatusBarMenu : NSObject <NSPopoverDelegate>
 {
 
 }
 
 //status item
 @property (nonatomic, strong, readwrite) NSStatusItem *statusItem;
+
+//popover
+@property (retain, nonatomic)NSPopover *popover;
 
 //daemom comms object
 @property (nonatomic, retain)DaemonComms* daemonComms;

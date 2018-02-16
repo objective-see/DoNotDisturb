@@ -11,8 +11,10 @@
 #import "Logging.h"
 #import "Utilities.h"
 #import "AppDelegate.h"
-#import "UserCommsInterface.h"
 #import "StatusBarMenu.h"
+#import "UserCommsInterface.h"
+#import "StatusBarPopoverController.h"
+
 
 //menu items
 enum menuItems
@@ -72,27 +74,91 @@ enum menuItems
         //load prefs
         preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
         
-        //no prefs?
-        // default to status: enabled
-        if(nil == preferences)
-        {
-            //enable
-            self.isEnabled = YES;
-        }
-        
-        //got prefs
-        // set status
-        else
-        {
-            //set status
-            self.isEnabled = [preferences[PREF_STATUS] boolValue];
-        }
+        //set status
+        self.isEnabled = [preferences[PREF_STATUS] boolValue];
         
         //set initial menu state
         [self setState];
+        
+        //show popover?
+        if(YES != [preferences[PREF_SHOWED_POPOVER] boolValue])
+        {
+            //show it
+            [self showPopover];
+            
+            //update prefs
+            // only want to show once!
+            [self.daemonComms updatePreferences:@{PREF_SHOWED_POPOVER: [NSNumber numberWithBool:YES]}];
+        }
     }
     
     return self;
+}
+
+//show popver
+-(void)showPopover
+{
+    //alloc popover
+    self.popover = [[NSPopover alloc] init];
+    
+    //don't want highlight for popover
+    self.statusItem.highlightMode = NO;
+    
+    //set action
+    // can close popover with click
+    self.statusItem.action = @selector(closePopover:);
+    
+    //set target
+    self.statusItem.target = self;
+    
+    //set view controller
+    self.popover.contentViewController = [[StatusBarPopoverController alloc] initWithNibName:@"StatusBarPopover" bundle:nil];
+    
+    //set behavior
+    // auto-close if user clicks button in status bar
+    self.popover.behavior = NSPopoverBehaviorTransient;
+    
+    //set delegate
+    self.popover.delegate = self;
+    
+    //show popover
+    // have to wait cuz...
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1.5 * NSEC_PER_SEC), dispatch_get_main_queue(),
+    ^{
+       //show
+       [self.popover showRelativeToRect:self.statusItem.button.bounds ofView:self.statusItem.button preferredEdge:NSMinYEdge];
+    });
+    
+    //wait a bit
+    // then automatically hide popup if user has not closed it
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 5 * NSEC_PER_SEC), dispatch_get_main_queue(),
+    ^{
+        //close
+        [self closePopover:nil];
+    });
+    
+    return;
+}
+
+//close popover
+// also unsets action handler, resets, highlighting, etc
+-(void)closePopover:(id)sender
+{
+    //still visible?
+    // close it then...
+    if(YES == self.popover.shown)
+    {
+        //close
+        [self.popover performClose:nil];
+    }
+    
+    //remove action handler
+    self.statusItem.action = nil;
+    
+    //reset highlight mode
+    self.statusItem.highlightMode = YES;
+    
+    return;
 }
 
 //menu handler
@@ -119,6 +185,7 @@ enum menuItems
         //init path to full (main) app
         mainApp = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
     }
+    
     //handle action
     switch ((long)((NSMenuItem*)sender).tag)
     {
@@ -221,17 +288,6 @@ bail:
 // logic based on 'isEnabled' iVar
 -(void)setState
 {
-    //preferences
-    NSMutableDictionary* preferences = nil;
-    
-    //load preferences from disk
-    preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-    if(nil == preferences)
-    {
-        //default to blank
-        preferences = [NSMutableDictionary dictionary];
-    }
-    
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"setting state to: %@", (self.isEnabled) ? @"enabled" : @"disabled"]);
     
@@ -255,12 +311,9 @@ bail:
         [self.statusItem.menu itemWithTag:toggleStatus].title = @"Enable";
     }
     
-    //set preference
-    preferences[PREF_STATUS] = [NSNumber numberWithBool:self.isEnabled];
-
     //send to daemon
     // will update preferences
-    [self.daemonComms updatePreferences:preferences];
+    [self.daemonComms updatePreferences:@{PREF_STATUS: [NSNumber numberWithBool:self.isEnabled]}];
     
     return;
 }
