@@ -39,9 +39,9 @@ typedef void (^ProcessCallbackBlock)(Process* _Nonnull);
 
 @interface ProcInfo : NSObject
 
-//init
-// flag dictates if CPU intensive signing checks should be performed
--(id _Nullable )init:(BOOL)skipSigningInfo;
+//init w/ flag
+// flag dictates if CPU-intensive logic (code signing, etc) should be preformed
+-(id _Nullable )init:(BOOL)goEasy;
 
 //start monitoring
 -(void)start:(ProcessCallbackBlock _Nonnull )callback;
