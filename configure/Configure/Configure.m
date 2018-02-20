@@ -181,7 +181,7 @@ bail:
     AuthorizationRef authRef = NULL;
     
     //error
-    CFErrorRef cfError = NULL;
+    CFErrorRef error = NULL;
     
     //auth item
     AuthorizationItem authItem = {};
@@ -228,10 +228,10 @@ bail:
     }
     
     //bless
-    if(YES != (BOOL)SMJobBless(kSMDomainSystemLaunchd, (__bridge CFStringRef)(HELPER_ID), authRef, &cfError))
+    if(YES != (BOOL)SMJobBless(kSMDomainSystemLaunchd, (__bridge CFStringRef)(HELPER_ID), authRef, &error))
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to bless job (%s)", ((__bridge NSError*)cfError).description.UTF8String);
+        syslog(LOG_ERR, "ERROR: failed to bless job (%s)", ((__bridge NSError*)error).description.UTF8String);
         
         //bail
         goto bail;
@@ -250,6 +250,16 @@ bail:
         
         //unset
         authRef = NULL;
+    }
+    
+    //free error
+    if(NULL != error)
+    {
+        //release
+        CFRelease(error);
+        
+        //unset
+        error = NULL;
     }
     
     return wasBlessed;

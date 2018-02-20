@@ -35,7 +35,11 @@
         linkWindowController = [[LinkWindowController alloc] initWithWindowNibName:@"Link"];
         
         //center
-        [[self.linkWindowController window] center];
+        [self.linkWindowController.window center];
+        
+        //key and front
+        [self.linkWindowController.window makeKeyAndOrderFront:self];
+        
     }
     
     //otherewise show prefs
@@ -45,11 +49,11 @@
         [self showPreferences:nil];
         
         //center
-        [[self.prefsWindowController window] center];
+        [self.prefsWindowController.window center];
+        
+        //key and front
+        [self.prefsWindowController.window makeKeyAndOrderFront:self];
     }
-    
-    //make app key and front
-    [self.window makeKeyAndOrderFront:self];
     
     //make app active
     [NSApp activateIgnoringOtherApps:YES];

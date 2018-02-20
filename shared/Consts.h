@@ -151,7 +151,7 @@
 #define BUTTON_CONFIG 101
 
 //patreon url
-#define PATREON_URL @"https://www.patreon.com/objective_see"
+#define PATREON_URL @"https://www.patreon.com/bePatron?c=701171"
 
 //product version url
 #define PRODUCT_VERSIONS_URL @"https://objective-see.com/products.json"

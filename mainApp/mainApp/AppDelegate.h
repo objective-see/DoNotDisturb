@@ -20,9 +20,6 @@
 
 /* PROPERTIES */
 
-//main window
-@property (weak) IBOutlet NSWindow *window;
-
 //link view controller
 @property(nonatomic, retain)LinkWindowController* linkWindowController;
 

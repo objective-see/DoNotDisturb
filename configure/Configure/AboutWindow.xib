@@ -19,7 +19,7 @@
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" texturedBackground="YES"/>
             <rect key="contentRect" x="196" y="240" width="486" height="301"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="486" height="301"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -27,12 +27,12 @@
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lEv-Wj-6S5">
                         <rect key="frame" x="10" y="191" width="110" height="106"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="icon" id="xKf-GK-m0k"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dndIcon" id="xKf-GK-m0k"/>
                     </imageView>
                     <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eaf-yA-bbe">
                         <rect key="frame" x="153" y="231" width="180" height="50"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="whatsYourSign" id="Ws8-bD-j2R"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dndText" id="Ws8-bD-j2R"/>
                     </imageView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="101" translatesAutoresizingMaskIntoConstraints="NO" id="HZZ-Es-mpy">
                         <rect key="frame" x="344" y="13" width="128" height="32"/>
@@ -118,7 +118,7 @@
         </window>
     </objects>
     <resources>
-        <image name="icon" width="512" height="512"/>
-        <image name="whatsYourSign" width="536.4000244140625" height="85.919998168945312"/>
+        <image name="dndIcon" width="256" height="256"/>
+        <image name="dndText" width="266.605712890625" height="34.354286193847656"/>
     </resources>
 </document>

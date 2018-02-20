@@ -22,7 +22,7 @@ then
     chown -R root:wheel "com.objective-see.dnd.plist"
 
     mv "Do Not Disturb" $INSTALL_DIRECTORY
-    cp com.objective-see.dnd.plist /Library/LaunchDaemons/
+    mv com.objective-see.dnd.plist /Library/LaunchDaemons/
     launchctl load /Library/LaunchDaemons/com.objective-see.dnd.plist
 
     echo "launch daemon installed and loaded"
@@ -55,7 +55,7 @@ then
 
     #delete DnD's folder
     # contains launch daemon, prefs, etc
-    rm -rf /Library/Objective-See/DnD/
+    rm -rf $INSTALL_DIRECTORY
 
     #kill
     killall "Do Not Disturb" 2> /dev/null
