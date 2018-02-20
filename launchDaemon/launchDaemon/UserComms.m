@@ -47,18 +47,22 @@ extern Queue* eventQueue;
     NSString* qrcInfo = nil;
     
     //TODO: remove
+    // framework will generate this
     NSMutableDictionary* info = [NSMutableDictionary dictionary];
     
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC request: qrc request");
     
-    //init
+    //TODO: remove
+    // framework will generate this
     info[@"name"] = [[NSHost currentHost] localizedName];
     info[@"uuid"] = [[[NSUUID UUID] UUIDString] lowercaseString];
     info[@"key"] = @"dGhpcyBpcyBhIHRlc3Q=";
     info[@"size"] = @20;
     
     //TODO: call into framework
+    // expect it to return us a dictionary that contains 'name', 'uuid', 'key', and 'size'
+    // ...or it can generate a string, we really don't care as we're just going to display it in a QRC
     
     //convert to string
     qrcInfo = info.description;
@@ -80,6 +84,10 @@ extern Queue* eventQueue;
     logMsg(LOG_DEBUG, @"XPC request: recv registration ACK");
     
     //TODO: call into framework
+    // expect a callback that contains info about the linked device (name? number?)
+    
+    //TODO:
+    // remove as framework will return this/something similar
     registrationInfo = @{KEY_PHONE_NUMBER : @"+1 123-456-7890"};
     
     //return registration framework
@@ -165,7 +173,7 @@ extern Queue* eventQueue;
 }
 
 //process alert dismiss request from client
-// blocks until framework calls it?
+// blocks until framework tell us it was dismissed via the phone
 -(void)alertDismiss:(void (^)(NSDictionary* alert))reply
 {
     //alert details
@@ -174,13 +182,13 @@ extern Queue* eventQueue;
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC request: alert dismiss");
     
-    //TODO:
-    // a) call into framework to block
-    // b) init alert dismiss dictionary
+    //TODO: call into framework to block
+    // expect a response when the user on the phone has dismissed
+    // can just be a BOOL (was dimissed) as currently we just dismiss any on-screen alerts...
     [NSThread sleepForTimeInterval:100000];
     
     //log to file
-    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert dimisss to login item to display to user: %@", alert]);
+    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert dismiss to login item to display to user: %@", alert]);
     
     //return alert
     reply(alert);

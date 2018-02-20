@@ -18,7 +18,6 @@
 
 @implementation AppDelegate
 
-@synthesize window;
 @synthesize linkWindowController;
 @synthesize aboutWindowController;
 @synthesize prefsWindowController;

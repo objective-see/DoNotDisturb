@@ -171,7 +171,7 @@
 
 //prefs
 // status
-#define PREF_STATUS @"status"
+#define PREF_IS_DISABLED @"disabled"
 
 //prefs
 // passive mode

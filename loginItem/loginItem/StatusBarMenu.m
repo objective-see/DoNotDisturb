@@ -75,7 +75,7 @@ enum menuItems
         preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
         
         //set status
-        self.isDisabled = [preferences[PREF_STATUS] boolValue];
+        self.isDisabled = [preferences[PREF_IS_DISABLED] boolValue];
         
         //set initial menu state
         [self setState];
@@ -184,6 +184,14 @@ enum menuItems
     {
         //init path to full (main) app
         mainApp = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
+    }
+    
+    //when nil
+    // use default path
+    if(nil == mainApp)
+    {
+        //default
+        mainApp = [@"/Applications" stringByAppendingPathComponent:APP_NAME];
     }
     
     //handle action
@@ -313,7 +321,7 @@ bail:
     
     //send to daemon
     // will update preferences
-    [self.daemonComms updatePreferences:@{PREF_STATUS: [NSNumber numberWithBool:self.isDisabled]}];
+    [self.daemonComms updatePreferences:@{PREF_IS_DISABLED: [NSNumber numberWithBool:self.isDisabled]}];
     
     return;
 }

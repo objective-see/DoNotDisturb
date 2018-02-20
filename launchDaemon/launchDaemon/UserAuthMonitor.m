@@ -313,7 +313,11 @@ bail:
                     case AUT_TRAILER:
                     {
                         //handle new process
-                        [self handleAuthEvent:authEvent];
+                        if(nil != authEvent)
+                        {
+                            //handle
+                            [self handleAuthEvent:authEvent];
+                        }
                         
                         //unset
                         authEvent = nil;
@@ -393,20 +397,20 @@ bail:
 //handle auth event
 // a) save successful auths
 // b) broadcast all auth events
--(void)handleAuthEvent:(AuthEvent*)authEvent
+-(void)handleAuthEvent:(AuthEvent*)event
 {
     //set timestamp
-    authEvent.timestamp = [NSDate date];
+    event.timestamp = [NSDate date];
     
     //save if successful
-    if(noErr == authEvent.result)
+    if(noErr == event.result)
     {
         //save
-        self.authEvent = authEvent;
+        self.authEvent = event;
     }
     
     //broadcast event
-    [[NSNotificationCenter defaultCenter] postNotificationName:AUTH_NOTIFICATION object:nil userInfo:@{AUTH_NOTIFICATION:authEvent}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:AUTH_NOTIFICATION object:nil userInfo:@{AUTH_NOTIFICATION:event}];
     
     return;
 }

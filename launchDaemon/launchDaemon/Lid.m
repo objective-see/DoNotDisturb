@@ -63,9 +63,9 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     //load prefs
     preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
     
-    //if user has disabled
-    // bail here to ignore everything
-    if(0 == [preferences[PREF_STATUS] intValue])
+    //if user explicity set disabled
+    // bail here, to ignore everything
+    if(YES == [preferences[PREF_IS_DISABLED] boolValue])
     {
         //dbg msg
         logMsg(LOG_DEBUG, @"client disabled DnD, so ignoring lid open event");
@@ -303,7 +303,7 @@ bail:
     kern_return_t status = kIOReturnError;
     
     //root domain for power management
-    io_service_t powerManagementRD = 0;
+    io_service_t powerManagementRD = MACH_PORT_NULL;
     
     //dbg msg
     logMsg(LOG_DEBUG, @"register for lid notifications");
@@ -375,13 +375,13 @@ bail:
 bail:
 
     //release
-    if(0 != powerManagementRD)
+    if(MACH_PORT_NULL != powerManagementRD)
     {
         //release
         IOObjectRelease(powerManagementRD);
         
         //unset
-        powerManagementRD = 0;
+        powerManagementRD = MACH_PORT_NULL;
     }
     
     return registered;
@@ -444,7 +444,8 @@ bail:
         }
     }
     
-    //TODO: call into framework
+    //TODO: call into framework to deliver message
+    // ideally, should pass in a callback block that will allow us to log the result (delivered, failed, etc...).
     
     
 bail:

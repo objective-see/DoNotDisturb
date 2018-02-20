@@ -80,6 +80,9 @@
     //scale
     CGFloat scale = 0.0f;
     
+    //gray space ref
+    CGColorSpaceRef colorSpaceRef = NULL;
+    
     //bitmap ref
     CGContextRef bitmapRef = NULL;
     
@@ -107,11 +110,29 @@
     //calc scale
     scale = MIN(size.width / CGRectGetWidth(extent), size.height / CGRectGetHeight(extent));
     
+    //create color space
+    colorSpaceRef = CGColorSpaceCreateDeviceGray();
+    if(NULL == colorSpaceRef)
+    {
+        //bail
+        goto bail;
+    }
+    
     //create bitmap context
-    bitmapRef = CGBitmapContextCreate(nil, CGRectGetWidth(extent) * scale, CGRectGetHeight(extent) * scale, 8, 0, CGColorSpaceCreateDeviceGray(), (CGBitmapInfo)kCGImageAlphaNone);
+    bitmapRef = CGBitmapContextCreate(nil, CGRectGetWidth(extent) * scale, CGRectGetHeight(extent) * scale, 8, 0, colorSpaceRef, (CGBitmapInfo)kCGImageAlphaNone);
+    if(NULL == bitmapRef)
+    {
+        //bail
+        goto bail;
+    }
     
     //create bitmap image
     bitmapImage = [[CIContext contextWithCGContext:bitmapRef options:nil] createCGImage:outputImage fromRect:extent];
+    if(NULL == bitmapImage)
+    {
+        //bail
+        goto bail;
+    }
     
     //set quality
     CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
@@ -124,19 +145,57 @@
     
     //create scaled image from bitmap
     scaledImage = CGBitmapContextCreateImage(bitmapRef);
+    if(NULL == scaledImage)
+    {
+        //bail
+        goto bail;
+    }
     
     //convert to NSImage
     qrcImage = [[NSImage alloc] initWithCGImage:scaledImage size:size];
     
-    //releale bitmap ref
-    CGContextRelease(bitmapRef);
+bail:
+    
+    //release color space ref
+    if(NULL != colorSpaceRef)
+    {
+        //release
+        CGColorSpaceRelease(colorSpaceRef);
+        
+        //unset
+        colorSpaceRef = NULL;
+    }
+    
+    //release bitmap ref
+    if(NULL != bitmapRef)
+    {
+        //release
+        CGContextRelease(bitmapRef);
+        
+        //unset
+        bitmapRef = NULL;
+    }
     
     //release bitmap
-    CGImageRelease(bitmapImage);
+    if(NULL != bitmapImage)
+    {
+        //release
+        CGImageRelease(bitmapImage);
+        
+        //unset
+        bitmapImage = NULL;
+    }
     
     //release scaled image
-    CGImageRelease(scaledImage);
-    
+    if(NULL != scaledImage)
+    {
+        //release
+        CGImageRelease(scaledImage);
+        
+        //unset
+        scaledImage = NULL;
+    }
+
     return qrcImage;
 }
 
