@@ -15,7 +15,7 @@
 @protocol UserProtocol
 
 //process qrc request from client
--(void)qrcRequest:(void (^)(NSString* qrcInfo))reply;
+-(void)qrcRequest:(void (^)(NSData *))reply;
 
 //wait for phone to complete registration
 // calls into framework that comms w/ server to wait for phone

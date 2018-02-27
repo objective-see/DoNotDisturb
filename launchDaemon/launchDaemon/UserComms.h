@@ -11,9 +11,9 @@
 
 @import Foundation;
 #import "UserCommsInterface.h"
+#import <dnd/dnd-Swift.h>
 
-
-@interface UserComms : NSObject <UserProtocol>
+@interface UserComms : NSObject <UserProtocol, DNDClientMacDelegate>
 {
     
 }

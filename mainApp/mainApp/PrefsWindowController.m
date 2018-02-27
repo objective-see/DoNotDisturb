@@ -167,7 +167,7 @@
             break;
             
         default:
-            break;
+            return;
     }
     
     //get height of toolbar

@@ -443,6 +443,8 @@ bail:
             logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to execute %@", preferences[PREF_EXECUTION_PATH]]);
         }
     }
+
+    //TODO: Call into framework to send alert
     
     //TODO: call into framework to deliver message
     // ideally, should pass in a callback block that will allow us to log the result (delivered, failed, etc...).

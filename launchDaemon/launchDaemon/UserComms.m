@@ -12,6 +12,7 @@
 #import "Logging.h"
 #import "UserComms.h"
 #import "UserCommsInterface.h"
+#import <dnd/dnd-swift.h>
 
 //signing auth
 #define SIGNING_AUTH @"Developer ID Application: Objective-See, LLC (VBG97UB4TA)"
@@ -20,9 +21,16 @@
 extern Queue* eventQueue;
 
 @implementation UserComms
+{
+    NSString *_clientid;
+    DNDIdentity *_identity;
+    NSDictionary *_registration;
+    dispatch_semaphore_t _deviceRegistered;
+}
 
 @synthesize currentStatus;
 @synthesize dequeuedAlert;
+
 
 //init
 // set connection to unknown
@@ -34,65 +42,91 @@ extern Queue* eventQueue;
     {
         //set status
         self.currentStatus = STATUS_CLIENT_UNKNOWN;
+        _identity = nil;
+        _clientid = nil;
+        _deviceRegistered = dispatch_semaphore_create(0);
     }
     
     return self;
 }
 
+-(void)initDNDIdenity {
+    // TODO: Get real CAPath from bundle
+    NSString *digitaCAPath = @"bar";
+    NSString *csrPathP12= @"foo";
+    NSString *awsCAPath = @"baz";
+
+    // @TODO: retrieve clientid from persistent storage
+    if(!_clientid) {
+        _clientid = [[[NSUUID UUID] UUIDString] lowercaseString];
+        //@TODO: Store this uuid persistently for later runs
+    }
+
+    NSError *error = nil;
+    DNDIdentity *csrIdentity = [[DNDIdentity alloc] init:_clientid p12Path:csrPathP12 passphrase:@"p12Passphrase" caPath:awsCAPath error:&error];
+    if(error) {
+        NSLog(@"Error Getting/Creating CSR Identity");
+        return;
+    }
+
+    //init DNDIdentity to get/generate an identity
+    DNDClientCsr *csr = [[DNDClientCsr alloc] initWithDndIdentity:csrIdentity sendCA:false background:true];
+    _identity = [csr getOrCreateIdentity:_clientid caPath:digitaCAPath];
+    if (!_identity) {
+        NSLog(@"Error Getting/Creating IDentity");
+        return;
+    }
+}
+
 //process alert request from client
 // blocks for queue item, then sends to client
--(void)qrcRequest:(void (^)(NSString *))reply
+-(void)qrcRequest:(void (^)(NSData *))reply
 {
-    //qrc info
-    NSString* qrcInfo = nil;
-    
-    //TODO: remove
-    // framework will generate this
-    NSMutableDictionary* info = [NSMutableDictionary dictionary];
-    
-    //dbg msg
-    logMsg(LOG_DEBUG, @"XPC request: qrc request");
-    
-    //TODO: remove
-    // framework will generate this
-    info[@"name"] = [[NSHost currentHost] localizedName];
-    info[@"uuid"] = [[[NSUUID UUID] UUIDString] lowercaseString];
-    info[@"key"] = @"dGhpcyBpcyBhIHRlc3Q=";
-    info[@"size"] = @20;
-    
-    //TODO: call into framework
-    // expect it to return us a dictionary that contains 'name', 'uuid', 'key', and 'size'
-    // ...or it can generate a string, we really don't care as we're just going to display it in a QRC
-    
-    //convert to string
-    qrcInfo = info.description;
-    
-    //return qrc info
-    reply(qrcInfo);
-    
+    if (_identity) {
+        reply(_identity.qrCodeData);
+    } else {
+        reply(nil);
+    }
     return;
+}
+
+// Delegate callback when a registered device tells us all is good
+-(void)didDeviceRegister:(RegisteredEndpoint*)endpoint {
+    NSLog(@"Recieved registration ack from %@", endpoint.name);
+
+    // save off the endpoint name
+    _registration = @{@"Device Name": endpoint.name};
+
+    // signal complete
+    dispatch_semaphore_signal(_deviceRegistered);
 }
 
 //wait for phone to complete registration
 // calls into framework that comms w/ server to wait for phone
 -(void)recvRegistrationACK:(void (^)(NSDictionary* registrationInfo))reply;
 {
-    //registration info
-    NSDictionary* registrationInfo = nil;
-    
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC request: recv registration ACK");
-    
-    //TODO: call into framework
-    // expect a callback that contains info about the linked device (name? number?)
-    
-    //TODO:
-    // remove as framework will return this/something similar
-    registrationInfo = @{KEY_PHONE_NUMBER : @"+1 123-456-7890"};
-    
-    //return registration framework
-    reply(registrationInfo);
-    
+
+    DNDClientMac *client = [[DNDClientMac alloc] initWithDndIdentity:_identity sendCA:true background:true];
+    if (client) {
+        client.delegate = self;
+
+        // Might need to async this to get delegate callback
+        [client listenOnDelegate:@[client.deviceRegisteredTopic]];
+
+        // wait for the delegate callback to hit
+        // @TODO: might want to time this out
+        dispatch_semaphore_wait(_deviceRegistered, DISPATCH_TIME_FOREVER);
+
+        // note the info to be returned
+        reply(_registration);
+
+        // disconnect the client
+        [client disconnect];
+    } else {
+        reply(nil);
+    }
     return;
 }
 
@@ -142,6 +176,14 @@ extern Queue* eventQueue;
     //read off queue
     // will block until alert is ready
     self.dequeuedAlert = [eventQueue peek];
+
+    DNDClientMac *client = [[DNDClientMac alloc] initWithDndIdentity:_identity sendCA:true background:true];
+    if (client) {
+        // Send an alert. @TODO: fill in username and use a better uuid if necessary
+        NSUUID *alertid = [NSUUID UUID];
+        NSNumber *num = [client sendAlertSyncWithUuid:alertid userName:@"User1"];
+        NSLog(@"Sent alert %@, published %@", alertid, num);
+    }
     
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"found alert on queue: %@", self.dequeuedAlert]);
@@ -172,6 +214,14 @@ extern Queue* eventQueue;
     logMsg(LOG_DEBUG, @"removed alert, as it's been consumed by the user");
 }
 
+// Delegate callback when a registered device tells us all is good
+-(void)didGetDismissEvent:(Event *)event {
+    NSLog(@"Recieved dismiss event");
+
+    // signal complete (TODO: Change this signal)
+    dispatch_semaphore_signal(_deviceRegistered);
+}
+
 //process alert dismiss request from client
 // blocks until framework tell us it was dismissed via the phone
 -(void)alertDismiss:(void (^)(NSDictionary* alert))reply
@@ -181,11 +231,22 @@ extern Queue* eventQueue;
     
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC request: alert dismiss");
-    
-    //TODO: call into framework to block
-    // expect a response when the user on the phone has dismissed
-    // can just be a BOOL (was dimissed) as currently we just dismiss any on-screen alerts...
-    [NSThread sleepForTimeInterval:100000];
+
+    //@TODO: This is not a good for this. Move this code to the proper place
+    DNDClientMac *client = [[DNDClientMac alloc] initWithDndIdentity:_identity sendCA:true background:true];
+    if (client) {
+        // set ourselves as the delegate so we get delegate callback for alert dismiss
+        client.delegate = self;
+
+        // tell the framework to handle the rest of the tasking
+        [client handleTasksWithFramework];
+
+        [client listenOnDelegate:nil];
+
+        // wait for the delegate callback to hit
+        // @TODO: might want to time this out, change semaphore
+        dispatch_semaphore_wait(_deviceRegistered, DISPATCH_TIME_FOREVER);
+    }
     
     //log to file
     logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert dismiss to login item to display to user: %@", alert]);
