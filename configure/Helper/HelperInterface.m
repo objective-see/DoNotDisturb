@@ -18,6 +18,7 @@
 //script name
 #define CONF_SCRIPT @"configure.sh"
 
+//TODO: GCD
 //SIGTERM handler
 void sigTerm(int signum);
 

@@ -9,6 +9,8 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PrefsWindowController">
             <connections>
                 <outlet property="actionView" destination="fC3-ls-u3Y" id="S6u-FV-nN2"/>
+                <outlet property="activityIndicator" destination="bCB-5L-mdQ" id="PXD-FF-Egz"/>
+                <outlet property="activityMessage" destination="JOg-EO-7nX" id="mea-Ze-oFq"/>
                 <outlet property="executeAction" destination="1z0-vD-5Vz" id="v4k-Xf-tks"/>
                 <outlet property="executePath" destination="eWd-63-7Gn" id="Qy2-9f-I1y"/>
                 <outlet property="generalView" destination="378-bj-fYw" id="eb3-2c-trh"/>
@@ -316,6 +318,19 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="UKX-lW-Ruz"/>
                 </imageView>
+                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="bCB-5L-mdQ">
+                    <rect key="frame" x="284" y="128" width="32" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </progressIndicator>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="JOg-EO-7nX">
+                    <rect key="frame" x="104" y="83" width="392" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qrc code..." id="XXy-o4-l0p">
+                        <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <point key="canvasLocation" x="1073" y="1452.5"/>
         </customView>

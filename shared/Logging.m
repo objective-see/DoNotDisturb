@@ -77,6 +77,7 @@ void logMsg(int level, NSString* msg)
     return;
 }
 
+//TODO: [@"/Library/Logs/" stringByAppendingPathComponent:LOG_FILE_NAME] ?
 //get path to log file
 NSString* logFilePath()
 {
@@ -118,6 +119,7 @@ BOOL initLogging()
     //log file path
     NSString* logPath = nil;
     
+    //TODO:?
 //    //create log directory if needed
 //    if(YES != [[NSFileManager defaultManager] fileExistsAtPath:supportDirectory()])
 //    {

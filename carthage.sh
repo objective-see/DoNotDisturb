@@ -1,1 +1,1 @@
-carthage update dnd --platform macOS --use-ssh
+carthage update dnd --platform macOS

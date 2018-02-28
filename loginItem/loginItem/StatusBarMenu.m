@@ -71,6 +71,18 @@ enum menuItems
             [self.statusItem.menu itemWithTag:i].target = self;
         }
         
+        //TODO:
+        
+        /*
+         
+         //get prefs via XPC
+         preferences = [((AppDelegate*)[[NSApplication sharedApplication] delegate]) getPreferences];
+         
+         //set state based on (existing) preferences
+         self.isDisabled = [preferences[PREF_IS_DISABLED] boolValue];
+         
+        */
+        
         //load prefs
         preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
         

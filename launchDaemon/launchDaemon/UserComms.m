@@ -11,6 +11,7 @@
 #import "Queue.h"
 #import "Logging.h"
 #import "UserComms.h"
+#import "Preferences.h"
 #import "UserCommsInterface.h"
 #import <dnd/dnd-swift.h>
 
@@ -19,6 +20,13 @@
 
 //global queue object
 extern Queue* eventQueue;
+
+//global prefs obj
+extern Preferences* preferences;
+
+//DnD identity
+extern DNDIdentity* identity;
+
 
 @implementation UserComms
 {
@@ -42,56 +50,58 @@ extern Queue* eventQueue;
     {
         //set status
         self.currentStatus = STATUS_CLIENT_UNKNOWN;
-        _identity = nil;
-        _clientid = nil;
+       
+        //TODO:
         _deviceRegistered = dispatch_semaphore_create(0);
     }
     
     return self;
 }
 
--(void)initDNDIdenity {
-    // TODO: Get real CAPath from bundle
-    NSString *digitaCAPath = @"bar";
-    NSString *csrPathP12= @"foo";
-    NSString *awsCAPath = @"baz";
-
-    // @TODO: retrieve clientid from persistent storage
-    if(!_clientid) {
-        _clientid = [[[NSUUID UUID] UUIDString] lowercaseString];
-        //@TODO: Store this uuid persistently for later runs
-    }
-
-    NSError *error = nil;
-    DNDIdentity *csrIdentity = [[DNDIdentity alloc] init:_clientid p12Path:csrPathP12 passphrase:@"p12Passphrase" caPath:awsCAPath error:&error];
-    if(error) {
-        NSLog(@"Error Getting/Creating CSR Identity");
-        return;
-    }
-
-    //init DNDIdentity to get/generate an identity
-    DNDClientCsr *csr = [[DNDClientCsr alloc] initWithDndIdentity:csrIdentity sendCA:false background:true];
-    _identity = [csr getOrCreateIdentity:_clientid caPath:digitaCAPath];
-    if (!_identity) {
-        NSLog(@"Error Getting/Creating IDentity");
-        return;
-    }
+//load preferences and send them back to client
+-(void)getPreferences:(void (^)(NSDictionary* alert))reply
+{
+    //dbg msg
+    logMsg(LOG_DEBUG, @"XPC request: get preferences");
+    
+    //preference obj has em
+    reply(preferences.preferences);
+    
+    return;
 }
+
 
 //process alert request from client
 // blocks for queue item, then sends to client
 -(void)qrcRequest:(void (^)(NSData *))reply
 {
-    if (_identity) {
-        reply(_identity.qrCodeData);
-    } else {
-        reply(nil);
+    //qrc data
+    NSData* qrcData = nil;
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"XPC request: qrc request");
+    
+    //get qrc data from identity obj
+    if(nil != identity)
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"querying framework 'identity' object to get QRC code");
+        
+        //get
+        qrcData = identity.qrCodeData;
     }
+    
+    //TODO: rem
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"qrc data from framework: %@/%@", qrcData.bytes, [[NSString alloc] initWithData:qrcData encoding:NSUTF8StringEncoding]]);
+    
+    reply(qrcData);
+    
     return;
 }
 
-// Delegate callback when a registered device tells us all is good
--(void)didDeviceRegister:(RegisteredEndpoint*)endpoint {
+//delegate callback when a registered device
+-(void)didDeviceRegister:(RegisteredEndpoint*)endpoint
+{
     NSLog(@"Recieved registration ack from %@", endpoint.name);
 
     // save off the endpoint name
@@ -131,33 +141,17 @@ extern Queue* eventQueue;
 }
 
 //update preferences
--(void)updatePreferences:(NSDictionary *)preferences
+-(void)updatePreferences:(NSDictionary *)prefs
 {
-    //existing preferences
-    NSMutableDictionary* existingPreferences = nil;
-    
     //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"XPC request: UPDATE PREFERENCES (%@)", preferences]);
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"XPC request: update preferences (%@)", preferences]);
     
-    //load current preferences
-    existingPreferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-    
-    //merge in new prefs and save
-    if(nil != existingPreferences)
+    //call into prefs obj to update
+    if(YES != [preferences update:prefs])
     {
-        //update
-        // merge in
-        [existingPreferences addEntriesFromDictionary:preferences];
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to save preferences to %@", PREFS_FILE]);
         
-        //save
-        [existingPreferences writeToFile:PREFS_FILE atomically:YES];
-    }
-    //no existing ones
-    // just saved passed in ones
-    else
-    {
-        //save
-        [preferences writeToFile:PREFS_FILE atomically:YES];
     }
     
     return;
@@ -231,6 +225,9 @@ extern Queue* eventQueue;
     
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC request: alert dismiss");
+    
+    //TODO:
+    [NSThread sleepForTimeInterval:10000];
 
     //@TODO: This is not a good for this. Move this code to the proper place
     DNDClientMac *client = [[DNDClientMac alloc] initWithDndIdentity:_identity sendCA:true background:true];

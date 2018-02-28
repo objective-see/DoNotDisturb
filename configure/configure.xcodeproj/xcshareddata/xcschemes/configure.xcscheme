@@ -42,9 +42,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "7D7755CF1F02DF9500D0017D"
-               BuildableName = "Do Not Disturb"
-               BlueprintName = "launchDaemon"
+               BlueprintIdentifier = "2063725A203DC70A006D4C38"
+               BuildableName = "Do Not Disturb.bundle"
+               BlueprintName = "launchDaemonBundle"
                ReferencedContainer = "container:../launchDaemon/launchDaemon.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

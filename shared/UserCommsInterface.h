@@ -21,6 +21,9 @@
 // calls into framework that comms w/ server to wait for phone
 -(void)recvRegistrationACK:(void (^)(NSDictionary* registrationInfo))reply;
 
+//get preferences
+-(void)getPreferences:(void (^)(NSDictionary* preferences))reply;
+
 //update preferences
 -(void)updatePreferences:(NSDictionary*)preferences;
 

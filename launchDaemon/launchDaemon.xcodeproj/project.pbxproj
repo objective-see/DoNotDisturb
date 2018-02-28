@@ -43,6 +43,10 @@
 		7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF671F1DC42700B33214 /* Utilities.m */; };
 		7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */; };
 		7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF751F1E9CE700B33214 /* Queue.m */; };
+		CD22786520463EB000C72C76 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD22786420463EB000C72C76 /* dnd.framework */; };
+		CD22786620463F0700C72C76 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD22786420463EB000C72C76 /* dnd.framework */; };
+		CD22786820463F7700C72C76 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD22786720463F7700C72C76 /* Info.plist */; };
+		CD22786C20464A6E00C72C76 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = CD22786A204648E000C72C76 /* Preferences.m */; };
 		CD3307AC2033D35000F10D71 /* Monitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307AB2033D35000F10D71 /* Monitor.m */; };
 		CD3307D420365CCC00F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D220365CCB00F10D71 /* Exception.m */; };
 		CD3307DD2036A87500F10D71 /* DownloadMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307DC2036A87500F10D71 /* DownloadMonitor.m */; };
@@ -118,7 +122,6 @@
 
 /* Begin PBXFileReference section */
 		2063725B203DC70A006D4C38 /* Do Not Disturb.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Do Not Disturb.bundle"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2063725D203DC70A006D4C38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		209E45A2203DF64E00900B89 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = ../Carthage/Build/Mac/Realm.framework; sourceTree = "<group>"; };
 		209E45A3203DF64E00900B89 /* AlamofireImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AlamofireImage.framework; path = ../Carthage/Build/Mac/AlamofireImage.framework; sourceTree = "<group>"; };
 		209E45A4203DF64E00900B89 /* CleanroomLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CleanroomLogger.framework; path = ../Carthage/Build/Mac/CleanroomLogger.framework; sourceTree = "<group>"; };
@@ -153,6 +156,10 @@
 		7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		7DD2BF741F1E9CE700B33214 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
 		7DD2BF751F1E9CE700B33214 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
+		CD22786420463EB000C72C76 /* dnd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dnd.framework; path = ../Carthage/Build/Mac/dnd.framework; sourceTree = "<group>"; };
+		CD22786720463F7700C72C76 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CD227869204648E000C72C76 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
+		CD22786A204648E000C72C76 /* Preferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Preferences.m; sourceTree = "<group>"; };
 		CD3307AA2033D35000F10D71 /* Monitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Monitor.h; sourceTree = "<group>"; };
 		CD3307AB2033D35000F10D71 /* Monitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Monitor.m; sourceTree = "<group>"; };
 		CD3307C5203639AD00F10D71 /* procInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = procInfo.h; path = launchDaemon/libs/procInfo.h; sourceTree = "<group>"; };
@@ -188,6 +195,7 @@
 				209E45B9203DF64E00900B89 /* CocoaMQTT.framework in Frameworks */,
 				209E45BB203DF64E00900B89 /* RealmSwift.framework in Frameworks */,
 				209E45BC203DF64E00900B89 /* dnd.framework in Frameworks */,
+				CD22786520463EB000C72C76 /* dnd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD22786620463F0700C72C76 /* dnd.framework in Frameworks */,
 				7D4FF8C41F0E1402001A4A68 /* libbsm.tbd in Frameworks */,
 				7D6E87701F3AE6FA00D6BD7C /* libprocInfo.a in Frameworks */,
 			);
@@ -203,20 +212,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2063725C203DC70A006D4C38 /* launchDaemonBundle */ = {
+		2063725C203DC70A006D4C38 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
 				20C8725A20460A7E00F1275D /* awsRootCA.pem */,
 				20C8725820460A7D00F1275D /* deviceCSRRequest.p12 */,
 				20C8725920460A7E00F1275D /* rootCA.pem */,
-				2063725D203DC70A006D4C38 /* Info.plist */,
 			);
-			path = launchDaemonBundle;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		7D4FF8BF1F0E12F1001A4A68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD22786420463EB000C72C76 /* dnd.framework */,
 				209E45A7203DF64E00900B89 /* Alamofire.framework */,
 				209E45A3203DF64E00900B89 /* AlamofireImage.framework */,
 				209E45A4203DF64E00900B89 /* CleanroomLogger.framework */,
@@ -239,7 +248,7 @@
 			children = (
 				CD3307C42036399900F10D71 /* Supporting Files */,
 				7D7755D21F02DF9500D0017D /* src */,
-				2063725C203DC70A006D4C38 /* launchDaemonBundle */,
+				2063725C203DC70A006D4C38 /* Resources */,
 				7D4FF8BF1F0E12F1001A4A68 /* Frameworks */,
 				7D7755D11F02DF9500D0017D /* Products */,
 			);
@@ -264,6 +273,8 @@
 				CE60F9C81FC9BBE500EFFDDA /* Lid.m */,
 				CD3307DB2036A87500F10D71 /* DownloadMonitor.h */,
 				CD3307DC2036A87500F10D71 /* DownloadMonitor.m */,
+				CD227869204648E000C72C76 /* Preferences.h */,
+				CD22786A204648E000C72C76 /* Preferences.m */,
 				CD3307AA2033D35000F10D71 /* Monitor.h */,
 				CD3307AB2033D35000F10D71 /* Monitor.m */,
 				CD4B7054202BDB4D007DB5A7 /* AuthEvent.h */,
@@ -305,6 +316,7 @@
 		CD3307C42036399900F10D71 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				CD22786720463F7700C72C76 /* Info.plist */,
 				CD3307C5203639AD00F10D71 /* procInfo.h */,
 				7D2582591F1A872400D28B95 /* com.objective-see.dnd.plist */,
 			);
@@ -363,7 +375,7 @@
 				TargetAttributes = {
 					2063725A203DC70A006D4C38 = {
 						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					7D7755CF1F02DF9500D0017D = {
 						CreatedOnToolsVersion = 8.2.1;
@@ -394,6 +406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD22786820463F7700C72C76 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +424,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD22786C20464A6E00C72C76 /* Preferences.m in Sources */,
 				7D46FEFF1F5E41F000FEB0F8 /* UserCommsListener.m in Sources */,
 				CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */,
 				7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */,
@@ -447,17 +461,18 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = S62KCC4ZPU;
+				DEVELOPMENT_TEAM = VBG97UB4TA;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = launchDaemonBundle/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = Digita.launchDaemonBundle;
 				PRODUCT_NAME = "Do Not Disturb";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -470,17 +485,18 @@
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = S62KCC4ZPU;
+				DEVELOPMENT_TEAM = VBG97UB4TA;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = launchDaemonBundle/Info.plist;
+				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = Digita.launchDaemonBundle;
 				PRODUCT_NAME = "Do Not Disturb";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				WRAPPER_EXTENSION = bundle;
 			};
@@ -588,9 +604,9 @@
 		7D7755D81F02DF9500D0017D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = S62KCC4ZPU;
+				DEVELOPMENT_TEAM = VBG97UB4TA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../Carthage/Build/Mac",
@@ -610,9 +626,9 @@
 		7D7755D91F02DF9500D0017D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = S62KCC4ZPU;
+				DEVELOPMENT_TEAM = VBG97UB4TA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../Carthage/Build/Mac",

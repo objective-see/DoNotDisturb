@@ -121,7 +121,7 @@
 #define INSTALL_DIRECTORY @"/Library/Objective-See/DnD"
 
 //preferences file
-#define PREFS_FILE @"/Library/Objective-See/DnD/preferences.plist"
+#define PREFS_FILE @"preferences.plist"
 
 //client no status
 #define STATUS_CLIENT_UNKNOWN -1
@@ -168,6 +168,9 @@
 //prefs
 // displayed popover
 #define PREF_SHOWED_POPOVER @"popover"
+
+//client ID
+#define PREF_CLIENT_ID @"clientID"
 
 //prefs
 // status

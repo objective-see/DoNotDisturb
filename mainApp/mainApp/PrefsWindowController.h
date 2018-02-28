@@ -35,6 +35,9 @@
 //daemon comms object
 @property (retain, nonatomic)DaemonComms* daemonComms;
 
+//preferences
+@property(nonatomic, retain)NSDictionary* preferences;
+
 //toolbar
 @property (weak) IBOutlet NSToolbar *toolbar;
 
@@ -67,6 +70,13 @@
 
 //link view
 @property (strong) IBOutlet NSView *linkView;
+
+/* QRC VIEW */
+
+//spinner
+@property (weak) IBOutlet NSProgressIndicator *activityIndicator;
+
+@property (weak) IBOutlet NSTextField *activityMessage;
 
 //qrc image view
 @property (weak) IBOutlet NSImageView *qrcImageView;

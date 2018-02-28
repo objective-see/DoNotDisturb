@@ -39,23 +39,34 @@
 {
     //make request to daemon
     // give me a QRC code y0!
-    [daemonComms qrcRequest:^(NSString* qrcInfo)
-     {
-         //qrc image
-         NSImage* qrcImage = nil;
+    [daemonComms qrcRequest:^(NSData* qrcData)
+    {
+        //qrc image
+        NSImage* qrcImage = nil;
+    
+        //generate qrc image
+        if(0 != qrcData.length)
+        {
+            //dbg msg
+            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got qrc from daemon: %@", qrcData]);
+            
+            //save qrc info
+            self.qrcInfo = [[NSString alloc] initWithData:qrcData encoding:NSUTF8StringEncoding];
+            
+            //generate QRC image
+            qrcImage = [self generateImage:size];
+        }
+        
+        //didn't get anything from the daemon/framework :(
+        else
+        {
+            //err msg
+            logMsg(LOG_ERR, @"failed to generated QRC data");
+        }
          
-         //dbg msg
-         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got qrc from daemon: %@", qrcInfo]);
-         
-         //save qrc info
-         self.qrcInfo = qrcInfo;
-         
-         //generate QRC image
-         qrcImage = [self generateImage:size];
-         
-         //call back
-         reply(qrcImage);
-         
+        //call back
+        reply(qrcImage);
+        
      }];
     
     return;

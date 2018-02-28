@@ -21,11 +21,14 @@
 
 //ask daemon for QRC info
 // name, uuid, key, key size, etc...
--(void)qrcRequest:(void (^)(NSString* qrcInfo))reply;
+-(void)qrcRequest:(void (^)(NSData* qrcInfo))reply;
 
 //wait for phone to complete registration
 // calls into framework that comms w/ server to wait for phone
 -(void)recvRegistrationACK:(void (^)(NSDictionary* registrationInfo))reply;
+
+//get preferences
+-(void)getPreferences:(void (^)(NSDictionary* preferences))reply;
 
 //update (save) preferences
 -(void)updatePreferences:(NSDictionary*)preferences;

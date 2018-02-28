@@ -48,7 +48,27 @@
     [qrcObj generateQRC:qrcSize reply:^(NSImage* qrcImage)
     {
         //nap to allow 'generating' msg to show up
-        [NSThread sleepForTimeInterval:1.0f];
+        [NSThread sleepForTimeInterval:0.5f];
+        
+        //sanity check
+        if(nil == qrcImage)
+        {
+            //show error msg on main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                //stop spinner
+                [self.activityIndicator stopAnimation:nil];
+                
+                //set message color to red
+                self.activityMessage.textColor = [NSColor redColor];
+                
+                //show err msg
+                self.activityMessage.stringValue = @"Error generating QRC";
+                
+            });
+            
+            return;
+        }
         
         //show QRC
         // on main thread since it's UI-related
@@ -94,7 +114,7 @@
     [self.activityIndicator stopAnimation:nil];
     
     //hide message
-    self.activityMsg.hidden = YES;
+    self.activityMessage.hidden = YES;
     
     //set image
     self.qrcImageView.image = qrcImage;

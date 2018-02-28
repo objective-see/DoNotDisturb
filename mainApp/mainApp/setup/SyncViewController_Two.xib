@@ -10,7 +10,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="SyncViewController_Two">
             <connections>
                 <outlet property="activityIndicator" destination="cr9-kJ-urk" id="813-4A-RbV"/>
-                <outlet property="activityMsg" destination="8gD-fN-px3" id="Tnb-0j-S5F"/>
+                <outlet property="activityMessage" destination="8gD-fN-px3" id="X35-J5-LhB"/>
                 <outlet property="qrcImageView" destination="8Qk-Cd-TNj" id="5bZ-x2-j0c"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -44,7 +44,7 @@
                     <rect key="frame" x="334" y="223" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="8gD-fN-px3">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="8gD-fN-px3" userLabel="Activity Message">
                     <rect key="frame" x="154" y="178" width="392" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qrc code..." id="xxs-1E-a34">

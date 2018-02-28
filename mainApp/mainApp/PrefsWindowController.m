@@ -59,35 +59,64 @@
         //disable
         self.touchIDMode.enabled = NO;
     }
-    
-    //load/serialize preferences
-    [self loadPreferences];
 
     //init daemon
     // use local var here, as we need to block
     daemonComms = [[DaemonComms alloc] init];
     
+    //get prefs
+    self.preferences = [self getPreferences];
+    
+    //deserialize
+    [self deserializePreferences];
+    
     return;
 }
 
-//load preferences from disk
-// serialize each into iVar (button, text field, etc)
--(void)loadPreferences
+//get preferences
+// send XPC message to daemon
+-(NSDictionary*)getPreferences
 {
     //preferences
-    NSDictionary* preferences = nil;
+    __block NSDictionary* preferences = nil;
     
+    //wait sema
+    dispatch_semaphore_t semaphore = NULL;
+    
+    //init sema
+    semaphore = dispatch_semaphore_create(0);
+    
+    //get preferences
+    [self.daemonComms getPreferences:^(NSDictionary* response)
+     {
+         //dbg msg
+         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got preferences from daemon: %@", response]);
+         
+         //save
+         preferences = response;
+         
+         //signal that a response came in
+         dispatch_semaphore_signal(semaphore);
+     }];
+    
+    //XPC is async
+    // wait for preferences from daemon
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    return preferences;
+}
+
+//deserialize prefs
+-(void)deserializePreferences
+{
     //instance varialble
     Ivar instanceVariable = nil;
     
     //instance variable obj
     id iVarObj = nil;
     
-    //load from disk
-    preferences = [NSDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-    
     //extract each key/value pair an assign to iVar
-    for(NSString* key in preferences)
+    for(NSString* key in self.preferences)
     {
         //get instance variable by name
         instanceVariable = class_getInstanceVariable([self class], key.UTF8String);
@@ -109,14 +138,14 @@
         if(YES == [[iVarObj class] isSubclassOfClass:[NSButton class]])
         {
             //set button's state
-            ((NSButton*)iVarObj).state = [preferences[key] boolValue];
+            ((NSButton*)iVarObj).state = [self.preferences[key] boolValue];
         }
         
         //text field iVar
         else if(YES == [[iVarObj class] isSubclassOfClass:[NSTextField class]])
         {
             //set text field's string
-            ((NSTextField*)iVarObj).stringValue = preferences[key];
+            ((NSTextField*)iVarObj).stringValue = self.preferences[key];
         }
     }
     
@@ -155,6 +184,9 @@
         //link
         case TOOLBAR_LINK:
             view = self.linkView;
+            
+            //start spinnner
+            [self.activityIndicator startAnimation:nil];
             
             //generate/display QRC
             [self generateQRC];
@@ -274,10 +306,33 @@
     
     //generate QRC
     [qrcObj generateQRC:qrcSize reply:^(NSImage* qrcImage)
-     {
+    {
+        //nap to allow 'generating' msg to show up
+        [NSThread sleepForTimeInterval:0.5f];
+        
+        //sanity check
+        if(nil == qrcImage)
+        {
+            //show error msg on main thread
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                //stop spinner
+                [self.activityIndicator stopAnimation:nil];
+            
+                //set message color to red
+                self.activityMessage.textColor = [NSColor redColor];
+                
+                //show err msg
+                self.activityMessage.stringValue = @"Error Generating QRC";
+                
+            });
+            
+            return;
+        }
+        
          //show QRC
          // on main thread since it's UI-related
-         dispatch_sync(dispatch_get_main_queue(), ^{
+         dispatch_async(dispatch_get_main_queue(), ^{
              
              //display QRC
              [self displayQRC:qrcImage];
@@ -312,6 +367,13 @@
 //display QRC code
 -(void)displayQRC:(NSImage*)qrcImage
 {
+    //stop spinner
+    // will also hide it
+    [self.activityIndicator stopAnimation:nil];
+    
+    //hide message
+    self.activityMessage.hidden = YES;
+    
     //set image
     self.qrcImageView.image = qrcImage;
     

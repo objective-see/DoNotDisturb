@@ -39,7 +39,7 @@
 
 //ask daemon for QRC info
 // name, uuid, key, key size, etc...
--(void)qrcRequest:(void (^)(NSString* qrcInfo))reply
+-(void)qrcRequest:(void (^)(NSData* qrcInfo))reply
 {
     //dbg msg
     logMsg(LOG_DEBUG, @"sending request, via XPC, for qrc info");
@@ -50,9 +50,9 @@
           //err msg
           logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'qrcRequest' method on launch daemon (error: %@)", proxyError]);
           
-      }] qrcRequest:^(NSString* qrcInfo)
+      }] qrcRequest:^(NSData* qrcInfo)
      {
-         //respond with alert
+         //respond with info
          reply(qrcInfo);
      }];
     
@@ -82,6 +82,27 @@
     return;
     
 }
+
+//get preferences
+-(void)getPreferences:(void (^)(NSDictionary* preferences))reply
+{
+    //dbg msg
+    logMsg(LOG_DEBUG, @"sending request, via XPC, for preferences");
+    
+    //request preferences
+    [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+      {
+          //err msg
+          logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'getPreferences' method on launch daemon (error: %@)", proxyError]);
+          
+      }] getPreferences:^(NSDictionary* preferences)
+     {
+         //respond
+         reply(preferences);
+     }];
+    
+}
+
 
 //update (save) preferences
 -(void)updatePreferences:(NSDictionary*)preferences

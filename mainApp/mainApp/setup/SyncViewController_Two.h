@@ -16,7 +16,7 @@
 @property (weak) IBOutlet NSProgressIndicator *activityIndicator;
 
 //activity msg
-@property (weak) IBOutlet NSTextField *activityMsg;
+@property (weak) IBOutlet NSTextField *activityMessage;
 
 //qrc image view
 @property (weak) IBOutlet NSImageView *qrcImageView;

@@ -21,7 +21,7 @@ then
     chown -R root:wheel "Do Not Disturb"
     chown -R root:wheel "com.objective-see.dnd.plist"
 
-    mv "Do Not Disturb" $INSTALL_DIRECTORY
+    mv "Do Not Disturb.bundle" $INSTALL_DIRECTORY
     mv com.objective-see.dnd.plist /Library/LaunchDaemons/
     launchctl load /Library/LaunchDaemons/com.objective-see.dnd.plist
 
@@ -37,6 +37,7 @@ then
 
     exit 0
 
+#TODO: not full?
 elif [ "${1}" == "-uninstall" ]
 then
     echo "uninstalling"
