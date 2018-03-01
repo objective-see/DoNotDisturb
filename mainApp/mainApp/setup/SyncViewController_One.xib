@@ -24,6 +24,16 @@
                     <view key="contentView" ambiguous="YES" id="Evr-nz-y8Z">
                         <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L4U-QD-Mu9">
+                                <rect key="frame" x="14" y="6" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="skip" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5js-uY-wWX">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
                     </view>
                     <color key="fillColor" red="0.57793885469999995" green="0.75859862570000003" blue="0.2368842065" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </box>
@@ -73,6 +83,15 @@
                 </textField>
             </subviews>
         </customView>
+        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="ofu-tU-8T4">
+            <rect key="frame" x="0.0" y="0.0" width="38" height="17"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="2Ep-Sb-UFg">
+                <font key="font" metaFont="system"/>
+                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+            </textFieldCell>
+        </textField>
     </objects>
     <resources>
         <image name="laptop" width="256" height="256"/>

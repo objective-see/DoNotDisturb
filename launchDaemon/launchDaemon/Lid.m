@@ -18,11 +18,13 @@
 #import "Consts.h"
 #import "Queue.h"
 #import "Logging.h"
+#import "Monitor.h"
 #import "AuthEvent.h"
 #import "Utilities.h"
+#import "Preferences.h"
 #import "UserAuthMonitor.h"
+#import "FrameworkInterface.h"
 
-#import "Monitor.h"
 
 /* GLOBALS */
 
@@ -40,6 +42,12 @@ extern Queue* eventQueue;
 //user auth event listener
 extern UserAuthMonitor* userAuthMonitor;
 
+//preferences obj
+extern Preferences* preferences;
+
+//DnD framework interface obj
+extern FrameworkInterface* framework;
+
 //callback for power/lid events
 static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageType, void *messageArgument)
 {
@@ -48,10 +56,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     
     //sleep bit
     int sleepState = -1;
-    
-    //preferences
-    NSDictionary* preferences = nil;
-    
+
     //sanity check
     // ignore any messages that are related to lid state
     if(kIOPMMessageClamshellStateChange != messageType)
@@ -59,13 +64,10 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         //bail
         goto bail;
     }
-    
-    //load prefs
-    preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-    
+
     //if user explicity set disabled
     // bail here, to ignore everything
-    if(YES == [preferences[PREF_IS_DISABLED] boolValue])
+    if(YES == [preferences.preferences[PREF_IS_DISABLED] boolValue])
     {
         //dbg msg
         logMsg(LOG_DEBUG, @"client disabled DnD, so ignoring lid open event");
@@ -99,7 +101,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         
         //touch id mode?
         // wait up to 5 seconds, and ignore event if user auth'd via biometrics
-        if(YES == [preferences[PREF_TOUCHID_MODE] boolValue])
+        if(YES == [preferences.preferences[PREF_TOUCHID_MODE] boolValue])
         {
             //user auth'd via touchID?
             if(YES == authViaTouchID())
@@ -119,7 +121,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         
         //process event
         // report to user, execute actions, etc
-        [lidObj processEvent:preferences];
+        [lidObj processEvent];
     }
     
     //(new) close?
@@ -205,6 +207,10 @@ bail:
 
 @implementation Lid
 
+@synthesize client;
+@synthesize dispatchGroup;
+@synthesize dispatchGroupEmpty;
+
 //init
 - (id)init
 {
@@ -227,10 +233,83 @@ bail:
         //save into global
         // allows static callback to access
         lidObj = self;
+        
+        //init dispatch group for dismiss events
+        dispatchGroup = dispatch_group_create();
+    
+        //init client device
+        // a) there's an identity
+        // b) there's a registered device
+        if( (nil != framework.identity) &&
+            (YES == [preferences.preferences[PREF_DEVICE_REGISTERED] boolValue]) )
+        {
+            //init client
+            if(YES != [self clientInit])
+            {
+                //err msg
+                logMsg(LOG_ERR, @"failed to initialize DnD client");
+            }
+        }
+        
+        //check if user has unregistered device
+        // if so, set flag, disconnect and unset client
+        if(nil != self.client)
+        {
+            //any registered device?
+            if(0 == [[self.client getShadowSync].state.reported.endpoints count])
+            {
+                //dbg msg
+                logMsg(LOG_DEBUG, @"user unregistered device, disconnecting client");
+                
+                //update preferences
+                if(YES != [preferences update:@{PREF_DEVICE_REGISTERED:@NO}])
+                {
+                    //err msg
+                    logMsg(LOG_ERR, @"failed to updated preferences ('device registered' : NO)");
+                }
+                
+                //disconnect client
+                [self.client disconnect];
+                
+                //unset
+                self.client = nil;
+            }
+        }
     }
+    
     return self;
 }
 
+//init dnd client
+-(BOOL)clientInit
+{
+    //flag
+    BOOL initialized = NO;
+    
+    //init client
+    client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:true background:true];
+    if(nil == self.client)
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to initialize DnD client for lid events");
+        
+        //bail
+        goto bail;
+    }
+    
+    //set delegate
+    client.delegate = self;
+    
+    //indicate we want tasking
+    [client handleTasksWithFramework];
+    
+    //happy
+    initialized = YES;
+    
+bail:
+    
+    return initialized;
+}
 //get state
 -(int)getState
 {
@@ -388,15 +467,15 @@ bail:
 }
 
 //proces lid open event
-// report to user, send sms, etc
--(void)processEvent:(NSDictionary*)preferences
+// report to user, execute cmd, send alert to server, etc
+-(void)processEvent
 {
     //monitor obj
     Monitor* monitor = nil;
     
     //only add events to queue
     // when client is not running in passive mode
-    if(YES != [preferences[PREF_PASSIVE_MODE] boolValue])
+    if(YES != [preferences.preferences[PREF_PASSIVE_MODE] boolValue])
     {
         //add to global queue
         // this will trigger processing of alert to user
@@ -413,7 +492,7 @@ bail:
     
     //monitor
     // start with first, as other actions might take a bit...
-    if(YES == [preferences[PREF_MONITOR_ACTION] boolValue])
+    if(YES == [preferences.preferences[PREF_MONITOR_ACTION] boolValue])
     {
         //dbg msg
         logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling monitoring (processes, usb, logins, etc.)");
@@ -430,30 +509,116 @@ bail:
     }
 
     //execute cmd?
-    if( (YES == [preferences[PREF_EXECUTE_ACTION] boolValue]) &&
-        (0 != [preferences[PREF_EXECUTION_PATH] length] ) )
+    if( (YES == [preferences.preferences[PREF_EXECUTE_ACTION] boolValue]) &&
+        (0 != [preferences.preferences[PREF_EXECUTION_PATH] length] ) )
     {
         //dbg msg
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"executing: %@", preferences[PREF_EXECUTION_PATH]]);
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"executing: %@", preferences.preferences[PREF_EXECUTION_PATH]]);
         
         //exec payload
-        if(YES != [self executeAction:preferences[PREF_EXECUTION_PATH]])
+        if(YES != [self executeAction:preferences.preferences[PREF_EXECUTION_PATH]])
         {
             //err msg
-            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to execute %@", preferences[PREF_EXECUTION_PATH]]);
+            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to execute %@", preferences.preferences[PREF_EXECUTION_PATH]]);
         }
     }
+    
+    //before sending it to server
+    // check and init client if needed
+    if( (nil == self.client) &&
+        (nil != framework.identity) &&
+        (YES == [preferences.preferences[PREF_DEVICE_REGISTERED] boolValue]) )
+    {
+        //init client
+        if(YES != [self clientInit])
+        {
+            //err msg
+            logMsg(LOG_ERR, @"failed to initialize DnD client");
+            
+            //bail
+            //goto bail;
+        }
+    }
+    
+    //send alert to server
+    [self.client sendAlertWithUuid:[NSUUID UUID] userName:getConsoleUser() completion:^(NSNumber* response)
+    {
+        //log
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
 
-    //TODO: Call into framework to send alert
-    
-    //TODO: call into framework to deliver message
-    // ideally, should pass in a callback block that will allow us to log the result (delivered, failed, etc...).
-    
-    
+    }];
+        
+    //wait for dismiss
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //wait
+        [self wait4Dismiss];
+        
+    });
+        
+
 bail:
     
     return;
 }
+
+//wait for dismiss
+// note: handles multiple client via dispatch group
+-(void)wait4Dismiss
+{
+    //sync
+    @synchronized(self)
+    {
+        //only start listening if nobody else is
+        if(YES == self.dispatchGroupEmpty)
+        {
+            //set flag
+            self.dispatchGroupEmpty = NO;
+            
+            //listen
+            [self.client listenOnDelegate:nil];
+            
+            //'register' notification code
+            // will be invoked when everything times out
+            dispatch_group_notify(self.dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+                
+                //disconnect client
+                [self.client disconnect];
+                
+                //unset flag
+                self.dispatchGroupEmpty = YES;
+                
+            });
+        }
+        
+    }//sync
+    
+    //enter dispatch group
+    dispatch_group_enter(self.dispatchGroup);
+    
+    //wait for 5 minutes
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (60 * 5) * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        
+        //done
+        // so leave!
+        dispatch_group_leave(self.dispatchGroup);
+        
+    });
+    
+    return;
+}
+
+
+//(framework) callback delegate
+// invoked when user dimisses event on phone
+-(void)didGetDismissEvent:(Event *)event {
+
+    //broadcast event
+    [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_NOTIFICATION object:nil userInfo:nil];
+    
+    return;
+}
+
 
 //execute action
 -(BOOL)executeAction:(NSString*)path

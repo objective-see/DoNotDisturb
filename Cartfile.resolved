@@ -1,7 +1,7 @@
 github "Alamofire/Alamofire" "4.6.0"
 github "Alamofire/AlamofireImage" "3.3.0"
 github "DigitaSecurity/CocoaMQTT" "0c56a9397d5d3fcea4472671e24014a5f31f9b15"
-github "DigitaSecurity/dnd" "0161f53ae7fc4281466404d585a00e45de159f9a"
+github "DigitaSecurity/dnd" "99719d6f0a1344463c5078011711d6dda793b318"
 github "SnapKit/SnapKit" "4.0.0"
 github "SwiftyJSON/SwiftyJSON" "4.0.0"
 github "alexeyxo/swift-apns" "1.2.2"

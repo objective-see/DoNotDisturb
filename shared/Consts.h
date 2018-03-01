@@ -172,6 +172,9 @@
 //client ID
 #define PREF_CLIENT_ID @"clientID"
 
+//device registered
+#define PREF_DEVICE_REGISTERED @"deviceRegistered"
+
 //prefs
 // status
 #define PREF_IS_DISABLED @"disabled"
@@ -275,6 +278,9 @@
 
 //auth event notification
 #define AUTH_NOTIFICATION @"com.objective-see.dnd.authNotification"
+
+//dismiss event notification
+#define DISMISS_NOTIFICATION @"com.objective-see.dnd.dismissNotification"
 
 //monitoring timeout
 #define MONITORING_TIMEOUT 60

@@ -26,6 +26,12 @@
 //last alert
 @property(nonatomic,retain)NSDictionary* dequeuedAlert;
 
+//registration info from server
+@property(nonatomic,retain)NSDictionary *registrationInfo;
+
+//registration wait semaphore
+@property dispatch_semaphore_t registrationSema;
+
 /* METHODS */
 
 

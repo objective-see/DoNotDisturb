@@ -40,6 +40,14 @@ NSOperatingSystemVersion getOSVersion()
     return [[NSProcessInfo processInfo] operatingSystemVersion];
 }
 
+//get name of logged in user
+NSString* getConsoleUser()
+{
+    //copy/return user
+    return CFBridgingRelease(SCDynamicStoreCopyConsoleUser(NULL, NULL, NULL));
+}
+
+
 //get console user id
 NSNumber* getConsoleUID()
 {

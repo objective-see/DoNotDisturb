@@ -45,12 +45,12 @@
 		7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF751F1E9CE700B33214 /* Queue.m */; };
 		CD22786520463EB000C72C76 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD22786420463EB000C72C76 /* dnd.framework */; };
 		CD22786620463F0700C72C76 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD22786420463EB000C72C76 /* dnd.framework */; };
-		CD22786820463F7700C72C76 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD22786720463F7700C72C76 /* Info.plist */; };
 		CD22786C20464A6E00C72C76 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = CD22786A204648E000C72C76 /* Preferences.m */; };
 		CD3307AC2033D35000F10D71 /* Monitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307AB2033D35000F10D71 /* Monitor.m */; };
 		CD3307D420365CCC00F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D220365CCB00F10D71 /* Exception.m */; };
 		CD3307DD2036A87500F10D71 /* DownloadMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307DC2036A87500F10D71 /* DownloadMonitor.m */; };
 		CD4B7056202BDB4D007DB5A7 /* AuthEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4B7055202BDB4D007DB5A7 /* AuthEvent.m */; };
+		CDA993A62048905D00C1E9CD /* FrameworkInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA993A42048905D00C1E9CD /* FrameworkInterface.m */; };
 		CDAAC23E202027310032F2E6 /* UserAuthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAAC23D202027310032F2E6 /* UserAuthMonitor.m */; };
 		CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */ = {isa = PBXBuildFile; fileRef = CE60F9C81FC9BBE500EFFDDA /* Lid.m */; };
 		CE85D4011FDC921200E116A5 /* USBMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CE85D4001FDC921200E116A5 /* USBMonitor.m */; };
@@ -170,6 +170,8 @@
 		CD3307DC2036A87500F10D71 /* DownloadMonitor.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DownloadMonitor.m; sourceTree = "<group>"; };
 		CD4B7054202BDB4D007DB5A7 /* AuthEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuthEvent.h; sourceTree = "<group>"; };
 		CD4B7055202BDB4D007DB5A7 /* AuthEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuthEvent.m; sourceTree = "<group>"; };
+		CDA993A32048905D00C1E9CD /* FrameworkInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrameworkInterface.h; sourceTree = "<group>"; };
+		CDA993A42048905D00C1E9CD /* FrameworkInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrameworkInterface.m; sourceTree = "<group>"; };
 		CDAAC23C202027310032F2E6 /* UserAuthMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAuthMonitor.h; sourceTree = "<group>"; };
 		CDAAC23D202027310032F2E6 /* UserAuthMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAuthMonitor.m; sourceTree = "<group>"; };
 		CDAAC245202259B50032F2E6 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = ../../shared/Consts.h; sourceTree = "<group>"; };
@@ -271,6 +273,8 @@
 				7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */,
 				CE60F9C71FC9BBE500EFFDDA /* Lid.h */,
 				CE60F9C81FC9BBE500EFFDDA /* Lid.m */,
+				CDA993A32048905D00C1E9CD /* FrameworkInterface.h */,
+				CDA993A42048905D00C1E9CD /* FrameworkInterface.m */,
 				CD3307DB2036A87500F10D71 /* DownloadMonitor.h */,
 				CD3307DC2036A87500F10D71 /* DownloadMonitor.m */,
 				CD227869204648E000C72C76 /* Preferences.h */,
@@ -406,7 +410,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD22786820463F7700C72C76 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +428,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD22786C20464A6E00C72C76 /* Preferences.m in Sources */,
+				CDA993A62048905D00C1E9CD /* FrameworkInterface.m in Sources */,
 				7D46FEFF1F5E41F000FEB0F8 /* UserCommsListener.m in Sources */,
 				CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */,
 				7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */,

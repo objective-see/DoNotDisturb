@@ -24,6 +24,9 @@ NSString* getAppVersion(void);
 // note: this uses macOS 10.10+ methods
 NSOperatingSystemVersion getOSVersion(void);
 
+//get name of logged in user
+NSString* getConsoleUser(void);
+
 //get console user id
 NSNumber* getConsoleUID(void);
 

@@ -6,6 +6,8 @@
 //  Copyright © 2018 Objective-See. All rights reserved.
 //
 
+//TODO: combine into 1!!
+
 #import <Cocoa/Cocoa.h>
 
 @interface SyncViewController_Zero : NSViewController
