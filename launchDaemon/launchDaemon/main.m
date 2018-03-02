@@ -38,6 +38,9 @@ UserAuthMonitor* userAuthMonitor = nil;
 //DnD framework interface
 FrameworkInterface* framework = nil;
 
+//dispatch source for SIGTERM
+dispatch_source_t dispatchSource = nil;
+
 //main
 // init & kickoff stuffz
 int main(int argc, const char * argv[])
@@ -153,10 +156,6 @@ bail:
 // can perform actions such as disabling firewall and closing logging
 void register4Shutdown()
 {
-    //TODO: needs to be global
-    //dispatch source for SIGTERM
-    dispatch_source_t dispatchSource = nil;
-    
     //ignore sigterm
     // handling it via GCD dispatch
     signal(SIGTERM, SIG_IGN);

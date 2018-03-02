@@ -37,6 +37,9 @@
     return self;
 }
 
+
+//TODO: make sync?
+
 //ask daemon for QRC info
 // name, uuid, key, key size, etc...
 -(void)qrcRequest:(void (^)(NSData* qrcInfo))reply
@@ -80,27 +83,48 @@
     }];
     
     return;
-    
 }
 
 //get preferences
--(void)getPreferences:(void (^)(NSDictionary* preferences))reply
+// note: synchronous
+-(NSDictionary*)getPreferences
 {
+    //preferences
+    __block NSDictionary* preferences = nil;
+    
+    //wait sema
+    dispatch_semaphore_t semaphore = NULL;
+    
+    //init sema
+    semaphore = dispatch_semaphore_create(0);
+    
     //dbg msg
     logMsg(LOG_DEBUG, @"sending request, via XPC, for preferences");
-    
+
     //request preferences
     [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
-      {
-          //err msg
-          logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'getPreferences' method on launch daemon (error: %@)", proxyError]);
+    {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'getPreferences' method on launch daemon (error: %@)", proxyError]);
+        
+        //signal sema
+        dispatch_semaphore_signal(semaphore);
           
-      }] getPreferences:^(NSDictionary* preferences)
-     {
-         //respond
-         reply(preferences);
-     }];
+    }] getPreferences:^(NSDictionary* preferencesFromDaemon)
+    {
+        //save
+        preferences = preferencesFromDaemon;
+        
+        //signal sema
+        dispatch_semaphore_signal(semaphore);
+        
+    }];
     
+    //XPC is async
+    // wait for preferences from daemon
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+    
+    return preferences;
 }
 
 

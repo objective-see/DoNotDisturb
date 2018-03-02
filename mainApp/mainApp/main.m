@@ -32,7 +32,7 @@ int main(int argc, const char * argv[])
     if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_INSTALL])
     {
         //toggle login item
-        if(YES != SMLoginItemSetEnabled((__bridge CFStringRef)HELPER_BUNDLE_ID, YES))
+        if(YES != SMLoginItemSetEnabled((__bridge CFStringRef)HELPER_ID, YES))
         {
             //err msg
             logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to enable login item (%@)", [[NSBundle mainBundle] bundleIdentifier]]);
@@ -47,7 +47,7 @@ int main(int argc, const char * argv[])
     else if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_UNINSTALL])
     {
         //toggle login item
-        if(YES != SMLoginItemSetEnabled((__bridge CFStringRef)HELPER_BUNDLE_ID, NO))
+        if(YES != SMLoginItemSetEnabled((__bridge CFStringRef)HELPER_ID, NO))
         {
             //err msg
             logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to disable login item (%@)", [[NSBundle mainBundle] bundleIdentifier]]);

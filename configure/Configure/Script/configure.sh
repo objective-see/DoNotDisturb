@@ -60,7 +60,7 @@ then
 
     #kill
     killall "Do Not Disturb" 2> /dev/null
-    killall com.objective-see.dndHelper 2> /dev/null
+    killall "com.objective-see.dnd.helper" 2> /dev/null
     killall "Do Not Disturb Helper" 2> /dev/null
 
     echo "uninstall complete"

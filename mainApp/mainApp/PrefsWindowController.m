@@ -35,6 +35,9 @@
 @synthesize monitorAction;
 @synthesize updateWindowController;
 
+//unlink button
+#define BUTTON_UNLINK 1
+
 //init 'general' view
 // add it, and make it selected
 -(void)awakeFromNib
@@ -65,45 +68,12 @@
     daemonComms = [[DaemonComms alloc] init];
     
     //get prefs
-    self.preferences = [self getPreferences];
+    self.preferences = [self.daemonComms getPreferences];
     
     //deserialize
     [self deserializePreferences];
     
     return;
-}
-
-//get preferences
-// send XPC message to daemon
--(NSDictionary*)getPreferences
-{
-    //preferences
-    __block NSDictionary* preferences = nil;
-    
-    //wait sema
-    dispatch_semaphore_t semaphore = NULL;
-    
-    //init sema
-    semaphore = dispatch_semaphore_create(0);
-    
-    //get preferences
-    [self.daemonComms getPreferences:^(NSDictionary* response)
-     {
-         //dbg msg
-         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got preferences from daemon: %@", response]);
-         
-         //save
-         preferences = response;
-         
-         //signal that a response came in
-         dispatch_semaphore_signal(semaphore);
-     }];
-    
-    //XPC is async
-    // wait for preferences from daemon
-    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-    
-    return preferences;
 }
 
 //deserialize prefs
@@ -162,6 +132,9 @@
     //view
     NSView* view = nil;
     
+    //preferences
+    NSDictionary* preferences = nil;
+    
     //height of toolbar
     float toolbarHeight = 0.0f;
     
@@ -181,15 +154,43 @@
             view = self.actionView;
             break;
             
-        //link
+        //link/unlink
         case TOOLBAR_LINK:
-            view = self.linkView;
             
-            //start spinnner
-            [self.activityIndicator startAnimation:nil];
+            //get prefs via XPC
+            preferences = [self.daemonComms getPreferences];
             
-            //generate/display QRC
-            [self generateQRC];
+            //if device is registered
+            // show unlink view in case user wants to unlink
+            if(nil != preferences[PREF_REGISTERED_DEVICE])
+            {
+                //set view
+                view = self.unlinkView;
+                
+                //enable button
+                self.unlinkButton.enabled = YES;
+                
+                //set host name
+                self.computerName.stringValue = [[NSHost currentHost] localizedName];
+                
+                //set device name
+                self.deviceName.stringValue = preferences[PREF_REGISTERED_DEVICE];
+            }
+            
+            //no device registered
+            // generate/show QRC so user can link
+            else
+            {
+                //set view
+                view = self.linkView;
+                
+                //need to generate qrc?
+                if(nil == self.qrcImageView.image)
+                {
+                    //generate/display QRC
+                    [self generateQRC];
+                }
+            }
             
             break;
             
@@ -236,7 +237,7 @@
     else if(sender == self.headlessMode)
     {
         //set
-        preferences[PREF_HEADLESS_MODE] = [NSNumber numberWithBool:self.headlessMode.state];
+        preferences[PREF_NO_ICON_MODE] = [NSNumber numberWithBool:self.headlessMode.state];
     }
 
     //touchID mode
@@ -267,7 +268,7 @@
     else if(sender == self.updateMode)
     {
         //set
-        preferences[PREF_NOUPDATES_MODE] = [NSNumber numberWithBool:self.updateMode.state];
+        preferences[PREF_NO_UPDATES_MODE] = [NSNumber numberWithBool:self.updateMode.state];
     }
     
     //send to daemon
@@ -303,6 +304,12 @@
     
     //grab size while still on main thread
     qrcSize = self.qrcImageView.frame.size;
+    
+    //set msg
+    self.activityMessage.stringValue = @"generating qr code...";
+    
+    //start spinnner
+    [self.activityIndicator startAnimation:nil];
     
     //generate QRC
     [qrcObj generateQRC:qrcSize reply:^(NSImage* qrcImage)
@@ -347,9 +354,7 @@
          // this will block until phone linking/registration is complete
          [daemonComms recvRegistrationACK:^(NSDictionary* registrationInfo)
           {
-              //TODO: remove
-              [NSThread sleepForTimeInterval:2.0f];
-              
+              //call into main thread to display
               dispatch_sync(dispatch_get_main_queue(), ^{
                   
                   //update image view
@@ -411,6 +416,83 @@ bail:
     // will update preferences
     [self.daemonComms updatePreferences:@{PREF_EXECUTION_PATH:self.executePath.stringValue}];
  
+    return;
+}
+
+//button handle
+- (IBAction)buttonHandler:(id)sender
+{
+    //alert
+    __block NSAlert *alert = nil;
+
+    //height of toolbar
+    __block float toolbarHeight = 0.0f;
+    
+    //unlink?
+    // just unset 'device registered' pref
+    if(BUTTON_UNLINK == ((NSButton*)sender).tag)
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"unregistering device");
+        
+        //disable button
+        self.unlinkButton.enabled = NO;
+        
+        //show/start spinner
+        [self.unregisterIndicator startAnimation:nil];
+        
+        //unset
+        // pass in blank string to 'unregister'
+        [self.daemonComms updatePreferences:@{PREF_REGISTERED_DEVICE:@""}];
+        
+        //change view after a second
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            //init alert
+            alert = [[NSAlert alloc] init];
+            
+            //set main text
+            alert.messageText = @"unregistered device";
+            
+            //set informative text
+            alert.informativeText = [NSString stringWithFormat:@"device: %@", self.deviceName];
+            
+            //add button
+            [alert addButtonWithTitle:@"Ok"];
+            
+            //set style
+            alert.alertStyle = NSWarningAlertStyle;
+            
+            //show it
+            [alert runModal];
+            
+            //stop (hide)
+            [self.unregisterIndicator stopAnimation:nil];
+            
+            //remove previous subview
+            [[[self.window.contentView subviews] lastObject] removeFromSuperview];
+            
+            //get height of toolbar
+            toolbarHeight = [self toolbarHeight];
+            
+            //set frame rect
+            self.linkView.frame = CGRectMake(0, toolbarHeight, self.window.contentView.frame.size.width, self.window.contentView.frame.size.height-toolbarHeight);
+            
+            //unset image
+            self.qrcImageView.image = nil;
+            
+            //hide image
+            self.qrcImageView.hidden = NO;
+            
+            //add to window
+            [self.window.contentView addSubview:self.linkView];
+            
+            //generate/display QRC
+            [self generateQRC];
+            
+        });
+    }
+    
     return;
 }
 

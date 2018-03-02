@@ -68,18 +68,39 @@
 //monitor button
 @property (weak) IBOutlet NSButton *monitorAction;
 
+/* LINK VIEW */
+
 //link view
 @property (strong) IBOutlet NSView *linkView;
-
-/* QRC VIEW */
 
 //spinner
 @property (weak) IBOutlet NSProgressIndicator *activityIndicator;
 
+//activity msg
 @property (weak) IBOutlet NSTextField *activityMessage;
 
 //qrc image view
 @property (weak) IBOutlet NSImageView *qrcImageView;
+
+/* UNLINK VIEW */
+
+//unlink view
+@property (strong) IBOutlet NSView *unlinkView;
+
+//button to unlink
+@property (weak) IBOutlet NSButton *unlinkButton;
+
+//host (computer) name
+@property (weak) IBOutlet NSTextField *computerName;
+
+//device (phone?) name
+@property (weak) IBOutlet NSTextField *deviceName;
+
+//spinner
+@property (weak) IBOutlet NSProgressIndicator *unregisterIndicator;
+
+
+/* UPDATE VIEW */
 
 //update view
 @property (weak) IBOutlet NSView *updateView;

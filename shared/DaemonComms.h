@@ -28,7 +28,8 @@
 -(void)recvRegistrationACK:(void (^)(NSDictionary* registrationInfo))reply;
 
 //get preferences
--(void)getPreferences:(void (^)(NSDictionary* preferences))reply;
+// note: synchronous
+-(NSDictionary*)getPreferences;
 
 //update (save) preferences
 -(void)updatePreferences:(NSDictionary*)preferences;

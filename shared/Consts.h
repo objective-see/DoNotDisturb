@@ -16,17 +16,20 @@
 //vendor id string
 #define OBJECTIVE_SEE_VENDOR "com.objectiveSee"
 
-//login helper bundle id
-#define HELPER_BUNDLE_ID @"com.objective-see.dndHelper"
+//installer (helper) ID
+#define INSTALLER_HELPER_ID @"com.objective-see.dnd.installer.helper"
+
+//main app bundle id
+#define MAIN_APP_ID @"com.objective-see.dnd"
+
+//login helper ID
+#define HELPER_ID @"com.objective-see.dnd.helper"
 
 //launch daemon name
 #define LAUNCH_DAEMON_BINARY @"Do Not Disturb"
 
 //launch daemon plist
 #define LAUNCH_DAEMON_PLIST @"com.objective-see.dnd.plist"
-
-//helper ID
-#define HELPER_ID @"com.objective-see.dnd.helper"
 
 //installer (app) ID
 #define INSTALLER_ID @"com.objective-see.dnd.installer"
@@ -165,15 +168,11 @@
 //login item name
 #define LOGIN_ITEM_NAME @"Do Not Disturb Helper"
 
-//prefs
-// displayed popover
-#define PREF_SHOWED_POPOVER @"popover"
-
 //client ID
 #define PREF_CLIENT_ID @"clientID"
 
-//device registered
-#define PREF_DEVICE_REGISTERED @"deviceRegistered"
+//registered device name
+#define PREF_REGISTERED_DEVICE @"registeredDevice"
 
 //prefs
 // status
@@ -185,7 +184,7 @@
 
 //prefs
 // icon mode
-#define PREF_HEADLESS_MODE @"headlessMode"
+#define PREF_NO_ICON_MODE @"iconMode"
 
 //prefs
 // touchID mode
@@ -205,7 +204,7 @@
 
 //prefs
 // update mode
-#define PREF_NOUPDATES_MODE @"noupdatesMode"
+#define PREF_NO_UPDATES_MODE @"noupdatesMode"
 
 //log file
 #define LOG_FILE_NAME @"DnD.log"

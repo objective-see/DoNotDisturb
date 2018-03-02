@@ -10,18 +10,18 @@
 #import <Cocoa/Cocoa.h>
 
 #import "DaemonComms.h"
-#import "LinkWindowController.h"
 #import "AboutWindowController.h"
 #import "PrefsWindowController.h"
 #import "UpdateWindowController.h"
+#import "WelcomeWindowController.h"
 #import "3rdParty/HyperlinkTextField.h"
 
 @interface AppDelegate : NSApplication <NSApplicationDelegate>
 
 /* PROPERTIES */
 
-//link view controller
-@property(nonatomic, retain)LinkWindowController* linkWindowController;
+//welcome view controller
+@property(nonatomic, retain)WelcomeWindowController* welcomeWindowController;
 
 //about window controller
 @property(nonatomic, retain)AboutWindowController* aboutWindowController;

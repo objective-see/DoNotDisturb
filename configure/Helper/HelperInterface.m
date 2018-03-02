@@ -14,79 +14,14 @@
 
 #import <signal.h>
 
-
 //script name
 #define CONF_SCRIPT @"configure.sh"
-
-//TODO: GCD
-//SIGTERM handler
-void sigTerm(int signum);
 
 //signing auth
 #define SIGNING_AUTH @"Developer ID Application: Objective-See, LLC (VBG97UB4TA)"
 
-//SIGTERM handler, that's delivered as we're being unloaded
-// a) remove plist
-// b) remove binary
-void sigTerm(int signum)
-{
-    #pragma unused(signum)
-    
-    //flag
-    BOOL noErrors = YES;
-    
-    //plist
-    NSString* helperPlist = nil;
-    
-    //binary
-    NSString* helperBinary = nil;
-    
-    //error
-    NSError* error = nil;
-    
-    //dbg msg
-    #ifndef NDEBUG
-    logMsg(LOG_DEBUG, @"XPC: got SIGTERM, deleting plist & self");
-    #endif
-    
-    //init path to plist
-    helperPlist = [@"/Library/LaunchDaemons" stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", HELPER_ID]];
-    
-    //delete plist
-    if(YES != [[NSFileManager defaultManager] removeItemAtPath:helperPlist error:&error])
-    {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"ERROR: failed to delete %@ (%@)", helperPlist, error.description]);
-        
-        //set error
-        noErrors = NO;
-    }
-    
-    //init path to binary
-    helperBinary = [@"/Library/PrivilegedHelperTools" stringByAppendingPathComponent:HELPER_ID];
-    
-    //delete self
-    if(YES != [[NSFileManager defaultManager] removeItemAtPath:helperBinary error:&error])
-    {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"ERROR: failed to delete %@ (%@)", helperBinary, error.description]);
-        
-        //set error
-        noErrors = NO;
-    }
-    
-    //no errors?
-    // display dbg msg
-    #ifndef NDEBUG
-    if(YES == noErrors)
-    {
-        //dbg msg
-        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"removed %@ and %@", helperPlist, helperBinary]);
-    }
-    #endif
-    
-    return;
-}
+//dispatch source for SIGTERM
+dispatch_source_t dispatchSource = nil;
 
 @implementation HelperInterface
 
@@ -241,28 +176,78 @@ bail:
 // since system install/launches us as root, client can't directly remove us
 -(void)remove
 {
-    //sig action struct
-    struct sigaction action;
+    //flag
+    __block BOOL noErrors = YES;
     
     //helper plist
-    NSString* helperPlist = nil;
+    __block NSString* helperPlist = nil;
+    
+    //binary
+    __block NSString* helperBinary = nil;
+    
+    //error
+    __block NSError* error = nil;
     
     //dbg msg
-    #ifdef NDEBUG
-    syslog(LOG_NOTICE, "XPC-request: remove (self)");
-    #endif
+    logMsg(LOG_DEBUG, @"XPC-request: remove (self!)");
     
-    //clear
-    memset(&action, 0, sizeof(struct sigaction));
+    //ignore sigterm
+    // handling it via GCD dispatch
+    signal(SIGTERM, SIG_IGN);
     
-    //set signal handler
-    action.sa_handler = sigTerm;
+    //init dispatch source for SIGTERM
+    dispatchSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGTERM, 0, dispatch_get_main_queue());
     
-    //install signal handler
-    sigaction(SIGTERM, &action, NULL);
+    //set handler
+    // disable kext & close logging
+    dispatch_source_set_event_handler(dispatchSource, ^{
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, @"XPC: got SIGTERM, deleting plist & self!");
+        
+        //init path to plist
+        helperPlist = [@"/Library/LaunchDaemons" stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", INSTALLER_HELPER_ID]];
+        
+        //delete plist
+        if(YES != [[NSFileManager defaultManager] removeItemAtPath:helperPlist error:&error])
+        {
+            //err msg
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"ERROR: failed to delete %@ (%@)", helperPlist, error.description]);
+            
+            //set error
+            noErrors = NO;
+        }
+        
+        //init path to binary
+        helperBinary = [@"/Library/PrivilegedHelperTools" stringByAppendingPathComponent:INSTALLER_HELPER_ID];
+        
+        //delete self
+        if(YES != [[NSFileManager defaultManager] removeItemAtPath:helperBinary error:&error])
+        {
+            //err msg
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"ERROR: failed to delete %@ (%@)", helperBinary, error.description]);
+            
+            //set error
+            noErrors = NO;
+        }
+        
+        //no errors?
+        // display dbg msg
+        if(YES == noErrors)
+        {
+            //dbg msg
+            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"removed %@ and %@", helperPlist, helperBinary]);
+        }
+        
+        //bye!
+        exit(SIGTERM);
+    });
+    
+    //resume
+    dispatch_resume(dispatchSource);
     
     //init path to plist
-    helperPlist = [@"/Library/LaunchDaemons" stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", HELPER_ID]];
+    helperPlist = [@"/Library/LaunchDaemons" stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.plist", INSTALLER_HELPER_ID]];
     
     //unload
     execTask(@"/bin/launchctl", @[@"unload", helperPlist], YES);

@@ -9,6 +9,7 @@
 
 @import Cocoa;
 
+#import "DaemonComms.h"
 #import "StatusBarMenu.h"
 #import "UpdateWindowController.h"
 
@@ -24,6 +25,15 @@
 
 //update window controller
 @property(nonatomic, retain)UpdateWindowController* updateWindowController;
+
+//daemon comms
+@property(nonatomic, retain)DaemonComms* daemonComms;
+
+//observer
+@property(nonatomic, retain)NSObject* appObserver;
+
+/* METHODS */
+
 
 @end
 

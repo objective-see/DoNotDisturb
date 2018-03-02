@@ -27,7 +27,7 @@
     if(nil != self)
     {
         //alloc/init
-        xpcServiceConnection = [[NSXPCConnection alloc] initWithMachServiceName:HELPER_ID options:0];
+        xpcServiceConnection = [[NSXPCConnection alloc] initWithMachServiceName:INSTALLER_HELPER_ID options:0];
         
         //set remote object interface
         self.xpcServiceConnection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(XPCProtocol)];

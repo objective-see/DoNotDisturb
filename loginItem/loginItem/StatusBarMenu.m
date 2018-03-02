@@ -11,6 +11,7 @@
 #import "Logging.h"
 #import "Utilities.h"
 #import "AppDelegate.h"
+#import "DaemonComms.h"
 #import "StatusBarMenu.h"
 #import "UserCommsInterface.h"
 #import "StatusBarPopoverController.h"
@@ -34,9 +35,9 @@ enum menuItems
 
 //init method
 // set some intial flags, init daemon comms, etc.
--(id)init:(NSMenu*)menu;
+-(id)init:(NSMenu*)menu firstTime:(BOOL)firstTime
 {
-    //prefs
+    //preferences
     NSDictionary* preferences = nil;
     
     //load from nib
@@ -71,37 +72,22 @@ enum menuItems
             [self.statusItem.menu itemWithTag:i].target = self;
         }
         
-        //TODO:
+        //first time?
+        // show popover
+        if(YES == firstTime)
+        {
+            //show
+            [self showPopover];
+        }
         
-        /*
+        //get prefs via XPC
+        preferences = [self.daemonComms getPreferences];
          
-         //get prefs via XPC
-         preferences = [((AppDelegate*)[[NSApplication sharedApplication] delegate]) getPreferences];
-         
-         //set state based on (existing) preferences
-         self.isDisabled = [preferences[PREF_IS_DISABLED] boolValue];
-         
-        */
-        
-        //load prefs
-        preferences = [NSMutableDictionary dictionaryWithContentsOfFile:PREFS_FILE];
-        
-        //set status
+        //set state based on (existing) preferences
         self.isDisabled = [preferences[PREF_IS_DISABLED] boolValue];
         
         //set initial menu state
         [self setState];
-        
-        //show popover?
-        if(YES != [preferences[PREF_SHOWED_POPOVER] boolValue])
-        {
-            //show it
-            [self showPopover];
-            
-            //update prefs
-            // only want to show once!
-            [self.daemonComms updatePreferences:@{PREF_SHOWED_POPOVER: [NSNumber numberWithBool:YES]}];
-        }
     }
     
     return self;

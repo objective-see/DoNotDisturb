@@ -30,6 +30,6 @@
 /* METHODS */
 
 //init
--(id)init:(NSMenu*)menu;
+-(id)init:(NSMenu*)menu firstTime:(BOOL)firstTime;
 
 @end

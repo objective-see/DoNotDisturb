@@ -112,10 +112,10 @@ bail:
     self.registrationInfo = @{@"Device Name": endpoint.name};
 
     //update preferences
-    if(YES != [preferences update:@{PREF_DEVICE_REGISTERED: @YES}])
+    if(YES != [preferences update:@{PREF_REGISTERED_DEVICE:endpoint.name}])
     {
         //err msg
-        logMsg(LOG_ERR, @"failed to updated preferences ('device registered' : YES)");
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to updated preferences ('device registered' : %@)", endpoint.name]);
     }
     
     //signal sema

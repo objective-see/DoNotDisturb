@@ -72,11 +72,11 @@ bail:
     BOOL result = NO;
     
     //init listener
-    listener = [[NSXPCListener alloc] initWithMachServiceName:HELPER_ID];
+    listener = [[NSXPCListener alloc] initWithMachServiceName:INSTALLER_HELPER_ID];
     if(nil == self.listener)
     {
         //err msg
-        syslog(LOG_ERR, "failed to create mach service %s", HELPER_ID.UTF8String);
+        syslog(LOG_ERR, "failed to create mach service %s", INSTALLER_HELPER_ID.UTF8String);
         
         //bail
         goto bail;
@@ -84,7 +84,7 @@ bail:
     
     //dbg msg
     #ifndef NDEBUG
-    syslog(LOG_NOTICE, "created mach service %s", HELPER_ID.UTF8String);
+    syslog(LOG_NOTICE, "created mach service %s", INSTALLER_HELPER_ID.UTF8String);
     #endif
     
     //set delegate

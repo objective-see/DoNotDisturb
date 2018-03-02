@@ -117,10 +117,22 @@ bail:
         {
             //dbg msg
             // and log to file
-            logMsg(LOG_DEBUG|LOG_TO_FILE, @"disabling...");
+            logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling...");
             
             //TODO: enabled
         }
+    }
+    
+    //device unregistered?
+    // can't pass in nil string, so remove
+    if( (nil != updates[PREF_REGISTERED_DEVICE]) &&
+        (0 == updates[PREF_REGISTERED_DEVICE]) )
+    {
+        //make mutable copy
+        updates = [NSMutableDictionary dictionaryWithDictionary:updates][PREF_REGISTERED_DEVICE] = nil;
+                   
+        
+
     }
     
     //add in (new) prefs

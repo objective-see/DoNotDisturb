@@ -228,7 +228,7 @@ bail:
     }
     
     //bless
-    if(YES != (BOOL)SMJobBless(kSMDomainSystemLaunchd, (__bridge CFStringRef)(HELPER_ID), authRef, &error))
+    if(YES != (BOOL)SMJobBless(kSMDomainSystemLaunchd, (__bridge CFStringRef)(INSTALLER_HELPER_ID), authRef, &error))
     {
         //err msg
         syslog(LOG_ERR, "ERROR: failed to bless job (%s)", ((__bridge NSError*)error).description.UTF8String);

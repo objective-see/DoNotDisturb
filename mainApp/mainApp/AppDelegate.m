@@ -12,15 +12,12 @@
 #import "Logging.h"
 #import "Utilities.h"
 #import "AppDelegate.h"
-#import "SyncViewController_One.h"
-#import "SyncViewController_Two.h"
-#import "SyncViewController_Three.h"
 
 @implementation AppDelegate
 
-@synthesize linkWindowController;
 @synthesize aboutWindowController;
 @synthesize prefsWindowController;
+@synthesize welcomeWindowController;
 
 //center window
 // also make front, init title bar, etc
@@ -31,14 +28,13 @@
     if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_INSTALL])
     {
         //alloc
-        linkWindowController = [[LinkWindowController alloc] initWithWindowNibName:@"Link"];
+        welcomeWindowController = [[WelcomeWindowController alloc] initWithWindowNibName:@"Welcome"];
         
         //center
-        [self.linkWindowController.window center];
+        [self.welcomeWindowController.window center];
         
         //key and front
-        [self.linkWindowController.window makeKeyAndOrderFront:self];
-        
+        [self.welcomeWindowController.window makeKeyAndOrderFront:self];
     }
     
     //otherewise show prefs
@@ -109,7 +105,7 @@
     if(nil == loginItemPID)
     {
         //lookup via bundle
-        loginItemPID = [getProcessIDs(HELPER_BUNDLE_ID, getuid()) firstObject];
+        loginItemPID = [getProcessIDs(HELPER_ID, getuid()) firstObject];
     }
     
     //already running and no restart?

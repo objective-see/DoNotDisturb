@@ -77,7 +77,6 @@ void logMsg(int level, NSString* msg)
     return;
 }
 
-//TODO: [@"/Library/Logs/" stringByAppendingPathComponent:LOG_FILE_NAME] ?
 //get path to log file
 NSString* logFilePath()
 {
@@ -119,21 +118,6 @@ BOOL initLogging()
     //log file path
     NSString* logPath = nil;
     
-    //TODO:?
-//    //create log directory if needed
-//    if(YES != [[NSFileManager defaultManager] fileExistsAtPath:supportDirectory()])
-//    {
-//        //create it
-//        if(YES != [[NSFileManager defaultManager] createDirectoryAtPath:supportDirectory() withIntermediateDirectories:YES attributes:nil error:NULL])
-//        {
-//            //err msg
-//            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to create directory (%@) for log file", supportDirectory()]);
-//
-//            //bail
-//            goto bail;
-//        }
-//    }
-//
     //get path to log file
     logPath = logFilePath();
     if(nil == logPath)
