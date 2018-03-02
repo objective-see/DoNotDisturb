@@ -35,7 +35,7 @@
 
 //generate a QRC code
 // gets QRC string from image, then generates image
--(void)generateQRC:(NSSize)size reply:(void (^)(NSImage* qrc))reply
+-(void)generateQRC:(float)size reply:(void (^)(NSImage* qrc))reply
 {
     //make request to daemon
     // give me a QRC code y0!
@@ -51,10 +51,10 @@
             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got qrc from daemon: %@", qrcData]);
             
             //save qrc info
-            self.qrcInfo = [[NSString alloc] initWithData:qrcData encoding:NSUTF8StringEncoding];
+            //self.qrcInfo = [[NSString alloc] initWithData:qrcData encoding:NSUTF8StringEncoding];
             
             //generate QRC image
-            qrcImage = [self generateImage:size];
+            qrcImage = [self generateImage:qrcData size:size];
         }
         
         //didn't get anything from the daemon/framework :(
@@ -72,6 +72,7 @@
     return;
 }
 
+/*
 //generate and scale a QRC image
 // based on: https://stackoverflow.com/a/23531217
 - (NSImage*)generateImage:(CGSize)size
@@ -209,5 +210,78 @@ bail:
 
     return qrcImage;
 }
+*/
+
+- (NSImage*)generateImage:(NSData*)data size:(float)size
+{
+    //qrc image
+    NSImage* qrcImage = nil;
+    
+    //filter
+    CIFilter *filter = NULL;
+    
+    //output image
+    CIImage *outputImage = NULL;
+    
+    //transformed image
+    CIImage *transformedImage = NULL;
+    
+    //image rep
+    NSCIImageRep* imageRep = nil;
+    
+    //extent
+    CGRect extent = {0};
+    
+    //scale
+    CGFloat scale = 0.0f;
+    
+    //transform
+    CGAffineTransform transform = {0};
+    
+    //init filter
+    filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    if(nil == filter)
+    {
+        //bail
+        goto bail;
+    }
+    
+    //set defaults
+    [filter setDefaults];
+    
+    //set data
+    [filter setValue:data forKey:@"inputMessage"];
+    
+    //set correction level
+    [filter setValue:@"Q" forKey:@"inputCorrectionLevel"];
+    
+    //grab output image
+    outputImage = filter.outputImage;
+    
+    //init extent
+    extent = outputImage.extent;
+    
+    //init scale
+    scale = MIN(size/extent.size.width, size/extent.size.height);
+    
+    //init transform
+    transform = CGAffineTransformMakeScale(scale, scale);
+    
+    //apply transform
+    transformedImage = [outputImage imageByApplyingTransform:transform];
+    
+    //generate image representation
+    imageRep = [NSCIImageRep imageRepWithCIImage:transformedImage];
+    
+    //init image
+    qrcImage = [[NSImage alloc] initWithSize:imageRep.size];
+    
+    //add representation
+    [qrcImage addRepresentation:imageRep];
+    
+bail:
+    return qrcImage;
+}
+
 
 @end

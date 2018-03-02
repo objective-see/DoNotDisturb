@@ -18,13 +18,13 @@
 @property(nonatomic, retain)DaemonComms* daemonComms;
 
 //qrc info (from daemon)
-@property(nonatomic, retain)NSString* qrcInfo;
+//@property(nonatomic, retain)NSData* qrcInfo;
 
 
 /* METHODS */
 
 //generate a QRC code
 // gets QRC string from image, then generates image
--(void)generateQRC:(NSSize)size reply:(void (^)(NSImage* qrc))reply;
+-(void)generateQRC:(float)size reply:(void (^)(NSImage* qrc))reply;
 
 @end

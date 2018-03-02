@@ -312,7 +312,7 @@
     [self.activityIndicator startAnimation:nil];
     
     //generate QRC
-    [qrcObj generateQRC:qrcSize reply:^(NSImage* qrcImage)
+    [qrcObj generateQRC:qrcSize.height reply:^(NSImage* qrcImage)
     {
         //nap to allow 'generating' msg to show up
         [NSThread sleepForTimeInterval:0.5f];

@@ -145,7 +145,7 @@
     qrcSize = self.qrcImageView.frame.size;
     
     //generate QRC
-    [qrcObj generateQRC:qrcSize reply:^(NSImage* qrcImage)
+    [qrcObj generateQRC:qrcSize.height reply:^(NSImage* qrcImage)
      {
          //nap to allow 'generating' msg to show up
          [NSThread sleepForTimeInterval:0.5f];
@@ -224,66 +224,5 @@
     
     return;
 }
-
-
-/*
-
-//switch (content) view
--(void)switchView:(NSUInteger)view parameters:(NSDictionary*)parameters
-{
-    switch(view)
-    {
-        //show 0st view
-        case SYNC_VIEW_ZERO:
-            
-            //init sync view controller
-            syncViewController = [[SyncViewController_Zero alloc] initWithNibName:@"SyncViewController_Zero" bundle:nil];
-            
-            break;
-            
-        //show 1st view
-        case SYNC_VIEW_ONE:
-            
-            //init sync view controller
-            syncViewController = [[SyncViewController_One alloc] initWithNibName:@"SyncViewController_One" bundle:nil];
-            
-            break;
-            
-        //show 2nd view
-        case SYNC_VIEW_TWO:
-            
-            //init sync view controller
-            syncViewController = [[SyncViewController_Two alloc] initWithNibName:@"SyncViewController_Two" bundle:nil];
-        
-            break;
-            
-        //show 3rd view
-        case SYNC_VIEW_THREE:
-            
-            //init sync view controller
-            syncViewController = [[SyncViewController_Three alloc] initWithNibName:@"SyncViewController_Three" bundle:nil];
-            
-            break;
-            
-        default:
-            break;
-    }
-    
-    //set params?
-    // also make sure obj has 'parameters' property
-    if( (nil != parameters) &&
-        (nil != class_getProperty([self.syncViewController class], "parameters")) )
-    {
-        //set
-        [self.syncViewController setValue:parameters forKey:@"parameters"];
-    }
-
-    //set it as content view
-    self.window.contentView = [self.syncViewController view];
-    
-    return;
-}
- 
-*/
 
 @end
