@@ -43,14 +43,15 @@
         logMsg(LOG_DEBUG, @"installing...");
         
         //already installed?
-        // uninstall everything first
+        // perform partial uninstall
         if(YES == [self isInstalled])
         {
             //dbg msg
-            logMsg(LOG_DEBUG, @"already installed, so uninstalling...");
+            logMsg(LOG_DEBUG, @"already installed, so uninstalling (partially)...");
             
             //uninstall
-            if(YES != [self uninstall])
+            // but do partial
+            if(YES != [self uninstall:NO])
             {
                 //bail
                 goto bail;
@@ -78,8 +79,8 @@
         logMsg(LOG_DEBUG, @"uninstalling...");
         
         //uninstall
-        // and relaunch Finder
-        if(YES != [self uninstall])
+        // do full to remove all
+        if(YES != [self uninstall:YES])
         {
             //bail
             goto bail;
@@ -283,7 +284,6 @@ bail:
 }
 
 //install
-// a)
 -(BOOL)install
 {
     //return/status var
@@ -321,8 +321,7 @@ bail:
 }
 
 //uninstall
-// a)
--(BOOL)uninstall
+-(BOOL)uninstall:(BOOL)full
 {
     //return/status var
     __block BOOL wasUninstalled = NO;
@@ -350,7 +349,7 @@ bail:
     };
     
     //install
-    [xpcComms uninstall:block];
+    [xpcComms uninstall:full reply:block];
     
     //wait for install to be completed by XPC
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);

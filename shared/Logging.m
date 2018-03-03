@@ -130,11 +130,18 @@ BOOL initLogging()
     }
     
     //first time
-    // create
+    // create log file
     if(YES != [[NSFileManager defaultManager] fileExistsAtPath:logPath])
     {
         //create
-        [[NSFileManager defaultManager] createFileAtPath:logPath contents:nil attributes:nil];
+        if(YES != [[NSFileManager defaultManager] createFileAtPath:logPath contents:nil attributes:nil])
+        {
+            //err msg
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to create %@", logPath]);
+            
+            //bail
+            goto bail;
+        }
     }
     
     //get file handle

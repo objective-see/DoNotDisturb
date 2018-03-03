@@ -18,7 +18,7 @@
 -(void)install:(NSString*)app reply:(void (^)(NSNumber*))reply;
 
 //uninstall
--(void)uninstall:(NSString*)app reply:(void (^)(NSNumber*))reply;
+-(void)uninstall:(NSString*)app full:(BOOL)full reply:(void (^)(NSNumber*))reply;
 
 //remove (self)
 -(void)remove;

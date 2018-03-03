@@ -26,7 +26,8 @@
 -(void)install:(void (^)(NSNumber*))reply;
 
 //uninstall
--(void)uninstall:(void (^)(NSNumber*))reply;
+// take flag to indicate full/partial
+-(void)uninstall:(BOOL)full reply:(void (^)(NSNumber*))reply;
 
 //remove
 -(void)remove;

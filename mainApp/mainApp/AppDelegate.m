@@ -113,9 +113,7 @@
         (YES != shouldRestart) )
     {
         //dbg msg
-        #ifndef NDEBUG
         logMsg(LOG_DEBUG, @"login item already running and 'shouldRestart' not set, so no need to start it");
-        #endif
         
         //happy
         result = YES;
@@ -132,26 +130,21 @@
         kill(loginItemPID.unsignedShortValue, SIGKILL);
         
         //dbg msg
-        #ifndef NDEBUG
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"killed login item (%@)", loginItemPID]);
-        #endif
         
         //nap
         [NSThread sleepForTimeInterval:0.5];
     }
-    
-    #ifndef NDEBUG
+   
+    //dbg msg
     else
     {
         //dbg msg
         logMsg(LOG_DEBUG, @"did not find running instance of login item\n");
     }
-    #endif
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, @"starting (helper) login item\n");
-    #endif
     
     //start (helper) login item
     // 'open -g' prevents focus loss!
@@ -160,7 +153,6 @@
     //happy
     result = YES;
     
-//bail
 bail:
 
     return result;

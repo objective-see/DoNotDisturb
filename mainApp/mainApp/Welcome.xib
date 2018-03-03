@@ -24,12 +24,12 @@
         <window title="Do Not Disturb" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="700" height="350"/>
+            <rect key="contentRect" x="196" y="240" width="800" height="500"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <value key="minSize" type="size" width="700" height="350"/>
-            <value key="maxSize" type="size" width="700" height="350"/>
+            <value key="minSize" type="size" width="800" height="500"/>
+            <value key="maxSize" type="size" width="800" height="500"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="700" height="350"/>
+                <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
                 <autoresizingMask key="autoresizingMask"/>
             </view>
             <connections>
@@ -38,50 +38,33 @@
             <point key="canvasLocation" x="161" y="11"/>
         </window>
         <customView id="vZ0-Uk-9P1" userLabel="Welcome">
-            <rect key="frame" x="0.0" y="0.0" width="700" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box fixedFrame="YES" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="7Na-zM-BHE">
-                    <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
+                    <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" ambiguous="YES" id="PIc-fG-tt2">
-                        <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="4jx-6J-8Qs">
+                                <rect key="frame" x="705" y="6" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Inb-Xk-JTx">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="buttonHandler:" target="-2" id="6xK-AH-ZMi"/>
+                                </connections>
+                            </button>
+                        </subviews>
                     </view>
                     <color key="fillColor" red="0.57793885469999995" green="0.75859862570000003" blue="0.2368842065" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </box>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="660" translatesAutoresizingMaskIntoConstraints="NO" id="S1K-AE-ect">
-                    <rect key="frame" x="119" y="276" width="338" height="54"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Welcome to" id="8Q5-lM-xUm">
-                        <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button verticalHuggingPriority="750" fixedFrame="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="4jx-6J-8Qs">
-                    <rect key="frame" x="605" y="6" width="81" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Inb-Xk-JTx">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="buttonHandler:" target="-2" id="6xK-AH-ZMi"/>
-                    </connections>
-                </button>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wqY-rf-Jqa">
-                    <rect key="frame" x="121" y="216" width="277" height="76"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dndText" id="nQo-jI-R0D"/>
-                </imageView>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BFC-HP-Dr3">
-                    <rect key="frame" x="0.0" y="200" width="131" height="150"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dndIcon" id="6Cb-sD-QOE"/>
-                </imageView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="660" translatesAutoresizingMaskIntoConstraints="NO" id="cxG-zN-szL">
-                    <rect key="frame" x="34" y="75" width="584" height="108"/>
+                    <rect key="frame" x="79" y="127" width="584" height="108"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="DoNotDistrurb detects 'evil maid' attacks,  alerting you if somebody tampers with your laptop!" id="tYf-YX-PsV">
                         <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
@@ -89,18 +72,65 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="660" translatesAutoresizingMaskIntoConstraints="NO" id="S1K-AE-ect">
+                    <rect key="frame" x="139" y="370" width="338" height="54"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Welcome to" id="8Q5-lM-xUm">
+                        <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wqY-rf-Jqa">
+                    <rect key="frame" x="141" y="310" width="277" height="76"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dndText" id="nQo-jI-R0D"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BFC-HP-Dr3">
+                    <rect key="frame" x="20" y="294" width="131" height="150"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dndIcon" id="6Cb-sD-QOE"/>
+                </imageView>
             </subviews>
             <point key="canvasLocation" x="-156" y="647"/>
         </customView>
         <customView id="Saf-Qg-NBo" userLabel="App Info">
-            <rect key="frame" x="0.0" y="0.0" width="700" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="660" translatesAutoresizingMaskIntoConstraints="NO" id="qwA-lo-6xT">
+                    <rect key="frame" x="68" y="426" width="664" height="54"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Let's link with your iPhone to enable mobile alerts" id="SFE-Jt-OYq">
+                        <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgC-yZ-fp2">
+                    <rect key="frame" x="342" y="257" width="116" height="73"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="unconnected" id="Mpj-kB-q4i"/>
+                </imageView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSA-l2-uw1">
+                    <rect key="frame" x="458" y="232" width="142" height="124"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="mobilePhone" id="ijd-WJ-9VT"/>
+                </imageView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="OFG-Gz-3rE">
+                    <rect key="frame" x="204" y="174" width="392" height="37"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Download 'Do Not Disturb' from the iOS App Store" id="MAH-fc-gnv">
+                        <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <box fixedFrame="YES" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NnT-va-Qf1">
-                    <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
+                    <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" ambiguous="YES" id="mzy-tf-VV5">
-                        <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="XhZ-7d-es8">
@@ -114,63 +144,35 @@
                                     <action selector="buttonHandler:" target="-2" id="skW-Zf-sd1"/>
                                 </connections>
                             </button>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="k0d-RO-RST">
+                                <rect key="frame" x="715" y="6" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7AI-8x-NIJ">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="buttonHandler:" target="-2" id="t7N-UK-K2k"/>
+                                </connections>
+                            </button>
                         </subviews>
                     </view>
                     <color key="fillColor" red="0.57793885469999995" green="0.75859862570000003" blue="0.2368842065" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </box>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="660" translatesAutoresizingMaskIntoConstraints="NO" id="qwA-lo-6xT">
-                    <rect key="frame" x="18" y="286" width="664" height="54"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Let's link with your iPhone to enable mobile alerts" id="SFE-Jt-OYq">
-                        <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Stm-VG-w3v">
-                    <rect key="frame" x="184" y="132" width="138" height="124"/>
+                    <rect key="frame" x="206" y="232" width="138" height="124"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="laptop" id="tNr-00-iNk"/>
                 </imageView>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hgC-yZ-fp2">
-                    <rect key="frame" x="292" y="157" width="116" height="73"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="unconnected" id="Mpj-kB-q4i"/>
-                </imageView>
-                <button verticalHuggingPriority="750" fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="k0d-RO-RST">
-                    <rect key="frame" x="605" y="7" width="81" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="next" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7AI-8x-NIJ">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="buttonHandler:" target="-2" id="t7N-UK-K2k"/>
-                    </connections>
-                </button>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tSA-l2-uw1">
-                    <rect key="frame" x="355" y="132" width="142" height="124"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="mobilePhone" id="ijd-WJ-9VT"/>
-                </imageView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="OFG-Gz-3rE">
-                    <rect key="frame" x="154" y="74" width="392" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Download 'Do Not Disturb' from the iOS App Store" id="MAH-fc-gnv">
-                        <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
             </subviews>
-            <point key="canvasLocation" x="640" y="647"/>
+            <point key="canvasLocation" x="775" y="647"/>
         </customView>
         <customView id="klO-RE-i9P" userLabel="QRC">
-            <rect key="frame" x="0.0" y="0.0" width="700" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yoQ-iS-XGg">
-                    <rect key="frame" x="66" y="83" width="412" height="37"/>
+                    <rect key="frame" x="66" y="233" width="412" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" id="Zmn-6A-0Bw">
                         <font key="font" size="20" name="AvenirNext-Regular"/>
@@ -179,21 +181,21 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="593" translatesAutoresizingMaskIntoConstraints="NO" id="Ruw-7G-qEy">
-                    <rect key="frame" x="72" y="58" width="597" height="73"/>
+                    <rect key="frame" x="18" y="51" width="764" height="73"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="n30-ie-4Th">
                         <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
-                        <string key="title">Open 'Do Not Disturb' on your iPhone, and navigate to Settings &gt; Linked Devices . Then, click the button to add a new device and scan the QRC code above.</string>
+                        <string key="title">Open 'Do Not Disturb' on your iPhone, and navigate to Settings &gt; Linked Devices .  Then, click the button to add a new device and scan the QRC code above.</string>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="12Q-wb-usj">
-                    <rect key="frame" x="334" y="223" width="32" height="32"/>
+                    <rect key="frame" x="384" y="291" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="nZq-LD-wqh" userLabel="Activity Message">
-                    <rect key="frame" x="154" y="178" width="392" height="37"/>
+                    <rect key="frame" x="204" y="231" width="392" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qr code..." id="ABh-sL-M2F">
                         <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
@@ -201,54 +203,34 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mos-zb-KRK">
-                    <rect key="frame" x="250" y="130" width="200" height="200"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="0qe-8u-Pkt"/>
-                </imageView>
                 <box fixedFrame="YES" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="BXe-qj-owp">
-                    <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
+                    <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <view key="contentView" ambiguous="YES" id="iFU-Dc-cDx">
-                        <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <color key="fillColor" red="0.57793885469999995" green="0.75859862570000003" blue="0.2368842065" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </box>
+                <imageView hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mos-zb-KRK">
+                    <rect key="frame" x="225" y="132" width="350" height="350"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" id="0qe-8u-Pkt"/>
+                </imageView>
             </subviews>
-            <point key="canvasLocation" x="-156" y="1104"/>
+            <point key="canvasLocation" x="-206" y="1241"/>
         </customView>
         <customView id="Bbb-NZ-tuF" userLabel="Linked">
-            <rect key="frame" x="0.0" y="0.0" width="700" height="350"/>
+            <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <box fixedFrame="YES" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NnY-68-gg7">
-                    <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <view key="contentView" ambiguous="YES" id="hEA-Lw-ebi">
-                        <rect key="frame" x="0.0" y="0.0" width="700" height="48"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <color key="fillColor" red="0.57793885469999995" green="0.75859862570000003" blue="0.2368842065" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                </box>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dlj-rL-OtJ">
-                    <rect key="frame" x="125" y="166" width="138" height="124"/>
+                    <rect key="frame" x="143" y="243" width="138" height="124"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="imageCell:fsG-IN-kmB:image" id="fsG-IN-kmB"/>
                 </imageView>
-                <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="SCr-nL-4pA">
-                    <rect key="frame" x="605" y="7" width="81" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="done!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jhe-Eu-d4x">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="buttonHandler:" target="-2" id="w27-1W-Z32"/>
-                    </connections>
-                </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mFe-eu-nNm">
-                    <rect key="frame" x="19" y="123" width="350" height="54"/>
+                    <rect key="frame" x="18" y="200" width="388" height="54"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="computer name" id="B82-Kt-J55">
                         <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
@@ -257,7 +239,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cwA-Cr-acf">
-                    <rect key="frame" x="357" y="123" width="287" height="54"/>
+                    <rect key="frame" x="410" y="200" width="372" height="54"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="device name" id="JR5-gF-Rl0">
                         <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
@@ -266,17 +248,39 @@
                     </textFieldCell>
                 </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="el0-YG-hlI">
-                    <rect key="frame" x="292" y="191" width="116" height="73"/>
+                    <rect key="frame" x="342" y="268" width="116" height="73"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="connected" id="2qd-A0-Gc0"/>
                 </imageView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cy2-Ge-A0C">
-                    <rect key="frame" x="429" y="166" width="142" height="124"/>
+                    <rect key="frame" x="525" y="243" width="142" height="124"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="linked" id="Uwi-Sw-FOC"/>
                 </imageView>
+                <box fixedFrame="YES" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="NnY-68-gg7">
+                    <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <view key="contentView" ambiguous="YES" id="hEA-Lw-ebi">
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="SCr-nL-4pA">
+                                <rect key="frame" x="705" y="6" width="81" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="done!" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Jhe-Eu-d4x">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="buttonHandler:" target="-2" id="w27-1W-Z32"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </view>
+                    <color key="fillColor" red="0.57793885469999995" green="0.75859862570000003" blue="0.2368842065" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                </box>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="255" translatesAutoresizingMaskIntoConstraints="NO" id="fE2-xo-kPg">
-                    <rect key="frame" x="221" y="56" width="259" height="41"/>
+                    <rect key="frame" x="271" y="93" width="259" height="41"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="computer + device linked!" id="g1b-at-EsL">
                         <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
@@ -285,7 +289,7 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="640" y="1104"/>
+            <point key="canvasLocation" x="757" y="1270"/>
         </customView>
     </objects>
     <resources>

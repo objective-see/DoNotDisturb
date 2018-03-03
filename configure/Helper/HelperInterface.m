@@ -73,7 +73,7 @@ bail:
 
 //uninstall
 // do uninstall logic and return result
--(void)uninstall:(NSString*)app reply:(void (^)(NSNumber*))reply;
+-(void)uninstall:(NSString*)app full:(BOOL)full reply:(void (^)(NSNumber*))reply;
 {
     //results
     NSNumber* result = nil;
@@ -107,7 +107,7 @@ bail:
     
     //configure
     // pass in 'install' flag and console user
-    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-uninstall", consoleUser.stringValue]]];
+    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-uninstall", consoleUser.stringValue, [NSNumber numberWithBool:full].stringValue]]];
     
 bail:
     
@@ -394,11 +394,21 @@ bail:
     //exec script
     results = execTask(script, arguments, YES);
     
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"executed script: %@", results]);
+    
     //grab result
     if(nil != results)
     {
         //grab
         result = [results[EXIT_CODE] intValue];
+    }
+    
+    //no output means error
+    // i.e. task exception, etc
+    else
+    {
+        result = -1;
     }
     
     //(re)set current working directory

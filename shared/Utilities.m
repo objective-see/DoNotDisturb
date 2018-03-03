@@ -424,6 +424,9 @@ NSMutableDictionary* execTask(NSString* binaryPath, NSArray* arguments, BOOL sho
     }
     @catch(NSException *exception)
     {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to launch task (%@)", exception]);
+        
         //bail
         goto bail;
     }

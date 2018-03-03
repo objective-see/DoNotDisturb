@@ -10,6 +10,7 @@
 @import Foundation;
 
 #import "Consts.h"
+#import "Logging.h"
 #import "AppDelegate.h"
 #import "HelperComms.h"
 
@@ -44,13 +45,13 @@
 -(void)install:(void (^)(NSNumber*))reply
 {
     //dbg msg
-    NSLog(@"installing");
+    logMsg(LOG_DEBUG, @"installing");
     
     //install
     [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
     {
         //err msg
-        NSLog(@"failed to execute 'install' method on helper tool (error: %@)", proxyError);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'install' method on helper tool (error: %@)", proxyError]);
         
         //invoke block
         reply([NSNumber numberWithInt:-1]);
@@ -66,25 +67,25 @@
 
 //uninstall
 // note: XPC is async, so return logic handled in callback block
--(void)uninstall:(void (^)(NSNumber*))reply
+-(void)uninstall:(BOOL)full reply:(void (^)(NSNumber*))reply
 {
     //dbg msg
-    NSLog(@"uninstalling");
+    logMsg(LOG_DEBUG, @"uninstalling");
     
     //uninstall
     [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
-      {
+    {
           //err msg
-          NSLog(@"failed to execute 'uninstall' method on helper tool (error: %@)", proxyError);
+          logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'uninstall' method on helper tool (error: %@)", proxyError]);
           
           //invoke block
           reply([NSNumber numberWithInt:-1]);
           
-      }] uninstall:[[NSBundle mainBundle] bundlePath] reply:^(NSNumber* result)
-     {
+    }] uninstall:[[NSBundle mainBundle] bundlePath] full:(BOOL)full reply:^(NSNumber* result)
+    {
          //invoke block
          reply(result);
-     }];
+    }];
     
     return;
 }
@@ -93,14 +94,14 @@
 -(void)remove
 {
     //dbg msg
-    NSLog(@"removing");
+    logMsg(LOG_DEBUG, @"removing");
     
     //remove
     [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
     {
-          //err msg
-          NSLog(@"failed to execute 'remove' method on helper tool (error: %@)", proxyError);
-          
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'remove' method on helper tool (error: %@)", proxyError]);
+        
     }] remove];
     
     return;

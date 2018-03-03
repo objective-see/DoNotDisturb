@@ -11,12 +11,10 @@
 #import "Preferences.h"
 #import "FrameworkInterface.h"
 
-
 //global prefs obj
 extern Preferences* preferences;
 
 @implementation FrameworkInterface
-
 
 @synthesize identity;
 
