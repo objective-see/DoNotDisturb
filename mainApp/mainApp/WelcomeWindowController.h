@@ -34,6 +34,12 @@
 //linked view
 @property (strong) IBOutlet NSView *linkedView;
 
+//host name
+@property (weak) IBOutlet NSTextField *hostName;
+
+//(registered) device name
+@property (weak) IBOutlet NSTextField *deviceName;
+
 //welcome view controller
 @property(nonatomic, retain)NSViewController* welcomeViewController;
 

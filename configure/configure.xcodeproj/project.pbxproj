@@ -26,6 +26,7 @@
 		CD17D55320104EE700F798D7 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D54B20104EE700F798D7 /* AboutWindowController.m */; };
 		CD17D55E201148F900F798D7 /* configure.sh in Resources */ = {isa = PBXBuildFile; fileRef = CD17D55D201148F900F798D7 /* configure.sh */; };
 		CD17D56320116C3800F798D7 /* com.objective-see.dnd.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD17D56220116C3800F798D7 /* com.objective-see.dnd.plist */; };
+		CD2F4082204B462E0066673E /* dndText.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24A20226DFB0032F2E6 /* dndText.png */; };
 		CD3307AE203567D500F10D71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD3307AD203567D400F10D71 /* Assets.xcassets */; };
 		CD73DA912004629D001FFC84 /* HelperInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA902004629D001FFC84 /* HelperInterface.m */; };
 		CD73DA942004633A001FFC84 /* HelperListener.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA9220046339001FFC84 /* HelperListener.m */; };
@@ -33,13 +34,11 @@
 		CD73DA9620046548001FFC84 /* HelperListener.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA9220046339001FFC84 /* HelperListener.m */; };
 		CD73DA99200490B4001FFC84 /* HelperComms.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA97200490B4001FFC84 /* HelperComms.m */; };
 		CDAAC241202255580032F2E6 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAAC23F202255580032F2E6 /* Utilities.m */; };
-		CDAAC242202257A10032F2E6 /* Utilities.m in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC23F202255580032F2E6 /* Utilities.m */; };
 		CDAAC243202257D70032F2E6 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAAC23F202255580032F2E6 /* Utilities.m */; };
 		CDAAC244202257FC0032F2E6 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D53820104DD700F798D7 /* Logging.m */; };
 		CDAAC24B20226DFB0032F2E6 /* objectiveSee.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24720226DFB0032F2E6 /* objectiveSee.png */; };
 		CDAAC24C20226DFB0032F2E6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24820226DFB0032F2E6 /* logo.png */; };
 		CDAAC24D20226DFB0032F2E6 /* dndIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24920226DFB0032F2E6 /* dndIcon.png */; };
-		CDAAC24E20226DFB0032F2E6 /* dndText.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24A20226DFB0032F2E6 /* dndText.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -331,7 +330,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDAAC242202257A10032F2E6 /* Utilities.m in Resources */,
+				CD2F4082204B462E0066673E /* dndText.png in Resources */,
 				CD17D54D20104EE700F798D7 /* ErrorWindowController.xib in Resources */,
 				CDAAC24C20226DFB0032F2E6 /* logo.png in Resources */,
 				CD17D56320116C3800F798D7 /* com.objective-see.dnd.plist in Resources */,
@@ -339,7 +338,6 @@
 				BF65C19111B985C0007C20AB /* MainMenu.xib in Resources */,
 				CD17D55E201148F900F798D7 /* configure.sh in Resources */,
 				CDAAC24D20226DFB0032F2E6 /* dndIcon.png in Resources */,
-				CDAAC24E20226DFB0032F2E6 /* dndText.png in Resources */,
 				CD17D54E20104EE700F798D7 /* AboutWindow.xib in Resources */,
 				CD3307AE203567D500F10D71 /* Assets.xcassets in Resources */,
 				CD17D55120104EE700F798D7 /* ConfigureWindowController.xib in Resources */,

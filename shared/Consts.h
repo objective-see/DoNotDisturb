@@ -88,19 +88,10 @@
 #define ACTION_INSTALL_FLAG 1
 
 //flag for partial uninstall (leave prefs?)
-#define UNINSTALL_PARIAL 0
+#define UNINSTALL_PARTIAL 0
 
 //flag for full uninstall
 #define UNINSTALL_FULL 1
-
-//OS version x
-#define OS_MAJOR_VERSION_X 10
-
-//OS minor version yosemite
-#define OS_MINOR_VERSION_YOSEMITE 10
-
-//OS minor version el capitan
-#define OS_MINOR_VERSION_EL_CAPITAN 11
 
 //path to pkill
 #define PKILL @"/usr/bin/pkill"
@@ -212,6 +203,12 @@
 //alert key
 // timestamp
 #define ALERT_TIMESTAMP @"timestamp"
+
+//key for device name
+#define KEY_DEVICE_NAME @"deviceName"
+
+//key for host name
+#define KEY_HOST_NAME @"hostName"
 
 /* LOGIN ITEM */
 

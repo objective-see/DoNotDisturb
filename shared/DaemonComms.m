@@ -37,9 +37,6 @@
     return self;
 }
 
-
-//TODO: make sync?
-
 //ask daemon for QRC info
 // name, uuid, key, key size, etc...
 -(void)qrcRequest:(void (^)(NSData* qrcInfo))reply
@@ -67,7 +64,7 @@
 -(void)recvRegistrationACK:(void (^)(NSDictionary* registrationInfo))reply
 {
     //dbg msg
-    logMsg(LOG_DEBUG, @"sending request, via XPC, for recv registration info");
+    logMsg(LOG_DEBUG, @"sending request, via XPC, for recv registration ack/info");
     
     //recv registration info
     // note: this will block until phone pings server
@@ -126,7 +123,6 @@
     
     return preferences;
 }
-
 
 //update (save) preferences
 -(void)updatePreferences:(NSDictionary*)preferences

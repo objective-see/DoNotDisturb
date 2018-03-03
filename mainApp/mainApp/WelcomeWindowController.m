@@ -7,6 +7,7 @@
 //
 
 #import "Consts.h"
+#import "Logging.h"
 #import "Utilities.h"
 #import "DaemonComms.h"
 #import "QuickResponseCode.h"
@@ -108,7 +109,7 @@
             break;
         }
             
-        //qrc
+        //linked view
         case VIEW_LINKED:
         {
             //exit
@@ -146,7 +147,7 @@
     
     //generate QRC
     [qrcObj generateQRC:qrcSize.height reply:^(NSImage* qrcImage)
-     {
+    {
          //nap to allow 'generating' msg to show up
          [NSThread sleepForTimeInterval:0.5f];
          
@@ -187,15 +188,32 @@
          // this will block until phone linking/registration is complete
          [daemonComms recvRegistrationACK:^(NSDictionary* registrationInfo)
          {
-              //switch to final view
-              // on main thread since it's UI-related
-              dispatch_sync(dispatch_get_main_queue(), ^{
+             //dbg msg
+             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"received registration ack/info from server/daemon: %@", registrationInfo]);
+             
+             //switch to final view
+             // on main thread since it's UI-related
+             dispatch_sync(dispatch_get_main_queue(),
+             ^{
+                 //set computer (host) name
+                 if(nil != registrationInfo[KEY_HOST_NAME])
+                 {
+                     //set
+                    self.hostName.stringValue = registrationInfo[KEY_HOST_NAME];
+                 }
+                 
+                 //set device name
+                 if(nil != registrationInfo[KEY_DEVICE_NAME])
+                 {
+                     //set
+                     self.deviceName.stringValue = registrationInfo[KEY_DEVICE_NAME];
+                 }
                   
-                  //remove prev. subview
-                  [[[self.window.contentView subviews] lastObject] removeFromSuperview];
-                  
-                  //set view
-                  [self.window.contentView addSubview:self.linkedView];
+                //remove prev. subview
+                [[[self.window.contentView subviews] lastObject] removeFromSuperview];
+
+                //set view
+                [self.window.contentView addSubview:self.linkedView];
                   
               });
               

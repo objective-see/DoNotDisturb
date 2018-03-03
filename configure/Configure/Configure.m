@@ -51,7 +51,7 @@
             
             //uninstall
             // but do partial
-            if(YES != [self uninstall:NO])
+            if(YES != [self uninstall:UNINSTALL_PARTIAL])
             {
                 //bail
                 goto bail;
@@ -80,7 +80,7 @@
         
         //uninstall
         // do full to remove all
-        if(YES != [self uninstall:YES])
+        if(YES != [self uninstall:UNINSTALL_FULL])
         {
             //bail
             goto bail;

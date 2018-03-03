@@ -48,7 +48,7 @@
         if(0 != qrcData.length)
         {
             //dbg msg
-            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got qrc from daemon: %@", qrcData]);
+            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got qrc from daemon (size: %lu)", (unsigned long)qrcData.length]);
             
             //save qrc info
             //self.qrcInfo = [[NSString alloc] initWithData:qrcData encoding:NSUTF8StringEncoding];

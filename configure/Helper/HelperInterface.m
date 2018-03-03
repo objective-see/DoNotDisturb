@@ -32,36 +32,32 @@ dispatch_source_t dispatchSource = nil;
     //results
     NSNumber* result = nil;
     
-    //console user
-    NSNumber* consoleUser = 0;
+    //console uid
+    NSNumber* consoleUID = 0;
     
     //init result
     result = @(-1);
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_NOTICE, [NSString stringWithFormat:@"XPC-request: install (%@)", app]);
-    #endif
     
     //get console uid
-    consoleUser = getConsoleUID();
-    if(nil == consoleUser)
+    consoleUID = getConsoleUID();
+    if(nil == consoleUID)
     {
         //err msg
-        logMsg(LOG_ERR, @"failed to determine console user");
+        logMsg(LOG_ERR, @"failed to determine console user id");
         
         //bail
         goto bail;
     }
     
     //dbg msg
-    #ifndef NDEBUG
-    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"console user: %@", consoleUser]);
-    #endif
-    
+    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"console uid: %@", consoleUID]);
+
     //configure
-    // pass in 'install' flag and console user
-    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-install", consoleUser.stringValue]]];
+    // pass in 'install' flag and console uid
+    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-install", consoleUID.stringValue]]];
     
 bail:
     
@@ -78,36 +74,32 @@ bail:
     //results
     NSNumber* result = nil;
     
-    //console user
-    NSNumber* consoleUser = 0;
+    //console uid
+    NSNumber* consoleUID = 0;
     
     //init result
     result = @(-1);
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, @"XPC-request: uninstall");
-    #endif
     
     //get console uid
-    consoleUser = getConsoleUID();
-    if(nil == consoleUser)
+    consoleUID = getConsoleUID();
+    if(nil == consoleUID)
     {
         //err msg
-        logMsg(LOG_ERR, @"failed to determine console user");
+        logMsg(LOG_ERR, @"failed to determine console uid");
         
         //bail
         goto bail;
     }
     
     //dbg msg
-    #ifndef NDEBUG
-    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"console user: %@", consoleUser]);
-    #endif
+    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"console uid: %@", consoleUID]);
     
     //configure
-    // pass in 'install' flag and console user
-    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-uninstall", consoleUser.stringValue, [NSNumber numberWithBool:full].stringValue]]];
+    // pass in 'uninstall' flag, console uid, and partial/full
+    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-uninstall", consoleUID.stringValue, [NSNumber numberWithBool:full].stringValue]]];
     
 bail:
     
@@ -139,9 +131,7 @@ bail:
     }
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"validated %@", app]);
-    #endif
     
     //exec script
     result = [self execScript:validatedApp arguments:args];

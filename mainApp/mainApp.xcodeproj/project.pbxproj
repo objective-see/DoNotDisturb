@@ -37,6 +37,8 @@
 		CD17D58B201A7F8500F798D7 /* WelcomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D589201A7F8500F798D7 /* WelcomeWindowController.m */; };
 		CD17D58C201A7F8500F798D7 /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D58A201A7F8500F798D7 /* Welcome.xib */; };
 		CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58E201A827A00F798D7 /* QuickResponseCode.m */; };
+		CD2F407F204B417E0066673E /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F407E204B417E0066673E /* alert.png */; };
+		CD2F4081204B41C90066673E /* hacker.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F4080204B41C90066673E /* hacker.png */; };
 		CD3307D720365CF500F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D520365CF500F10D71 /* Exception.m */; };
 		CDAAC213201D0CD90032F2E6 /* three.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC212201D0CD80032F2E6 /* three.png */; };
 		CDAAC215201D2DD30032F2E6 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC214201D2DD30032F2E6 /* checkbox.png */; };
@@ -109,6 +111,8 @@
 		CD17D58A201A7F8500F798D7 /* Welcome.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Welcome.xib; sourceTree = "<group>"; };
 		CD17D58D201A827A00F798D7 /* QuickResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickResponseCode.h; sourceTree = "<group>"; };
 		CD17D58E201A827A00F798D7 /* QuickResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickResponseCode.m; sourceTree = "<group>"; };
+		CD2F407E204B417E0066673E /* alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
+		CD2F4080204B41C90066673E /* hacker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hacker.png; sourceTree = "<group>"; };
 		CD3307D520365CF500F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../shared/Exception.m; sourceTree = "<group>"; };
 		CD3307D620365CF500F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../shared/Exception.h; sourceTree = "<group>"; };
 		CDAAC212201D0CD80032F2E6 /* three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = three.png; sourceTree = "<group>"; };
@@ -219,6 +223,8 @@
 		7D564DD31F18441500B8AAD6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CD2F4080204B41C90066673E /* hacker.png */,
+				CD2F407E204B417E0066673E /* alert.png */,
 				CDAAC21A201D77390032F2E6 /* connected.png */,
 				CDAAC21B201D77390032F2E6 /* unconnected.png */,
 				CDAAC218201D72780032F2E6 /* linked.png */,
@@ -339,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD17D56E20178DFC00F798D7 /* mobilePhone.png in Resources */,
+				CD2F407F204B417E0066673E /* alert.png in Resources */,
 				CD17D58C201A7F8500F798D7 /* Welcome.xib in Resources */,
 				CE0F559C1FD408BB00529259 /* dndText.png in Resources */,
 				7DD2BF461F1C2B4200B33214 /* logo.png in Resources */,
@@ -360,6 +367,7 @@
 				7D564DDC1F18441500B8AAD6 /* AboutWindow.xib in Resources */,
 				7D564DB61F18434F00B8AAD6 /* MainMenu.xib in Resources */,
 				CDAAC21D201D77390032F2E6 /* unconnected.png in Resources */,
+				CD2F4081204B41C90066673E /* hacker.png in Resources */,
 				CE968A9F1FCC66A300AD6B78 /* prefsAction.png in Resources */,
 				7D564DDB1F18441500B8AAD6 /* MainMenu.xib in Resources */,
 				CDAAC217201D54C30032F2E6 /* prefsLink.png in Resources */,

@@ -108,8 +108,9 @@ bail:
     //dbg msg
     logMsg(LOG_DEBUG, @"delegate callback (from framework) 'didDeviceRegister' invoked");
     
-    //save device name
-    self.registrationInfo = @{@"Device Name": endpoint.name};
+    //save info
+    // also add host name
+    self.registrationInfo = @{KEY_DEVICE_NAME: endpoint.name, KEY_HOST_NAME:[[NSHost currentHost] localizedName]};
 
     //update preferences
     if(YES != [preferences update:@{PREF_REGISTERED_DEVICE:endpoint.name}])
@@ -134,7 +135,10 @@ bail:
     DNDClientMac *client = nil;
     
     //dbg msg
-    logMsg(LOG_DEBUG, @"XPC request: recv registration ACK");
+    logMsg(LOG_DEBUG, @"XPC request: recv registration ack/info");
+    
+    //reset any registration info
+    self.registrationInfo = nil;
 
     //init registration sema
     if(0 == self.registrationSema)
@@ -153,9 +157,12 @@ bail:
     
     //set delegate
     client.delegate = self;
-
+    
     //listen on 'device registered' topic
     [client listenOnDelegate:@[client.deviceRegisteredTopic]];
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"listening on 'deviceRegisteredTopic' topic...");
     
     //wait until registration info has come back
     dispatch_semaphore_wait(self.registrationSema, DISPATCH_TIME_FOREVER);
@@ -175,7 +182,6 @@ bail:
 }
 
 //update preferences
-// TODO: return BOOL?
 -(void)updatePreferences:(NSDictionary *)prefs
 {
     //dbg msg
