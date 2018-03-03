@@ -9,18 +9,20 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PrefsWindowController">
             <connections>
                 <outlet property="actionView" destination="fC3-ls-u3Y" id="S6u-FV-nN2"/>
-                <outlet property="activityIndicator" destination="bCB-5L-mdQ" id="QXP-9v-Q7J"/>
-                <outlet property="activityMessage" destination="JOg-EO-7nX" id="mea-Ze-oFq"/>
-                <outlet property="computerName" destination="13Y-Ot-CSc" id="PkX-04-UNL"/>
+                <outlet property="activityIndicator" destination="pUS-KZ-De6" id="Ax9-Zm-1bk"/>
+                <outlet property="activityMessage" destination="Lu9-bx-bBG" id="zN9-HV-VG6"/>
                 <outlet property="deviceName" destination="947-ZA-lYL" id="q5z-KH-yYw"/>
                 <outlet property="executeAction" destination="1z0-vD-5Vz" id="v4k-Xf-tks"/>
                 <outlet property="executePath" destination="eWd-63-7Gn" id="Qy2-9f-I1y"/>
                 <outlet property="generalView" destination="378-bj-fYw" id="eb3-2c-trh"/>
                 <outlet property="headlessMode" destination="kLX-Ap-3dh" id="4ga-4i-TRU"/>
+                <outlet property="hostName" destination="13Y-Ot-CSc" id="2UV-LF-hJN"/>
+                <outlet property="linkToolbarItem" destination="43J-tU-rUa" id="Xxm-I1-7wt"/>
                 <outlet property="linkView" destination="ICa-qr-QQQ" id="1hF-ig-dAy"/>
                 <outlet property="monitorAction" destination="Od2-P2-SXK" id="Vtz-0a-lAM"/>
                 <outlet property="passiveMode" destination="gkd-LL-o86" id="4vC-65-XMl"/>
                 <outlet property="qrcImageView" destination="2xF-jM-X4o" id="NnB-tX-U6C"/>
+                <outlet property="qrcPanel" destination="vdL-RT-p6a" id="KrV-Fe-sK0"/>
                 <outlet property="toolbar" destination="V8g-Ya-LK4" id="SH2-6E-QST"/>
                 <outlet property="touchIDLabel" destination="F9r-H0-4xe" id="q5C-od-ni1"/>
                 <outlet property="touchIDMode" destination="ANF-lj-j0H" id="1LW-Q3-PCa"/>
@@ -71,7 +73,7 @@
                             <action selector="toolbarButtonHandler:" target="-2" id="wWx-DP-lVm"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5DB39F09-CC43-4EC3-BF61-362FDA2DF782" label="link" paletteLabel="link" tag="103" image="prefsLink" selectable="YES" id="43J-tU-rUa">
+                    <toolbarItem implicitItemIdentifier="5DB39F09-CC43-4EC3-BF61-362FDA2DF782" explicitItemIdentifier="link" label="link" paletteLabel="link" tag="103" image="prefsLink" selectable="YES" id="43J-tU-rUa">
                         <connections>
                             <action selector="toolbarButtonHandler:" target="-2" id="Hcq-YC-Tek"/>
                         </connections>
@@ -267,15 +269,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="345"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iuR-U4-Die">
-                    <rect key="frame" x="206" y="189" width="189" height="17"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="Ydg-wd-BnQ">
-                        <font key="font" size="13" name="Consolas-Bold"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dHT-yp-cSe">
                     <rect key="frame" x="35" y="286" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -293,7 +286,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="4vQ-yK-HbJ">
                     <rect key="frame" x="73" y="250" width="475" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="open the app, navigate to Settings &gt; Linked Devices.  " id="4bg-zE-tjJ">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="open the app and click the 'Add devices...' button" id="4bg-zE-tjJ">
                         <font key="font" size="13" name="Menlo-Bold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -312,30 +305,23 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="a02-wv-Nsx">
                     <rect key="frame" x="73" y="215" width="475" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="click 'Add a New Decice and scan the QRC code below." id="XIZ-oU-Kyo">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="then click the button below to generate a scannable qr code" id="XIZ-oU-Kyo">
                         <font key="font" size="13" name="Menlo-Bold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2xF-jM-X4o">
-                    <rect key="frame" x="215" y="37" width="170" height="170"/>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jJ9-Wf-Ygq">
+                    <rect key="frame" x="227" y="155" width="166" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="UKX-lW-Ruz"/>
-                </imageView>
-                <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="bCB-5L-mdQ">
-                    <rect key="frame" x="284" y="128" width="32" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                </progressIndicator>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="JOg-EO-7nX">
-                    <rect key="frame" x="104" y="83" width="392" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qr code..." id="XXy-o4-l0p">
-                        <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
+                    <buttonCell key="cell" type="push" title="generate qr code" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wLV-FV-TJy">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" size="13" name="Menlo-Regular"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="generatedQRC:" target="-2" id="hKL-GM-hYR"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="1073" y="1452.5"/>
         </customView>
@@ -413,10 +399,10 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="unlink" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="bee-qw-QU4">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" size="13" name="Menlo-Regular"/>
                     </buttonCell>
                     <connections>
-                        <action selector="buttonHandler:" target="-2" id="d3Y-Ko-XhF"/>
+                        <action selector="unlink:" target="-2" id="YWL-7O-gvq"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13Y-Ot-CSc">
@@ -463,6 +449,48 @@
             </subviews>
             <point key="canvasLocation" x="218" y="1428.5"/>
         </customView>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="vdL-RT-p6a" userLabel="QRC Panel" customClass="NSPanel">
+            <windowStyleMask key="styleMask" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="2832" y="172" width="594" height="546"/>
+            <rect key="screenRect" x="2560" y="0.0" width="2560" height="1417"/>
+            <view key="contentView" id="jEo-ef-0kG">
+                <rect key="frame" x="0.0" y="0.0" width="594" height="546"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2xF-jM-X4o">
+                        <rect key="frame" x="72" y="48" width="450" height="450"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" id="UKX-lW-Ruz"/>
+                    </imageView>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vCQ-cj-DXV">
+                        <rect key="frame" x="513" y="507" width="81" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pgT-Ve-2gR">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name="Menlo-Regular"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="closeQRC:" target="-2" id="4Qi-IR-65o"/>
+                        </connections>
+                    </button>
+                    <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="pUS-KZ-De6">
+                        <rect key="frame" x="281" y="285" width="32" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </progressIndicator>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="Lu9-bx-bBG">
+                        <rect key="frame" x="101" y="240" width="392" height="37"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qr code..." id="EUt-Br-Xsi">
+                            <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                </subviews>
+            </view>
+            <point key="canvasLocation" x="1773" y="1576"/>
+        </window>
     </objects>
     <resources>
         <image name="connected" width="128" height="128"/>

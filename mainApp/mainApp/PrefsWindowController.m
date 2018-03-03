@@ -171,7 +171,7 @@
                 self.unlinkButton.enabled = YES;
                 
                 //set host name
-                self.computerName.stringValue = [[NSHost currentHost] localizedName];
+                self.hostName.stringValue = [[NSHost currentHost] localizedName];
                 
                 //set device name
                 self.deviceName.stringValue = preferences[PREF_REGISTERED_DEVICE];
@@ -183,13 +183,6 @@
             {
                 //set view
                 view = self.linkView;
-                
-                //need to generate qrc?
-                if(nil == self.qrcImageView.image)
-                {
-                    //generate/display QRC
-                    [self generateQRC];
-                }
             }
             
             break;
@@ -286,9 +279,8 @@
     return;
 }
 
-//invoked when we show QRC view
-// ping daemon for QRC, display it, etc
--(void)generateQRC
+//ping daemon for QRC, display it, etc
+-(IBAction)generatedQRC:(id)sender
 {
     //qrc object
     QuickResponseCode* qrcObj = nil;
@@ -314,9 +306,6 @@
     //generate QRC
     [qrcObj generateQRC:qrcSize.height reply:^(NSImage* qrcImage)
     {
-        //nap to allow 'generating' msg to show up
-        [NSThread sleepForTimeInterval:0.5f];
-        
         //sanity check
         if(nil == qrcImage)
         {
@@ -337,32 +326,41 @@
             return;
         }
         
-         //show QRC
-         // on main thread since it's UI-related
-         dispatch_async(dispatch_get_main_queue(), ^{
+        //show QRC
+        // on main thread since it's UI-related
+        dispatch_async(dispatch_get_main_queue(), ^{
              
              //display QRC
              [self displayQRC:qrcImage];
              
-         });
-         
-         //init daemon comms
-         // will connect, etc.
-         daemonComms = [[DaemonComms alloc] init];
-         
-         //call into daemon/framework
-         // this will block until phone linking/registration is complete
-         [daemonComms recvRegistrationACK:^(NSDictionary* registrationInfo)
-          {
-              //call into main thread to display
-              dispatch_sync(dispatch_get_main_queue(), ^{
-                  
-                  //update image view
-                  self.qrcImageView.image = [NSImage imageNamed:@"linked"];
+        });
         
-              });
-              
-          }];
+        //dbg msg
+        logMsg(LOG_DEBUG, @"displayed QRC...now waiting for user to scan, server to register and ack");
+         
+        //init daemon comms
+        // will connect, etc.
+        daemonComms = [[DaemonComms alloc] init];
+        
+        //call into daemon/framework
+        // this will block until phone linking/registration is complete
+        [daemonComms recvRegistrationACK:^(NSDictionary* registrationInfo)
+        {
+             //dbg msg
+             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"received registration ack/info from server/daemon: %@", registrationInfo]);
+             
+             //call into main thread to display
+             dispatch_sync(dispatch_get_main_queue(), ^{
+                 
+                 //hide qrc sheet
+                 [self.window endSheet:self.qrcPanel];
+                 
+                 //trigger refresh of link view
+                 [self toolbarButtonHandler:self.linkToolbarItem];
+        
+             });
+             
+        }];
          
      }];
     
@@ -384,6 +382,26 @@
     
     //show
     self.qrcImageView.hidden = NO;
+    
+    //show qrc code
+    [self.window beginSheet:self.qrcPanel completionHandler:^(NSInteger result) {
+        
+        //trigger refresh of link view
+        [self toolbarButtonHandler:self.linkToolbarItem];
+        
+        //no need to do anything else...
+        // when daemon reponds with registration ack/info, will close sheet
+    }];
+
+    return;
+}
+
+//invoked when user closes QRC view
+// normally view is closed automatically when registration is complete
+-(IBAction)closeQRC:(id)sender {
+    
+    //hide qrc sheet
+    [self.window endSheet:self.qrcPanel];
     
     return;
 }
@@ -419,14 +437,13 @@ bail:
     return;
 }
 
-//button handle
-- (IBAction)buttonHandler:(id)sender
+//TODO: test
+//button handler for 'unlink'
+// tell daemon to reset registered device name, and reload view
+-(IBAction)unlink:(id)sender
 {
     //alert
     __block NSAlert *alert = nil;
-
-    //height of toolbar
-    __block float toolbarHeight = 0.0f;
     
     //unlink?
     // just unset 'device registered' pref
@@ -455,7 +472,7 @@ bail:
             alert.messageText = @"unregistered device";
             
             //set informative text
-            alert.informativeText = [NSString stringWithFormat:@"device: %@", self.deviceName];
+            alert.informativeText = [NSString stringWithFormat:@"device: %@", self.deviceName.stringValue];
             
             //add button
             [alert addButtonWithTitle:@"Ok"];
@@ -469,26 +486,8 @@ bail:
             //stop (hide)
             [self.unregisterIndicator stopAnimation:nil];
             
-            //remove previous subview
-            [[[self.window.contentView subviews] lastObject] removeFromSuperview];
-            
-            //get height of toolbar
-            toolbarHeight = [self toolbarHeight];
-            
-            //set frame rect
-            self.linkView.frame = CGRectMake(0, toolbarHeight, self.window.contentView.frame.size.width, self.window.contentView.frame.size.height-toolbarHeight);
-            
-            //unset image
-            self.qrcImageView.image = nil;
-            
-            //hide image
-            self.qrcImageView.hidden = NO;
-            
-            //add to window
-            [self.window.contentView addSubview:self.linkView];
-            
-            //generate/display QRC
-            [self generateQRC];
+            //trigger refresh of link view
+            [self toolbarButtonHandler:self.linkToolbarItem];
             
         });
     }
@@ -564,9 +563,7 @@ bail:
         case 1:
             
             //dbg msg
-            #ifndef NDEBUG
             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"a new version (%@) is available", newVersion]);
-            #endif
             
             //alloc update window
             updateWindowController = [[UpdateWindowController alloc] initWithWindowNibName:@"UpdateWindow"];
@@ -587,9 +584,6 @@ bail:
                 makeModal(self.updateWindowController);
                 
             });
-            
-            //set label
-            //self.updateLabel.stringValue = [NSString stringWithFormat:@"a new version (%@) is available", newVersion];
             
             break;
     }

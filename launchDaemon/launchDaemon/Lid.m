@@ -474,6 +474,9 @@ bail:
     //monitor obj
     Monitor* monitor = nil;
     
+    //console user
+    NSString* consoleUser = nil;
+    
     //only add events to queue
     // when client is not running in passive mode
     if(YES != [preferences.preferences[PREF_PASSIVE_MODE] boolValue])
@@ -541,23 +544,47 @@ bail:
         }
     }
     
-    //send alert to server
-    [self.client sendAlertWithUuid:[NSUUID UUID] userName:getConsoleUser() completion:^(NSNumber* response)
+    //send to server
+    // and wait for dismiss
+    if(nil != self.client)
     {
-        //log
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
-
-    }];
+        //get user
+        consoleUser = getConsoleUser();
+        if(0 == consoleUser.length)
+        {
+            //defult
+            consoleUser = @"unknown";
+        }
         
-    //wait for dismiss
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        //dbg msg
+        // and log to file
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to server (user: %@)", consoleUser]);
         
-        //wait
-        [self wait4Dismiss];
+        //send
+        [self.client sendAlertWithUuid:[NSUUID UUID] userName:consoleUser completion:^(NSNumber* response)
+        {
+             //log
+             logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
+             
+        }];
         
-    });
-        
-
+        //wait for dismiss
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            
+            //wait
+            [self wait4Dismiss];
+            
+        });
+    }
+    
+    //didn't send
+    // ...as not registered w/ server
+    else
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"did not send to server - no client/registered device");
+    }
+    
 bail:
     
     return;

@@ -179,6 +179,9 @@
              [self displayQRC:qrcImage];
              
          });
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, @"displayed QRC...now waiting for user to scan, server to register and ack");
          
          //init daemon comms
          // will connect, etc.

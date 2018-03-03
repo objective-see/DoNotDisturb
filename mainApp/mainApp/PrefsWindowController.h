@@ -25,7 +25,7 @@
 //update view
 #define TOOLBAR_UPDATE 104
 
-//to select, need string ID
+//tool bar id for 'general'
 #define TOOLBAR_GENERAL_ID @"general"
 
 @interface PrefsWindowController : NSWindowController <NSTextFieldDelegate>
@@ -70,6 +70,9 @@
 
 /* LINK VIEW */
 
+//link toolbar item
+@property (weak) IBOutlet NSToolbarItem *linkToolbarItem;
+
 //link view
 @property (strong) IBOutlet NSView *linkView;
 
@@ -78,6 +81,9 @@
 
 //activity msg
 @property (weak) IBOutlet NSTextField *activityMessage;
+
+//qrc panel
+@property (strong) IBOutlet NSPanel *qrcPanel;
 
 //qrc image view
 @property (weak) IBOutlet NSImageView *qrcImageView;
@@ -91,7 +97,7 @@
 @property (weak) IBOutlet NSButton *unlinkButton;
 
 //host (computer) name
-@property (weak) IBOutlet NSTextField *computerName;
+@property (weak) IBOutlet NSTextField *hostName;
 
 //device (phone?) name
 @property (weak) IBOutlet NSTextField *deviceName;
