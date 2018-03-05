@@ -302,11 +302,7 @@ bail:
         //bail
         goto bail;
     }
-    
-    //TODO: re-enable
-    
-    /*
-    
+
     //verify app
     // make sure it's signed, and by our signing auth
     if(noErr != verifyApp(appCopy, SIGNING_AUTH))
@@ -317,8 +313,6 @@ bail:
         //bail
         goto bail;
     }
-     
-    */
     
     //happy
     validatedApp = appCopy;

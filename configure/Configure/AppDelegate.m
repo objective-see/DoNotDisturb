@@ -1,17 +1,15 @@
 
 #import "Consts.h"
-#import "HelperComms.h"
-#import "AppDelegate.h"
-
+#import "Logging.h"
 #import "Configure.h"
 #import "Exception.h"
 #import "Utilities.h"
 #import "AppDelegate.h"
+#import "HelperComms.h"
 
 #import <syslog.h>
 #import <Security/Authorization.h>
 #import <ServiceManagement/ServiceManagement.h>
-
 
 @implementation AppDelegate
 
@@ -33,6 +31,17 @@
     // install exception handlers
     installExceptionHandlers();
     
+    //make sure system is supported
+    // if not, will show alert to user
+    if(YES != [self isSupported])
+    {
+        //dbg msg
+        logMsg(LOG_ERR, @"device doesn't appear to have a lid (i.e. is unsupported)");
+        
+        //exit
+        [NSApp terminate:self];
+    }
+    
     //alloc/init Config obj
     configureObj = [[Configure alloc] init];
     
@@ -40,6 +49,51 @@
     [self displayConfigureWindow:[self.configureObj isInstalled]];
     
     return;
+}
+
+//check if there's a lid
+// if not, alert to tell user
+-(BOOL)isSupported
+{
+    //flag
+    BOOL supported = NO;
+    
+    //alert
+    NSAlert* alert =  nil;
+    
+    //no lid
+    // can't support!
+    if(stateUnavailable == getLidState())
+    {
+        //init alert
+        alert = [[NSAlert alloc] init];
+        
+        //set main text
+        alert.messageText = @"unsupported device";
+        
+        //set informative text
+        alert.informativeText = [NSString stringWithFormat:@"%@ does not appear to be a laptop", [[NSHost currentHost] localizedName]];
+        
+        //add button
+        [alert addButtonWithTitle:@"Ok"];
+        
+        //set style
+        alert.alertStyle = NSWarningAlertStyle;
+        
+        //show it
+        [alert runModal];
+        
+        //bail
+        goto bail;
+    }
+    
+    //happy
+    supported = YES;
+    
+bail:
+    
+    return supported;
+    
 }
 
 //exit when last window is closed

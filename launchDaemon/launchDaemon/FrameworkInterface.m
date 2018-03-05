@@ -81,9 +81,8 @@ extern Preferences* preferences;
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"client id: %@", clientID]);
     
-    //TODO: passphrase
     //alloc init csr identity
-    csrIdentity = [[DNDIdentity alloc] init:clientID p12Path:csrPath passphrase:@"csr" caPath:awsCAPath error:&error];
+    csrIdentity = [[DNDIdentity alloc] init:clientID p12Path:csrPath passphrase:CSR_PASSPHRASE caPath:awsCAPath error:&error];
     if( (nil == csrIdentity) ||
        (nil != error) )
     {

@@ -43,7 +43,6 @@
 		7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF671F1DC42700B33214 /* Utilities.m */; };
 		7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */; };
 		7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF751F1E9CE700B33214 /* Queue.m */; };
-		CD22786520463EB000C72C76 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD22786420463EB000C72C76 /* dnd.framework */; };
 		CD22786620463F0700C72C76 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD22786420463EB000C72C76 /* dnd.framework */; };
 		CD22786C20464A6E00C72C76 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = CD22786A204648E000C72C76 /* Preferences.m */; };
 		CD3307AC2033D35000F10D71 /* Monitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307AB2033D35000F10D71 /* Monitor.m */; };
@@ -197,7 +196,6 @@
 				209E45B9203DF64E00900B89 /* CocoaMQTT.framework in Frameworks */,
 				209E45BB203DF64E00900B89 /* RealmSwift.framework in Frameworks */,
 				209E45BC203DF64E00900B89 /* dnd.framework in Frameworks */,
-				CD22786520463EB000C72C76 /* dnd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

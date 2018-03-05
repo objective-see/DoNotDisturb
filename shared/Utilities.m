@@ -47,7 +47,6 @@ NSString* getConsoleUser()
     return CFBridgingRelease(SCDynamicStoreCopyConsoleUser(NULL, NULL, NULL));
 }
 
-
 //get console user id
 NSNumber* getConsoleUID()
 {
@@ -155,6 +154,69 @@ bail:
     
     return status;
 }
+
+//get state of lid
+int getLidState()
+{
+    //state
+    int state = stateUnavailable;
+    
+    //registry entry for power management
+    io_registry_entry_t powerManagmentRE = MACH_PORT_NULL;
+    
+    //reference to 'kAppleClamshellStateKey' property
+    CFBooleanRef clamshellState = NULL;
+    
+    //get registry entry for power management root domain
+    powerManagmentRE = IORegistryEntryFromPath(kIOMasterPortDefault, kIOPowerPlane ":/IOPowerConnection/IOPMrootDomain");
+    if(MACH_PORT_NULL == powerManagmentRE)
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to look up the registry entry for 'IOPMrootDomain'");
+        
+        //error
+        goto bail;
+    }
+    
+    //get reference to state of 'kAppleClamshellStateKey'
+    clamshellState = (CFBooleanRef)IORegistryEntryCreateCFProperty(powerManagmentRE, CFSTR(kAppleClamshellStateKey), kCFAllocatorDefault, 0);
+    if(NULL == clamshellState)
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to get property for 'kAppleClamshellStateKey'");
+        
+        //error
+        goto bail;
+    }
+    
+    //get state
+    state = (LidState)CFBooleanGetValue(clamshellState);
+    
+bail:
+    
+    //release
+    if(NULL != clamshellState)
+    {
+        //release
+        CFRelease(clamshellState);
+        
+        //unset
+        clamshellState = NULL;
+    }
+    
+    //release
+    if(MACH_PORT_NULL != powerManagmentRE)
+    {
+        //release
+        IOObjectRelease(powerManagmentRE);
+        
+        //unset
+        powerManagmentRE = MACH_PORT_NULL;
+    }
+    
+    return state;
+}
+
 
 //set dir's|file's group/owner
 BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL recursive)

@@ -111,14 +111,26 @@ int main(int argc, const char * argv[])
         lid = [[Lid alloc] init];
         
         //dbg msg
-        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"lid state: %@", ([lid getState]) ? @"closed" : @"open"]);
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"lid state: %d", getLidState()]);
         
-        //register for lid notifications
-        [lid register4Notifications];
+        //not (prev) disabled?
+        // register for lid notifications
+        if(YES != [preferences.preferences[PREF_IS_DISABLED] boolValue])
+        {
+            //register for lid notifications
+            [lid register4Notifications];
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"registered for lid change notifications");
+        }
         
-        //dbg msg
-        logMsg(LOG_DEBUG, @"registered for lid change notifications");
-        
+        //(prev) disabled
+        else
+        {
+            //dbg msg
+            logMsg(LOG_DEBUG, @"currently disabled, so did not register for lid change notifications");
+        }
+    
         //init global queue
         eventQueue = [[Queue alloc] init];
 

@@ -8,13 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#import "Lid.h"
 #import "consts.h"
 #import "logging.h"
 #import "Preferences.h"
 
 /* GLOBALS */
 
-
+//lid obj
+extern Lid* lid;
 
 @implementation Preferences
 
@@ -109,7 +111,11 @@ bail:
             // and log to file
             logMsg(LOG_DEBUG|LOG_TO_FILE, @"disabling...");
             
-            //TODO: disable?
+            //unregister for lid notifications
+            [lid unregister4Notifications];
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"unregistered for lid change notifications");
         }
         
         //enable?
@@ -119,7 +125,11 @@ bail:
             // and log to file
             logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling...");
             
-            //TODO: enabled
+            //register for lid notifications
+            [lid register4Notifications];
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"registered for lid change notifications");
         }
     }
     

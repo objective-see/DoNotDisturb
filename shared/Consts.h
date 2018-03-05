@@ -257,6 +257,10 @@
 //key for error sub msg
 #define KEY_ERROR_SUB_MSG @"errorSubMsg"
 
+//passphrase for CSR
+// no, this isn't sensitive
+#define CSR_PASSPHRASE @"csr"
+
 //0st sync view
 #define SYNC_VIEW_ZERO 0
 

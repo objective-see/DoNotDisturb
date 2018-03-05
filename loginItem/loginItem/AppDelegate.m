@@ -82,6 +82,7 @@
              
              //complete initializations
              [self completeInitialization:preferences firstTime:YES];
+             
          }];
     }
     
@@ -141,13 +142,6 @@ bail:
     // first time, need a bit to show the popover
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, firstTime * 5 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
     {
-        //TODO
-       //check in w/ daemon
-       //[self.daemonComms clientCheckin];
-    
-        //dbg msg
-        logMsg(LOG_DEBUG, @"checked in with daemon");
-        
         //init alert monitor
         alertMonitor = [[AlertMonitor alloc] init];
         

@@ -11,8 +11,17 @@
 #define Utilities_h
 
 #import <AppKit/AppKit.h>
+#import <IOKit/IOKitLib.h>
+#import <IOKit/pwr_mgt/IOPM.h>
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
+
+//enum of lid states
+typedef NS_ENUM(int, LidState) {
+    stateUnavailable = -1,
+    stateOpen = 0,
+    stateClosed = 1
+};
 
 /* FUNCTIONS */
 
@@ -34,6 +43,9 @@ NSNumber* getConsoleUID(void);
 // a) signed
 // b) signed with signing auth
 OSStatus verifyApp(NSString* path, NSString* signingAuth);
+
+//get state of lid
+int getLidState(void);
 
 //get process name
 // either via app bundle, or path

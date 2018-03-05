@@ -6,20 +6,12 @@
 //  Copyright © 2017 Objective-See. All rights reserved.
 //
 
+#import "Utilities.h"
 #import <dnd/dnd-Swift.h>
 
 #import <IOKit/IOKitLib.h>
 #import <IOKit/pwr_mgt/IOPM.h>
 #import <Foundation/Foundation.h>
-
-
-
-//enum of lid states
-typedef NS_ENUM(int, LidState) {
-    stateUnavailable = -1,
-    stateOpen = 0,
-    stateClosed = 1
-};
 
 /* FUNCTIONS */
 
@@ -41,7 +33,6 @@ BOOL authViaTouchID(void);
     
     //notification object
     io_object_t notification;
-    
 }
 
 /* PROPERTIES */
@@ -57,11 +48,11 @@ BOOL authViaTouchID(void);
 
 /* METHODS */
 
-//get state
--(int)getState;
-
 //register for notifications
 -(BOOL)register4Notifications;
+
+//register for notifications
+-(void)unregister4Notifications;
 
 //proces lid open event
 -(void)processEvent;

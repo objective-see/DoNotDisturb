@@ -33,8 +33,7 @@
 LidState lastLidState;
 
 //lid obj
-// allows callback to access obj
-Lid* lidObj;
+extern Lid* lid;
 
 //queue object
 extern Queue* eventQueue;
@@ -121,7 +120,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         
         //process event
         // report to user, execute actions, etc
-        [lidObj processEvent];
+        [lid processEvent];
     }
     
     //(new) close?
@@ -229,11 +228,7 @@ bail:
         
         //init
         lastLidState = stateUnavailable;
-        
-        //save into global
-        // allows static callback to access
-        lidObj = self;
-        
+            
         //init dispatch group for dismiss events
         dispatchGroup = dispatch_group_create();
     
@@ -259,7 +254,7 @@ bail:
             if(0 == [[self.client getShadowSync].state.reported.endpoints count])
             {
                 //dbg msg
-                logMsg(LOG_DEBUG, @"user unregistered device, disconnecting client");
+                logMsg(LOG_DEBUG, @"user unregistered device via phone, unregistering locally & disconnecting");
                 
                 //update preferences
                 // pass in blank string to 'unregister'
@@ -311,67 +306,6 @@ bail:
     
     return initialized;
 }
-//get state
--(int)getState
-{
-    //state
-    int state = stateUnavailable;
-    
-    //registry entry for power management
-    io_registry_entry_t powerManagmentRE = MACH_PORT_NULL;
-    
-    //reference to 'kAppleClamshellStateKey' property
-    CFBooleanRef clamshellState = NULL;
-    
-    //get registry entry for power management root domain
-    powerManagmentRE = IORegistryEntryFromPath(kIOMasterPortDefault, kIOPowerPlane ":/IOPowerConnection/IOPMrootDomain");
-    if(MACH_PORT_NULL == powerManagmentRE)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"failed to look up the registry entry for 'IOPMrootDomain'");
-        
-        //error
-        goto bail;
-    }
-    
-    //get reference to state of 'kAppleClamshellStateKey'
-    clamshellState = (CFBooleanRef)IORegistryEntryCreateCFProperty(powerManagmentRE, CFSTR(kAppleClamshellStateKey), kCFAllocatorDefault, 0);
-    if(NULL == clamshellState)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"failed to get property for 'kAppleClamshellStateKey'");
-        
-        //error
-        goto bail;
-    }
-    
-    //get state
-    state = (LidState)CFBooleanGetValue(clamshellState);
-    
-bail:
-    
-    //release
-    if(NULL != clamshellState)
-    {
-        //release
-        CFRelease(clamshellState);
-        
-        //unset
-        clamshellState = NULL;
-    }
-    
-    //release
-    if(MACH_PORT_NULL != powerManagmentRE)
-    {
-        //release
-        IOObjectRelease(powerManagmentRE);
-        
-        //unset
-        powerManagmentRE = MACH_PORT_NULL;
-    }
-    
-    return state;
-}
 
 //register for notifications
 -(BOOL)register4Notifications
@@ -386,10 +320,10 @@ bail:
     io_service_t powerManagementRD = MACH_PORT_NULL;
     
     //dbg msg
-    logMsg(LOG_DEBUG, @"register for lid notifications");
+    logMsg(LOG_DEBUG, @"registering for lid notifications");
     
     //make sure state is ok
-    if(stateUnavailable == [self getState])
+    if(stateUnavailable == getLidState())
     {
         //err msg
         logMsg(LOG_ERR, @"failed to get lid state, so aborting lid notifications registration");
@@ -465,6 +399,47 @@ bail:
     }
     
     return registered;
+}
+
+//register for notifications
+-(void)unregister4Notifications
+{
+    //dbg msg
+    logMsg(LOG_DEBUG, @"unregistering lid notifications");
+    
+    //release queue
+    //dispatch_release(dispatchQ);
+    
+    //destroy notification port
+    if(NULL != notificationPort)
+    {
+        //destroy
+        IONotificationPortDestroy(notificationPort);
+        
+        //unset
+        notificationPort = NULL;
+    }
+    
+    //unset dispatch queue
+    //IONotificationPortSetDispatchQueue(notificationPort, dispatchQ);
+    
+    //TODO: like this?
+    //release notification
+    if(0 != notification)
+    {
+        //release
+        IOObjectRelease(notification);
+        
+        //unset
+        notification = 0;
+    }
+    
+    //add interest notification
+    //status = IOServiceAddInterestNotification(notificationPort, powerManagementRD, kIOGeneralInterest,
+    //                                          pmDomainChange, &lidState, &notification);
+    
+
+    return;
 }
 
 //proces lid open event
