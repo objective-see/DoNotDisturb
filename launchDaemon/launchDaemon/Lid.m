@@ -236,7 +236,7 @@ bail:
         // a) there's an identity
         // b) there's a registered device
         if( (nil != framework.identity) &&
-            (nil == preferences.preferences[PREF_REGISTERED_DEVICE]) )
+            (nil == preferences.preferences[PREF_REGISTERED_DEVICES]) )
         {
             //init client
             if(YES != [self clientInit])
@@ -257,8 +257,8 @@ bail:
                 logMsg(LOG_DEBUG, @"user unregistered device via phone, unregistering locally & disconnecting");
                 
                 //update preferences
-                // pass in blank string to 'unregister'
-                if(YES != [preferences update:@{PREF_REGISTERED_DEVICE:@""}])
+                // pass in blank list to 'unregister'
+                if(YES != [preferences update:@{PREF_REGISTERED_DEVICES:@[]}])
                 {
                     //err msg
                     logMsg(LOG_ERR, @"failed to updated preferences ('device registered' : NO)");
@@ -506,7 +506,7 @@ bail:
     // check and init client if needed
     if( (nil == self.client) &&
         (nil != framework.identity) &&
-        (nil != preferences.preferences[PREF_REGISTERED_DEVICE]) )
+        (nil != preferences.preferences[PREF_REGISTERED_DEVICES]) )
     {
         //init client
         if(YES != [self clientInit])

@@ -72,168 +72,8 @@
     return;
 }
 
-/*
-//generate and scale a QRC image
-// based on: https://stackoverflow.com/a/23531217
-- (NSImage*)generateImage:(CGSize)size
-{
-    //qrc image
-    NSImage* qrcImage = nil;
-    
-    //filter
-    CIFilter *filter = NULL;
-    
-    //output image
-    CIImage *outputImage = NULL;
-    
-    //extent
-    CGRect extent = {0};
-    
-    //scale
-    CGFloat scale = 0.0f;
-    
-    //gray space ref
-    CGColorSpaceRef colorSpaceRef = NULL;
-    
-    //bitmap ref
-    CGContextRef bitmapRef = NULL;
-    
-    //bitmap image
-    CGImageRef bitmapImage = NULL;
-    
-    //scaled image
-    CGImageRef scaledImage = NULL;
-    
-    //init filter
-    filter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
-    
-    //set defaults
-    [filter setDefaults];
-    
-    //set data
-    [filter setValue:[self.qrcInfo dataUsingEncoding:NSUTF8StringEncoding] forKey:@"inputMessage"];
-    
-    //grab output image
-    outputImage = filter.outputImage;
-    
-    //calc extent
-    extent = CGRectIntegral(outputImage.extent);
-    
-    //calc scale
-    scale = MIN(size.width / CGRectGetWidth(extent), size.height / CGRectGetHeight(extent));
-    
-    //create color space
-    colorSpaceRef = CGColorSpaceCreateDeviceGray();
-    if(NULL == colorSpaceRef)
-    {
-        //bail
-        goto bail;
-    }
-    
-    //create bitmap context
-    bitmapRef = CGBitmapContextCreate(nil, CGRectGetWidth(extent) * scale, CGRectGetHeight(extent) * scale, 8, 0, colorSpaceRef, (CGBitmapInfo)kCGImageAlphaNone);
-    if(NULL == bitmapRef)
-    {
-        //bail
-        goto bail;
-    }
-    
-    //create bitmap image
-    bitmapImage = [[CIContext contextWithCGContext:bitmapRef options:nil] createCGImage:outputImage fromRect:extent];
-    if(NULL == bitmapImage)
-    {
-        //bail
-        goto bail;
-    }
-    
-    //set quality
-    CGContextSetInterpolationQuality(bitmapRef, kCGInterpolationNone);
-    
-    //set scale
-    CGContextScaleCTM(bitmapRef, scale, scale);
-    
-    //draw
-    CGContextDrawImage(bitmapRef, extent, bitmapImage);
-    
-    //create scaled image from bitmap
-    scaledImage = CGBitmapContextCreateImage(bitmapRef);
-    if(NULL == scaledImage)
-    {
-        //bail
-        goto bail;
-    }
-    
-    //convert to NSImage
-    qrcImage = [[NSImage alloc] initWithCGImage:scaledImage size:size];
-    
-bail:
-    
-    //release color space ref
-    if(NULL != colorSpaceRef)
-    {
-        //release
-        CGColorSpaceRelease(colorSpaceRef);
-        
-        //unset
-        colorSpaceRef = NULL;
-    }
-    
-    //release bitmap ref
-    if(NULL != bitmapRef)
-    {
-        //release
-        CGContextRelease(bitmapRef);
-        
-        //unset
-        bitmapRef = NULL;
-    }
-    
-    //release bitmap
-    if(NULL != bitmapImage)
-    {
-        //release
-        CGImageRelease(bitmapImage);
-        
-        //unset
-        bitmapImage = NULL;
-    }
-    
-    //release scaled image
-    if(NULL != scaledImage)
-    {
-        //release
-        CGImageRelease(scaledImage);
-        
-        //unset
-        scaledImage = NULL;
-    }
-
-    return qrcImage;
-}
-*/
-
-/*
-func generateQRCode(size: CGFloat) -> NSImage? {
-    //let data = self.data(using: String.Encoding.utf8, allowLossyConversion: false)
-    guard let filter = CIFilter(name: "CIQRCodeGenerator") else { return nil }
-    filter.setValue(data, forKey: "inputMessage")
-    filter.setValue("Q", forKey: "inputCorrectionLevel")
-    if let output = filter.outputImage {
-        let extent = output.extent
-        let scale = min(size / extent.width, size / extent.height)
-        let transform = CGAffineTransform(scaleX: scale, y: scale)
-        let result = output.transformed(by: transform)
-        let rep: NSCIImageRep = NSCIImageRep(ciImage: result)
-        let nsImage: NSImage = NSImage(size: rep.size)
-        nsImage.addRepresentation(rep)
-        return nsImage
-    }
-    return nil
-}
-}
-*/
-
-- (NSImage*)generateImage:(NSData*)data size:(float)size
+//generate qrc image
+-(NSImage*)generateImage:(NSData*)data size:(float)size
 {
     //qrc image
     NSImage* qrcImage = nil;
@@ -267,9 +107,6 @@ func generateQRCode(size: CGFloat) -> NSImage? {
         goto bail;
     }
     
-    //set defaults
-    //[filter setDefaults];
-    
     //set data
     [filter setValue:data forKey:@"inputMessage"];
     
@@ -281,18 +118,6 @@ func generateQRCode(size: CGFloat) -> NSImage? {
     
     //init extent
     extent = outputImage.extent;
-    
-    
-    /*
-     
-     let scale = min(size / extent.width, size / extent.height)
-     let transform = CGAffineTransform(scaleX: scale, y: scale)
-     let result = output.transformed(by: transform)
-     let rep: NSCIImageRep = NSCIImageRep(ciImage: result)
-     let nsImage: NSImage = NSImage(size: rep.size)
-     nsImage.addRepresentation(rep)
-     
-     */
     
     //init scale
     scale = MIN(size/extent.size.width, size/extent.size.height);
@@ -313,8 +138,8 @@ func generateQRCode(size: CGFloat) -> NSImage? {
     [qrcImage addRepresentation:imageRep];
     
 bail:
+    
     return qrcImage;
 }
-
 
 @end

@@ -160,21 +160,24 @@
             //get prefs via XPC
             preferences = [self.daemonComms getPreferences];
             
-            //if device is registered
-            // show unlink view in case user wants to unlink
-            if(nil != preferences[PREF_REGISTERED_DEVICE])
+            //if devices are registered
+            // show linked devices view...
+            if(nil != preferences[PREF_REGISTERED_DEVICES])
             {
                 //set view
-                view = self.unlinkView;
-                
-                //enable button
-                self.unlinkButton.enabled = YES;
-                
+                view = self.linkedView;
+            
                 //set host name
                 self.hostName.stringValue = [[NSHost currentHost] localizedName];
                 
-                //set device name
-                self.deviceName.stringValue = preferences[PREF_REGISTERED_DEVICE];
+                //set font
+                self.deviceNames.font = [NSFont fontWithName:@"Avenir Next Condensed Regular" size:20];
+                
+                //populate text view w/ registered devices
+                for(NSString* deviceName in preferences[PREF_REGISTERED_DEVICES])
+                {
+                    self.deviceNames.string = [NSString stringWithFormat:@"%@\n%@", self.deviceNames.string, deviceName];
+                }
             }
             
             //no device registered
@@ -437,6 +440,16 @@ bail:
     return;
 }
 
+//button handler for 'link'
+// ... TODO:
+-(IBAction)link:(id)sender
+{
+    
+    
+    return;
+}
+
+/*
 //TODO: test
 //button handler for 'unlink'
 // tell daemon to reset registered device name, and reload view
@@ -459,8 +472,8 @@ bail:
         [self.unregisterIndicator startAnimation:nil];
         
         //unset
-        // pass in blank string to 'unregister'
-        [self.daemonComms updatePreferences:@{PREF_REGISTERED_DEVICE:@""}];
+        // pass in blank list to 'unregister'
+        [self.daemonComms updatePreferences:@{PREF_REGISTERED_DEVICES:@[]}];
         
         //change view after a second
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
@@ -494,6 +507,8 @@ bail:
     
     return;
 }
+*/
+
 
 //'check for update' button handler
 -(IBAction)check4Update:(id)sender
@@ -553,7 +568,7 @@ bail:
             logMsg(LOG_DEBUG, @"no updates available");
             #endif
             
-            //set lable
+            //set label
             self.updateLabel.stringValue = @"no new versions";
             
             break;
@@ -624,6 +639,23 @@ bail:
 bail:
     
     return toolbarHeight;
+}
+
+
+//delegate method
+// return number of registered devices for combo box
+-(NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
+{
+    //return count
+    return [self.preferences[PREF_REGISTERED_DEVICES] count];
+}
+
+//delegate method
+// return registered device at index
+-(id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
+{
+    //return count
+    return [self.preferences[PREF_REGISTERED_DEVICES] objectAtIndex:index];
 }
 
 @end

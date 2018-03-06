@@ -39,6 +39,9 @@
 		CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58E201A827A00F798D7 /* QuickResponseCode.m */; };
 		CD2F407F204B417E0066673E /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F407E204B417E0066673E /* alert.png */; };
 		CD2F4081204B41C90066673E /* hacker.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F4080204B41C90066673E /* hacker.png */; };
+		CD325425204DEAEA0059951B /* dndText@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD325424204DEAEA0059951B /* dndText@2x.png */; };
+		CD325427204E0C500059951B /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = CD325426204E0C500059951B /* close.png */; };
+		CD32542B204E0E420059951B /* closeAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = CD32542A204E0E420059951B /* closeAlt.png */; };
 		CD3307D720365CF500F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D520365CF500F10D71 /* Exception.m */; };
 		CDAAC213201D0CD90032F2E6 /* three.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC212201D0CD80032F2E6 /* three.png */; };
 		CDAAC215201D2DD30032F2E6 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC214201D2DD30032F2E6 /* checkbox.png */; };
@@ -113,6 +116,9 @@
 		CD17D58E201A827A00F798D7 /* QuickResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickResponseCode.m; sourceTree = "<group>"; };
 		CD2F407E204B417E0066673E /* alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
 		CD2F4080204B41C90066673E /* hacker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hacker.png; sourceTree = "<group>"; };
+		CD325424204DEAEA0059951B /* dndText@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dndText@2x.png"; path = "../../../shared/images/dndText@2x.png"; sourceTree = "<group>"; };
+		CD325426204E0C500059951B /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		CD32542A204E0E420059951B /* closeAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeAlt.png; sourceTree = "<group>"; };
 		CD3307D520365CF500F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../shared/Exception.m; sourceTree = "<group>"; };
 		CD3307D620365CF500F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../shared/Exception.h; sourceTree = "<group>"; };
 		CDAAC212201D0CD80032F2E6 /* three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = three.png; sourceTree = "<group>"; };
@@ -223,6 +229,9 @@
 		7D564DD31F18441500B8AAD6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CD32542A204E0E420059951B /* closeAlt.png */,
+				CD325426204E0C500059951B /* close.png */,
+				CD325424204DEAEA0059951B /* dndText@2x.png */,
 				CD2F4080204B41C90066673E /* hacker.png */,
 				CD2F407E204B417E0066673E /* alert.png */,
 				CDAAC21A201D77390032F2E6 /* connected.png */,
@@ -344,6 +353,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD32542B204E0E420059951B /* closeAlt.png in Resources */,
 				CD17D56E20178DFC00F798D7 /* mobilePhone.png in Resources */,
 				CD2F407F204B417E0066673E /* alert.png in Resources */,
 				CD17D58C201A7F8500F798D7 /* Welcome.xib in Resources */,
@@ -356,11 +366,13 @@
 				CE85D3FE1FDB47B200E116A5 /* settings.png in Resources */,
 				CDAAC213201D0CD90032F2E6 /* three.png in Resources */,
 				CDAAC219201D72780032F2E6 /* linked.png in Resources */,
+				CD325425204DEAEA0059951B /* dndText@2x.png in Resources */,
 				7DD2BF481F1C2B4200B33214 /* logoOver.png in Resources */,
 				7D7553801F22E40E0010FE88 /* Preferences.xib in Resources */,
 				7D7553831F23199A0010FE88 /* prefsGeneral.png in Resources */,
 				CD17D5772017941C00F798D7 /* laptop.png in Resources */,
 				CD17D58520179BC700F798D7 /* two.png in Resources */,
+				CD325427204E0C500059951B /* close.png in Resources */,
 				7D564DD61F18441500B8AAD6 /* Assets.xcassets in Resources */,
 				CD17D57020178EB500F798D7 /* one.png in Resources */,
 				7D7553841F23199A0010FE88 /* prefsUpdate.png in Resources */,

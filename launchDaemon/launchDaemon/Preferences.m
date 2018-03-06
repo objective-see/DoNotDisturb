@@ -133,18 +133,6 @@ bail:
         }
     }
     
-    //device unregistered?
-    // couldn't pass in nil string from client, so remove
-    if( (nil != updates[PREF_REGISTERED_DEVICE]) &&
-        (0 == [updates[PREF_REGISTERED_DEVICE] length]) )
-    {
-        //make mutable copy
-        updates = [NSMutableDictionary dictionaryWithDictionary:updates];
-        
-        //remove key
-        [(NSMutableDictionary*)updates removeObjectForKey:PREF_REGISTERED_DEVICE];
-    }
-    
     //add in (new) prefs
     [self.preferences addEntriesFromDictionary:updates];
         

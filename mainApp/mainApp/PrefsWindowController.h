@@ -88,22 +88,16 @@
 //qrc image view
 @property (weak) IBOutlet NSImageView *qrcImageView;
 
-/* UNLINK VIEW */
+/* LINKED (DEVICES) VIEW */
 
-//unlink view
-@property (strong) IBOutlet NSView *unlinkView;
-
-//button to unlink
-@property (weak) IBOutlet NSButton *unlinkButton;
+//linked view
+@property (strong) IBOutlet NSView *linkedView;
 
 //host (computer) name
 @property (weak) IBOutlet NSTextField *hostName;
 
-//device (phone?) name
-@property (weak) IBOutlet NSTextField *deviceName;
-
-//spinner
-@property (weak) IBOutlet NSProgressIndicator *unregisterIndicator;
+//device names
+@property (unsafe_unretained) IBOutlet NSTextView *deviceNames;
 
 
 /* UPDATE VIEW */

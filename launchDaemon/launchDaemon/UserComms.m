@@ -113,7 +113,7 @@ bail:
     self.registrationInfo = @{KEY_DEVICE_NAME: endpoint.name, KEY_HOST_NAME:[[NSHost currentHost] localizedName]};
 
     //update preferences
-    if(YES != [preferences update:@{PREF_REGISTERED_DEVICE:endpoint.name}])
+    if(YES != [preferences update:@{PREF_REGISTERED_DEVICES:@[endpoint.name]}])
     {
         //err msg
         logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to updated preferences ('device registered' : %@)", endpoint.name]);

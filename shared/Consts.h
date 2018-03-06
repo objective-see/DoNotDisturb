@@ -163,7 +163,7 @@
 #define PREF_CLIENT_ID @"clientID"
 
 //registered device name
-#define PREF_REGISTERED_DEVICE @"registeredDevice"
+#define PREF_REGISTERED_DEVICES @"registeredDevices"
 
 //prefs
 // status
