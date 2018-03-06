@@ -231,6 +231,9 @@ bail:
             
         //init dispatch group for dismiss events
         dispatchGroup = dispatch_group_create();
+        
+        //start empty
+        dispatchGroupEmpty = YES;
     
         //init client device
         // a) there's an identity
@@ -569,12 +572,21 @@ bail:
 // note: handles multiple client via dispatch group
 -(void)wait4Dismiss
 {
+    //enter dispatch group
+    dispatch_group_enter(self.dispatchGroup);
+    
+    //debug msg
+    logMsg(LOG_DEBUG, @"entered 'wait/dismiss' dispatch group");
+    
     //sync
     @synchronized(self)
     {
         //only start listening if nobody else is
         if(YES == self.dispatchGroupEmpty)
         {
+            //dbg msg
+            logMsg(LOG_DEBUG, @"dispatch group currently empty");
+            
             //set flag
             self.dispatchGroupEmpty = NO;
             
@@ -584,6 +596,9 @@ bail:
             //'register' notification code
             // will be invoked when everything times out
             dispatch_group_notify(self.dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
+                
+                //dbg msg
+                logMsg(LOG_DEBUG, @"'wait/dismiss' dispatch group notified, disconnecting");
                 
                 //disconnect client
                 [self.client disconnect];
@@ -596,11 +611,11 @@ bail:
         
     }//sync
     
-    //enter dispatch group
-    dispatch_group_enter(self.dispatchGroup);
-    
     //wait for 5 minutes
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (60 * 5) * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        
+        //debug msg
+        logMsg(LOG_DEBUG, @"leaving 'wait/dismiss' dispatch group");
         
         //done
         // so leave!
@@ -610,7 +625,6 @@ bail:
     
     return;
 }
-
 
 //(framework) callback delegate
 // invoked when user dimisses event on phone

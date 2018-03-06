@@ -18,6 +18,6 @@
 
 //initialize an identity for DnD comms
 // generates client id, etc. and then creates identity
--(BOOL)initIdentity;
+-(BOOL)initIdentity:(BOOL)full;
 
 @end

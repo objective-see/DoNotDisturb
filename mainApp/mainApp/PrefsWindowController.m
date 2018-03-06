@@ -135,6 +135,9 @@
     //preferences
     NSDictionary* preferences = nil;
     
+    //registered device names
+    NSMutableString* registeredDevices = nil;
+    
     //height of toolbar
     float toolbarHeight = 0.0f;
     
@@ -173,11 +176,21 @@
                 //set font
                 self.deviceNames.font = [NSFont fontWithName:@"Avenir Next Condensed Regular" size:20];
                 
+                //set inset
+                self.deviceNames.textContainerInset = NSMakeSize(5.0, 10.0);
+                
+                //init string
+                registeredDevices = [NSMutableString string];
+                
                 //populate text view w/ registered devices
                 for(NSString* deviceName in preferences[PREF_REGISTERED_DEVICES])
                 {
-                    self.deviceNames.string = [NSString stringWithFormat:@"%@\n%@", self.deviceNames.string, deviceName];
+                    //append
+                    [registeredDevices appendString:[NSString stringWithFormat:@"📱 %@", deviceName]];
                 }
+                     
+                //add
+                self.deviceNames.string = registeredDevices;
             }
             
             //no device registered
@@ -283,7 +296,7 @@
 }
 
 //ping daemon for QRC, display it, etc
--(IBAction)generatedQRC:(id)sender
+-(IBAction)generateQRC:(id)sender
 {
     //qrc object
     QuickResponseCode* qrcObj = nil;
@@ -440,11 +453,11 @@ bail:
     return;
 }
 
-//button handler for 'link'
-// ... TODO:
--(IBAction)link:(id)sender
+//button handler for adding new device
+-(IBAction)addDevice:(id)sender
 {
-    
+    //trigger refresh of link view
+    [self generateQRC:nil];
     
     return;
 }
@@ -639,23 +652,6 @@ bail:
 bail:
     
     return toolbarHeight;
-}
-
-
-//delegate method
-// return number of registered devices for combo box
--(NSInteger)numberOfItemsInComboBox:(NSComboBox *)aComboBox
-{
-    //return count
-    return [self.preferences[PREF_REGISTERED_DEVICES] count];
-}
-
-//delegate method
-// return registered device at index
--(id)comboBox:(NSComboBox *)aComboBox objectValueForItemAtIndex:(NSInteger)index
-{
-    //return count
-    return [self.preferences[PREF_REGISTERED_DEVICES] objectAtIndex:index];
 }
 
 @end

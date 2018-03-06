@@ -59,22 +59,22 @@
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="6nW-4K-zf4"/>
                     <toolbarItem implicitItemIdentifier="99F00439-5E3B-4FBB-BC65-3E1F7EBDDBC6" explicitItemIdentifier="general" label="general" paletteLabel="general" tag="101" image="prefsGeneral" selectable="YES" id="Twx-TJ-y2Q">
                         <connections>
-                            <action selector="toolbarButtonHandler:" target="-2" id="6sP-cE-opo"/>
+                            <action selector="toolbarButtonHandler:" target="-2" id="9JH-zR-BcH"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="48B3FCFA-8A19-4D19-A840-E21E6D564389" explicitItemIdentifier="action" label="action" paletteLabel="action" tag="102" image="prefsAction" selectable="YES" id="hqU-b9-59A">
                         <connections>
-                            <action selector="toolbarButtonHandler:" target="-2" id="BgL-3p-HJQ"/>
+                            <action selector="toolbarButtonHandler:" target="-2" id="dy9-vy-N89"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="B0FD7AF2-DAC5-45EF-A31B-2E2C7CB85294" explicitItemIdentifier="update" label="update" paletteLabel="update" tag="104" image="prefsUpdate" selectable="YES" id="2Fi-c8-fnE">
                         <connections>
-                            <action selector="toolbarButtonHandler:" target="-2" id="wWx-DP-lVm"/>
+                            <action selector="toolbarButtonHandler:" target="-2" id="jeu-wN-mgR"/>
                         </connections>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="5DB39F09-CC43-4EC3-BF61-362FDA2DF782" explicitItemIdentifier="link" label="link" paletteLabel="link" tag="103" image="prefsLink" selectable="YES" id="43J-tU-rUa">
                         <connections>
-                            <action selector="toolbarButtonHandler:" target="-2" id="Hcq-YC-Tek"/>
+                            <action selector="toolbarButtonHandler:" target="-2" id="tSK-K0-f7H"/>
                         </connections>
                     </toolbarItem>
                 </allowedToolbarItems>
@@ -105,7 +105,7 @@
                         <font key="font" size="14" name="Consolas-Bold"/>
                     </buttonCell>
                     <connections>
-                        <action selector="togglePreference:" target="-2" id="hCf-ID-afp"/>
+                        <action selector="generateQRC:" target="-2" id="hCf-ID-afp"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IlI-AI-u7J">
@@ -134,7 +134,7 @@
                         <font key="font" size="14" name="Consolas-Bold"/>
                     </buttonCell>
                     <connections>
-                        <action selector="togglePreference:" target="-2" id="9Kw-RG-KJy"/>
+                        <action selector="generateQRC:" target="-2" id="9Kw-RG-KJy"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q5L-bq-4ua">
@@ -163,7 +163,7 @@
                         <font key="font" size="14" name="Consolas-Bold"/>
                     </buttonCell>
                     <connections>
-                        <action selector="togglePreference:" target="-2" id="8T5-pf-9dO"/>
+                        <action selector="generateQRC:" target="-2" id="8T5-pf-9dO"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9r-H0-4xe">
@@ -199,7 +199,7 @@
                         <font key="font" size="14" name="Consolas-Bold"/>
                     </buttonCell>
                     <connections>
-                        <action selector="togglePreference:" target="-2" id="pUi-UU-qgt"/>
+                        <action selector="generateQRC:" target="-2" id="pUi-UU-qgt"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Byk-Y4-1yK">
@@ -228,7 +228,7 @@
                         <font key="font" size="14" name="Consolas-Bold"/>
                     </buttonCell>
                     <connections>
-                        <action selector="togglePreference:" target="-2" id="GBy-Xx-HhH"/>
+                        <action selector="generateQRC:" target="-2" id="GBy-Xx-HhH"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BXf-fg-RpF">
@@ -303,7 +303,7 @@
                         <font key="font" size="13" name="Menlo-Regular"/>
                     </buttonCell>
                     <connections>
-                        <action selector="generatedQRC:" target="-2" id="hKL-GM-hYR"/>
+                        <action selector="generateQRC:" target="-2" id="hKL-GM-hYR"/>
                     </connections>
                 </button>
             </subviews>
@@ -321,7 +321,7 @@
                         <font key="font" size="14" name="Consolas-Bold"/>
                     </buttonCell>
                     <connections>
-                        <action selector="togglePreference:" target="-2" id="YQd-OG-Lhs"/>
+                        <action selector="generateQRC:" target="-2" id="YQd-OG-Lhs"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YB6-Vv-lQu">
@@ -350,7 +350,7 @@
                         <font key="font" size="13" name="Menlo-Bold"/>
                     </buttonCell>
                     <connections>
-                        <action selector="check4Update:" target="-2" id="GJb-mB-UIz"/>
+                        <action selector="generateQRC:" target="-2" id="GJb-mB-UIz"/>
                     </connections>
                 </button>
                 <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="o0T-ra-4H0">
@@ -386,7 +386,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="connected" id="epV-nQ-N1Q"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="13Y-Ot-CSc">
-                    <rect key="frame" x="18" y="96" width="219" height="40"/>
+                    <rect key="frame" x="18" y="103" width="219" height="40"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="jvE-P3-Ubg"/>
                     </constraints>
@@ -402,7 +402,7 @@
                         <rect key="frame" x="1" y="1" width="256" height="151"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="9cB-rx-0JH">
+                            <textView editable="NO" selectable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="9cB-rx-0JH">
                                 <rect key="frame" x="0.0" y="0.0" width="256" height="151"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -422,14 +422,6 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xoO-va-gSP">
-                    <rect key="frame" x="383" y="88" width="149" height="19"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="registered devices" id="Ita-Ym-GFa">
-                        <font key="font" size="13" name="Menlo-Regular"/>
-                        <color key="textColor" white="0.49994419642857141" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="I9u-ax-Pzl">
                     <rect key="frame" x="462" y="297" width="124" height="32"/>
                     <constraints>
@@ -440,9 +432,17 @@
                         <font key="font" size="13" name="Menlo-Regular"/>
                     </buttonCell>
                     <connections>
-                        <action selector="link:" target="-2" id="Y11-no-h79"/>
+                        <action selector="addDevice:" target="-2" id="xeI-AJ-kRB"/>
                     </connections>
                 </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xoO-va-gSP">
+                    <rect key="frame" x="433" y="265" width="149" height="19"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="registered devices" id="Ita-Ym-GFa">
+                        <font key="font" size="13" name="Menlo-Regular"/>
+                        <color key="textColor" white="0.49994419642857141" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstItem="RDW-1i-H7T" firstAttribute="top" secondItem="I9u-ax-Pzl" secondAttribute="bottom" constant="36" id="3pi-7s-pYR"/>
@@ -450,14 +450,14 @@
                 <constraint firstAttribute="trailing" secondItem="RDW-1i-H7T" secondAttribute="trailing" constant="20" id="8S4-9Q-f6q"/>
                 <constraint firstItem="hzC-s6-8LE" firstAttribute="leading" secondItem="mxF-gz-eKM" secondAttribute="trailing" constant="8" symbolic="YES" id="9Iy-ZC-9e1"/>
                 <constraint firstItem="I9u-ax-Pzl" firstAttribute="top" secondItem="1qc-X7-qCq" secondAttribute="top" constant="20" symbolic="YES" id="DRF-G4-OLZ"/>
-                <constraint firstItem="13Y-Ot-CSc" firstAttribute="top" secondItem="hzC-s6-8LE" secondAttribute="bottom" constant="33" id="GMp-a9-bkX"/>
-                <constraint firstItem="xoO-va-gSP" firstAttribute="top" secondItem="RDW-1i-H7T" secondAttribute="bottom" constant="8" id="JZ3-AD-7QQ"/>
-                <constraint firstItem="13Y-Ot-CSc" firstAttribute="top" secondItem="mxF-gz-eKM" secondAttribute="bottom" constant="8" symbolic="YES" id="Mav-X2-O79"/>
+                <constraint firstItem="13Y-Ot-CSc" firstAttribute="top" secondItem="hzC-s6-8LE" secondAttribute="bottom" constant="26" id="GMp-a9-bkX"/>
+                <constraint firstItem="xoO-va-gSP" firstAttribute="top" secondItem="RDW-1i-H7T" secondAttribute="bottom" constant="-169" id="JZ3-AD-7QQ"/>
+                <constraint firstItem="13Y-Ot-CSc" firstAttribute="top" secondItem="mxF-gz-eKM" secondAttribute="bottom" constant="1" id="Mav-X2-O79"/>
+                <constraint firstItem="xoO-va-gSP" firstAttribute="top" secondItem="1qc-X7-qCq" secondAttribute="top" constant="61" id="Mqb-e2-IC5"/>
                 <constraint firstItem="13Y-Ot-CSc" firstAttribute="centerX" secondItem="mxF-gz-eKM" secondAttribute="centerX" id="W7t-jy-cuM"/>
                 <constraint firstItem="hzC-s6-8LE" firstAttribute="leading" secondItem="1qc-X7-qCq" secondAttribute="leading" constant="204" id="Y5J-dz-sDH"/>
-                <constraint firstAttribute="bottom" secondItem="xoO-va-gSP" secondAttribute="bottom" constant="88" id="Zjb-oo-UbI"/>
-                <constraint firstAttribute="trailing" secondItem="xoO-va-gSP" secondAttribute="trailing" constant="70" id="cS5-YU-J7x"/>
                 <constraint firstItem="RDW-1i-H7T" firstAttribute="leading" secondItem="13Y-Ot-CSc" secondAttribute="trailing" constant="87" id="mrM-TB-4i9"/>
+                <constraint firstItem="xoO-va-gSP" firstAttribute="trailing" secondItem="I9u-ax-Pzl" secondAttribute="trailing" id="n2M-ID-Aqy"/>
                 <constraint firstItem="hzC-s6-8LE" firstAttribute="centerY" secondItem="mxF-gz-eKM" secondAttribute="centerY" id="prJ-9a-siN"/>
                 <constraint firstItem="I9u-ax-Pzl" firstAttribute="trailing" secondItem="RDW-1i-H7T" secondAttribute="trailing" id="rnU-xX-2xn"/>
                 <constraint firstItem="RDW-1i-H7T" firstAttribute="top" secondItem="I9u-ax-Pzl" secondAttribute="bottom" constant="36" id="uCe-OK-eUB"/>
@@ -490,7 +490,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <action selector="closeQRC:" target="-2" id="4Qi-IR-65o"/>
+                                        <action selector="closeQRC:" target="-2" id="gzM-2c-suu"/>
                                     </connections>
                                 </button>
                             </subviews>

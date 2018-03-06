@@ -20,7 +20,7 @@ extern Preferences* preferences;
 
 //initialize an identity for DnD comms
 // generates client id, etc. and then creates identity
--(BOOL)initIdentity
+-(BOOL)initIdentity:(BOOL)full
 {
     //flag
     BOOL initialized = NO;
@@ -72,58 +72,94 @@ extern Preferences* preferences;
     
     //try load client id
     clientID = preferences.preferences[PREF_CLIENT_ID];
-    if(nil == clientID)
+    
+    //already have client id
+    // go ahead and try to init identity here
+    if(nil != clientID)
+    {
+        //init
+        identity = [[DNDIdentity alloc] init:clientID caPath:digitaCAPath error:&error];
+    }
+    
+    //when not doing full init
+    // if we don't have an identify here, bail
+    if( (YES != full) &&
+        (self.identity == nil) )
+    {
+        //bail
+        goto bail;
+    }
+
+    //no client id
+    // or (still) need to create identity
+    if( (nil == clientID) ||
+        (nil == self.identity) )
     {
         //generate
         clientID = [[[NSUUID UUID] UUIDString] lowercaseString];
-    }
     
-    //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"client id: %@", clientID]);
-    
-    //alloc init csr identity
-    csrIdentity = [[DNDIdentity alloc] init:clientID p12Path:csrPath passphrase:CSR_PASSPHRASE caPath:awsCAPath error:&error];
-    if( (nil == csrIdentity) ||
-       (nil != error) )
-    {
-        //err msg
-        logMsg(LOG_ERR, @"fail to get/create CSR identity");
+        //alloc init csr identity
+        csrIdentity = [[DNDIdentity alloc] init:clientID p12Path:csrPath passphrase:CSR_PASSPHRASE caPath:awsCAPath error:&error];
+        if( (nil == csrIdentity) ||
+           (nil != error) )
+        {
+            //err msg
+            logMsg(LOG_ERR, @"fail to get/create CSR identity");
+            
+            //bail
+            goto bail;
+        }
         
-        //bail
-        goto bail;
-    }
-    
-    //alloc/init csr client
-    csrClient = [[DNDClientCsr alloc] initWithDndIdentity:csrIdentity sendCA:false background:true];
-    if(nil == csrClient)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"fail to get/create CSR client");
+        //alloc/init csr client
+        csrClient = [[DNDClientCsr alloc] initWithDndIdentity:csrIdentity sendCA:false background:true];
+        if(nil == csrClient)
+        {
+            //err msg
+            logMsg(LOG_ERR, @"fail to get/create CSR client");
+            
+            //bail
+            goto bail;
+        }
         
-        //bail
-        goto bail;
-    }
-    
-    //get (or create) dnd identity
-    identity = [csrClient getOrCreateIdentity:clientID caPath:digitaCAPath];
-    if(nil == self.identity)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"fail to get/create DND identity");
+        //get (or create) dnd identity
+        identity = [csrClient getOrCreateIdentity:clientID caPath:digitaCAPath];
+        if(nil == self.identity)
+        {
+            //err msg
+            logMsg(LOG_ERR, @"fail to get/create DND identity");
+            
+            //bail
+            goto bail;
+        }
         
-        //bail
-        goto bail;
+        //save client ID
+        // also used as indicator that identity was generated
+        if(nil == preferences.preferences[PREF_CLIENT_ID])
+        {
+            //save
+            [preferences update:@{PREF_CLIENT_ID:clientID}];
+        }
     }
-    
-    //save client ID
-    // also used as indicator that identity was generated
-    [preferences update:@{PREF_CLIENT_ID:clientID}];
-    
+
     //happy
     initialized = YES;
     
 bail:
     
+    //don't need this anymore
+    if(nil != csrIdentity)
+    {
+        //delete
+        if(YES != [csrIdentity deleteIdentity])
+        {
+            //err msg
+            logMsg(LOG_ERR, @"fail to delete CSR identity");
+        }
+        
+        //unset
+        csrIdentity = nil;
+    }
+
     return initialized;
 }
 

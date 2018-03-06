@@ -51,11 +51,29 @@ int main(int argc, const char * argv[])
         UserCommsListener* userCommsListener = nil;
         
         //dbg msg
-        logMsg(LOG_DEBUG, @"DnD launch daemon started");
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"DnD launch daemon started (args: %@)", [[NSProcessInfo processInfo] arguments]]);
         
         //first thing...
         // install exception handlers
         installExceptionHandlers();
+        
+        //uninstall?
+        // delete DND identity and exit
+        if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_UNINSTALL])
+        {
+            //uninstall
+            if(YES != uninstall())
+            {
+                //err msg
+                logMsg(LOG_DEBUG, @"failed to perform daemon's 'uninstall' logic");
+                
+                //bail
+                goto bail;
+            }
+            
+            //bail
+            goto bail;
+        }
         
         //init logging
         if(YES != initLogging())
@@ -94,7 +112,7 @@ int main(int argc, const char * argv[])
         if(nil != preferences.preferences[PREF_CLIENT_ID])
         {
             //load identity
-            if(YES != [framework initIdentity])
+            if(YES != [framework initIdentity:YES])
             {
                 //err msg
                 logMsg(LOG_ERR, @"failed to generate DnD identity");
@@ -162,6 +180,50 @@ bail:
     logMsg(LOG_DEBUG, @"launch daemon exiting");
     
     return 0;
+}
+
+//uninstall
+// delete DND identity
+BOOL uninstall()
+{
+    //result
+    BOOL uninstalled = NO;
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"performing daemon 'uninstall' logic");
+    
+    //init framework obj
+    framework = [[FrameworkInterface alloc] init];
+    if(nil == framework)
+    {
+        //bail
+        goto bail;
+    }
+    
+    //load identity
+    // but no need to do full init
+    if(YES != [framework initIdentity:NO])
+    {
+        //bail
+        goto bail;
+    }
+    
+    //delete id
+    if(YES != [framework.identity deleteIdentity])
+    {
+        //bail
+        goto bail;
+    }
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"deleted identity");
+    
+    //happy
+    uninstalled = YES;
+    
+bail:
+
+    return uninstalled;
 }
 
 //init a handler for SIGTERM

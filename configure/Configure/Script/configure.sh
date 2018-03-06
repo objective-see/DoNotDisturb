@@ -43,6 +43,9 @@ elif [ "${1}" == "-uninstall" ] && ! [ -z "${2}" ]; then
 
     echo "uninstalling"
 
+    #tell daemon to perform uninstall logic
+    "$INSTALL_DIRECTORY/Do Not Disturb.bundle/Contents/MacOS/Do Not Disturb" "-uninstall"
+
     #unload launch daemon & remove plist
     launchctl unload /Library/LaunchDaemons/com.objective-see.dnd.plist
     rm /Library/LaunchDaemons/com.objective-see.dnd.plist

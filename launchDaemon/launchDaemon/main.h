@@ -16,17 +16,17 @@
 
 /* FUNCTIONS */
 
+//uninstall
+// remove DND identity
+BOOL uninstall(void);
+
+//TODO:
 //init sentry
 // crash/error reporting
 BOOL initCrashReporting(void);
 
-//initialize an identity for DnD comms
-// generates client id, and then creates identity
-BOOL initIdentity(void);
-
 //init a handler for SIGTERM
 // can perform actions such as disabling firewall and closing logging
 void register4Shutdown(void);
-
 
 #endif /* main_h */

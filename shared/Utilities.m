@@ -82,7 +82,7 @@ bail:
 // b) signed with signing auth
 OSStatus verifyApp(NSString* path, NSString* signingAuth)
 {
-    //TODO:
+    //TODO: remove!
     return noErr;
     
     //status

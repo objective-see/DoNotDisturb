@@ -78,7 +78,7 @@ extern FrameworkInterface* framework;
     if(nil == framework.identity)
     {
         //create it
-        if(YES != [framework initIdentity])
+        if(YES != [framework initIdentity:YES])
         {
             //err msg
             logMsg(LOG_ERR, @"failed to initialize DnD identity");
