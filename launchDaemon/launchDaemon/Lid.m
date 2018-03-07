@@ -55,21 +55,26 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     
     //sleep bit
     int sleepState = -1;
-
-    //sanity check
-    // ignore any messages that are related to lid state
+    
+    //preferences
+    NSDictionary* currentPrefs = nil;
+    
+    //ignore any messages that are related to lid state
     if(kIOPMMessageClamshellStateChange != messageType)
     {
         //bail
         goto bail;
     }
+    
+    //get prefs
+    currentPrefs = [preferences get];
 
     //if user explicity set disabled
     // bail here, to ignore everything
-    if(YES == [preferences.preferences[PREF_IS_DISABLED] boolValue])
+    if(YES == [currentPrefs[PREF_IS_DISABLED] boolValue])
     {
         //dbg msg
-        logMsg(LOG_DEBUG, @"client disabled DnD, so ignoring lid open event");
+        logMsg(LOG_DEBUG, @"client disabled DnD, so ignoring lid event");
         
         //bail
         goto bail;
@@ -100,7 +105,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         
         //touch id mode?
         // wait up to 5 seconds, and ignore event if user auth'd via biometrics
-        if(YES == [preferences.preferences[PREF_TOUCHID_MODE] boolValue])
+        if(YES == [currentPrefs[PREF_TOUCHID_MODE] boolValue])
         {
             //user auth'd via touchID?
             if(YES == authViaTouchID())
@@ -213,6 +218,9 @@ bail:
 //init
 - (id)init
 {
+    //current preferences
+    NSDictionary* currentPrefs = nil;
+    
     //super
     self = [super init];
     if(nil != self)
@@ -233,13 +241,13 @@ bail:
         dispatchGroup = dispatch_group_create();
         
         //start empty
-        dispatchGroupEmpty = YES;
-    
-        //init client device
+        self.dispatchGroupEmpty = YES;
+        
+        //init client device, when:
         // a) there's an identity
         // b) there's a registered device
         if( (nil != framework.identity) &&
-            (nil == preferences.preferences[PREF_REGISTERED_DEVICES]) )
+            (nil == [preferences get][PREF_REGISTERED_DEVICES]) )
         {
             //init client
             if(YES != [self clientInit])
@@ -253,19 +261,18 @@ bail:
         // if so, set flag, disconnect and unset client
         if(nil != self.client)
         {
-            //any registered device?
-            if(0 == [[self.client getShadowSync].state.reported.endpoints count])
+            //dbg msg
+            logMsg(LOG_DEBUG, @"getting registered device list from server");
+            
+            //now get current prefs
+            // this will also sync to get latest list of registered devices
+            currentPrefs = [preferences get];
+            
+            //any registered devices?
+            if(0 == [currentPrefs[PREF_REGISTERED_DEVICES] count])
             {
                 //dbg msg
-                logMsg(LOG_DEBUG, @"user unregistered device via phone, unregistering locally & disconnecting");
-                
-                //update preferences
-                // pass in blank list to 'unregister'
-                if(YES != [preferences update:@{PREF_REGISTERED_DEVICES:@[]}])
-                {
-                    //err msg
-                    logMsg(LOG_ERR, @"failed to updated preferences ('device registered' : NO)");
-                }
+                logMsg(LOG_DEBUG, @"not registered devices, so disconnecting DnD client");
                 
                 //disconnect client
                 [self.client disconnect];
@@ -404,29 +411,12 @@ bail:
     return registered;
 }
 
-//register for notifications
+//unregister for notifications
 -(void)unregister4Notifications
 {
     //dbg msg
     logMsg(LOG_DEBUG, @"unregistering lid notifications");
     
-    //release queue
-    //dispatch_release(dispatchQ);
-    
-    //destroy notification port
-    if(NULL != notificationPort)
-    {
-        //destroy
-        IONotificationPortDestroy(notificationPort);
-        
-        //unset
-        notificationPort = NULL;
-    }
-    
-    //unset dispatch queue
-    //IONotificationPortSetDispatchQueue(notificationPort, dispatchQ);
-    
-    //TODO: like this?
     //release notification
     if(0 != notification)
     {
@@ -435,13 +425,30 @@ bail:
         
         //unset
         notification = 0;
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, @"released service interest notification");
     }
     
-    //add interest notification
-    //status = IOServiceAddInterestNotification(notificationPort, powerManagementRD, kIOGeneralInterest,
-    //                                          pmDomainChange, &lidState, &notification);
-    
+    //destroy notification port
+    if(NULL != notificationPort)
+    {
+        //set queue to NULL
+        IONotificationPortSetDispatchQueue(notificationPort, NULL);
+        
+        //unset dispatch queue
+        dispatchQ = NULL;
 
+        //destroy port
+        IONotificationPortDestroy(notificationPort);
+        
+        //unset
+        notificationPort = NULL;
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, @"destroyed notification port");
+    }
+    
     return;
 }
 
@@ -455,9 +462,15 @@ bail:
     //console user
     NSString* consoleUser = nil;
     
+    //current prefs
+    NSDictionary* currentPrefs = nil;
+    
+    //get current prefs
+    currentPrefs = [preferences get];
+    
     //only add events to queue
     // when client is not running in passive mode
-    if(YES != [preferences.preferences[PREF_PASSIVE_MODE] boolValue])
+    if(YES != [currentPrefs[PREF_PASSIVE_MODE] boolValue])
     {
         //add to global queue
         // this will trigger processing of alert to user
@@ -474,7 +487,7 @@ bail:
     
     //monitor
     // start with first, as other actions might take a bit...
-    if(YES == [preferences.preferences[PREF_MONITOR_ACTION] boolValue])
+    if(YES == [currentPrefs[PREF_MONITOR_ACTION] boolValue])
     {
         //dbg msg
         logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling monitoring (processes, usb, logins, etc.)");
@@ -491,17 +504,17 @@ bail:
     }
 
     //execute cmd?
-    if( (YES == [preferences.preferences[PREF_EXECUTE_ACTION] boolValue]) &&
-        (0 != [preferences.preferences[PREF_EXECUTION_PATH] length] ) )
+    if( (YES == [currentPrefs[PREF_EXECUTE_ACTION] boolValue]) &&
+        (0 != [currentPrefs[PREF_EXECUTION_PATH] length] ) )
     {
         //dbg msg
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"executing: %@", preferences.preferences[PREF_EXECUTION_PATH]]);
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"executing: %@", currentPrefs[PREF_EXECUTION_PATH]]);
         
         //exec payload
-        if(YES != [self executeAction:preferences.preferences[PREF_EXECUTION_PATH]])
+        if(YES != [self executeAction:currentPrefs[PREF_EXECUTION_PATH]])
         {
             //err msg
-            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to execute %@", preferences.preferences[PREF_EXECUTION_PATH]]);
+            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to execute %@", currentPrefs[PREF_EXECUTION_PATH]]);
         }
     }
     
@@ -509,7 +522,7 @@ bail:
     // check and init client if needed
     if( (nil == self.client) &&
         (nil != framework.identity) &&
-        (nil != preferences.preferences[PREF_REGISTERED_DEVICES]) )
+        (nil != currentPrefs[PREF_REGISTERED_DEVICES]) )
     {
         //init client
         if(YES != [self clientInit])
@@ -665,7 +678,5 @@ bail:
     
     return executed;
 }
-
-//unregister for notifications?
 
 @end

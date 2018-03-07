@@ -26,7 +26,7 @@ BOOL uninstall(void);
 BOOL initCrashReporting(void);
 
 //init a handler for SIGTERM
-// can perform actions such as disabling firewall and closing logging
+// can perform actions such as closing logging
 void register4Shutdown(void);
 
 #endif /* main_h */

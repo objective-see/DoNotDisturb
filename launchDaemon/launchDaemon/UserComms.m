@@ -58,8 +58,8 @@ extern FrameworkInterface* framework;
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC request: get preferences");
     
-    //preference obj has em
-    reply(preferences.preferences);
+    //get current prefs
+    reply([preferences get]);
     
     return;
 }
@@ -113,7 +113,7 @@ bail:
     self.registrationInfo = @{KEY_DEVICE_NAME: endpoint.name, KEY_HOST_NAME:[[NSHost currentHost] localizedName]};
 
     //update preferences
-    if(YES != [preferences update:@{PREF_REGISTERED_DEVICES:@[endpoint.name]}])
+    if(YES != [preferences update:@{PREF_REGISTERED_DEVICES:@{endpoint.token:endpoint.name}}])
     {
         //err msg
         logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to updated preferences ('device registered' : %@)", endpoint.name]);

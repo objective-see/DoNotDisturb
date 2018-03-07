@@ -50,6 +50,9 @@ int main(int argc, const char * argv[])
         //user comms listener (XPC) obj
         UserCommsListener* userCommsListener = nil;
         
+        //current preferences
+        NSDictionary* currentPrefs = nil;
+        
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"DnD launch daemon started (args: %@)", [[NSProcessInfo processInfo] arguments]]);
         
@@ -99,7 +102,10 @@ int main(int argc, const char * argv[])
             //bail
             goto bail;
         }
-        	
+        
+        //get current prefs
+        currentPrefs = [preferences get];
+        
         //register for shutdown
         // allows to close logging, etc.
         register4Shutdown();
@@ -109,7 +115,7 @@ int main(int argc, const char * argv[])
         
         //1st time identity generatation is done on demand
         // subsequent times though, can just always do here
-        if(nil != preferences.preferences[PREF_CLIENT_ID])
+        if(nil != currentPrefs[PREF_CLIENT_ID])
         {
             //load identity
             if(YES != [framework initIdentity:YES])
@@ -120,11 +126,11 @@ int main(int argc, const char * argv[])
                 //bail
                 goto bail;
             }
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"initialized DnD identity");
         }
     
-        //dbg msg
-        logMsg(LOG_DEBUG, @"initialized DnD identity");
-        
         //init global lid object
         lid = [[Lid alloc] init];
         
@@ -133,7 +139,7 @@ int main(int argc, const char * argv[])
         
         //not (prev) disabled?
         // register for lid notifications
-        if(YES != [preferences.preferences[PREF_IS_DISABLED] boolValue])
+        if(YES != [currentPrefs[PREF_IS_DISABLED] boolValue])
         {
             //register for lid notifications
             [lid register4Notifications];
@@ -171,7 +177,8 @@ int main(int argc, const char * argv[])
         
         //run loop
         [[NSRunLoop currentRunLoop] run];
-    }
+    
+    }//pool
     
 bail:
     
@@ -227,7 +234,7 @@ bail:
 }
 
 //init a handler for SIGTERM
-// can perform actions such as disabling firewall and closing logging
+// can perform actions such as closing logging
 void register4Shutdown()
 {
     //ignore sigterm

@@ -88,6 +88,29 @@ bail:
     return loaded;
 }
 
+//get prefs
+// contains extra logic to query server to get (current) list of registered devices
+-(NSDictionary*)get
+{
+    //registered devices
+    NSDictionary* devices = nil;
+    
+    //ask client for latest list of registered devices
+    if(nil != lid.client)
+    {
+        //get devices
+        devices = [lid.client getShadowSync].state.reported.endpoints;
+        
+        //TODO: parse/proceces/update
+        
+        //save
+        
+        //(re)load
+    }
+    
+    return self.preferences;
+}
+
 //update prefs
 // handles logic for specific prefs & then saves
 -(BOOL)update:(NSDictionary*)updates
@@ -102,7 +125,7 @@ bail:
     if(nil != updates[PREF_IS_DISABLED])
     {
         //dbg msg
-        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"client toggling firewall state: %@", updates[PREF_IS_DISABLED]]);
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"client toggling state: %@", updates[PREF_IS_DISABLED]]);
         
         //disable?
         if(YES == [updates[PREF_IS_DISABLED] boolValue])

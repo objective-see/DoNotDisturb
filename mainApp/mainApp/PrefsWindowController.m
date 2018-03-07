@@ -183,10 +183,10 @@
                 registeredDevices = [NSMutableString string];
                 
                 //populate text view w/ registered devices
-                for(NSString* deviceName in preferences[PREF_REGISTERED_DEVICES])
+                for(NSString* deviceToken in preferences[PREF_REGISTERED_DEVICES])
                 {
                     //append
-                    [registeredDevices appendString:[NSString stringWithFormat:@"📱 %@", deviceName]];
+                    [registeredDevices appendString:[NSString stringWithFormat:@"📱 %@", preferences[PREF_REGISTERED_DEVICES][deviceToken]]];
                 }
                      
                 //add
@@ -461,67 +461,6 @@ bail:
     
     return;
 }
-
-/*
-//TODO: test
-//button handler for 'unlink'
-// tell daemon to reset registered device name, and reload view
--(IBAction)unlink:(id)sender
-{
-    //alert
-    __block NSAlert *alert = nil;
-    
-    //unlink?
-    // just unset 'device registered' pref
-    if(BUTTON_UNLINK == ((NSButton*)sender).tag)
-    {
-        //dbg msg
-        logMsg(LOG_DEBUG, @"unregistering device");
-        
-        //disable button
-        self.unlinkButton.enabled = NO;
-        
-        //show/start spinner
-        [self.unregisterIndicator startAnimation:nil];
-        
-        //unset
-        // pass in blank list to 'unregister'
-        [self.daemonComms updatePreferences:@{PREF_REGISTERED_DEVICES:@[]}];
-        
-        //change view after a second
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            
-            //init alert
-            alert = [[NSAlert alloc] init];
-            
-            //set main text
-            alert.messageText = @"unregistered device";
-            
-            //set informative text
-            alert.informativeText = [NSString stringWithFormat:@"device: %@", self.deviceName.stringValue];
-            
-            //add button
-            [alert addButtonWithTitle:@"Ok"];
-            
-            //set style
-            alert.alertStyle = NSWarningAlertStyle;
-            
-            //show it
-            [alert runModal];
-            
-            //stop (hide)
-            [self.unregisterIndicator stopAnimation:nil];
-            
-            //trigger refresh of link view
-            [self toolbarButtonHandler:self.linkToolbarItem];
-            
-        });
-    }
-    
-    return;
-}
-*/
-
 
 //'check for update' button handler
 -(IBAction)check4Update:(id)sender

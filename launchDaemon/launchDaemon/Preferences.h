@@ -17,8 +17,9 @@
 
 /* METHODS */
 
-//load prefs from disk
--(BOOL)load;
+//get prefs
+// contains extra logic to query server to get (current) list of registered devices
+-(NSDictionary*)get;
 
 //update prefs
 // saves and handles logic for specific prefs

@@ -46,6 +46,15 @@ extern Preferences* preferences;
     //csr client
     DNDClientCsr *csrClient = nil;
     
+    //current preferences
+    NSDictionary* currentPrefs = nil;
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"initializing DnD identity");
+    
+    //get current prefs
+    currentPrefs = [preferences get];
+    
     //init digita CA path
     digitaCAPath = [[NSBundle mainBundle] pathForResource:@"rootCA" ofType:@"pem"];
     if(nil == digitaCAPath)
@@ -71,7 +80,7 @@ extern Preferences* preferences;
     }
     
     //try load client id
-    clientID = preferences.preferences[PREF_CLIENT_ID];
+    clientID = currentPrefs[PREF_CLIENT_ID];
     
     //already have client id
     // go ahead and try to init identity here
@@ -99,9 +108,9 @@ extern Preferences* preferences;
         clientID = [[[NSUUID UUID] UUIDString] lowercaseString];
     
         //alloc init csr identity
-        csrIdentity = [[DNDIdentity alloc] init:clientID p12Path:csrPath passphrase:CSR_PASSPHRASE caPath:awsCAPath error:&error];
+        csrIdentity = [[DNDIdentity alloc] init:[[NSUUID UUID] UUIDString] p12Path:csrPath passphrase:CSR_PASSPHRASE caPath:awsCAPath error:&error];
         if( (nil == csrIdentity) ||
-           (nil != error) )
+            (nil != error) )
         {
             //err msg
             logMsg(LOG_ERR, @"fail to get/create CSR identity");
@@ -134,7 +143,7 @@ extern Preferences* preferences;
         
         //save client ID
         // also used as indicator that identity was generated
-        if(nil == preferences.preferences[PREF_CLIENT_ID])
+        if(nil == currentPrefs[PREF_CLIENT_ID])
         {
             //save
             [preferences update:@{PREF_CLIENT_ID:clientID}];
@@ -146,6 +155,7 @@ extern Preferences* preferences;
     
 bail:
     
+
     //don't need this anymore
     if(nil != csrIdentity)
     {
@@ -153,7 +163,7 @@ bail:
         if(YES != [csrIdentity deleteIdentity])
         {
             //err msg
-            logMsg(LOG_ERR, @"fail to delete CSR identity");
+            logMsg(LOG_ERR, @"failed to delete CSR identity");
         }
         
         //unset

@@ -204,6 +204,10 @@ enum menuItems
             //set menu state
             [self setState];
             
+            //send to daemon
+            // will update preferences
+            [self.daemonComms updatePreferences:@{PREF_IS_DISABLED: [NSNumber numberWithBool:self.isDisabled]}];
+            
             break;
         }
         
@@ -316,10 +320,6 @@ bail:
         //change text
         [self.statusItem.menu itemWithTag:toggleStatus].title = @"Disable";
     }
-    
-    //send to daemon
-    // will update preferences
-    [self.daemonComms updatePreferences:@{PREF_IS_DISABLED: [NSNumber numberWithBool:self.isDisabled]}];
     
     return;
 }
