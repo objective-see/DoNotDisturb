@@ -741,7 +741,7 @@ BOOL hasTouchID()
     
     /*
     //set flag
-    if (@available(macOS 10.13.2, *))
+    if(@available(macOS 10.13.2, *))
     {
         hasTouchID = (LABiometryTypeTouchID == localauthContext.biometryType);
     }

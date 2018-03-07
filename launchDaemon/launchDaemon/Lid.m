@@ -465,6 +465,9 @@ bail:
     //current prefs
     NSDictionary* currentPrefs = nil;
     
+    //registered devices
+    __block NSMutableDictionary* devices = nil;
+    
     //get current prefs
     currentPrefs = [preferences get];
     
@@ -531,7 +534,7 @@ bail:
             logMsg(LOG_ERR, @"failed to initialize DnD client");
             
             //bail
-            //goto bail;
+            goto bail;
         }
     }
     
@@ -554,9 +557,22 @@ bail:
         //send
         [self.client sendAlertWithUuid:[NSUUID UUID] userName:consoleUser completion:^(NSNumber* response)
         {
-             //log
-             logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
-             
+            //log
+            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
+            
+            //alloc dictionary
+            devices = [NSMutableDictionary dictionary];
+            
+            //get list of registered devices
+            // build (updated) list of devices id : device name mappings
+            for(NSString* deviceID in [self.client getShadowSync].state.reported.endpoints)
+            {
+                //add current device name
+                devices[deviceID] = currentPrefs[deviceID];
+            }
+            
+            //set (overwrite) prefs with upated list
+            [preferences set:PREF_REGISTERED_DEVICES value:devices];             
         }];
         
         //wait for dismiss

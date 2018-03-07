@@ -123,6 +123,7 @@
     return;
 }
 
+//TODO: add more messages
 //generate a QRC
 // calls into daemon and then displays
 -(void)generateQRC

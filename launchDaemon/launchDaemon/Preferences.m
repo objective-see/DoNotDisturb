@@ -89,26 +89,19 @@ bail:
 }
 
 //get prefs
-// contains extra logic to query server to get (current) list of registered devices
 -(NSDictionary*)get
 {
-    //registered devices
-    NSDictionary* devices = nil;
-    
-    //ask client for latest list of registered devices
-    if(nil != lid.client)
-    {
-        //get devices
-        devices = [lid.client getShadowSync].state.reported.endpoints;
-        
-        //TODO: parse/proceces/update
-        
-        //save
-        
-        //(re)load
-    }
-    
     return self.preferences;
+}
+
+//set
+// directly override value
+-(void)set:(NSString*)key value:(id)value
+{
+    //set
+    self.preferences[key] = value;
+    
+    return;
 }
 
 //update prefs
@@ -156,9 +149,27 @@ bail:
         }
     }
     
-    //add in (new) prefs
-    [self.preferences addEntriesFromDictionary:updates];
-        
+    //updating list of registered devices?
+    // its a dictionary so requires some extra tlc
+    if(nil != updates[PREF_REGISTERED_DEVICES])
+    {
+        //iterate over device ids
+        // remove blank ones, as unregistered devices
+        for(NSString* deviceID in updates[PREF_REGISTERED_DEVICES])
+        {
+            //add new device(s)
+            self.preferences[PREF_REGISTERED_DEVICES][deviceID] = updates[PREF_REGISTERED_DEVICES][deviceID];
+        }
+    }
+    
+    //for all other prefs
+    // just merge in new prefs
+    else
+    {
+        //merge
+        [self.preferences addEntriesFromDictionary:updates];
+    }
+    
     //save
     if(YES != [self save])
     {

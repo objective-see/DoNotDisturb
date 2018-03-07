@@ -18,8 +18,11 @@
 /* METHODS */
 
 //get prefs
-// contains extra logic to query server to get (current) list of registered devices
 -(NSDictionary*)get;
+
+//set
+// directly override value
+-(void)set:(NSString*)key value:(id)value;
 
 //update prefs
 // saves and handles logic for specific prefs
