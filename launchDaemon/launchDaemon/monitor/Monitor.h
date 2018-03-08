@@ -10,6 +10,7 @@
 #import "ProcListener.h"
 #import "DownloadMonitor.h"
 #import "UserAuthMonitor.h"
+#import "ThunderboltMonitor.h"
 
 #import <Foundation/Foundation.h>
 
@@ -17,8 +18,14 @@
 
 /* PROPERTIES */
 
+//dimiss flag
+@property BOOL wasDismissed;
+
 //observer for user auths events
 @property(nonatomic, retain)id userAuthObserver;
+
+//observer for dimisss events
+@property(nonatomic, retain)id dimisssObserver;
 
 //process listener obj
 @property(nonatomic, retain)ProcessMonitor* processMonitor;
@@ -31,6 +38,9 @@
 
 //user auth events monitor
 @property(nonatomic, retain)UserAuthMonitor* userAuthMonitor;
+
+//thunderbolt monitor
+@property(nonatomic, retain)ThunderboltMonitor* thunberboltMonitor;
 
 /* METHODS */
 

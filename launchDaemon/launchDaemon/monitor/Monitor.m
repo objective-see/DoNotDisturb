@@ -9,15 +9,17 @@
 #import "Consts.h"
 #import "Logging.h"
 #import "Monitor.h"
-//#import "ThunderboltMonitor.h"
+
 
 @implementation Monitor
 
 @synthesize usbMonitor;
 @synthesize processMonitor;
+@synthesize dimisssObserver;
 @synthesize downloadMonitor;
 @synthesize userAuthMonitor;
 @synthesize userAuthObserver;
+@synthesize thunberboltMonitor;
 
 //start all monitoring
 // processes, auth events, hardware insertions, etc
@@ -36,15 +38,23 @@
     //alloc/init usb monitor obj
     usbMonitor = [[USBMonitor alloc] init];
     
-    //start monitoring
-    // can fail, so check
+    //start usb monitoring
+    // can fail, so check, but keep going
     if(YES != [self.usbMonitor start])
     {
         //err msg
         logMsg(LOG_ERR, @"failed to start USB monitoring");
-        
-        //bail
-        goto bail;
+    }
+    
+    //alloc/init thunderbolt monitor obj
+    thunberboltMonitor = [[ThunderboltMonitor alloc] init];
+    
+    //start thunberbolt monitoring
+    // can fail, so check, but keep going
+    if(YES != [self.thunberboltMonitor start])
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to start thunderbolt monitoring");
     }
     
     //alloc/init download monitor
@@ -58,45 +68,55 @@
     
     //start user auth monitoring
     // broadcasts events which we register for/handle below
-    if(YES != [self.userAuthMonitor start])
+    if(YES == [self.userAuthMonitor start])
     {
-        //err msg
-        logMsg(LOG_ERR, @"failed to start user auth monitoring");
-        
-        //bail
-        goto bail;
+        //register listener for user auth events
+        // on event; just log to the log file for now...
+        self.userAuthObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AUTH_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue]
+                                                                              usingBlock:^(NSNotification *notification)
+        {
+            //dbg msg & log
+            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: user authentication %@", notification.userInfo[AUTH_NOTIFICATION]]);
+         
+        }];
     }
     
-    //register listener for user auth events
-    // on event; just log to the log file for now...
-    self.userAuthObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AUTH_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue]
-                                                  usingBlock:^(NSNotification *notification)
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"initialized all monitoring (timeout: %lu)", (unsigned long)timeout]);
+
+    //register listener for dimiss event
+    self.dimisssObserver = [[NSNotificationCenter defaultCenter] addObserverForName:DISMISS_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification)
     {
-         //dbg msg & log
-         logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: user authentication %@", notification.userInfo[AUTH_NOTIFICATION]]);
+        //dbg msg
+        logMsg(LOG_DEBUG, @"got dismiss notification, will stop monitoring");
+        
+        //set flag
+        self.wasDismissed = YES;
+        
+        //stop
+        [self stop];
         
     }];
-    
-    //dbg msg
-    #ifndef NDEBUG
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"initialized all monitoring (timeout: %lu)", (unsigned long)timeout]);
-    #endif
-    
+
     //timeout?
-    // stop everything
+    // exec block to stop everything once timeout is hit
     if(0 != timeout)
     {
         //dbg msg
-        #ifndef NDEBUG
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"will stop monitoring after %lu", (unsigned long)timeout]);
-        #endif
-        
+    
         //invoke stop after specified timeout
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, timeout * NSEC_PER_SEC), dispatch_get_main_queue(),
         ^{
-            //stop
-            [self stop];
-           
+            //make sure alert wasn't dismissed (via phone)
+            if(YES != self.wasDismissed)
+            {
+                //dbg msg
+                logMsg(LOG_DEBUG, @"monitoring timeout hit, will stop monitoring");
+                
+                //stop
+                [self stop];
+            }
         });
     }
     
@@ -113,7 +133,7 @@ bail:
 -(void)stop
 {
     //dbg/log msg
-    logMsg(LOG_DEBUG|LOG_TO_FILE, @"stopping all monitoring, as timeout was hit");
+    logMsg(LOG_DEBUG|LOG_TO_FILE, @"stopping all monitoring...");
     
     //stop process monitor
     if(nil != self.processMonitor)
@@ -133,6 +153,16 @@ bail:
         
         //unset
         self.usbMonitor = nil;
+    }
+    
+    //stop thunderbolt monitor
+    if(nil != self.thunberboltMonitor)
+    {
+        //stop
+        [self.thunberboltMonitor stop];
+        
+        //unset
+        self.thunberboltMonitor = nil;
     }
     
     //stop download monitor

@@ -208,7 +208,7 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="nZq-LD-wqh" userLabel="Activity Message">
                     <rect key="frame" x="204" y="231" width="392" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qr code..." id="ABh-sL-M2F">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="ABh-sL-M2F">
                         <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -316,7 +316,7 @@
         <image name="alert" width="256" height="208"/>
         <image name="connected" width="128" height="128"/>
         <image name="dndIcon" width="256" height="256"/>
-        <image name="dndText" width="266.605712890625" height="34.354286193847656"/>
+        <image name="dndText" width="164.57142639160156" height="21.188571929931641"/>
         <image name="hacker" width="256" height="256"/>
         <image name="imageCell:fsG-IN-kmB:image" width="256" height="256">
             <mutableData key="keyedArchiveRepresentation">

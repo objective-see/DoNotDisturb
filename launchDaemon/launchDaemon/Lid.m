@@ -623,7 +623,7 @@ bail:
             [self.client listenOnDelegate:nil];
             
             //'register' notification code
-            // will be invoked when everything times out
+            // will be invoked when *everything* times out
             dispatch_group_notify(self.dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
                 
                 //dbg msg
@@ -659,12 +659,11 @@ bail:
 // invoked when user dimisses event on phone
 -(void)didGetDismissEvent:(Event *)event {
 
-    //broadcast event
+    //broadcast event to everybody
     [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_NOTIFICATION object:nil userInfo:nil];
     
     return;
 }
-
 
 //execute action
 -(BOOL)executeAction:(NSString*)path

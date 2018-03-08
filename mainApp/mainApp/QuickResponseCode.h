@@ -17,9 +17,6 @@
 //daemon comms obj
 @property(nonatomic, retain)DaemonComms* daemonComms;
 
-//qrc info (from daemon)
-//@property(nonatomic, retain)NSData* qrcInfo;
-
 
 /* METHODS */
 

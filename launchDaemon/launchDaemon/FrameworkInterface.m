@@ -155,7 +155,6 @@ extern Preferences* preferences;
     
 bail:
     
-
     //don't need this anymore
     if(nil != csrIdentity)
     {
@@ -164,6 +163,12 @@ bail:
         {
             //err msg
             logMsg(LOG_ERR, @"failed to delete CSR identity");
+        }
+        //deleted ok
+        else
+        {
+            //dbg msg
+            logMsg(LOG_DEBUG, @"deleted CSR identity");
         }
         
         //unset

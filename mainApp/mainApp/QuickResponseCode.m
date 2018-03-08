@@ -50,9 +50,6 @@
             //dbg msg
             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got qrc from daemon (size: %lu)", (unsigned long)qrcData.length]);
             
-            //save qrc info
-            //self.qrcInfo = [[NSString alloc] initWithData:qrcData encoding:NSUTF8StringEncoding];
-            
             //generate QRC image
             qrcImage = [self generateImage:qrcData size:size];
         }

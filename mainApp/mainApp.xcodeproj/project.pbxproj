@@ -37,6 +37,7 @@
 		CD17D58B201A7F8500F798D7 /* WelcomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D589201A7F8500F798D7 /* WelcomeWindowController.m */; };
 		CD17D58C201A7F8500F798D7 /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D58A201A7F8500F798D7 /* Welcome.xib */; };
 		CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58E201A827A00F798D7 /* QuickResponseCode.m */; };
+		CD256DE92050853C00768457 /* CustomNSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DE82050853C00768457 /* CustomNSButton.m */; };
 		CD2F407F204B417E0066673E /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F407E204B417E0066673E /* alert.png */; };
 		CD2F4081204B41C90066673E /* hacker.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F4080204B41C90066673E /* hacker.png */; };
 		CD325425204DEAEA0059951B /* dndText@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD325424204DEAEA0059951B /* dndText@2x.png */; };
@@ -114,6 +115,8 @@
 		CD17D58A201A7F8500F798D7 /* Welcome.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Welcome.xib; sourceTree = "<group>"; };
 		CD17D58D201A827A00F798D7 /* QuickResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickResponseCode.h; sourceTree = "<group>"; };
 		CD17D58E201A827A00F798D7 /* QuickResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickResponseCode.m; sourceTree = "<group>"; };
+		CD256DE72050853C00768457 /* CustomNSButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNSButton.h; sourceTree = "<group>"; };
+		CD256DE82050853C00768457 /* CustomNSButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNSButton.m; sourceTree = "<group>"; };
 		CD2F407E204B417E0066673E /* alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
 		CD2F4080204B41C90066673E /* hacker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hacker.png; sourceTree = "<group>"; };
 		CD325424204DEAEA0059951B /* dndText@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dndText@2x.png"; path = "../../../shared/images/dndText@2x.png"; sourceTree = "<group>"; };
@@ -179,11 +182,13 @@
 			isa = PBXGroup;
 			children = (
 				7D564DCF1F18441500B8AAD6 /* AboutWindowController.h */,
+				7D564DC31F18441500B8AAD6 /* AboutWindowController.m */,
+				CD256DE72050853C00768457 /* CustomNSButton.h */,
+				CD256DE82050853C00768457 /* CustomNSButton.m */,
 				CD17D58D201A827A00F798D7 /* QuickResponseCode.h */,
 				CD17D58E201A827A00F798D7 /* QuickResponseCode.m */,
 				CD17D588201A7F8500F798D7 /* WelcomeWindowController.h */,
 				CD17D589201A7F8500F798D7 /* WelcomeWindowController.m */,
-				7D564DC31F18441500B8AAD6 /* AboutWindowController.m */,
 				7D564DAC1F18434F00B8AAD6 /* AppDelegate.h */,
 				7D564DAD1F18434F00B8AAD6 /* AppDelegate.m */,
 				7D75537C1F22E40E0010FE88 /* PrefsWindowController.h */,
@@ -415,6 +420,7 @@
 				7D564DEA1F1855E900B8AAD6 /* UpdateWindowController.m in Sources */,
 				CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */,
 				CD3307D720365CF500F10D71 /* Exception.m in Sources */,
+				CD256DE92050853C00768457 /* CustomNSButton.m in Sources */,
 				7D2582571F19FAD700D28B95 /* DaemonComms.m in Sources */,
 				7D564DE61F18446200B8AAD6 /* Logging.m in Sources */,
 				7D16D69A1F65EF9900DB3161 /* Update.m in Sources */,
