@@ -43,8 +43,11 @@ elif [ "${1}" == "-uninstall" ] && ! [ -z "${2}" ]; then
 
     echo "uninstalling"
 
-    #tell daemon to perform uninstall logic
-    "$INSTALL_DIRECTORY/Do Not Disturb.bundle/Contents/MacOS/Do Not Disturb" "-uninstall"
+    #full uninstall?
+    # tell daemon to perform uninstall logic (delete IDs, etc)
+    if [[ "${3}" -eq "1" ]]; then
+        "$INSTALL_DIRECTORY/Do Not Disturb.bundle/Contents/MacOS/Do Not Disturb" "-uninstall"
+    fi
 
     #unload launch daemon & remove plist
     launchctl unload /Library/LaunchDaemons/com.objective-see.dnd.plist
@@ -58,7 +61,7 @@ elif [ "${1}" == "-uninstall" ] && ! [ -z "${2}" ]; then
     #uninstall & remove main app/helper app
     rm -rf "/Applications/Do Not Disturb.app"
 
-    #full?
+    #full uninstall?
     # delete DnD's folder w/ everything
     if [[ "${3}" -eq "1" ]]; then
         rm -rf $INSTALL_DIRECTORY

@@ -80,6 +80,7 @@ int main(int argc, const char * argv[])
         
         //uninstall?
         // delete DND identity and exit
+        // note: only called (via script) during full uninstall
         if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_UNINSTALL])
         {
             //uninstall
