@@ -115,6 +115,7 @@ bail:
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"updating preferences (%@)", updates]);
     
     //user setting state?
+    // toggle the state of the daemon (lid) watcher too
     if(nil != updates[PREF_IS_DISABLED])
     {
         //dbg msg
@@ -150,20 +151,16 @@ bail:
     }
     
     //updating list of registered devices?
-    // its a dictionary so requires some extra tlc
-    if(nil != updates[PREF_REGISTERED_DEVICES])
+    // its a dictionary so requires an extra merge
+    if( (nil != updates[PREF_REGISTERED_DEVICES]) &&
+        (nil != self.preferences[PREF_REGISTERED_DEVICES]) )
     {
-        //iterate over device ids
-        // remove blank ones, as unregistered devices
-        for(NSString* deviceID in updates[PREF_REGISTERED_DEVICES])
-        {
-            //add new device(s)
-            self.preferences[PREF_REGISTERED_DEVICES][deviceID] = updates[PREF_REGISTERED_DEVICES][deviceID];
-        }
+        //merge
+        [self.preferences addEntriesFromDictionary:updates[PREF_REGISTERED_DEVICES]];
     }
     
-    //for all other prefs
-    // just merge in new prefs
+    //for all other prefs or for 1st device
+    // just merge in new prefs into existing ones
     else
     {
         //merge

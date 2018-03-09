@@ -174,7 +174,7 @@ bail:
     if(nil != csrIdentity)
     {
         //delete
-        if(YES != [csrIdentity deleteIdentity])
+        if(YES != [csrIdentity deleteIdentityWithDeleteAssociatedCA:YES])
         {
             //err msg
             logMsg(LOG_ERR, @"failed to delete CSR identity");

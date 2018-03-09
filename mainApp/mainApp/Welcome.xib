@@ -10,7 +10,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="WelcomeWindowController">
             <connections>
                 <outlet property="activityIndicator" destination="12Q-wb-usj" id="OBk-O9-kxj"/>
-                <outlet property="activityMessage" destination="nZq-LD-wqh" id="YQQ-wX-mLr"/>
                 <outlet property="appInfo" destination="Saf-Qg-NBo" id="xs0-qj-7dm"/>
                 <outlet property="deviceName" destination="cwA-Cr-acf" id="2Iv-JH-zGS"/>
                 <outlet property="hostName" destination="mFe-eu-nNm" id="oRs-cQ-NN6"/>
@@ -205,15 +204,6 @@
                     <rect key="frame" x="384" y="291" width="32" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </progressIndicator>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="nZq-LD-wqh" userLabel="Activity Message">
-                    <rect key="frame" x="204" y="231" width="392" height="37"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" id="ABh-sL-M2F">
-                        <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
                 <box fixedFrame="YES" boxType="custom" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="BXe-qj-owp">
                     <rect key="frame" x="0.0" y="0.0" width="800" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -233,6 +223,15 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Click 'Add devices' and scan the QRC code above." id="6z7-v2-XLt">
                         <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="fFv-Gr-YPE">
+                    <rect key="frame" x="18" y="230" width="764" height="39"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qr code... " id="MRH-7c-xXs">
+                        <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>

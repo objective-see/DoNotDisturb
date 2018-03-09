@@ -248,7 +248,7 @@ BOOL uninstall()
     }
     
     //delete id
-    if(YES != [framework.identity deleteIdentity])
+    if(YES != [framework.identity deleteIdentityWithDeleteAssociatedCA:YES])
     {
         //err msg
         logMsg(LOG_ERR, @"failed to delete DnD identity");
@@ -256,6 +256,9 @@ BOOL uninstall()
         //bail
         goto bail;
     }
+    
+    //unset
+    framework.identity = nil;
     
     //dbg msg
     logMsg(LOG_DEBUG, @"deleted identity");

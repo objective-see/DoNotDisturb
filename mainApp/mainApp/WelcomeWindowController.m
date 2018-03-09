@@ -129,9 +129,6 @@
     //qrc object
     QuickResponseCode* qrcObj = nil;
     
-    //flag
-    __block BOOL doneGenerating = NO;
-    
     //daemon comms obj
     __block DaemonComms* daemonComms = nil;
     
@@ -147,44 +144,13 @@
     //grab size while still on main thread
     qrcSize = self.qrcImageView.frame.size;
     
-    //show msg's related to events
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        //iterate over all msg
-        // show each, but bail (early) if done...
-        for(NSString* activity in @[@"generating public/private key pair...", @"generating certificate signing request for new keypair...", @"requesting new certificate from server...", @"saving new certificate to keychain...", @"generating qr code with certifcate and private key..."])
-        {
-            //check if done
-            if(YES == doneGenerating)
-            {
-                //done
-                break;
-            }
-            
-            //on main thread
-            // show activity message
-            dispatch_sync(dispatch_get_main_queue(), ^{
-                
-                //show msg
-                self.activityMessage.stringValue = activity;
-                
-            });
-            
-            //nap
-            [NSThread sleepForTimeInterval:5.0];
-        }
-    });
-    
     //generate QRC
     // block will be executed when method returns
     [qrcObj generateQRC:qrcSize.height reply:^(NSImage* qrcImage)
     {
-         //set flag
-         doneGenerating = YES;
-        
-         //sanity check
-         if(nil == qrcImage)
-         {
+        //sanity check
+        if(nil == qrcImage)
+        {
              //show error msg on main thread
              dispatch_async(dispatch_get_main_queue(), ^{
                  
@@ -200,16 +166,16 @@
              });
              
              return;
-         }
+        }
          
-         //show QRC
-         // on main thread since it's UI-related
-         dispatch_sync(dispatch_get_main_queue(), ^{
+        //show QRC
+        // on main thread since it's UI-related
+        dispatch_sync(dispatch_get_main_queue(), ^{
              
              //display QRC
              [self displayQRC:qrcImage];
              
-         });
+        });
         
         //dbg msg
         logMsg(LOG_DEBUG, @"displayed QRC...now waiting for user to scan, then server to register and ack");
