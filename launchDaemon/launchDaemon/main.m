@@ -45,6 +45,9 @@ dispatch_source_t dispatchSource = nil;
 // init & kickoff stuffz
 int main(int argc, const char * argv[])
 {
+    //return
+    int result = -1;
+    
     @autoreleasepool
     {
         //user comms listener (XPC) obj
@@ -60,6 +63,21 @@ int main(int argc, const char * argv[])
         // install exception handlers
         installExceptionHandlers();
         
+        //alloc/init/load prefs
+        // to here (early) as other logic (below) uses prefs
+        preferences = [[Preferences alloc] init];
+        if(nil == preferences)
+        {
+            //err msg
+            logMsg(LOG_ERR, @"failed to initialize preferences");
+            
+            //bail
+            goto bail;
+        }
+        
+        //get current prefs
+        currentPrefs = [preferences get];
+        
         //uninstall?
         // delete DND identity and exit
         if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_UNINSTALL])
@@ -73,6 +91,9 @@ int main(int argc, const char * argv[])
                 //bail
                 goto bail;
             }
+            
+            //happy
+            result = 0;
             
             //bail
             goto bail;
@@ -91,20 +112,7 @@ int main(int argc, const char * argv[])
         //log to file
         logMsg(LOG_TO_FILE, @"launch daemon started");
         
-        //alloc/init/load prefs
-        // to here (early) as other logic (below) uses prefs
-        preferences = [[Preferences alloc] init];
-        if(nil == preferences)
-        {
-            //err msg
-            logMsg(LOG_ERR, @"failed to initialize preferences");
-            
-            //bail
-            goto bail;
-        }
         
-        //get current prefs
-        currentPrefs = [preferences get];
         
         //register for shutdown
         // allows to close logging, etc.
@@ -180,13 +188,16 @@ int main(int argc, const char * argv[])
     
     }//pool
     
+    //happy
+    result = 0;
+    
 bail:
     
     //dbg msg
     // should never happen unless box is shutting down
     logMsg(LOG_DEBUG, @"launch daemon exiting");
     
-    return 0;
+    return result;
 }
 
 //uninstall
@@ -199,10 +210,27 @@ BOOL uninstall()
     //dbg msg
     logMsg(LOG_DEBUG, @"performing daemon 'uninstall' logic");
     
+    //no client id?
+    // no need to delete identity
+    if(nil == [preferences get][PREF_CLIENT_ID])
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"no client ID found, so no identity to delete");
+        
+        //happy
+        uninstalled = YES;
+        
+        //bail
+        goto bail;
+    }
+    
     //init framework obj
     framework = [[FrameworkInterface alloc] init];
     if(nil == framework)
     {
+        //err msg
+        logMsg(LOG_ERR, @"failed to alloc/init framework interface");
+        
         //bail
         goto bail;
     }
@@ -211,6 +239,9 @@ BOOL uninstall()
     // but no need to do full init
     if(YES != [framework initIdentity:NO])
     {
+        //err msg
+        logMsg(LOG_ERR, @"failed to init DnD identity");
+        
         //bail
         goto bail;
     }
@@ -218,6 +249,9 @@ BOOL uninstall()
     //delete id
     if(YES != [framework.identity deleteIdentity])
     {
+        //err msg
+        logMsg(LOG_ERR, @"failed to delete DnD identity");
+        
         //bail
         goto bail;
     }

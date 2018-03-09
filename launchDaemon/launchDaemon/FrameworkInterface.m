@@ -59,14 +59,20 @@ extern Preferences* preferences;
     digitaCAPath = [[NSBundle mainBundle] pathForResource:@"rootCA" ofType:@"pem"];
     if(nil == digitaCAPath)
     {
+        //err msg
+        logMsg(LOG_ERR, @"fail to locate Digita's CA path");
+        
         //bail
         goto bail;
     }
     
     //init csr path
     csrPath = [[NSBundle mainBundle] pathForResource:@"deviceCSRRequest" ofType:@"p12"];
-    if(nil == digitaCAPath)
+    if(nil == csrPath)
     {
+        //err msg
+        logMsg(LOG_ERR, @"fail to locate CSR path");
+        
         //bail
         goto bail;
     }
@@ -75,6 +81,9 @@ extern Preferences* preferences;
     awsCAPath = [[NSBundle mainBundle] pathForResource:@"awsRootCA" ofType:@"pem"];
     if(nil == awsCAPath)
     {
+        //err msg
+        logMsg(LOG_ERR, @"fail to locate AWS CA path");
+        
         //bail
         goto bail;
     }
@@ -86,6 +95,9 @@ extern Preferences* preferences;
     // go ahead and try to init identity here
     if(nil != clientID)
     {
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"using existing client id: %@", clientID]);
+        
         //init
         identity = [[DNDIdentity alloc] init:clientID caPath:digitaCAPath error:&error];
     }
@@ -95,6 +107,9 @@ extern Preferences* preferences;
     if( (YES != full) &&
         (self.identity == nil) )
     {
+        //err msg
+        logMsg(LOG_ERR, @"failed to init *existing* DnD identity (full init: false)");
+        
         //bail
         goto bail;
     }
