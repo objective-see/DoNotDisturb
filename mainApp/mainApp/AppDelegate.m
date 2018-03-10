@@ -23,7 +23,7 @@
 // also make front, init title bar, etc
 -(void)awakeFromNib
 {
-    //install?
+    //install
     // kick off phone sync ui logic flow
     if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_INSTALL])
     {
@@ -60,11 +60,6 @@
 // init user interface
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-    //dbg msg
-    #ifndef NDEBUG
-    logMsg(LOG_DEBUG, @"main (config) app launched");
-    #endif
-
     //start login item in background
     // method checks first to make sure only single instance is running
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),

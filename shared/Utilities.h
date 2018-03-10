@@ -36,9 +36,6 @@ NSOperatingSystemVersion getOSVersion(void);
 //get name of logged in user
 NSString* getConsoleUser(void);
 
-//get console user id
-NSNumber* getConsoleUID(void);
-
 //verify that an app bundle is
 // a) signed
 // b) signed with signing auth

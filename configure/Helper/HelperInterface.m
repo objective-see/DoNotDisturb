@@ -32,34 +32,12 @@ dispatch_source_t dispatchSource = nil;
     //results
     NSNumber* result = nil;
     
-    //console uid
-    NSNumber* consoleUID = 0;
-    
-    //init result
-    result = @(-1);
-    
     //dbg msg
     logMsg(LOG_NOTICE, [NSString stringWithFormat:@"XPC-request: install (%@)", app]);
     
-    //get console uid
-    consoleUID = getConsoleUID();
-    if(nil == consoleUID)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"failed to determine console user id");
-        
-        //bail
-        goto bail;
-    }
-    
-    //dbg msg
-    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"console uid: %@", consoleUID]);
-
     //configure
-    // pass in 'install' flag and console uid
-    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-install", consoleUID.stringValue]]];
-    
-bail:
+    // pass in 'install' flag
+    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-install"]]];
     
     //reply to client
     reply(result);
@@ -74,34 +52,12 @@ bail:
     //results
     NSNumber* result = nil;
     
-    //console uid
-    NSNumber* consoleUID = 0;
-    
-    //init result
-    result = @(-1);
-    
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC-request: uninstall");
     
-    //get console uid
-    consoleUID = getConsoleUID();
-    if(nil == consoleUID)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"failed to determine console uid");
-        
-        //bail
-        goto bail;
-    }
-    
-    //dbg msg
-    logMsg(LOG_NOTICE, [NSString stringWithFormat:@"console uid: %@", consoleUID]);
-    
     //configure
-    // pass in 'uninstall' flag, console uid, and partial/full
-    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-uninstall", consoleUID.stringValue, [NSNumber numberWithBool:full].stringValue]]];
-    
-bail:
+    // pass in 'uninstall' flag, and partial/full
+    result = [NSNumber numberWithInt:[self configure:app arguements:@[@"-uninstall", [NSNumber numberWithBool:full].stringValue]]];
     
     //reply to client
     reply(result);

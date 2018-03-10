@@ -87,7 +87,8 @@
 //flag to install
 #define ACTION_INSTALL_FLAG 1
 
-//flag for partial uninstall (leave prefs?)
+//flag for partial uninstall
+// leave preferences file, etc.
 #define UNINSTALL_PARTIAL 0
 
 //flag for full uninstall

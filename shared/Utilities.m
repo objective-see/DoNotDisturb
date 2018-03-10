@@ -47,36 +47,6 @@ NSString* getConsoleUser()
     return CFBridgingRelease(SCDynamicStoreCopyConsoleUser(NULL, NULL, NULL));
 }
 
-//get console user id
-NSNumber* getConsoleUID()
-{
-    //console user
-    NSNumber* consoleUser = nil;
-    
-    //stat info
-    struct stat statInfo = {0};
-    
-    //clear
-    bzero(&statInfo, sizeof(struct stat));
-    
-    //get console owner
-    if(0 != lstat(PATH_CONSOLE, &statInfo))
-    {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"lstat('%s') failed with %d", PATH_CONSOLE, errno]);
-        
-        //bail
-        goto bail;
-    }
-    
-    //extract owner
-    consoleUser = @(statInfo.st_uid);
-    
-bail:
-    
-    return consoleUser;
-}
-
 //verify that an app bundle is
 // a) signed
 // b) signed with signing auth

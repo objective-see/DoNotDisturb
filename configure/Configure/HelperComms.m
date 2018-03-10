@@ -81,7 +81,7 @@
           //invoke block
           reply([NSNumber numberWithInt:-1]);
           
-    }] uninstall:[[NSBundle mainBundle] bundlePath] full:(BOOL)full reply:^(NSNumber* result)
+    }] uninstall:[[NSBundle mainBundle] bundlePath] full:full reply:^(NSNumber* result)
     {
          //invoke block
          reply(result);

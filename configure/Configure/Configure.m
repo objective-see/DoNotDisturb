@@ -36,14 +36,14 @@
         goto bail;
     }
     
-    //install extension
+    //install
     if(ACTION_INSTALL_FLAG == parameter)
     {
         //dbg msg
         logMsg(LOG_DEBUG, @"installing...");
         
         //already installed?
-        // perform partial uninstall
+        // perform (partial) uninstall first
         if(YES == [self isInstalled])
         {
             //dbg msg
@@ -59,6 +59,7 @@
             
             //dbg msg
             logMsg(LOG_DEBUG, @"uninstalled");
+    
         }
         
         //install
@@ -70,7 +71,6 @@
         
         //dbg msg
         logMsg(LOG_DEBUG, @"installed!");
-        
     }
     //uninstall extension
     else if(ACTION_UNINSTALL_FLAG == parameter)

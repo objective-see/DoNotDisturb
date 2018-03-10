@@ -228,9 +228,9 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="fFv-Gr-YPE">
-                    <rect key="frame" x="18" y="230" width="764" height="39"/>
+                    <rect key="frame" x="18" y="233" width="764" height="35"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qr code... " id="MRH-7c-xXs">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="generating qr code..." id="MRH-7c-xXs">
                         <font key="font" size="20" name="AvenirNextCondensed-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

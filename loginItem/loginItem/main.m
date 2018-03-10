@@ -20,6 +20,9 @@ int main(int argc, const char * argv[])
     //return var
     int iReturn = -1;
     
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: DnD helper/login item (args: %@)", [[NSProcessInfo processInfo] arguments]]);
+    
     //first thing...
     // install exception handlers
     installExceptionHandlers();

@@ -23,10 +23,11 @@
 /* METHODS */
 
 //install
+// takes flag to indicate full/partial
 -(void)install:(void (^)(NSNumber*))reply;
 
 //uninstall
-// take flag to indicate full/partial
+// takes flag to indicate full/partial
 -(void)uninstall:(BOOL)full reply:(void (^)(NSNumber*))reply;
 
 //remove

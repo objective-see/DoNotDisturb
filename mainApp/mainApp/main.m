@@ -21,7 +21,7 @@ int main(int argc, const char * argv[])
     int iReturn = -1;
     
     //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"starting config/pref's app (args: %@)", [[NSProcessInfo processInfo] arguments]]);
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: DND config/prefs app (args: %@)", [[NSProcessInfo processInfo] arguments]]);
     
     //first thing...
     // install exception handlers
@@ -40,6 +40,9 @@ int main(int argc, const char * argv[])
             //bail
             goto bail;
         }
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"enabled login item (%@)", [[NSBundle mainBundle] bundleIdentifier]]);
     }
     
     //uninstall
@@ -55,6 +58,12 @@ int main(int argc, const char * argv[])
             //bail
             goto bail;
         }
+        
+        //happy
+        iReturn = 0;
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"disabled login item (%@)", [[NSBundle mainBundle] bundleIdentifier]]);
         
         //don't want to show UI or do anything else, so bail
         goto bail;

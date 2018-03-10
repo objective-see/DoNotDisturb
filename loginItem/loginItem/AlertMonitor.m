@@ -120,10 +120,11 @@
             logMsg(LOG_DEBUG, @"requesting alert dismiss message(s) from daemon, will block");
             
             //wait for alert dismiss from daemon via XPC
+            // for now, will just dimiss all (shown) alerts
             [daemonComms alertDismiss:^(NSDictionary* alert)
              {
                  //dbg msg
-                 logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got alert dismiss message from daemon: %@", alert]);
+                 logMsg(LOG_DEBUG, @"got 'alert dismiss' message from daemon");
                  
                  //dismiss alerts on main thread
                  dispatch_async(dispatch_get_main_queue(), ^{

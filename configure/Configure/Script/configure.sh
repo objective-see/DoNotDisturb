@@ -12,14 +12,15 @@
 INSTALL_DIRECTORY="/Library/Objective-See/DnD"
 
 #install
-if [ "${1}" == "-install" ] && ! [ -z "${2}" ]; then
+if [ "${1}" == "-install" ]; then
+
     echo "installing"
 
-    #main DnD directory
+    #create DnD directory
     mkdir -p $INSTALL_DIRECTORY
 
     #set permissions
-    chown -R root:wheel "Do Not Disturb"
+    chown -R root:wheel "Do Not Disturb.bundle"
     chown -R root:wheel "com.objective-see.dnd.plist"
 
     #install & load launch daemon
@@ -32,20 +33,28 @@ if [ "${1}" == "-install" ] && ! [ -z "${2}" ]; then
     #install main app/helper app
     mv "Do Not Disturb.app" /Applications
 
-    #kick off main app w/ install flag as user
-    launchctl asuser "${2}" "/Applications/Do Not Disturb.app/Contents/MacOS/Do Not Disturb" "-install"
+    #first time
+    # kick of main app w/ -install flag
+    if [ ! -f "$INSTALL_DIRECTORY/preferences.plist" ]; then
+        open "/Applications/Do Not Disturb.app/" "--args" "-install"
+
+    #otherwise
+    # just launch login item
+    else
+        open "/Applications/Do Not Disturb.app/Contents/Library/LoginItems/Do Not Disturb Helper.app"
+    fi
 
     echo "install complete"
     exit 0
 
 #uninstall
-elif [ "${1}" == "-uninstall" ] && ! [ -z "${2}" ]; then
+elif [ "${1}" == "-uninstall" ]; then
 
     echo "uninstalling"
 
     #full uninstall?
     # tell daemon to perform uninstall logic (delete IDs, etc)
-    if [[ "${3}" -eq "1" ]]; then
+    if [[ "${2}" -eq "1" ]]; then
         "$INSTALL_DIRECTORY/Do Not Disturb.bundle/Contents/MacOS/Do Not Disturb" "-uninstall"
     fi
 
@@ -55,15 +64,19 @@ elif [ "${1}" == "-uninstall" ] && ! [ -z "${2}" ]; then
 
     echo "unloaded launch daemon"
 
-    #kick off main app w/ uninstall flag as user
-    launchctl asuser "${2}" "/Applications/Do Not Disturb.app/Contents/MacOS/Do Not Disturb" "-uninstall"
+    #kick off main app w/ uninstall flag
+    open "/Applications/Do Not Disturb.app" "--args" "-uninstall"
+
+    #give it a second
+    # time to remove login item, etc
+    sleep 1.0
 
     #uninstall & remove main app/helper app
     rm -rf "/Applications/Do Not Disturb.app"
 
     #full uninstall?
     # delete DnD's folder w/ everything
-    if [[ "${3}" -eq "1" ]]; then
+    if [[ "${2}" -eq "1" ]]; then
         rm -rf $INSTALL_DIRECTORY
 
     #partial
@@ -82,5 +95,5 @@ elif [ "${1}" == "-uninstall" ] && ! [ -z "${2}" ]; then
 fi
 
 #invalid args
-echo "\nERROR: run w/ '-install' || '-uninstall' || '-upgrade' + [uid]\n"
+echo "\nERROR: run w/ '-install' || '-uninstall'"
 exit -1

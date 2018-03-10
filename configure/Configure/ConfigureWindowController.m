@@ -66,7 +66,7 @@
     else
     {
         //init status msg
-        [self.statusMsg setStringValue:@"evil maids; stay out! 🛡️☠️"];
+        [self.statusMsg setStringValue:@"evil maids: stay out! 🙅‍♀️🛡️"];
     }
     
     //enable 'uninstall' button when app is installed already

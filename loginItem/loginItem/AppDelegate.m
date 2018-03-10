@@ -36,10 +36,8 @@
     NSURL* mainApp = nil;
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, @"starting DnD login item");
-    #endif
-    
+
     //init deamon comms
     daemonComms = [[DaemonComms alloc] init];
     
@@ -58,7 +56,10 @@
         //get path to main app
         mainApp = [NSURL fileURLWithPath:[self getAppPath]];
         
-        //set up notification for app exit
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"waiting for %@ to terminate", mainApp.path]);
+        
+        //set up notification for main app exit
         // wait until it's exited to complete initializations
         self.appObserver = [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName:NSWorkspaceDidTerminateApplicationNotification object:nil queue:nil usingBlock:^(NSNotification *notification)
          {

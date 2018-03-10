@@ -316,12 +316,31 @@
     //set msg
     self.activityMessage.stringValue = @"generating qr code...";
     
+    //make sure it's showing
+    self.activityMessage.hidden = NO;
+    
     //start spinnner
     [self.activityIndicator startAnimation:nil];
+    
+    //show qrc sheet
+    // block executed when sheet is closed
+    [self.window beginSheet:self.qrcPanel completionHandler:^(NSInteger result) {
+        
+        //done!
+        
+        //trigger refresh of link view
+        [self toolbarButtonHandler:self.linkToolbarItem];
+        
+        //no need to do anything else...
+        // when daemon reponds with registration ack/info, will close sheet
+    }];
     
     //generate QRC
     [qrcObj generateQRC:qrcSize.height reply:^(NSImage* qrcImage)
     {
+        //allow 'generating' msg to show up for a bit
+        [NSThread sleepForTimeInterval:0.25];
+        
         //sanity check
         if(nil == qrcImage)
         {
@@ -345,7 +364,7 @@
         //show QRC
         // on main thread since it's UI-related
         dispatch_async(dispatch_get_main_queue(), ^{
-             
+        
              //display QRC
              [self displayQRC:qrcImage];
              
@@ -378,8 +397,8 @@
              
         }];
          
-     }];
-    
+    }];
+        
     return;
 }
 
@@ -399,16 +418,6 @@
     //show
     self.qrcImageView.hidden = NO;
     
-    //show qrc code
-    [self.window beginSheet:self.qrcPanel completionHandler:^(NSInteger result) {
-        
-        //trigger refresh of link view
-        [self toolbarButtonHandler:self.linkToolbarItem];
-        
-        //no need to do anything else...
-        // when daemon reponds with registration ack/info, will close sheet
-    }];
-
     return;
 }
 
@@ -456,7 +465,7 @@ bail:
 //button handler for adding new device
 -(IBAction)addDevice:(id)sender
 {
-    //trigger refresh of link view
+    //generate QRC
     [self generateQRC:nil];
     
     return;

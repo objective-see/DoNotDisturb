@@ -245,6 +245,7 @@ bail:
 -(void)alertDismiss:(void (^)(NSDictionary* alert))reply
 {
     //alert details
+    // for now, nil...
     __block NSMutableDictionary* alert = nil;
     
     //observer for dimiss alerts
@@ -272,9 +273,8 @@ bail:
     // wait for preferences from daemon
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
-
     //log to file
-    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert dismiss to login item to display to user: %@", alert]);
+    logMsg(LOG_DEBUG|LOG_TO_FILE, @"sending alert dismiss (from phone) to login item");
     
     //return alert
     reply(alert);
