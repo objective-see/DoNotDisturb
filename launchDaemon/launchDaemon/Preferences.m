@@ -133,6 +133,16 @@ bail:
             
             //dbg msg
             logMsg(LOG_DEBUG, @"unregistered for lid change notifications");
+            
+            //disconnect any client(s)
+            if(nil != lid.client)
+            {
+                //disconnect
+                [lid.client disconnect];
+                
+                //dbg msg
+                logMsg(LOG_DEBUG, @"disconnected client");
+            }
         }
         
         //enable?

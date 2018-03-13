@@ -8,9 +8,9 @@
 
 #import "Consts.h"
 #import "Logging.h"
-#import "CustomNSButton.h"
+#import "CustomNSTextField.h"
 
-@implementation CustomNSButton
+@implementation CustomNSTextField
 
 //check if a event appears to be simulated
 // tl;dr pid isn't root or self, and 'kCGEventSourceStateID' isn't 0x1

@@ -186,7 +186,7 @@
                 for(NSString* deviceToken in preferences[PREF_REGISTERED_DEVICES])
                 {
                     //append
-                    [registeredDevices appendString:[NSString stringWithFormat:@"📱 %@", preferences[PREF_REGISTERED_DEVICES][deviceToken]]];
+                    [registeredDevices appendString:[NSString stringWithFormat:@"📱%@", preferences[PREF_REGISTERED_DEVICES][deviceToken]]];
                 }
                      
                 //add

@@ -24,7 +24,6 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
-
 //get app's version
 // extracted from Info.plist
 NSString* getAppVersion()
@@ -52,11 +51,11 @@ NSString* getConsoleUser()
 // b) signed with signing auth
 OSStatus verifyApp(NSString* path, NSString* signingAuth)
 {
-    //TODO: remove!
-    return noErr;
-    
     //status
     OSStatus status = !noErr;
+    
+    //TODO: remove!!
+    return noErr;
     
     //signing req string
     NSString *requirementString = nil;

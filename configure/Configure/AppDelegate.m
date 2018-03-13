@@ -1,8 +1,9 @@
 
+@import Sentry;
+
 #import "Consts.h"
 #import "Logging.h"
 #import "Configure.h"
-#import "Exception.h"
 #import "Utilities.h"
 #import "AppDelegate.h"
 #import "HelperComms.h"
@@ -27,12 +28,14 @@
 {
     #pragma unused(notification)
     
-    //first thing...
-    // install exception handlers
-    installExceptionHandlers();
+    //init crash reporting client
+    SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];
     
-    //make sure system is supported
-    // if not, will show alert to user
+    //start crash handler
+    [SentryClient.sharedClient startCrashHandlerWithError:nil];
+    
+    //make sure system is supported (lid)
+    // if not, will inform user via alert
     if(YES != [self isSupported])
     {
         //dbg msg

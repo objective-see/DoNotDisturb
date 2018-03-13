@@ -8,9 +8,10 @@
 //
 
 @import Cocoa;
+@import Sentry;
 
+#import "Consts.h"
 #import "Logging.h"
-#import "Exception.h"
 #import "Utilities.h"
 
 //main
@@ -23,9 +24,11 @@ int main(int argc, const char * argv[])
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: DnD helper/login item (args: %@)", [[NSProcessInfo processInfo] arguments]]);
     
-    //first thing...
-    // install exception handlers
-    installExceptionHandlers();
+    //init crash reporting client
+    SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];
+    
+    //start crash handler
+    [SentryClient.sharedClient startCrashHandlerWithError:nil];
     
     //already running?
     if(YES == isAppRunning([[NSBundle mainBundle] bundleIdentifier]))

@@ -129,7 +129,6 @@ bail:
 }
 
 //stop all monitoring
-// contains extra checks since mighe be called 2x (user dismiss/timeout)
 -(void)stop
 {
     //dbg/log msg

@@ -1,1 +1,2 @@
 github "DigitaSecurity/dnd" "master"
+github "getsentry/sentry-cocoa" "3.12.0"

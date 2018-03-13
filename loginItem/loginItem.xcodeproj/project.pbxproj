@@ -21,7 +21,7 @@
 		7DD260131F25307B00277EC4 /* HyperlinkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD260121F25307B00277EC4 /* HyperlinkTextField.m */; };
 		7DD2BF6E1F1DDF1F00B33214 /* AlertMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF6D1F1DDF1F00B33214 /* AlertMonitor.m */; };
 		7DD2BF7A1F1EAC9C00B33214 /* DaemonComms.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF791F1EAC9C00B33214 /* DaemonComms.m */; };
-		CD3307DA20365D1900F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D820365D1900F10D71 /* Exception.m */; };
+		CD20A0D720579AFD0044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0D620579AFD0044BCC5 /* Sentry.framework */; };
 		CD3307E020375ED000F10D71 /* StatusBarPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307DF20375ED000F10D71 /* StatusBarPopoverController.m */; };
 		CD3307E22037648B00F10D71 /* StatusBarPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD3307E12037648B00F10D71 /* StatusBarPopover.xib */; };
 		CD3307E420376B8300F10D71 /* upArrowSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD3307E320376B8300F10D71 /* upArrowSmall@2x.png */; };
@@ -59,6 +59,7 @@
 		7DD2BF6D1F1DDF1F00B33214 /* AlertMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertMonitor.m; sourceTree = "<group>"; };
 		7DD2BF781F1EAC9C00B33214 /* DaemonComms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaemonComms.h; path = ../shared/DaemonComms.h; sourceTree = "<group>"; };
 		7DD2BF791F1EAC9C00B33214 /* DaemonComms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaemonComms.m; path = ../shared/DaemonComms.m; sourceTree = "<group>"; };
+		CD20A0D620579AFD0044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
 		CD3307D820365D1900F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../shared/Exception.m; sourceTree = "<group>"; };
 		CD3307D920365D1900F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../shared/Exception.h; sourceTree = "<group>"; };
 		CD3307DE20375ECF00F10D71 /* StatusBarPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarPopoverController.h; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD20A0D720579AFD0044BCC5 /* Sentry.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +132,7 @@
 				7DD260101F252EC200277EC4 /* 3rdParty */,
 				7D3B75201F13356900568828 /* shared */,
 				7D7755E51F02E05B00D0017D /* src */,
+				CD20A0D520579AE50044BCC5 /* Frameworks */,
 				7D7755E41F02E05B00D0017D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -180,6 +183,14 @@
 				7DD260121F25307B00277EC4 /* HyperlinkTextField.m */,
 			);
 			name = 3rdParty;
+			sourceTree = "<group>";
+		};
+		CD20A0D520579AE50044BCC5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CD20A0D620579AFD0044BCC5 /* Sentry.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,7 +278,6 @@
 			files = (
 				7D16D6961F64E43300DB3161 /* UpdateWindowController.m in Sources */,
 				7D3B75141F13354900568828 /* StatusBarMenu.m in Sources */,
-				CD3307DA20365D1900F10D71 /* Exception.m in Sources */,
 				7D7755EB1F02E05B00D0017D /* main.m in Sources */,
 				7DD260131F25307B00277EC4 /* HyperlinkTextField.m in Sources */,
 				7D3B75251F13357D00568828 /* Logging.m in Sources */,
@@ -409,9 +419,10 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = loginItem/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../../../../../Frameworks";
 				OTHER_CODE_SIGN_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.helper";
 				PRODUCT_NAME = "Do Not Disturb Helper";
@@ -427,9 +438,10 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = loginItem/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../../../../../Frameworks";
 				OTHER_CODE_SIGN_FLAGS = "-o hard,kill";
 				OTHER_LDFLAGS = "-Wl,-sectcreate,__RESTRICT,__restrict,/dev/null";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.helper";

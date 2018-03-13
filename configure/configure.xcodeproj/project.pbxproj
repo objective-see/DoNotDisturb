@@ -16,7 +16,6 @@
 		BF04235611C0531400431286 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF04235511C0531400431286 /* AppDelegate.m */; };
 		BF65C19111B985C0007C20AB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF65C19011B985C0007C20AB /* MainMenu.xib */; };
 		CD17D53B20104DD700F798D7 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D53820104DD700F798D7 /* Logging.m */; };
-		CD17D53C20104DD700F798D7 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D53920104DD700F798D7 /* Exception.m */; };
 		CD17D54D20104EE700F798D7 /* ErrorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D54320104EE600F798D7 /* ErrorWindowController.xib */; };
 		CD17D54E20104EE700F798D7 /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D54420104EE700F798D7 /* AboutWindow.xib */; };
 		CD17D54F20104EE700F798D7 /* Configure.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D54720104EE700F798D7 /* Configure.m */; };
@@ -26,6 +25,8 @@
 		CD17D55320104EE700F798D7 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D54B20104EE700F798D7 /* AboutWindowController.m */; };
 		CD17D55E201148F900F798D7 /* configure.sh in Resources */ = {isa = PBXBuildFile; fileRef = CD17D55D201148F900F798D7 /* configure.sh */; };
 		CD17D56320116C3800F798D7 /* com.objective-see.dnd.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD17D56220116C3800F798D7 /* com.objective-see.dnd.plist */; };
+		CD20A0D02057992F0044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0CF2057992F0044BCC5 /* Sentry.framework */; };
+		CD20A0D320579A380044BCC5 /* Sentry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD20A0CF2057992F0044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CD2F4082204B462E0066673E /* dndText.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24A20226DFB0032F2E6 /* dndText.png */; };
 		CD3307AE203567D500F10D71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD3307AD203567D400F10D71 /* Assets.xcassets */; };
 		CD73DA912004629D001FFC84 /* HelperInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA902004629D001FFC84 /* HelperInterface.m */; };
@@ -62,6 +63,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CD20A0D220579A1B0044BCC5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CD20A0D320579A380044BCC5 /* Sentry.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -78,9 +89,7 @@
 		BF04235411C0531400431286 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BF04235511C0531400431286 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		BF65C19011B985C0007C20AB /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		CD17D53720104DD600F798D7 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../../shared/Exception.h; sourceTree = "<group>"; };
 		CD17D53820104DD700F798D7 /* Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Logging.m; path = ../../shared/Logging.m; sourceTree = "<group>"; };
-		CD17D53920104DD700F798D7 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../../shared/Exception.m; sourceTree = "<group>"; };
 		CD17D53A20104DD700F798D7 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logging.h; path = ../../shared/Logging.h; sourceTree = "<group>"; };
 		CD17D53E20104E5A00F798D7 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = ../../shared/Consts.h; sourceTree = "<group>"; };
 		CD17D54220104EE600F798D7 /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
@@ -97,6 +106,7 @@
 		CD17D55D201148F900F798D7 /* configure.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = configure.sh; sourceTree = "<group>"; };
 		CD17D56220116C3800F798D7 /* com.objective-see.dnd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "com.objective-see.dnd.plist"; path = "../launchDaemon/launchDaemon/com.objective-see.dnd.plist"; sourceTree = "<group>"; };
 		CD18D64C200DA301005609F9 /* XPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCProtocol.h; path = Shared/XPCProtocol.h; sourceTree = SOURCE_ROOT; };
+		CD20A0CF2057992F0044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
 		CD3307AD203567D400F10D71 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CD73DA8F2004629D001FFC84 /* HelperInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelperInterface.h; sourceTree = "<group>"; };
 		CD73DA902004629D001FFC84 /* HelperInterface.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelperInterface.m; sourceTree = "<group>"; };
@@ -125,6 +135,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				CD20A0D02057992F0044BCC5 /* Sentry.framework in Frameworks */,
 				4BE4906410445F2F006BE471 /* Security.framework in Frameworks */,
 				4BE4906810445F36006BE471 /* ServiceManagement.framework in Frameworks */,
 			);
@@ -159,6 +170,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD20A0CF2057992F0044BCC5 /* Sentry.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
 				4BE4906310445F2F006BE471 /* Security.framework */,
 				4BE4906710445F36006BE471 /* ServiceManagement.framework */,
@@ -230,8 +242,6 @@
 				CDAAC240202255580032F2E6 /* Utilities.h */,
 				CDAAC23F202255580032F2E6 /* Utilities.m */,
 				CD17D53E20104E5A00F798D7 /* Consts.h */,
-				CD17D53720104DD600F798D7 /* Exception.h */,
-				CD17D53920104DD700F798D7 /* Exception.m */,
 				CD17D53A20104DD700F798D7 /* Logging.h */,
 				CD17D53820104DD700F798D7 /* Logging.m */,
 				CD18D64C200DA301005609F9 /* XPCProtocol.h */,
@@ -278,6 +288,7 @@
 				8D11072E0486CEB800E47090 /* Frameworks */,
 				4BE49098104463C5006BE471 /* CopyFiles */,
 				CD17D55F20115E5E00F798D7 /* ShellScript */,
+				CD20A0D220579A1B0044BCC5 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -382,7 +393,6 @@
 				CD17D55220104EE700F798D7 /* ErrorWindowController.m in Sources */,
 				4BE4905110445D49006BE471 /* main.m in Sources */,
 				CD73DA942004633A001FFC84 /* HelperListener.m in Sources */,
-				CD17D53C20104DD700F798D7 /* Exception.m in Sources */,
 				CD17D55320104EE700F798D7 /* AboutWindowController.m in Sources */,
 				CD73DA99200490B4001FFC84 /* HelperComms.m in Sources */,
 				CDAAC241202255580032F2E6 /* Utilities.m in Sources */,
@@ -471,8 +481,10 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
 				INFOPLIST_FILE = configure/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer";
 				PRODUCT_NAME = "DoNotDisturb Installer";
@@ -491,8 +503,10 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
 				INFOPLIST_FILE = configure/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer";
 				PRODUCT_NAME = "DoNotDisturb Installer";

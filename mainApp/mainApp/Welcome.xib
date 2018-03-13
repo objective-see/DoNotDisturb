@@ -10,6 +10,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="WelcomeWindowController">
             <connections>
                 <outlet property="activityIndicator" destination="12Q-wb-usj" id="OBk-O9-kxj"/>
+                <outlet property="activityMessage" destination="fFv-Gr-YPE" id="ItR-ES-c5V"/>
                 <outlet property="appInfo" destination="Saf-Qg-NBo" id="xs0-qj-7dm"/>
                 <outlet property="deviceName" destination="cwA-Cr-acf" id="2Iv-JH-zGS"/>
                 <outlet property="hostName" destination="mFe-eu-nNm" id="oRs-cQ-NN6"/>

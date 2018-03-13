@@ -42,6 +42,9 @@
 		7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF671F1DC42700B33214 /* Utilities.m */; };
 		7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */; };
 		7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF751F1E9CE700B33214 /* Queue.m */; };
+		CD20A0CA205793040044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; };
+		CD20A0CB205793100044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; };
+		CD20A0CC205793680044BCC5 /* Sentry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CD22786620463F0700C72C76 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD22786420463EB000C72C76 /* dnd.framework */; };
 		CD22786C20464A6E00C72C76 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = CD22786A204648E000C72C76 /* Preferences.m */; };
 		CD256E022050DE9B00768457 /* ProcListener.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256E002050DE6600768457 /* ProcListener.m */; };
@@ -51,7 +54,6 @@
 		CD256E062050DE9B00768457 /* ThunderboltMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DF32050DE4C00768457 /* ThunderboltMonitor.m */; };
 		CD256E072050DE9B00768457 /* USBMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DF52050DE4C00768457 /* USBMonitor.m */; };
 		CD256E082050DE9B00768457 /* UserAuthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DED2050DE4B00768457 /* UserAuthMonitor.m */; };
-		CD3307D420365CCC00F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D220365CCB00F10D71 /* Exception.m */; };
 		CDA993A62048905D00C1E9CD /* FrameworkInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA993A42048905D00C1E9CD /* FrameworkInterface.m */; };
 		CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */ = {isa = PBXBuildFile; fileRef = CE60F9C81FC9BBE500EFFDDA /* Lid.m */; };
 /* End PBXBuildFile section */
@@ -83,6 +85,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				CD20A0CC205793680044BCC5 /* Sentry.framework in CopyFiles */,
 				20C87249204609A900F1275D /* Alamofire.framework in CopyFiles */,
 				20C8724A204609A900F1275D /* AlamofireImage.framework in CopyFiles */,
 				20C8724C204609A900F1275D /* CleanroomLogger.framework in CopyFiles */,
@@ -111,7 +114,7 @@
 		};
 		7D7755CE1F02DF9500D0017D /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			dstPath = /usr/share/man/man1/;
 			dstSubfolderSpec = 0;
 			files = (
@@ -154,6 +157,7 @@
 		7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		7DD2BF741F1E9CE700B33214 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
 		7DD2BF751F1E9CE700B33214 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
+		CD20A0C9205793040044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
 		CD22786420463EB000C72C76 /* dnd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dnd.framework; path = ../Carthage/Build/Mac/dnd.framework; sourceTree = "<group>"; };
 		CD22786720463F7700C72C76 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CD227869204648E000C72C76 /* Preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Preferences.h; sourceTree = "<group>"; };
@@ -174,8 +178,6 @@
 		CD256E002050DE6600768457 /* ProcListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProcListener.m; path = launchDaemon/monitor/ProcListener.m; sourceTree = SOURCE_ROOT; };
 		CD3307C5203639AD00F10D71 /* procInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = procInfo.h; path = launchDaemon/libs/procInfo.h; sourceTree = "<group>"; };
 		CD3307C82036518400F10D71 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
-		CD3307D220365CCB00F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../../shared/Exception.m; sourceTree = "<group>"; };
-		CD3307D320365CCC00F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../../shared/Exception.h; sourceTree = "<group>"; };
 		CDA993A32048905D00C1E9CD /* FrameworkInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrameworkInterface.h; sourceTree = "<group>"; };
 		CDA993A42048905D00C1E9CD /* FrameworkInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrameworkInterface.m; sourceTree = "<group>"; };
 		CDAAC245202259B50032F2E6 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = ../../shared/Consts.h; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				209E45B9203DF64E00900B89 /* CocoaMQTT.framework in Frameworks */,
 				209E45BB203DF64E00900B89 /* RealmSwift.framework in Frameworks */,
 				209E45BC203DF64E00900B89 /* dnd.framework in Frameworks */,
+				CD20A0CB205793100044BCC5 /* Sentry.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD22786620463F0700C72C76 /* dnd.framework in Frameworks */,
+				CD20A0CA205793040044BCC5 /* Sentry.framework in Frameworks */,
 				7D4FF8C41F0E1402001A4A68 /* libbsm.tbd in Frameworks */,
 				7D6E87701F3AE6FA00D6BD7C /* libprocInfo.a in Frameworks */,
 			);
@@ -228,6 +232,7 @@
 		7D4FF8BF1F0E12F1001A4A68 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD20A0C9205793040044BCC5 /* Sentry.framework */,
 				CD22786420463EB000C72C76 /* dnd.framework */,
 				209E45A7203DF64E00900B89 /* Alamofire.framework */,
 				209E45A3203DF64E00900B89 /* AlamofireImage.framework */,
@@ -295,8 +300,6 @@
 		7D7756071F05D62E00D0017D /* shared */ = {
 			isa = PBXGroup;
 			children = (
-				CD3307D320365CCC00F10D71 /* Exception.h */,
-				CD3307D220365CCB00F10D71 /* Exception.m */,
 				CDAAC245202259B50032F2E6 /* Consts.h */,
 				7DD2BF661F1DC42700B33214 /* Utilities.h */,
 				7DD2BF671F1DC42700B33214 /* Utilities.m */,
@@ -325,8 +328,7 @@
 				CD256DF72050DE4C00768457 /* UserAuthMonitor.h */,
 				CD256DED2050DE4B00768457 /* UserAuthMonitor.m */,
 			);
-			name = monitor;
-			path = "New Group";
+			path = monitor;
 			sourceTree = "<group>";
 		};
 		CD3307C42036399900F10D71 /* Supporting Files */ = {
@@ -453,7 +455,6 @@
 				7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */,
 				7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */,
 				7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */,
-				CD3307D420365CCC00F10D71 /* Exception.m in Sources */,
 				7D7755D41F02DF9500D0017D /* main.m in Sources */,
 				7D4FF8CD1F0EF2F9001A4A68 /* UserComms.m in Sources */,
 				7D7755FC1F02EBBE00D0017D /* Logging.m in Sources */,
@@ -486,7 +487,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = Digita.launchDaemonBundle;
 				PRODUCT_NAME = "Do Not Disturb";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -510,7 +511,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
-				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = Digita.launchDaemonBundle;
 				PRODUCT_NAME = "Do Not Disturb";
 				PROVISIONING_PROFILE_SPECIFIER = "";

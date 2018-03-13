@@ -8,12 +8,13 @@
 //
 
 @import Cocoa;
-#import <ServiceManagement/ServiceManagement.h>
+@import Sentry;
 
 #import "Consts.h"
 #import "Logging.h"
-#import "Exception.h"
 #import "Utilities.h"
+
+#import <ServiceManagement/ServiceManagement.h>
 
 int main(int argc, const char * argv[])
 {
@@ -23,9 +24,11 @@ int main(int argc, const char * argv[])
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: DND config/prefs app (args: %@)", [[NSProcessInfo processInfo] arguments]]);
     
-    //first thing...
-    // install exception handlers
-    installExceptionHandlers();
+    //init crash reporting client
+    SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];
+    
+    //start crash handler
+    [SentryClient.sharedClient startCrashHandlerWithError:nil];
     
     //install
     // enable login item

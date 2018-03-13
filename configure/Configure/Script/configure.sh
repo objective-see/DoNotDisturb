@@ -25,8 +25,8 @@ if [ "${1}" == "-install" ]; then
 
     #install & load launch daemon
     mv "Do Not Disturb.bundle" $INSTALL_DIRECTORY
-    mv com.objective-see.dnd.plist /Library/LaunchDaemons/
-    launchctl load /Library/LaunchDaemons/com.objective-see.dnd.plist
+    mv "com.objective-see.dnd.plist" /Library/LaunchDaemons/
+    launchctl load "/Library/LaunchDaemons/com.objective-see.dnd.plist"
 
     echo "launch daemon installed and loaded"
 
@@ -51,6 +51,10 @@ if [ "${1}" == "-install" ]; then
 elif [ "${1}" == "-uninstall" ]; then
 
     echo "uninstalling"
+
+    #kill main app
+    # ...it might be open
+    killall "Do Not Disturb" 2> /dev/null
 
     #full uninstall?
     # tell daemon to perform uninstall logic (delete IDs, etc)

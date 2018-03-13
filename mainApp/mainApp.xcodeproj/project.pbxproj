@@ -37,13 +37,14 @@
 		CD17D58B201A7F8500F798D7 /* WelcomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D589201A7F8500F798D7 /* WelcomeWindowController.m */; };
 		CD17D58C201A7F8500F798D7 /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D58A201A7F8500F798D7 /* Welcome.xib */; };
 		CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58E201A827A00F798D7 /* QuickResponseCode.m */; };
-		CD256DE92050853C00768457 /* CustomNSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DE82050853C00768457 /* CustomNSButton.m */; };
+		CD20A0CE205797030044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0CD205797030044BCC5 /* Sentry.framework */; };
+		CD20A0DA20579B290044BCC5 /* Sentry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD20A0CD205797030044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CD256DE92050853C00768457 /* CustomNSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DE82050853C00768457 /* CustomNSTextField.m */; };
 		CD2F407F204B417E0066673E /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F407E204B417E0066673E /* alert.png */; };
 		CD2F4081204B41C90066673E /* hacker.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F4080204B41C90066673E /* hacker.png */; };
 		CD325425204DEAEA0059951B /* dndText@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD325424204DEAEA0059951B /* dndText@2x.png */; };
 		CD325427204E0C500059951B /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = CD325426204E0C500059951B /* close.png */; };
 		CD32542B204E0E420059951B /* closeAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = CD32542A204E0E420059951B /* closeAlt.png */; };
-		CD3307D720365CF500F10D71 /* Exception.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307D520365CF500F10D71 /* Exception.m */; };
 		CDAAC213201D0CD90032F2E6 /* three.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC212201D0CD80032F2E6 /* three.png */; };
 		CDAAC215201D2DD30032F2E6 /* checkbox.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC214201D2DD30032F2E6 /* checkbox.png */; };
 		CDAAC217201D54C30032F2E6 /* prefsLink.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC216201D54C20032F2E6 /* prefsLink.png */; };
@@ -64,6 +65,16 @@
 			dstPath = Contents/Library/LoginItems;
 			dstSubfolderSpec = 1;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CD20A0D920579B170044BCC5 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CD20A0DA20579B290044BCC5 /* Sentry.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,8 +126,9 @@
 		CD17D58A201A7F8500F798D7 /* Welcome.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Welcome.xib; sourceTree = "<group>"; };
 		CD17D58D201A827A00F798D7 /* QuickResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickResponseCode.h; sourceTree = "<group>"; };
 		CD17D58E201A827A00F798D7 /* QuickResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickResponseCode.m; sourceTree = "<group>"; };
-		CD256DE72050853C00768457 /* CustomNSButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNSButton.h; sourceTree = "<group>"; };
-		CD256DE82050853C00768457 /* CustomNSButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNSButton.m; sourceTree = "<group>"; };
+		CD20A0CD205797030044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
+		CD256DE72050853C00768457 /* CustomNSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNSTextField.h; sourceTree = "<group>"; };
+		CD256DE82050853C00768457 /* CustomNSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNSTextField.m; sourceTree = "<group>"; };
 		CD2F407E204B417E0066673E /* alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
 		CD2F4080204B41C90066673E /* hacker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hacker.png; sourceTree = "<group>"; };
 		CD325424204DEAEA0059951B /* dndText@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dndText@2x.png"; path = "../../../shared/images/dndText@2x.png"; sourceTree = "<group>"; };
@@ -143,6 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDAAC238201FD4660032F2E6 /* LocalAuthentication.framework in Frameworks */,
+				CD20A0CE205797030044BCC5 /* Sentry.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -183,8 +196,8 @@
 			children = (
 				7D564DCF1F18441500B8AAD6 /* AboutWindowController.h */,
 				7D564DC31F18441500B8AAD6 /* AboutWindowController.m */,
-				CD256DE72050853C00768457 /* CustomNSButton.h */,
-				CD256DE82050853C00768457 /* CustomNSButton.m */,
+				CD256DE72050853C00768457 /* CustomNSTextField.h */,
+				CD256DE82050853C00768457 /* CustomNSTextField.m */,
 				CD17D58D201A827A00F798D7 /* QuickResponseCode.h */,
 				CD17D58E201A827A00F798D7 /* QuickResponseCode.m */,
 				CD17D588201A7F8500F798D7 /* WelcomeWindowController.h */,
@@ -288,6 +301,7 @@
 		CDAAC236201FD4660032F2E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CD20A0CD205797030044BCC5 /* Sentry.framework */,
 				CDAAC237201FD4660032F2E6 /* LocalAuthentication.framework */,
 			);
 			name = Frameworks;
@@ -305,6 +319,7 @@
 				7D564DA71F18434F00B8AAD6 /* Resources */,
 				7DD25FEE1F23B5AE00277EC4 /* CopyFiles */,
 				7D16D6971F650FF400DB3161 /* ShellScript */,
+				CD20A0D920579B170044BCC5 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -419,8 +434,7 @@
 			files = (
 				7D564DEA1F1855E900B8AAD6 /* UpdateWindowController.m in Sources */,
 				CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */,
-				CD3307D720365CF500F10D71 /* Exception.m in Sources */,
-				CD256DE92050853C00768457 /* CustomNSButton.m in Sources */,
+				CD256DE92050853C00768457 /* CustomNSTextField.m in Sources */,
 				7D2582571F19FAD700D28B95 /* DaemonComms.m in Sources */,
 				7D564DE61F18446200B8AAD6 /* Logging.m in Sources */,
 				7D16D69A1F65EF9900DB3161 /* Update.m in Sources */,
@@ -564,6 +578,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = mainApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
@@ -583,6 +598,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = mainApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

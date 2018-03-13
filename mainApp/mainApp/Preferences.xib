@@ -191,7 +191,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1z0-vD-5Vz" customClass="CustomNSButton">
+                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1z0-vD-5Vz">
                     <rect key="frame" x="37" y="220" width="29" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0eO-nb-SYy">
@@ -241,15 +241,15 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="5Db-O5-SI8">
-                    <rect key="frame" x="74" y="123" width="475" height="19"/>
+                    <rect key="frame" x="74" y="89" width="475" height="53"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Track new processes, usb insertions, etc." id="HpC-rm-l1c">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Track new processes, usb insertions, etc. ...this will automatically terminate (after 1 min.)" id="HpC-rm-l1c">
                         <font key="font" size="13" name="Menlo-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eWd-63-7Gn">
+                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eWd-63-7Gn" customClass="CustomNSTextField">
                     <rect key="frame" x="198" y="218" width="354" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="path" drawsBackground="YES" id="kLf-zy-hmt">

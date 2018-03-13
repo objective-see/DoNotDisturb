@@ -12,12 +12,13 @@
 #import "Consts.h"
 #import "Queue.h"
 #import "Logging.h"
-#import "Exception.h"
 #import "Utilities.h"
 #import "Preferences.h"
 #import "UserAuthMonitor.h"
 #import "UserCommsListener.h"
 #import "FrameworkInterface.h"
+
+@import Sentry;
 
 //GLOBALS
 
@@ -59,9 +60,11 @@ int main(int argc, const char * argv[])
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"DnD launch daemon started (args: %@)", [[NSProcessInfo processInfo] arguments]]);
         
-        //first thing...
-        // install exception handlers
-        installExceptionHandlers();
+        //init crash reporting client
+        SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];
+        
+        //start crash handler
+        [SentryClient.sharedClient startCrashHandlerWithError:nil];
         
         //alloc/init/load prefs
         // to here (early) as other logic (below) uses prefs
@@ -112,8 +115,6 @@ int main(int argc, const char * argv[])
         
         //log to file
         logMsg(LOG_TO_FILE, @"launch daemon started");
-        
-        
         
         //register for shutdown
         // allows to close logging, etc.

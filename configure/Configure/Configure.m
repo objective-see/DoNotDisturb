@@ -58,8 +58,7 @@
             }
             
             //dbg msg
-            logMsg(LOG_DEBUG, @"uninstalled");
-    
+            logMsg(LOG_DEBUG, @"(partially) uninstalled");
         }
         
         //install
@@ -348,7 +347,7 @@ bail:
         });
     };
     
-    //install
+    //uninstall
     [xpcComms uninstall:full reply:block];
     
     //wait for install to be completed by XPC
