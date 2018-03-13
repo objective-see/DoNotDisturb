@@ -47,11 +47,6 @@
 # define DEBUG_PRINT(x) do {} while (0)
 #endif
 
-//install flag
-#define CMD_INSTALL "-install"
-
-//uninstall flag
-#define CMD_UNINSTALL "-uninstall"
 
 //action to install
 // also button title
@@ -218,6 +213,9 @@
 
 //command line install
 #define CMDLINE_FLAG_INSTALL @"-install"
+
+//welcome flag
+#define CMDLINE_FLAG_WELCOME @"-welcome"
 
 //command line uninstall
 #define CMDLINE_FLAG_UNINSTALL @"-uninstall"

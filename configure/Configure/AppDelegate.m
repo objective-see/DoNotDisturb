@@ -72,10 +72,10 @@
         alert = [[NSAlert alloc] init];
         
         //set main text
-        alert.messageText = @"unsupported device";
+        alert.messageText = @"Unsupported Device";
         
         //set informative text
-        alert.informativeText = [NSString stringWithFormat:@"%@ does not appear to be a laptop", [[NSHost currentHost] localizedName]];
+        alert.informativeText = [NSString stringWithFormat:@"'%@' does not appear to be a laptop", [[NSHost currentHost] localizedName]];
         
         //add button
         [alert addButtonWithTitle:@"Ok"];

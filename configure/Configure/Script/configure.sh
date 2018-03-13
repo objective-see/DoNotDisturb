@@ -34,13 +34,14 @@ if [ "${1}" == "-install" ]; then
     mv "Do Not Disturb.app" /Applications
 
     #first time
-    # kick of main app w/ -install flag
+    # kick of main app w/ -install & -welcome flag
     if [ ! -f "$INSTALL_DIRECTORY/preferences.plist" ]; then
-        open "/Applications/Do Not Disturb.app/" "--args" "-install"
+        open "/Applications/Do Not Disturb.app/" "--args" "-install" "-welcome"
 
     #otherwise
-    # just launch login item
+    # just install and manually launch login item
     else
+        open "/Applications/Do Not Disturb.app/" "--args" "-install"
         open "/Applications/Do Not Disturb.app/Contents/Library/LoginItems/Do Not Disturb Helper.app"
     fi
 

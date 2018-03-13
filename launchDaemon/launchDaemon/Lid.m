@@ -568,11 +568,24 @@ bail:
             for(NSString* deviceID in [self.client getShadowSync].state.reported.endpoints)
             {
                 //add current device name
-                devices[deviceID] = currentPrefs[deviceID];
+                devices[deviceID] = currentPrefs[PREF_REGISTERED_DEVICES][deviceID];
             }
             
-            //set (overwrite) prefs with upated list
-            [preferences set:PREF_REGISTERED_DEVICES value:devices];             
+            //no registered devices?
+            // remove key from preferences
+            if(0 == devices.count)
+            {
+                //unset
+                [preferences set:PREF_REGISTERED_DEVICES value:nil];
+            }
+            //otherwise
+            // update preferences with (current) registered devices
+            else
+            {
+                //update
+                [preferences set:PREF_REGISTERED_DEVICES value:devices];
+            }
+            
         }];
         
         //wait for dismiss

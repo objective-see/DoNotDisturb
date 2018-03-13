@@ -23,9 +23,9 @@
 // also make front, init title bar, etc
 -(void)awakeFromNib
 {
-    //install
+    //welcome?
     // kick off phone sync ui logic flow
-    if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_INSTALL])
+    if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_WELCOME])
     {
         //alloc
         welcomeWindowController = [[WelcomeWindowController alloc] initWithWindowNibName:@"Welcome"];

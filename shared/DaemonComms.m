@@ -109,6 +109,9 @@
           
     }] getPreferences:^(NSDictionary* preferencesFromDaemon)
     {
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got preferences: %@", preferencesFromDaemon]);
+        
         //save
         preferences = preferencesFromDaemon;
         

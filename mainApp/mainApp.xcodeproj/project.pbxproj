@@ -134,8 +134,6 @@
 		CD325424204DEAEA0059951B /* dndText@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dndText@2x.png"; path = "../../../shared/images/dndText@2x.png"; sourceTree = "<group>"; };
 		CD325426204E0C500059951B /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
 		CD32542A204E0E420059951B /* closeAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeAlt.png; sourceTree = "<group>"; };
-		CD3307D520365CF500F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../shared/Exception.m; sourceTree = "<group>"; };
-		CD3307D620365CF500F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../shared/Exception.h; sourceTree = "<group>"; };
 		CDAAC212201D0CD80032F2E6 /* three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = three.png; sourceTree = "<group>"; };
 		CDAAC214201D2DD30032F2E6 /* checkbox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkbox.png; sourceTree = "<group>"; };
 		CDAAC216201D54C20032F2E6 /* prefsLink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = prefsLink.png; sourceTree = "<group>"; };
@@ -279,8 +277,6 @@
 		7D564DE21F18445400B8AAD6 /* shared */ = {
 			isa = PBXGroup;
 			children = (
-				CD3307D620365CF500F10D71 /* Exception.h */,
-				CD3307D520365CF500F10D71 /* Exception.m */,
 				7D564DE31F18446200B8AAD6 /* Consts.h */,
 				7D2582551F19FAD700D28B95 /* DaemonComms.h */,
 				7D2582561F19FAD700D28B95 /* DaemonComms.m */,

@@ -101,6 +101,18 @@ bail:
     //set
     self.preferences[key] = value;
     
+    //save
+    if(YES != [self save])
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to save preferences");
+        
+        //bail
+        goto bail;
+    }
+    
+bail:
+    
     return;
 }
 
@@ -143,6 +155,9 @@ bail:
                 //dbg msg
                 logMsg(LOG_DEBUG, @"disconnected client");
             }
+            
+            //finally broadcast dimiss to dismiss any alerts
+            [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_NOTIFICATION object:nil userInfo:nil];
         }
         
         //enable?

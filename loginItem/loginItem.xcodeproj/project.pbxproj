@@ -60,8 +60,6 @@
 		7DD2BF781F1EAC9C00B33214 /* DaemonComms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaemonComms.h; path = ../shared/DaemonComms.h; sourceTree = "<group>"; };
 		7DD2BF791F1EAC9C00B33214 /* DaemonComms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaemonComms.m; path = ../shared/DaemonComms.m; sourceTree = "<group>"; };
 		CD20A0D620579AFD0044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
-		CD3307D820365D1900F10D71 /* Exception.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Exception.m; path = ../shared/Exception.m; sourceTree = "<group>"; };
-		CD3307D920365D1900F10D71 /* Exception.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exception.h; path = ../shared/Exception.h; sourceTree = "<group>"; };
 		CD3307DE20375ECF00F10D71 /* StatusBarPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarPopoverController.h; sourceTree = "<group>"; };
 		CD3307DF20375ED000F10D71 /* StatusBarPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusBarPopoverController.m; sourceTree = "<group>"; };
 		CD3307E12037648B00F10D71 /* StatusBarPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusBarPopover.xib; sourceTree = "<group>"; };
@@ -107,8 +105,6 @@
 			isa = PBXGroup;
 			children = (
 				CD3307E720376CCB00F10D71 /* dndIcon.png */,
-				CD3307D920365D1900F10D71 /* Exception.h */,
-				CD3307D820365D1900F10D71 /* Exception.m */,
 				7D16D68F1F64E43300DB3161 /* Update.h */,
 				7D16D6901F64E43300DB3161 /* Update.m */,
 				7D16D6911F64E43300DB3161 /* UpdateWindow.xib */,

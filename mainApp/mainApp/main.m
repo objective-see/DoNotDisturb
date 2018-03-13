@@ -46,6 +46,17 @@ int main(int argc, const char * argv[])
         
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"enabled login item (%@)", [[NSBundle mainBundle] bundleIdentifier]]);
+        
+        //not showing 'welcome' screen(s)?
+        // bail here so UI, etc isn't shown to user
+        if(YES != [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_WELCOME])
+        {
+            //happy
+            iReturn = 0;
+            
+            //bail
+            goto bail;
+        }
     }
     
     //uninstall
