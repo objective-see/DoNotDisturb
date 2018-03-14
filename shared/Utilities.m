@@ -53,10 +53,7 @@ OSStatus verifyApp(NSString* path, NSString* signingAuth)
 {
     //status
     OSStatus status = !noErr;
-    
-    //TODO: remove!!
-    return noErr;
-    
+
     //signing req string
     NSString *requirementString = nil;
     
@@ -678,7 +675,148 @@ BOOL isAppRunning(NSString* bundleID)
     return alreadyRunning;
 }
 
-//
+//toggle login item
+// ->either add (install) or remove (uninstall)
+BOOL toggleLoginItem(NSURL* loginItem, int toggleFlag)
+{
+    //flag
+    BOOL wasToggled = NO;
+    
+    //login item ref
+    LSSharedFileListRef loginItemsRef = NULL;
+    
+    //login items
+    CFArrayRef loginItems = NULL;
+    
+    //current login item
+    CFURLRef currentLoginItem = NULL;
+    
+    //get reference to login items
+    loginItemsRef = LSSharedFileListCreate(NULL, kLSSharedFileListSessionLoginItems, NULL);
+    
+    //add (install)
+    if(ACTION_INSTALL_FLAG == toggleFlag)
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"adding login item %@", loginItem]);
+        
+        //add
+        LSSharedFileListItemRef itemRef = LSSharedFileListInsertItemURL(loginItemsRef, kLSSharedFileListItemLast, NULL, NULL, (__bridge CFURLRef)(loginItem), NULL, NULL);
+        
+        //release item ref
+        if(NULL != itemRef)
+        {
+            //dbg msg
+            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"added %@/%@", loginItem, itemRef]);
+            
+            //release
+            CFRelease(itemRef);
+            
+            //reset
+            itemRef = NULL;
+        }
+        //failed
+        else
+        {
+            //err msg
+            logMsg(LOG_ERR, @"failed to add login item");
+            
+            //bail
+            goto bail;
+        }
+        
+        //happy
+        wasToggled = YES;
+    }
+    //remove (uninstall)
+    else
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"removing login item %@", loginItem]);
+        
+        //grab existing login items
+        loginItems = LSSharedFileListCopySnapshot(loginItemsRef, nil);
+        
+        //iterate over all login items
+        // look for self, then remove it
+        for(id item in (__bridge NSArray *)loginItems)
+        {
+            //get current login item
+            currentLoginItem = LSSharedFileListItemCopyResolvedURL((__bridge LSSharedFileListItemRef)item, 0, NULL);
+            if(NULL == currentLoginItem)
+            {
+                //skip
+                continue;
+            }
+
+            //current login item match self?
+            if(YES == [(__bridge NSURL *)currentLoginItem isEqual:loginItem])
+            {
+                //remove
+                if(noErr != LSSharedFileListItemRemove(loginItemsRef, (__bridge LSSharedFileListItemRef)item))
+                {
+                    //err msg
+                    logMsg(LOG_ERR, @"failed to remove login item");
+                    
+                    //bail
+                    goto bail;
+    
+                }
+                
+                //dbg msg
+                logMsg(LOG_DEBUG, [NSString stringWithFormat:@"removed login item: %@", loginItem]);
+                
+                //happy
+                wasToggled = YES;
+                
+                //all done
+                goto bail;
+            }
+            
+            //release
+            CFRelease(currentLoginItem);
+            
+            //reset
+            currentLoginItem = NULL;
+            
+        }//all login items
+        
+    }//remove/uninstall
+
+bail:
+    
+    //release login items
+    if(NULL != loginItems)
+    {
+        //release
+        CFRelease(loginItems);
+        
+        //reset
+        loginItems = NULL;
+    }
+    
+    //release login ref
+    if(NULL != loginItemsRef)
+    {
+        //release
+        CFRelease(loginItemsRef);
+        
+        //reset
+        loginItemsRef = NULL;
+    }
+    
+    //release url
+    if(NULL != currentLoginItem)
+    {
+        //release
+        CFRelease(currentLoginItem);
+        
+        //reset
+        currentLoginItem = NULL;
+    }
+    
+    return wasToggled;
+}
 
 //touchID capable?
 BOOL hasTouchID()

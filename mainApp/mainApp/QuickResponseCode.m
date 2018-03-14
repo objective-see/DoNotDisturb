@@ -108,7 +108,7 @@
     [filter setValue:data forKey:@"inputMessage"];
     
     //set correction level
-    [filter setValue:@"Q" forKey:@"inputCorrectionLevel"];
+    [filter setValue:@"L" forKey:@"inputCorrectionLevel"];
     
     //grab output image
     outputImage = filter.outputImage;

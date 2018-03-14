@@ -465,11 +465,17 @@ bail:
     //current prefs
     NSDictionary* currentPrefs = nil;
     
+    //timestamp
+    NSDate* timestamp = nil;
+    
     //registered devices
     __block NSMutableDictionary* devices = nil;
     
     //get current prefs
     currentPrefs = [preferences get];
+    
+    //init timestamp
+    timestamp = [NSDate date];
     
     //only add events to queue
     // when client is not running in passive mode
@@ -477,7 +483,7 @@ bail:
     {
         //add to global queue
         // this will trigger processing of alert to user
-        [eventQueue enqueue:@{ALERT_TIMESTAMP:[NSDate date]}];
+        [eventQueue enqueue:@{ALERT_TIMESTAMP:timestamp}];
     }
     //passive mode
     // just log a msg about this fact
@@ -555,7 +561,7 @@ bail:
         logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to server (user: %@)", consoleUser]);
         
         //send
-        [self.client sendAlertWithUuid:[NSUUID UUID] userName:consoleUser completion:^(NSNumber* response)
+        [self.client sendAlertWithUuid:[NSUUID UUID] userName:consoleUser date:timestamp completion:^(NSNumber* response)
         {
             //log
             logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);

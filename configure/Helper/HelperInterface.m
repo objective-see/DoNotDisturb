@@ -217,9 +217,7 @@ bail:
     NSError* error = nil;
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"validating %@", app]);
-    #endif
     
     //grab default file manager
     defaultManager = [NSFileManager defaultManager];

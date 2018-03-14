@@ -54,10 +54,10 @@
     //make 'general' selected
     [self.toolbar setSelectedItemIdentifier:TOOLBAR_GENERAL_ID];
     
-    //disable touchID mode option
-    // if: no touch bar || < 10.13.4
-    if( (YES != hasTouchID()) ||
-        (YES != [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 13, 4}]) )
+    //enable touchID mode option
+    // if: < 10.13.4 (check first!) && no touch bar
+    if( (YES != [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 13, 4}]) &&
+        (YES != hasTouchID()) )
     {
         //disable
         self.touchIDMode.enabled = NO;

@@ -21,6 +21,9 @@ int main(int argc, const char * argv[])
     //return var
     int iReturn = -1;
     
+    //path to login item
+    NSString* loginItem = nil;
+    
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: DND config/prefs app (args: %@)", [[NSProcessInfo processInfo] arguments]]);
     
@@ -30,22 +33,25 @@ int main(int argc, const char * argv[])
     //start crash handler
     [SentryClient.sharedClient startCrashHandlerWithError:nil];
     
+    //init path to login item app
+    loginItem = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"/Contents/Library/LoginItems/%@.app", LOGIN_ITEM_NAME]];
+    
     //install
     // enable login item
     if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_INSTALL])
     {
-        //toggle login item
-        if(YES != SMLoginItemSetEnabled((__bridge CFStringRef)HELPER_ID, YES))
+        //enable
+        if(YES != toggleLoginItem([NSURL fileURLWithPath:loginItem], ACTION_INSTALL_FLAG))
         {
             //err msg
-            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to enable login item (%@)", [[NSBundle mainBundle] bundleIdentifier]]);
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to enable login item (%@)", loginItem]);
             
             //bail
             goto bail;
         }
         
         //dbg msg
-        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"enabled login item (%@)", [[NSBundle mainBundle] bundleIdentifier]]);
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"enabled login item (%@)", loginItem]);
         
         //not showing 'welcome' screen(s)?
         // bail here so UI, etc isn't shown to user
@@ -63,11 +69,11 @@ int main(int argc, const char * argv[])
     // disable login item and bail
     else if(YES == [[[NSProcessInfo processInfo] arguments] containsObject:CMDLINE_FLAG_UNINSTALL])
     {
-        //toggle login item
-        if(YES != SMLoginItemSetEnabled((__bridge CFStringRef)HELPER_ID, NO))
+        //disable
+        if(YES != toggleLoginItem([NSURL fileURLWithPath:loginItem], ACTION_UNINSTALL_FLAG))
         {
             //err msg
-            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to disable login item (%@)", [[NSBundle mainBundle] bundleIdentifier]]);
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to disable login item (%@)", loginItem]);
             
             //bail
             goto bail;

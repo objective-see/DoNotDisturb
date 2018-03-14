@@ -27,7 +27,7 @@
     
     //when supported
     // indicate title bar is transparent (too)
-    if ([self.window respondsToSelector:@selector(titlebarAppearsTransparent)])
+    if([self.window respondsToSelector:@selector(titlebarAppearsTransparent)])
     {
         //set transparency
         self.window.titlebarAppearsTransparent = YES;
@@ -66,7 +66,7 @@
     else
     {
         //init status msg
-        [self.statusMsg setStringValue:@"evil maids: stay out! 🙅‍♀️🛡️"];
+        [self.statusMsg setStringValue:@"evil maids: stay out! 🙅‍♀️🚪"];
     }
     
     //enable 'uninstall' button when app is installed already

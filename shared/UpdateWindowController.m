@@ -46,7 +46,7 @@
     
     //when supported
     // indicate title bar is transparent (too)
-    if ([self.window respondsToSelector:@selector(titlebarAppearsTransparent)])
+    if([self.window respondsToSelector:@selector(titlebarAppearsTransparent)])
     {
         //set transparency
         self.window.titlebarAppearsTransparent = YES;

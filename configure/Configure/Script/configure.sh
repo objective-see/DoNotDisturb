@@ -33,6 +33,9 @@ if [ "${1}" == "-install" ]; then
     #install main app/helper app
     mv "Do Not Disturb.app" /Applications
 
+    #remove xattrz
+    xattr -rc "/Applications/Do Not Disturb.app"
+
     #first time
     # kick of main app w/ -install & -welcome flag
     if [ ! -f "$INSTALL_DIRECTORY/preferences.plist" ]; then
@@ -41,8 +44,8 @@ if [ "${1}" == "-install" ]; then
     #otherwise
     # just install and manually launch login item
     else
-        open "/Applications/Do Not Disturb.app/" "--args" "-install"
-        open "/Applications/Do Not Disturb.app/Contents/Library/LoginItems/Do Not Disturb Helper.app"
+        open -g -j "/Applications/Do Not Disturb.app/" "--args" "-install"
+        open -g -j "/Applications/Do Not Disturb.app/Contents/Library/LoginItems/Do Not Disturb Helper.app"
     fi
 
     echo "install complete"

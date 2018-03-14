@@ -70,6 +70,10 @@ BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL rec
 // if 'shouldWait' is set, wait and return stdout/in and termination status
 NSMutableDictionary* execTask(NSString* binaryPath, NSArray* arguments, BOOL shouldWait);
 
+//toggle login item
+// ->either add (install) or remove (uninstall)
+BOOL toggleLoginItem(NSURL* loginItem, int toggleFlag);
+
 //touchID capable?
 BOOL hasTouchID(void);
 

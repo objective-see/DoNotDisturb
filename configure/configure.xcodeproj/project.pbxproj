@@ -85,7 +85,7 @@
 		4BE4905D10445E0A006BE471 /* com.objective-see.dnd.installer.helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "com.objective-see.dnd.installer.helper"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BE4906310445F2F006BE471 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		4BE4906710445F36006BE471 /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		8D1107320486CEB800E47090 /* DoNotDisturb Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DoNotDisturb Installer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Do Not Disturb Installer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Do Not Disturb Installer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF04235411C0531400431286 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BF04235511C0531400431286 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		BF65C19011B985C0007C20AB /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
@@ -147,7 +147,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* DoNotDisturb Installer.app */,
+				8D1107320486CEB800E47090 /* Do Not Disturb Installer.app */,
 				4BE4905D10445E0A006BE471 /* com.objective-see.dnd.installer.helper */,
 			);
 			name = Products;
@@ -298,7 +298,7 @@
 			name = configure;
 			productInstallPath = "$(HOME)/Applications";
 			productName = SMJobBless;
-			productReference = 8D1107320486CEB800E47090 /* DoNotDisturb Installer.app */;
+			productReference = 8D1107320486CEB800E47090 /* Do Not Disturb Installer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -487,7 +487,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer";
-				PRODUCT_NAME = "DoNotDisturb Installer";
+				PRODUCT_NAME = "Do Not Disturb Installer";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = x86_64;
 			};
@@ -509,7 +509,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer";
-				PRODUCT_NAME = "DoNotDisturb Installer";
+				PRODUCT_NAME = "Do Not Disturb Installer";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				VALID_ARCHS = x86_64;
 			};
