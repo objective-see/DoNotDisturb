@@ -833,10 +833,22 @@ BOOL hasTouchID()
     //alloc/init
     localauthContext = [[LAContext alloc] init];
     
-    //eval
+    //eval w/ try/catch as it can throw!
     // note though we ignore "Code=-4 Touch Bar is not available in closed clamshell mode"
-    if( (YES != [localauthContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) &&
-        (error.code != -4) )
+    @try
+    {
+        //eval
+        if( (YES != [localauthContext canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) &&
+            (error.code != -4) )
+        {
+            //bail
+            goto bail;
+        }
+    }
+    
+    //exception likely means 'unknown policy'
+    // so we can safely ignore/bail and 'hasTouchID' won't be set
+    @catch(NSException *exception)
     {
         //bail
         goto bail;
