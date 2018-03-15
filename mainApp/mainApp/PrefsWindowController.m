@@ -23,6 +23,7 @@
 @implementation PrefsWindowController
 
 @synthesize toolbar;
+@synthesize startMode;
 @synthesize actionView;
 @synthesize updateMode;
 @synthesize updateView;
@@ -255,6 +256,20 @@
         //set
         preferences[PREF_TOUCHID_MODE] = [NSNumber numberWithBool:self.touchIDMode.state];
     }
+    
+    //start mode
+    else if(sender == self.startMode)
+    {
+        //set
+        preferences[PREF_START_MODE] = [NSNumber numberWithBool:self.startMode.state];
+        
+        //toggle login item
+        if(YES != toggleLoginItem([NSURL fileURLWithPath:[((AppDelegate*)[[NSApplication sharedApplication] delegate]) path2LoginItem]], (int)self.startMode.state))
+        {
+            //err msg
+            logMsg(LOG_ERR, @"failed to toggle login item");
+        }
+    }
 
     //execute action
     else if(sender == self.executeAction)
@@ -285,7 +300,7 @@
     [daemonComms updatePreferences:preferences];
     
     //restart login item if user toggle'd icon state
-    // this has to be done after the prefs are written out by the daemon
+    // note: this has to be done after the prefs are written out by the daemon
     if(sender == self.headlessMode)
     {
         //restart login item

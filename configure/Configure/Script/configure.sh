@@ -28,6 +28,10 @@ if [ "${1}" == "-install" ]; then
     mv "com.objective-see.dnd.plist" /Library/LaunchDaemons/
     launchctl load "/Library/LaunchDaemons/com.objective-see.dnd.plist"
 
+    #give launch daemon a second
+    # time to initialize, get XPC interface up, etc...
+    sleep 1.0
+
     echo "launch daemon installed and loaded"
 
     #install main app/helper app
@@ -42,11 +46,13 @@ if [ "${1}" == "-install" ]; then
         open "/Applications/Do Not Disturb.app/" "--args" "-install" "-welcome"
 
     #otherwise
-    # just install and manually launch login item
+    # just install (no welcome)
     else
         open -g -j "/Applications/Do Not Disturb.app/" "--args" "-install"
-        open -g -j "/Applications/Do Not Disturb.app/Contents/Library/LoginItems/Do Not Disturb Helper.app"
     fi
+
+    #start login item
+    open -g -j "/Applications/Do Not Disturb.app/Contents/Library/LoginItems/Do Not Disturb Helper.app"
 
     echo "install complete"
     exit 0

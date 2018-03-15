@@ -276,7 +276,7 @@ bail:
         [alert addButtonWithTitle:@"Ok"];
         
         //set style
-        alert.alertStyle = NSWarningAlertStyle;
+        alert.alertStyle = NSAlertStyleWarning;
         
         //show it
         [alert runModal];

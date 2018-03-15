@@ -51,7 +51,7 @@
     if(0 == preferences.count)
     {
         //set some default prefs
-        preferences = @{PREF_PASSIVE_MODE:@NO, PREF_NO_ICON_MODE:@NO, PREF_NO_UPDATES_MODE:@NO};
+        preferences = @{PREF_PASSIVE_MODE:@NO, PREF_NO_ICON_MODE:@NO, PREF_NO_UPDATES_MODE:@NO, PREF_START_MODE:@YES};
         
         //get path to main app
         mainApp = [NSURL fileURLWithPath:[self getAppPath]];

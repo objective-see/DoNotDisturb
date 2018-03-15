@@ -236,7 +236,7 @@
     self.statusMsg.frame = statusMsgFrame;
     
     //align text left
-    [self.statusMsg setAlignment:NSLeftTextAlignment];
+    [self.statusMsg setAlignment:NSTextAlignmentLeft];
     
     //install msg
     if(ACTION_INSTALL_FLAG == event)
@@ -283,7 +283,7 @@
     NSColor* resultMsgColor = nil;
     
     //generally want centered text
-    [self.statusMsg setAlignment:NSCenterTextAlignment];
+    [self.statusMsg setAlignment:NSTextAlignmentCenter];
     
     //set action msg for install
     if(ACTION_INSTALL_FLAG == event)

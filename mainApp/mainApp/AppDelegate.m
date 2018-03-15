@@ -56,19 +56,11 @@
     return;
 }
 
-//app interface
-// init user interface
--(void)applicationDidFinishLaunching:(NSNotification *)aNotification
+//build/return path to login item
+-(NSString*)path2LoginItem
 {
-    //start login item in background
-    // method checks first to make sure only single instance is running
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-    ^{
-        //start
-        [self startLoginItem:NO];
-    });
-    
-    return;
+    //return path
+    return [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"/Contents/Library/LoginItems/%@.app", LOGIN_ITEM_NAME]];
 }
 
 //start the (helper) login item
@@ -87,7 +79,7 @@
     NSNumber* loginItemPID = nil;
     
     //init path to login item app
-    loginItem = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:[NSString stringWithFormat:@"/Contents/Library/LoginItems/%@.app", LOGIN_ITEM_NAME]];
+    loginItem = [self path2LoginItem];
                  
     //init path to binary
     loginItemBinary = [NSString pathWithComponents:@[loginItem, @"Contents", @"MacOS", LOGIN_ITEM_NAME]];
@@ -213,8 +205,8 @@ bail:
 //paste support
 // see: https://stackoverflow.com/a/3176930
 - (void) sendEvent:(NSEvent *)event {
-    if ([event type] == NSKeyDown) {
-        if (([event modifierFlags] & NSDeviceIndependentModifierFlagsMask) == NSCommandKeyMask) {
+    if ([event type] == NSEventTypeKeyDown) {
+        if (([event modifierFlags] & NSEventModifierFlagDeviceIndependentFlagsMask) == NSEventModifierFlagCommand) {
             if ([[event charactersIgnoringModifiers] isEqualToString:@"x"]) {
                 if ([self sendAction:@selector(cut:) to:nil from:self])
                     return;

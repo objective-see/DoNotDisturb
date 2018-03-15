@@ -186,7 +186,6 @@ bail:
     return state;
 }
 
-
 //set dir's|file's group/owner
 BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL recursive)
 {
@@ -675,8 +674,13 @@ BOOL isAppRunning(NSString* bundleID)
     return alreadyRunning;
 }
 
+//for login item enable/disable
+// we use the launch services APIs, since replacements don't always work :(
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 //toggle login item
-// ->either add (install) or remove (uninstall)
+// either add (install) or remove (uninstall)
 BOOL toggleLoginItem(NSURL* loginItem, int toggleFlag)
 {
     //flag
@@ -817,6 +821,8 @@ bail:
     
     return wasToggled;
 }
+
+#pragma clang diagnostic pop
 
 //touchID capable?
 BOOL hasTouchID()

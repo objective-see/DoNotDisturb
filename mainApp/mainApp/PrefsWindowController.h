@@ -53,8 +53,8 @@
 //touchID mode button
 @property (weak) IBOutlet NSButton *touchIDMode;
 
-//label for touch ID
-@property (weak) IBOutlet NSTextField *touchIDLabel;
+//(automatically) start mode button
+@property (weak) IBOutlet NSButton *startMode;
 
 //action view
 @property (weak) IBOutlet NSView *actionView;

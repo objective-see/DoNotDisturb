@@ -180,6 +180,10 @@
 // touchID mode
 #define PREF_TOUCHID_MODE @"touchIDMode"
 
+//prefs
+// start mode
+#define PREF_START_MODE @"startMode"
+
 //pref
 // execute action
 #define PREF_EXECUTE_ACTION @"executeAction"

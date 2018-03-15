@@ -34,5 +34,8 @@
 //start the (helper) login item
 -(BOOL)startLoginItem:(BOOL)shouldRestart;
 
+//build/return path to login item
+-(NSString*)path2LoginItem;
+
 @end
 
