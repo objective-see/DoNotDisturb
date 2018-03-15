@@ -97,7 +97,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" preferredMaxLayoutWidth="660" translatesAutoresizingMaskIntoConstraints="NO" id="cxG-zN-szL">
                     <rect key="frame" x="31" y="180" width="738" height="117"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="DoNotDistrurb attempts to detect 'evil maid' attacks,  alerting you if somebody tampers with your laptop!" id="tYf-YX-PsV">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="'Do Not Disturb' attempts to detect 'evil maid' attacks,  alerting you if somebody tampers with your laptop!" id="tYf-YX-PsV">
                         <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

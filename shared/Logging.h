@@ -1,13 +1,13 @@
 //
 //  Logging.h
-//  BlockBlock
+//  Do Not Disturb
 //
 //  Created by Patrick Wardle on 12/21/14.
 //  Copyright (c) 2015 Objective-See. All rights reserved.
 //
 
-#ifndef __BlockBlock__Logging__
-#define __BlockBlock__Logging__
+#ifndef __DND__Logging__
+#define __DND__Logging__
 
 #import <syslog.h>
 #import <Foundation/Foundation.h>
@@ -31,4 +31,4 @@ void deinitLogging(void);
 //log to file
 void log2File(NSString* msg);
 
-#endif /* defined(__BlockBlock__Logging__) */
+#endif

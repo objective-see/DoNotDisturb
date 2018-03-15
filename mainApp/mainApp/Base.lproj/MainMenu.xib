@@ -16,7 +16,7 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="vG3-92-ajA">
             <items>
-                <menuItem title="DnD" id="R8B-Wd-oK9" userLabel="DnD">
+                <menuItem title="DnD" id="R8B-Wd-oK9" userLabel="Do Not Disturb">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="DnD" systemMenu="apple" id="l2x-Sw-2Zo">
                         <items>
@@ -27,7 +27,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="doQ-u9-gKW"/>
-                            <menuItem title="About DnD" id="GOu-8z-DaB">
+                            <menuItem title="About" id="GOu-8z-DaB">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="showAbout:" target="Voe-Tx-rLC" id="7t6-BU-qX6"/>

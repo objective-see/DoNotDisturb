@@ -111,7 +111,7 @@
 #define PATH_CONSOLE "/dev/console"
 
 //install directory
-#define INSTALL_DIRECTORY @"/Library/Objective-See/DnD"
+#define INSTALL_DIRECTORY @"/Library/Objective-See/DND"
 
 //preferences file
 #define PREFS_FILE @"preferences.plist"
@@ -197,7 +197,7 @@
 #define PREF_NO_UPDATES_MODE @"noupdatesMode"
 
 //log file
-#define LOG_FILE_NAME @"DnD.log"
+#define LOG_FILE_NAME @"DND.log"
 
 //alert key
 // timestamp

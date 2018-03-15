@@ -1,6 +1,6 @@
 //
 //  ConfigureWindowController.h
-//  WhatsYourSign
+//  Do Not Disturb
 //
 //  Created by Patrick Wardle on 7/7/2016.
 //  Copyright (c) 2016 Objective-See. All rights reserved.

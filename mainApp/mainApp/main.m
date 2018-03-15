@@ -93,7 +93,7 @@ int main(int argc, const char * argv[])
     if(YES == isAppRunning([[NSBundle mainBundle] bundleIdentifier]))
     {
         //dbg msg
-        logMsg(LOG_DEBUG, @"an instance of DnD (main app) is already running");
+        logMsg(LOG_DEBUG, @"an instance of DND (main app) is already running");
         
         //bail
         goto bail;

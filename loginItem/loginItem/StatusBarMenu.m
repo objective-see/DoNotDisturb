@@ -305,7 +305,7 @@ bail:
     if(YES == self.isDisabled)
     {
         //update status
-        [self.statusItem.menu itemWithTag:status].title = @"DnD: disabled";
+        [self.statusItem.menu itemWithTag:status].title = @"DND: disabled";
         
         //change text
         [self.statusItem.menu itemWithTag:toggleStatus].title = @"Enable";
@@ -315,7 +315,7 @@ bail:
     else
     {
         //update status
-        [self.statusItem.menu itemWithTag:status].title = @"DnD: enabled";
+        [self.statusItem.menu itemWithTag:status].title = @"DND: enabled";
         
         //change text
         [self.statusItem.menu itemWithTag:toggleStatus].title = @"Disable";

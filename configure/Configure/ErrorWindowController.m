@@ -1,6 +1,6 @@
 //
 //  ErrorWindowController.m
-//  WhatsYourSign
+//  Do Not Disturb
 //
 //  Created by Patrick Wardle on 7/7/16.
 //  Copyright (c) 2016 Objective-See. All rights reserved.

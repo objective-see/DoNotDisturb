@@ -2,21 +2,21 @@
 
 #
 #  file: configure.sh
-#  project: DnD (configure)
+#  project: DND (configure)
 #  description: install/uninstall
 #
 #  created by Patrick Wardle
 #  copyright (c) 2017 Objective-See. All rights reserved.
 #
 
-INSTALL_DIRECTORY="/Library/Objective-See/DnD"
+INSTALL_DIRECTORY="/Library/Objective-See/DND"
 
 #install
 if [ "${1}" == "-install" ]; then
 
     echo "installing"
 
-    #create DnD directory
+    #create DND directory
     mkdir -p $INSTALL_DIRECTORY
 
     #set permissions
@@ -83,7 +83,7 @@ elif [ "${1}" == "-uninstall" ]; then
     rm -rf "/Applications/Do Not Disturb.app"
 
     #full uninstall?
-    # delete DnD's folder w/ everything
+    # delete DND's folder w/ everything
     if [[ "${2}" -eq "1" ]]; then
         rm -rf $INSTALL_DIRECTORY
 
