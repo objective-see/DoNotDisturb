@@ -25,7 +25,6 @@
 #import "UserAuthMonitor.h"
 #import "FrameworkInterface.h"
 
-
 /* GLOBALS */
 
 //last state
@@ -93,9 +92,18 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"lid state: %@ (sleep bit: %d)", (lidState) ? @"closed" : @"open", sleepState]);
     
     //(new) open?
+    // OS sometimes delivers 2x events, so ignore same same
     if( (stateOpen == lidState) &&
         (stateOpen != lastLidState) )
     {
+        //ignore if lid isn't really open
+        // on reboot, OS may deliver 'open' message if external monitors are connected
+        if(stateOpen != getLidState())
+        {
+            //bail
+            goto bail;
+        }
+        
         //update 'prev' state
         lastLidState = stateOpen;
         
@@ -129,6 +137,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     }
     
     //(new) close?
+    // OS sometimes delivers 2x events, so ignore same same
     else if( (stateClosed == lidState) &&
              (stateClosed != lastLidState) )
     {
@@ -234,8 +243,8 @@ bail:
         //init
         notification = 0;
         
-        //init
-        lastLidState = stateUnavailable;
+        //init to current state
+        lastLidState = getLidState();
             
         //init dispatch group for dismiss events
         dispatchGroup = dispatch_group_create();

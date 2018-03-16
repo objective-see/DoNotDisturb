@@ -15,5 +15,9 @@
 	</array>
 	<key>RunAtLoad</key>
 	<true/>
+	<key>LSUIElement</key>
+	<true/>
+	<key>EnableTransactions</key>
+	<false/>
 </dict>
 </plist>

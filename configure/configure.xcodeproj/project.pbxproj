@@ -80,7 +80,7 @@
 		4BE4904C10445D49006BE471 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4BE4904D10445D49006BE471 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4BE4905310445DDD006BE471 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4BE4905410445DDD006BE471 /* Launchd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Launchd.plist; sourceTree = "<group>"; };
+		4BE4905410445DDD006BE471 /* launchDaemon.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = launchDaemon.plist; sourceTree = "<group>"; };
 		4BE4905510445DDD006BE471 /* Helper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Helper.m; sourceTree = "<group>"; };
 		4BE4905D10445E0A006BE471 /* com.objective-see.dnd.installer.helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "com.objective-see.dnd.installer.helper"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4BE4906310445F2F006BE471 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -208,7 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				4BE4905310445DDD006BE471 /* Info.plist */,
-				4BE4905410445DDD006BE471 /* Launchd.plist */,
+				4BE4905410445DDD006BE471 /* launchDaemon.plist */,
 				4BE4905510445DDD006BE471 /* Helper.m */,
 				CD73DA8F2004629D001FFC84 /* HelperInterface.h */,
 				CD73DA902004629D001FFC84 /* HelperInterface.m */,
@@ -433,7 +433,7 @@
 					"-sectcreate",
 					__TEXT,
 					__launchd_plist,
-					Helper/launchd.plist,
+					Helper/launchDaemon.plist,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer.helper";
 				PRODUCT_NAME = "com.objective-see.dnd.installer.helper";
@@ -461,7 +461,7 @@
 					"-sectcreate",
 					__TEXT,
 					__launchd_plist,
-					Helper/launchd.plist,
+					Helper/launchDaemon.plist,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer.helper";
 				PRODUCT_NAME = "com.objective-see.dnd.installer.helper";

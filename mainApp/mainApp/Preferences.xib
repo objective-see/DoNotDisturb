@@ -179,7 +179,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="BhQ-tq-9gJ">
                     <rect key="frame" x="74" y="87" width="508" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Supress alerts if proceeded by a touchID login" id="yKN-Kc-8Q2">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Supress alerts if proceeded by a touchID login." id="yKN-Kc-8Q2">
                         <font key="font" size="13" name="Menlo-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -208,7 +208,7 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="LOC-tP-KQd">
                     <rect key="frame" x="74" y="28" width="475" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="automatically start login item" id="k4V-lS-86b">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Automatically start login item." id="k4V-lS-86b">
                         <font key="font" size="13" name="Menlo-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
