@@ -152,6 +152,9 @@ bail:
                 //disconnect
                 [lid.client disconnect];
                 
+                //unset
+                lid.client = nil;
+                
                 //dbg msg
                 logMsg(LOG_DEBUG, @"disconnected client");
             }

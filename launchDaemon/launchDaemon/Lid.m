@@ -280,14 +280,14 @@ bail:
             //any registered devices?
             if(0 == [currentPrefs[PREF_REGISTERED_DEVICES] count])
             {
-                //dbg msg
-                logMsg(LOG_DEBUG, @"not registered devices, so disconnecting DnD client");
-                
                 //disconnect client
                 [self.client disconnect];
                 
                 //unset
                 self.client = nil;
+                
+                //dbg msg
+                logMsg(LOG_DEBUG, @"no registered devices, so disconnected DnD client");   
             }
         }
     }
@@ -600,7 +600,6 @@ bail:
                 //update
                 [preferences set:PREF_REGISTERED_DEVICES value:devices];
             }
-            
         }];
         
         //wait for dismiss
@@ -654,14 +653,17 @@ bail:
             // will be invoked when *everything* times out
             dispatch_group_notify(self.dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
                 
+                //unset flag
+                self.dispatchGroupEmpty = YES;
+                
                 //dbg msg
                 logMsg(LOG_DEBUG, @"'wait/dismiss' dispatch group notified, disconnecting");
                 
                 //disconnect client
                 [self.client disconnect];
                 
-                //unset flag
-                self.dispatchGroupEmpty = YES;
+                //unset client
+                self.client = nil;
                 
             });
         }
@@ -685,8 +687,8 @@ bail:
 
 //(framework) callback delegate
 // invoked when user dimisses event on phone
--(void)didGetDismissEvent:(Event *)event {
-
+-(void)didGetDismissEvent:(Event *)event
+{
     //broadcast event to everybody
     [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_NOTIFICATION object:nil userInfo:nil];
     
