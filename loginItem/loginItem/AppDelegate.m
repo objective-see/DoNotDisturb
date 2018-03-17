@@ -37,7 +37,7 @@
     
     //dbg msg
     logMsg(LOG_DEBUG, @"starting DnD login item");
-
+    
     //init deamon comms
     daemonComms = [[DaemonComms alloc] init];
     
@@ -83,7 +83,6 @@
              
              //complete initializations
              [self completeInitialization:preferences firstTime:YES];
-             
          }];
     }
     
@@ -166,6 +165,118 @@ bail:
         
     });
     
+    return;
+}
+
+//init/show touch bar
+-(void)initTouchBar
+{
+    //touch bar items
+    NSArray *touchBarItems = nil;
+    
+    //alloc/init
+    self.touchBar = [[NSTouchBar alloc] init];
+    
+    //set delegate
+    self.touchBar.delegate = self;
+    
+    //set id
+    self.touchBar.customizationIdentifier = @"com.objective-see.dnd";
+    
+    //init items
+    touchBarItems = @[@".icon", @".label", @".button"];
+    
+    //set items
+    self.touchBar.defaultItemIdentifiers = touchBarItems;
+    
+    //set customization items
+    self.touchBar.customizationAllowedItemIdentifiers = touchBarItems;
+    
+    //want button in center
+    self.touchBar.principalItemIdentifier = @".button";
+    
+    //activate so toolbar shows up
+    [NSApp activateIgnoringOtherApps:YES];
+    
+bail:
+    
+    return;
+}
+
+//delegate method
+// init item for touch bar
+-(NSTouchBarItem *)touchBar:(NSTouchBar *)touchBar makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier
+{
+    //icon view
+    NSImageView *iconView = nil;
+    
+    //icon
+    NSImage* icon = nil;
+    
+    //item
+    NSCustomTouchBarItem *touchBarItem = nil;
+    
+    //init item
+    touchBarItem = [[NSCustomTouchBarItem alloc] initWithIdentifier:identifier];
+    
+    //icon
+    if(YES == [identifier isEqualToString: @".icon" ])
+    {
+        //init icon view
+        iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, 32.0, 32.0)];
+        
+        //enable layer
+        [iconView setWantsLayer:YES];
+        
+        //set color
+        [iconView.layer setBackgroundColor:[[NSColor whiteColor] CGColor]];
+        
+        //mask
+        iconView.layer.masksToBounds = YES;
+        
+        //round corners
+        iconView.layer.cornerRadius = 3.0;
+        
+        //load icon image
+        icon = [NSImage imageNamed:@"dndIcon"];
+        
+        //set size
+        icon.size = CGSizeMake(32, 32);
+        
+        //add image
+        iconView.image = icon;
+    
+        //set view
+        touchBarItem.view = iconView;
+    }
+    
+    //label
+    else if(YES == [identifier isEqualToString:@".label"])
+    {
+        //item label
+        touchBarItem.view = [NSTextField labelWithString:@"Do Not Disturb Alert: lid opened!"];
+    }
+    
+    //button
+    else if(YES == [identifier isEqualToString:@".button"])
+    {
+        //init button
+        touchBarItem.view = [NSButton buttonWithTitle: @"dismiss" target:self action: @selector(touchBarButtonHandler:)];
+    }
+    
+    return touchBarItem;
+}
+
+//button handler
+-(IBAction)touchBarButtonHandler:(id)sender
+{
+    //show notification
+    [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+    
+    //unset
+    // will hide
+    self.touchBar = nil;
+
     return;
 }
 

@@ -26,7 +26,7 @@ int main(int argc, const char * argv[])
     
     //init crash reporting client
     SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];
-    
+
     //start crash handler
     [SentryClient.sharedClient startCrashHandlerWithError:nil];
     

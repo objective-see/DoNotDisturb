@@ -172,25 +172,7 @@ enum menuItems
     NSError* error = nil;
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"user clicked %ld", (long)((NSMenuItem*)sender).tag]);
-    #endif
-    
-    //get path components
-    pathComponents = [[[NSBundle mainBundle] bundlePath] pathComponents];
-    if(pathComponents.count > 4)
-    {
-        //init path to full (main) app
-        mainApp = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
-    }
-    
-    //when nil
-    // use default path
-    if(nil == mainApp)
-    {
-        //default
-        mainApp = [@"/Applications" stringByAppendingPathComponent:APP_NAME];
-    }
     
     //handle action
     switch ((long)((NSMenuItem*)sender).tag)
@@ -225,6 +207,22 @@ enum menuItems
         // will show preferences
         case showPrefs:
         {
+            //get path components
+            pathComponents = [[[NSBundle mainBundle] bundlePath] pathComponents];
+            if(pathComponents.count > 4)
+            {
+                //init path to full (main) app
+                mainApp = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
+            }
+            
+            //when nil
+            // use default path
+            if(nil == mainApp)
+            {
+                //default
+                mainApp = [@"/Applications" stringByAppendingPathComponent:APP_NAME];
+            }
+            
             //launch main app
             if(nil == [[NSWorkspace sharedWorkspace] launchApplicationAtURL:[NSURL fileURLWithPath:mainApp] options:0 configuration:@{} error:&error])
             {

@@ -245,6 +245,9 @@ bail:
         
         //init to current state
         lastLidState = getLidState();
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"initial lid state: %d", lastLidState]);
             
         //init dispatch group for dismiss events
         dispatchGroup = dispatch_group_create();

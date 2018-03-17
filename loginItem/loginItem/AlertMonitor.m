@@ -122,7 +122,7 @@
             //wait for alert dismiss from daemon via XPC
             // for now, will just dimiss all (shown) alerts
             [daemonComms alertDismiss:^(NSDictionary* alert)
-             {
+            {
                  //dbg msg
                  logMsg(LOG_DEBUG, @"got 'alert dismiss' message from daemon");
                  
@@ -131,6 +131,10 @@
                      
                      //show notification
                      [[NSUserNotificationCenter defaultUserNotificationCenter] removeAllDeliveredNotifications];
+                     
+                     //set app delegate's touch bar to nil
+                     // will hide/unset the touch bar alert....
+                     ((AppDelegate*)[[NSApplication sharedApplication] delegate]).touchBar = nil;
                      
                  });
                  
@@ -172,7 +176,7 @@
     [dateFormat setDateFormat:@"MM/dd/yyyy HH:mm:ss"];
     
     //set other button title
-    notification.otherButtonTitle = @"ok";
+    notification.otherButtonTitle = @"dismiss";
     
     //remove action button
     notification.hasActionButton = NO;
@@ -191,6 +195,9 @@
     
     //deliver notification
     [[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
+    
+    //init/show touch bar
+    [((AppDelegate*)[[NSApplication sharedApplication] delegate]) initTouchBar];
 }
 
 //delegate method
