@@ -155,6 +155,7 @@
 }
 
 //format, then show notification
+// both on screen and on touch bar
 -(void)showNotification:(NSDictionary*)alert
 {
     //notification

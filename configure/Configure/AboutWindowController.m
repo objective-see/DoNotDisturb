@@ -47,7 +47,7 @@
     // calling this without a timeout sometimes fails :/
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (100 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
         
-        //and make it first responder
+        //set first responder
         [self.window makeFirstResponder:self.supportUs];
         
     });

@@ -47,7 +47,7 @@
     [self.window.contentView addSubview:self.generalView];
     
     //set title
-    self.window.title = [NSString stringWithFormat:@"DoNotDisturb (v. %@)", getAppVersion()];
+    self.window.title = [NSString stringWithFormat:@"Do Not Disturb (v. %@)", getAppVersion()];
     
     //set frame rect
     self.generalView.frame = CGRectMake(0, 100, self.window.contentView.frame.size.width, self.window.contentView.frame.size.height-100);
@@ -329,7 +329,7 @@
     qrcSize = self.qrcImageView.frame.size;
     
     //set msg
-    self.activityMessage.stringValue = @"generating qr code...";
+    self.activityMessage.stringValue = @"Generating QR Code...";
     
     //make sure it's showing
     self.activityMessage.hidden = NO;
@@ -353,7 +353,7 @@
     //generate QRC
     [qrcObj generateQRC:qrcSize.height reply:^(NSImage* qrcImage)
     {
-        //allow 'generating' msg to show up for a bit
+        //allow msg to show
         [NSThread sleepForTimeInterval:0.25];
         
         //sanity check
@@ -369,7 +369,7 @@
                 self.activityMessage.textColor = [NSColor redColor];
                 
                 //show err msg
-                self.activityMessage.stringValue = @"Error Generating QRC";
+                self.activityMessage.stringValue = @"Error generating QR code";
                 
             });
             
@@ -438,7 +438,10 @@
 
 //invoked when user closes QRC view
 // normally view is closed automatically when registration is complete
--(IBAction)closeQRC:(id)sender {
+-(IBAction)closeQRC:(id)sender
+{
+    //hide qrc
+    self.qrcImageView.hidden = YES;
     
     //hide qrc sheet
     [self.window endSheet:self.qrcPanel];
@@ -560,7 +563,7 @@ bail:
             updateWindowController = [[UpdateWindowController alloc] initWithWindowNibName:@"UpdateWindow"];
             
             //configure
-            [self.updateWindowController configure:[NSString stringWithFormat:@"a new version (%@) is available!", newVersion] buttonTitle:@"update"];
+            [self.updateWindowController configure:[NSString stringWithFormat:@"a new version (%@) is available!", newVersion] buttonTitle:@"Update"];
             
             //center window
             [[self.updateWindowController window] center];

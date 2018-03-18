@@ -49,7 +49,7 @@
     
     //show first view
     [self buttonHandler:nil];
-    
+
     return;
 }
 
@@ -69,6 +69,9 @@
             //set view
             [self.window.contentView addSubview:self.welcomeView];
             
+            //and 'next' button first responder
+            [self.window makeFirstResponder:[self.welcomeView viewWithTag:VIEW_APP_INFO]];
+            
             break;
         }
             
@@ -80,6 +83,9 @@
             
             //set view
             [self.window.contentView addSubview:self.appInfo];
+            
+            //and 'next' button first responder
+            [self.window makeFirstResponder:[self.appInfo viewWithTag:VIEW_QRC]];
             
             break;
         }
@@ -104,7 +110,7 @@
             
             //generate/show
             [self generateQRC];
-            
+        
             break;
         }
             
@@ -116,8 +122,6 @@
             
             break;
         }
-            
-            
     }
     return;
 }
@@ -161,7 +165,7 @@
                  self.activityMessage.textColor = [NSColor redColor];
                  
                  //show err msg
-                 self.activityMessage.stringValue = @"Error generating QRC";
+                 self.activityMessage.stringValue = @"Error generating QR code";
                  
              });
              
@@ -180,14 +184,14 @@
         //dbg msg
         logMsg(LOG_DEBUG, @"displayed QRC...now waiting for user to scan, then server to register and ack");
          
-         //init daemon comms
-         // will connect, etc.
-         daemonComms = [[DaemonComms alloc] init];
+        //init daemon comms
+        // will connect, etc.
+        daemonComms = [[DaemonComms alloc] init];
          
-         //call into daemon/framework
-         // this will block until phone linking/registration is complete
-         [daemonComms recvRegistrationACK:^(NSDictionary* registrationInfo)
-         {
+        //call into daemon/framework
+        // this will block until phone linking/registration is complete
+        [daemonComms recvRegistrationACK:^(NSDictionary* registrationInfo)
+        {
              //dbg msg
              logMsg(LOG_DEBUG, [NSString stringWithFormat:@"received registration ack/info from server/daemon: %@", registrationInfo]);
              
@@ -208,16 +212,19 @@
                      //set
                      self.deviceName.stringValue = registrationInfo[KEY_DEVICE_NAME];
                  }
-                  
+                 
                 //remove prev. subview
                 [[[self.window.contentView subviews] lastObject] removeFromSuperview];
 
                 //set view
                 [self.window.contentView addSubview:self.linkedView];
-                  
-              });
-              
-          }];
+                 
+                //and 'done' button first responder
+                [self.window makeFirstResponder:[self.linkedView viewWithTag:VIEW_LINKED]];
+                 
+             });
+             
+        }];
          
      }];
     

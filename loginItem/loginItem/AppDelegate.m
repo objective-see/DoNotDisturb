@@ -174,29 +174,38 @@ bail:
     //touch bar items
     NSArray *touchBarItems = nil;
     
-    //alloc/init
-    self.touchBar = [[NSTouchBar alloc] init];
-    
-    //set delegate
-    self.touchBar.delegate = self;
-    
-    //set id
-    self.touchBar.customizationIdentifier = @"com.objective-see.dnd";
-    
-    //init items
-    touchBarItems = @[@".icon", @".label", @".button"];
-    
-    //set items
-    self.touchBar.defaultItemIdentifiers = touchBarItems;
-    
-    //set customization items
-    self.touchBar.customizationAllowedItemIdentifiers = touchBarItems;
-    
-    //want button in center
-    self.touchBar.principalItemIdentifier = @".button";
-    
-    //activate so toolbar shows up
-    [NSApp activateIgnoringOtherApps:YES];
+    //touch bar API is only 10.12.2+
+    if(@available(macOS 10.12.2, *))
+    {
+        //alloc/init
+        self.touchBar = [[NSTouchBar alloc] init];
+        if(nil == self.touchBar)
+        {
+            //no touch bar?
+            goto bail;
+        }
+        
+        //set delegate
+        self.touchBar.delegate = self;
+        
+        //set id
+        self.touchBar.customizationIdentifier = @"com.objective-see.dnd";
+        
+        //init items
+        touchBarItems = @[@".icon", @".label", @".button"];
+        
+        //set items
+        self.touchBar.defaultItemIdentifiers = touchBarItems;
+        
+        //set customization items
+        self.touchBar.customizationAllowedItemIdentifiers = touchBarItems;
+        
+        //want button in center
+        self.touchBar.principalItemIdentifier = @".button";
+        
+        //activate so toolbar shows up
+        [NSApp activateIgnoringOtherApps:YES];
+    }
     
 bail:
     
@@ -368,7 +377,7 @@ bail:
             updateWindowController = [[UpdateWindowController alloc] initWithWindowNibName:@"UpdateWindow"];
             
             //configure
-            [self.updateWindowController configure:[NSString stringWithFormat:@"a new version (%@) is available!", newVersion] buttonTitle:@"update"];
+            [self.updateWindowController configure:[NSString stringWithFormat:@"a new version (%@) is available!", newVersion] buttonTitle:@"Update"];
             
             //center window
             [[self.updateWindowController window] center];

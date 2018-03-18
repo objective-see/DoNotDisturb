@@ -290,7 +290,7 @@ bail:
                 self.client = nil;
                 
                 //dbg msg
-                logMsg(LOG_DEBUG, @"no registered devices, so disconnected DnD client");   
+                logMsg(LOG_DEBUG, @"no registered devices, so disconnected client");
             }
         }
     }
@@ -659,14 +659,14 @@ bail:
                 //unset flag
                 self.dispatchGroupEmpty = YES;
                 
-                //dbg msg
-                logMsg(LOG_DEBUG, @"'wait/dismiss' dispatch group notified, disconnecting");
-                
                 //disconnect client
                 [self.client disconnect];
                 
                 //unset client
                 self.client = nil;
+                
+                //dbg msg
+                logMsg(LOG_DEBUG, @"'wait/dismiss' dispatch group notified, disconnected client");
                 
             });
         }

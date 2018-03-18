@@ -32,7 +32,7 @@ void logMsg(int level, NSString* msg)
     
     //alloc/init
     // always start w/ name + pid
-    logPrefix = [NSMutableString stringWithFormat:@"DoNotDisturb(%d)", getpid()];
+    logPrefix = [NSMutableString stringWithFormat:@"Do Not Disturb (pid: %d)", getpid()];
     
     //if its error, add error to prefix
     if(LOG_ERR == level)

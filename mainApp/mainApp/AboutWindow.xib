@@ -28,11 +28,6 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="dndIcon" id="xKf-GK-m0k"/>
                     </imageView>
-                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eaf-yA-bbe">
-                        <rect key="frame" x="158" y="236" width="265" height="45"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="dndText" id="Ws8-bD-j2R"/>
-                    </imageView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" tag="101" translatesAutoresizingMaskIntoConstraints="NO" id="HZZ-Es-mpy">
                         <rect key="frame" x="344" y="13" width="128" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -99,8 +94,13 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Eaf-yA-bbe">
+                        <rect key="frame" x="111" y="236" width="355" height="50"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="dndText" id="Ws8-bD-j2R"/>
+                    </imageView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OSm-xS-Dmd">
-                        <rect key="frame" x="158" y="217" width="182" height="19"/>
+                        <rect key="frame" x="111" y="217" width="182" height="19"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Version:" id="bBK-v0-ypq">
                             <font key="font" size="13" name="Menlo-Regular"/>
@@ -118,6 +118,6 @@
     </objects>
     <resources>
         <image name="dndIcon" width="256" height="256"/>
-        <image name="dndText" width="266.605712890625" height="34.354286193847656"/>
+        <image name="dndText" width="164.57142639160156" height="21.188571929931641"/>
     </resources>
 </document>

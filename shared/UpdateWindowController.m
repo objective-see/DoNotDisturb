@@ -60,7 +60,7 @@
 
     //hide first button when action is 'update'
     // don't need update check button ;)
-    if(YES == [self.actionButton.title isEqualToString:@"update"])
+    if(YES == [self.actionButton.title isEqualToString:@"Update"])
     {
         //hide
         self.firstButton.hidden = YES;

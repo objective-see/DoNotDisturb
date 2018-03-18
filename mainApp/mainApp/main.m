@@ -1,6 +1,6 @@
 //
 //  file: main.m
-//  project: donotdisturb (main app)
+//  project: Do Not Disturb (main app)
 //  description: main interface, toggle login item, or just kick off app interface
 //
 //  created by Patrick Wardle

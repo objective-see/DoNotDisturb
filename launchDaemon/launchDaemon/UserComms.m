@@ -170,6 +170,9 @@ bail:
     //disconnect client
     [client disconnect];
     
+    //unset
+    client = nil;
+    
     //dbg msg
     logMsg(LOG_DEBUG, @"received & processed registration ACK from server");
     
