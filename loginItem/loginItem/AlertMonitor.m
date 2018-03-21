@@ -177,7 +177,7 @@
     [dateFormat setDateFormat:@"MM/dd/yyyy HH:mm:ss"];
     
     //set other button title
-    notification.otherButtonTitle = @"dismiss";
+    notification.otherButtonTitle = @"Dismiss";
     
     //remove action button
     notification.hasActionButton = NO;
@@ -186,7 +186,7 @@
     notification.title = @"⚠️ Do Not Disturb Alert";
     
     //set subtitle
-    notification.subtitle = [NSString stringWithFormat:@"lid opened: %@", [dateFormat stringFromDate:alert[ALERT_TIMESTAMP]]];
+    notification.subtitle = [NSString stringWithFormat:@"Lid Opened: %@", [dateFormat stringFromDate:alert[ALERT_TIMESTAMP]]];
     
     //set informative text
     //notification.informativeText = @"<blah>";

@@ -156,9 +156,7 @@ BOOL initLogging()
     }
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"opened log file; %@", logPath]);
-    #endif
     
     //seek to end
     [logFileHandle seekToEndOfFile];

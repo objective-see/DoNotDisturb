@@ -11,6 +11,7 @@
 
 #include <syslog.h>
 
+#import "Logging.h"
 #import "XPCProtocol.h"
 #import "HelperListener.h"
 #import "HelperInterface.h"
@@ -37,16 +38,14 @@ int main(int argc, const char * argv[])
         if(nil == helperListener)
         {
             //err msg
-            syslog(LOG_ERR, "failed to initialize user comms XPC listener");
+            logMsg(LOG_ERR, @"failed to initialize user comms XPC listener");
             
             //bail
             goto bail;
         }
         
         //dbg msg
-        #ifndef NDEBUG
-        syslog(LOG_NOTICE, "listening for client XPC connections...");
-        #endif
+        logMsg(LOG_NOTICE, @"listening for client XPC connections...");
     
         //run loop
         [[NSRunLoop currentRunLoop] run];

@@ -330,9 +330,7 @@ bail:
         case 0:
             
             //dbg msg
-            #ifndef NDEBUG
             logMsg(LOG_DEBUG, @"no updates available");
-            #endif
             
             break;
             
@@ -340,9 +338,7 @@ bail:
         case 1:
             
             //dbg msg
-            #ifndef NDEBUG
             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"a new version (%@) is available", newVersion]);
-            #endif
      
             //alloc update window
             updateWindowController = [[UpdateWindowController alloc] initWithWindowNibName:@"UpdateWindow"];

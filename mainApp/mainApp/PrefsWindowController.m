@@ -7,7 +7,6 @@
 //  copyright (c) 2017 Objective-See. All rights reserved.
 //
 
-
 #import "Consts.h"
 #import "Update.h"
 #import "Logging.h"
@@ -35,36 +34,26 @@
 // add it, and make it selected
 -(void)awakeFromNib
 {
-    //init w/ 'general' view
-    [self.window.contentView addSubview:self.generalView];
-    
     //set title
     self.window.title = [NSString stringWithFormat:@"Do Not Disturb (v. %@)", getAppVersion()];
     
-    //set frame rect
-    self.generalView.frame = CGRectMake(0, 100, self.window.contentView.frame.size.width, self.window.contentView.frame.size.height-100);
+    //init daemon comms
+    daemonComms = [[DaemonComms alloc] init];
     
     //make 'general' selected
     [self.toolbar setSelectedItemIdentifier:TOOLBAR_GENERAL_ID];
     
+    //set general prefs as default
+    [self toolbarButtonHandler:nil];
+    
     //enable touchID mode option
     // if: < 10.13.4 (check first!) && no touch bar
-    if( (YES != [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 13, 4}]) &&
-        (YES != hasTouchID()) )
+    if( (YES == [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 13, 4}]) &&
+        (YES == hasTouchID()) )
     {
-        //disable button
-        ((NSButton*)[self.generalView viewWithTag:BUTTON_TOUCHID_MODE]).enabled = NO;
+        //enable button
+        ((NSButton*)[self.generalView viewWithTag:BUTTON_TOUCHID_MODE]).enabled = YES;
     }
-
-    //init daemon
-    // use local var here, as we need to block
-    daemonComms = [[DaemonComms alloc] init];
-    
-    //get prefs
-    self.preferences = [self.daemonComms getPreferences];
-    
-    //deserialize
-    //[self deserializePreferences];
     
     return;
 }
@@ -120,8 +109,12 @@
             //set 'execute action' button state
             ((NSButton*)[view viewWithTag:BUTTON_EXECUTE_ACTION]).state = [self.preferences[PREF_EXECUTE_ACTION] boolValue];
             
-            //set 'execute action' path
-            self.executePath.stringValue = self.preferences[PREF_EXECUTION_PATH];
+            //set 'execute action' 
+            if(0 != [self.preferences[PREF_EXECUTION_PATH] length])
+            {
+                //set
+                self.executePath.stringValue = self.preferences[PREF_EXECUTION_PATH];
+            }
             
             //set state of 'execute action' to match
             self.executePath.enabled = [self.preferences[PREF_EXECUTE_ACTION] boolValue];
@@ -215,7 +208,7 @@
     preferences = [NSMutableDictionary dictionary];
     
     //get button state
-    state = [NSNumber numberWithInteger:((NSButton*)sender).state];
+    state = [NSNumber numberWithBool:((NSButton*)sender).state];
     
     //set appropriate preference
     switch(((NSButton*)sender).tag)
@@ -550,10 +543,8 @@ bail:
         case 0:
             
             //dbg msg
-            #ifndef NDEBUG
             logMsg(LOG_DEBUG, @"no updates available");
-            #endif
-            
+    
             //set label
             self.updateLabel.stringValue = @"no new versions";
             

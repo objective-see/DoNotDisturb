@@ -40,14 +40,6 @@
 //sentry crash reporting URL
 #define CRASH_REPORTING_URL @"https://b6e82fd3037642edbc63b1ded9be53d3:87738f112d454de5a89a9864aae73b23@sentry.io/289135"
 
-//print macros
-#ifndef NDEBUG
-# define DEBUG_PRINT(x) printf x
-#else
-# define DEBUG_PRINT(x) do {} while (0)
-#endif
-
-
 //action to install
 // also button title
 #define ACTION_INSTALL @"Install"
@@ -174,7 +166,7 @@
 
 //prefs
 // icon mode
-#define PREF_NO_ICON_MODE @"iconMode"
+#define PREF_NO_ICON_MODE @"noIconMode"
 
 //prefs
 // touchID mode
@@ -198,7 +190,7 @@
 
 //prefs
 // update mode
-#define PREF_NO_UPDATES_MODE @"noupdatesMode"
+#define PREF_NO_UPDATES_MODE @"noUpdatesMode"
 
 //log file
 #define LOG_FILE_NAME @"DND.log"

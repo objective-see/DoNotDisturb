@@ -83,9 +83,7 @@ bail:
     }
     
     //dbg msg
-    #ifndef NDEBUG
-    syslog(LOG_NOTICE, "created mach service %s", INSTALLER_HELPER_ID.UTF8String);
-    #endif
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"created mach service %@", INSTALLER_HELPER_ID]);
     
     //set delegate
     self.listener.delegate = self;
@@ -151,9 +149,7 @@ bail:
     [newConnection resume];
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"allowed XPC connection: %@", newConnection]);
-    #endif
     
     //happy
     shouldAccept = YES;

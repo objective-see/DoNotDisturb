@@ -100,9 +100,7 @@
     NSInteger action = 0;
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"handling action click: %@", ((NSButton*)sender).title]);
-    #endif
     
     //grab tag
     action = ((NSButton*)sender).tag;

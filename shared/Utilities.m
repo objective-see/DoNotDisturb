@@ -246,9 +246,7 @@ BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL rec
     }
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"set ownership for %@ (%@)", path, fileOwner]);
-    #endif
     
     //do it recursively
     if(YES == recursive)

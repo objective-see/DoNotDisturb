@@ -14,16 +14,16 @@
 /* CONSTS */
 
 //general view
-#define TOOLBAR_GENERAL 101
+#define TOOLBAR_GENERAL 0
 
 //action view
-#define TOOLBAR_ACTION 102
+#define TOOLBAR_ACTION 1
 
 //link view
-#define TOOLBAR_LINK 103
+#define TOOLBAR_LINK 2
 
 //update view
-#define TOOLBAR_UPDATE 104
+#define TOOLBAR_UPDATE 3
 
 //tool bar id for 'general'
 #define TOOLBAR_GENERAL_ID @"general"

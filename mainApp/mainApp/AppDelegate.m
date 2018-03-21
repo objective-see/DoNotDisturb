@@ -49,7 +49,6 @@
         //key and front
         [self.prefsWindowController.window makeKeyAndOrderFront:self];
         
-        //TODO: need? and doesn't lose focus?
         //start login item in background
         // method checks first to make sure only one instance is running
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
@@ -87,6 +86,9 @@
     //login item's pid
     NSNumber* loginItemPID = nil;
     
+    //task results
+    NSDictionary* taskResults = nil;
+    
     //init path to login item app
     loginItem = [self path2LoginItem];
                  
@@ -123,7 +125,14 @@
     else if(nil != loginItemPID)
     {
         //kill it
-        kill(loginItemPID.unsignedShortValue, SIGKILL);
+        if(-1 == kill(loginItemPID.intValue, SIGKILL))
+        {
+            //err msg
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to kill login item (%d): %d", loginItemPID.intValue, errno]);
+            
+            //bail
+            goto bail;
+        }
         
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"killed login item (%@)", loginItemPID]);
@@ -144,7 +153,13 @@
     
     //start (helper) login item
     // 'open -g' prevents focus loss
-    execTask(OPEN, @[@"--args", @"-g", loginItem], NO);
+    taskResults = execTask(OPEN, @[@"-g", loginItem], NO);
+    if( (nil == taskResults) ||
+        (0 != [taskResults[EXIT_CODE] intValue]) )
+    {
+        //bail
+        goto bail;
+    }
     
     //happy
     result = YES;

@@ -91,16 +91,11 @@
     latestVersion = [[productsVersionDictionary objectForKey:@"Do Not Disturb"] objectForKey:@"version"];
     
     //dbg msg
-    #ifndef NDEBUG
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"latest version: %@", latestVersion]);
-    #endif
     
 bail:
     
     return latestVersion;
 }
-
-
-
 
 @end
