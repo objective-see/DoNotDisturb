@@ -69,7 +69,7 @@
             //set view
             [self.window.contentView addSubview:self.welcomeView];
             
-            //and 'next' button first responder
+            //make 'next' button first responder
             [self.window makeFirstResponder:[self.welcomeView viewWithTag:VIEW_APP_INFO]];
             
             break;
@@ -84,7 +84,7 @@
             //set view
             [self.window.contentView addSubview:self.appInfo];
             
-            //and 'next' button first responder
+            //make 'next' button first responder
             [self.window makeFirstResponder:[self.appInfo viewWithTag:VIEW_QRC]];
             
             break;
@@ -219,7 +219,7 @@
                 //set view
                 [self.window.contentView addSubview:self.linkedView];
                  
-                //and 'done' button first responder
+                //make 'done' button first responder
                 [self.window makeFirstResponder:[self.linkedView viewWithTag:VIEW_LINKED]];
                  
              });

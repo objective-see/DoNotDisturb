@@ -48,6 +48,15 @@
         
         //key and front
         [self.prefsWindowController.window makeKeyAndOrderFront:self];
+        
+        //TODO: need? and doesn't lose focus?
+        //start login item in background
+        // method checks first to make sure only one instance is running
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+        ^{
+           //start
+           [self startLoginItem:NO];
+        });
     }
     
     //make app active
@@ -131,11 +140,11 @@
     }
     
     //dbg msg
-    logMsg(LOG_DEBUG, @"starting (helper) login item\n");
+    logMsg(LOG_DEBUG, @"starting login item\n");
     
     //start (helper) login item
-    // 'open -g' prevents focus loss!
-    execTask(OPEN, @[@"-g", loginItem], NO);
+    // 'open -g' prevents focus loss
+    execTask(OPEN, @[@"--args", @"-g", loginItem], NO);
     
     //happy
     result = YES;

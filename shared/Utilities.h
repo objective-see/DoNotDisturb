@@ -33,6 +33,10 @@ NSString* getAppVersion(void);
 // note: this uses macOS 10.10+ methods
 NSOperatingSystemVersion getOSVersion(void);
 
+//get path to (main) app
+// login item is in app bundle, so parse up to get main app
+NSString* getMainAppPath(void);
+
 //get name of logged in user
 NSString* getConsoleUser(void);
 

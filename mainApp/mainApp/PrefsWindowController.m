@@ -23,21 +23,13 @@
 @implementation PrefsWindowController
 
 @synthesize toolbar;
-@synthesize startMode;
 @synthesize actionView;
-@synthesize updateMode;
 @synthesize updateView;
 @synthesize daemonComms;
 @synthesize executePath;
 @synthesize generalView;
-@synthesize passiveMode;
-@synthesize headlessMode;
-@synthesize executeAction;
-@synthesize monitorAction;
+@synthesize updateButton;
 @synthesize updateWindowController;
-
-//unlink button
-#define BUTTON_UNLINK 1
 
 //init 'general' view
 // add it, and make it selected
@@ -60,8 +52,8 @@
     if( (YES != [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 13, 4}]) &&
         (YES != hasTouchID()) )
     {
-        //disable
-        self.touchIDMode.enabled = NO;
+        //disable button
+        ((NSButton*)[self.generalView viewWithTag:BUTTON_TOUCHID_MODE]).enabled = NO;
     }
 
     //init daemon
@@ -72,56 +64,7 @@
     self.preferences = [self.daemonComms getPreferences];
     
     //deserialize
-    [self deserializePreferences];
-    
-    return;
-}
-
-//deserialize prefs
--(void)deserializePreferences
-{
-    //instance varialble
-    Ivar instanceVariable = nil;
-    
-    //instance variable obj
-    id iVarObj = nil;
-    
-    //extract each key/value pair an assign to iVar
-    for(NSString* key in self.preferences)
-    {
-        //get instance variable by name
-        instanceVariable = class_getInstanceVariable([self class], key.UTF8String);
-        if(NULL == instanceVariable)
-        {
-            //skip
-            continue;
-        }
-        
-        //get iVar object
-        iVarObj = object_getIvar(self, instanceVariable);
-        if(nil == iVarObj)
-        {
-            //skip
-            continue;
-        }
-        
-        //button iVar
-        if(YES == [[iVarObj class] isSubclassOfClass:[NSButton class]])
-        {
-            //set button's state
-            ((NSButton*)iVarObj).state = [self.preferences[key] boolValue];
-        }
-        
-        //text field iVar
-        else if(YES == [[iVarObj class] isSubclassOfClass:[NSTextField class]])
-        {
-            //set text field's string
-            ((NSTextField*)iVarObj).stringValue = self.preferences[key];
-        }
-    }
-    
-    //set execute path field state to match
-    self.executePath.enabled = self.executeAction.state;
+    //[self deserializePreferences];
     
     return;
 }
@@ -133,9 +76,6 @@
     //view
     NSView* view = nil;
     
-    //preferences
-    NSDictionary* preferences = nil;
-    
     //registered device names
     NSMutableString* registeredDevices = nil;
     
@@ -145,28 +85,58 @@
     //remove previous subview
     [[[self.window.contentView subviews] lastObject] removeFromSuperview];
     
+    //get (latest) prefs
+    self.preferences = [self.daemonComms getPreferences];
+    
     //assign view
     switch(((NSToolbarItem*)sender).tag)
     {
         //general
         case TOOLBAR_GENERAL:
+            
+            //set view
             view = self.generalView;
+            
+            //set 'passive mode' button state
+            ((NSButton*)[view viewWithTag:BUTTON_PASSIVE_MODE]).state = [self.preferences[PREF_PASSIVE_MODE] boolValue];
+            
+            //set 'no icon' button state
+            ((NSButton*)[view viewWithTag:BUTTON_NO_ICON_MODE]).state = [self.preferences[PREF_NO_ICON_MODE] boolValue];
+            
+            //set 'touch id' button state
+            ((NSButton*)[view viewWithTag:BUTTON_TOUCHID_MODE]).state = [self.preferences[PREF_TOUCHID_MODE] boolValue];
+            
+            //set 'start mode' button state
+            ((NSButton*)[view viewWithTag:BUTTON_START_MODE]).state = [self.preferences[PREF_START_MODE] boolValue];
+                         
             break;
             
         //action
         case TOOLBAR_ACTION:
+            
+            //set view
             view = self.actionView;
+            
+            //set 'execute action' button state
+            ((NSButton*)[view viewWithTag:BUTTON_EXECUTE_ACTION]).state = [self.preferences[PREF_EXECUTE_ACTION] boolValue];
+            
+            //set 'execute action' path
+            self.executePath.stringValue = self.preferences[PREF_EXECUTION_PATH];
+            
+            //set state of 'execute action' to match
+            self.executePath.enabled = [self.preferences[PREF_EXECUTE_ACTION] boolValue];
+            
+            //set 'monitor' button state
+            ((NSButton*)[view viewWithTag:BUTTON_MONITOR_ACTION]).state = [self.preferences[PREF_MONITOR_ACTION] boolValue];
+            
             break;
             
         //link/unlink
         case TOOLBAR_LINK:
             
-            //get prefs via XPC
-            preferences = [self.daemonComms getPreferences];
-            
             //if devices are registered
             // show linked devices view...
-            if(nil != preferences[PREF_REGISTERED_DEVICES])
+            if(nil != self.preferences[PREF_REGISTERED_DEVICES])
             {
                 //set view
                 view = self.linkedView;
@@ -184,10 +154,10 @@
                 registeredDevices = [NSMutableString string];
                 
                 //populate text view w/ registered devices
-                for(NSString* deviceToken in preferences[PREF_REGISTERED_DEVICES])
+                for(NSString* deviceToken in self.preferences[PREF_REGISTERED_DEVICES])
                 {
                     //append
-                    [registeredDevices appendString:[NSString stringWithFormat:@"📱%@", preferences[PREF_REGISTERED_DEVICES][deviceToken]]];
+                    [registeredDevices appendString:[NSString stringWithFormat:@"📱%@", self.preferences[PREF_REGISTERED_DEVICES][deviceToken]]];
                 }
                      
                 //add
@@ -206,7 +176,13 @@
             
         //update
         case TOOLBAR_UPDATE:
+            
+            //set view
             view = self.updateView;
+            
+            //set 'no update' button state
+            ((NSButton*)[view viewWithTag:BUTTON_NO_UPDATES_MODE]).state = [self.preferences[PREF_NO_UPDATES_MODE] boolValue];
+            
             break;
             
         default:
@@ -226,85 +202,118 @@
 }
 
 //invoked when user toggles button
-// update preferences for that button, and possibly perform immediate action
+// update preferences for that button, and possibly perform (immediate) action
 -(IBAction)togglePreference:(id)sender
 {
     //preferences
     NSMutableDictionary* preferences = nil;
     
-    //init prefs
+    //button state
+    NSNumber* state = nil;
+    
+    //init
     preferences = [NSMutableDictionary dictionary];
     
-    //passiveMode
-    if(sender == self.passiveMode)
-    {
-        //set
-        preferences[PREF_PASSIVE_MODE] = [NSNumber numberWithBool:self.passiveMode.state];
-    }
+    //get button state
+    state = [NSNumber numberWithInteger:((NSButton*)sender).state];
     
-    //icon/headless
-    // also restart login item
-    else if(sender == self.headlessMode)
+    //set appropriate preference
+    switch(((NSButton*)sender).tag)
     {
-        //set
-        preferences[PREF_NO_ICON_MODE] = [NSNumber numberWithBool:self.headlessMode.state];
-    }
-
-    //touchID mode
-    else if(sender == self.touchIDMode)
-    {
-        //set
-        preferences[PREF_TOUCHID_MODE] = [NSNumber numberWithBool:self.touchIDMode.state];
-    }
-    
-    //start mode
-    else if(sender == self.startMode)
-    {
-        //set
-        preferences[PREF_START_MODE] = [NSNumber numberWithBool:self.startMode.state];
-        
-        //toggle login item
-        if(YES != toggleLoginItem([NSURL fileURLWithPath:[((AppDelegate*)[[NSApplication sharedApplication] delegate]) path2LoginItem]], (int)self.startMode.state))
+        //passive mode
+        case BUTTON_PASSIVE_MODE:
         {
-            //err msg
-            logMsg(LOG_ERR, @"failed to toggle login item");
+            //set pref
+            preferences[PREF_PASSIVE_MODE] = state;
+            
+            break;
+        }
+            
+        //(no) icon mode
+        // login item will be restarted below
+        case BUTTON_NO_ICON_MODE:
+        {
+            //set pref
+            preferences[PREF_NO_ICON_MODE] = state;
+            
+            break;
+        }
+            
+        //touch id mode
+        case BUTTON_TOUCHID_MODE:
+        {
+            //set pref
+            preferences[PREF_TOUCHID_MODE] = state;
+            
+            break;
+        }
+            
+        //start mode
+        // also toggle here...
+        case BUTTON_START_MODE:
+        {
+            //set pref
+            preferences[PREF_START_MODE] = state;
+            
+            //toggle login item in background
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+            ^{
+                //toggle
+                if(YES != toggleLoginItem([NSURL fileURLWithPath:[((AppDelegate*)[[NSApplication sharedApplication] delegate]) path2LoginItem]], [preferences[PREF_START_MODE] intValue]))
+                {
+                    //err msg
+                    logMsg(LOG_ERR, @"failed to toggle login item");
+                }
+            });
+            
+            break;
+        }
+            
+        //execute action
+        // also toggle state of path
+        case BUTTON_EXECUTE_ACTION:
+        {
+            //set
+            preferences[PREF_EXECUTE_ACTION] = state;
+            
+            //set path field state to match
+            self.executePath.enabled = state.boolValue;
+            
+            break;
+        }
+        
+        //monitor mode
+        case BUTTON_MONITOR_ACTION:
+        {
+            //set pref
+            preferences[PREF_MONITOR_ACTION] = state;
+            
+            break;
+        }
+        
+        //(no) update mode
+        case BUTTON_NO_UPDATES_MODE:
+        {
+            //set pref
+            preferences[PREF_NO_UPDATES_MODE] = state;
+            
+            break;
         }
     }
-
-    //execute action
-    else if(sender == self.executeAction)
-    {
-        //set
-        preferences[PREF_EXECUTE_ACTION] = [NSNumber numberWithBool:self.executeAction.state];
-        
-        //set path field state to match
-        self.executePath.enabled = self.executeAction.state;
-    }
     
-    //monitoring action
-    else if(sender == self.monitorAction)
-    {
-        //set
-        preferences[PREF_MONITOR_ACTION] = [NSNumber numberWithBool:self.monitorAction.state];
-    }
-    
-    //update
-    else if(sender == self.updateMode)
-    {
-        //set
-        preferences[PREF_NO_UPDATES_MODE] = [NSNumber numberWithBool:self.updateMode.state];
-    }
-    
-    //send to daemon
-    // will update preferences
+    //tell daemon to update preferences
     [daemonComms updatePreferences:preferences];
     
     //restart login item if user toggle'd icon state
     // note: this has to be done after the prefs are written out by the daemon
-    if(sender == self.headlessMode)
+    if(BUTTON_NO_ICON_MODE == ((NSButton*)sender).tag)
     {
         //restart login item
-        [((AppDelegate*)[[NSApplication sharedApplication] delegate]) startLoginItem:TRUE];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+        ^{
+            //restart
+            [((AppDelegate*)[[NSApplication sharedApplication] delegate]) startLoginItem:TRUE];
+        });
     }
     
     return;
@@ -340,9 +349,7 @@
     //show qrc sheet
     // block executed when sheet is closed
     [self.window beginSheet:self.qrcPanel completionHandler:^(NSInteger result) {
-        
-        //done!
-        
+    
         //trigger refresh of link view
         [self toolbarButtonHandler:self.linkToolbarItem];
         
@@ -551,7 +558,6 @@ bail:
             self.updateLabel.stringValue = @"no new versions";
             
             break;
-         
             
         //new version
         case 1:

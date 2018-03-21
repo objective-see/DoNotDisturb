@@ -49,25 +49,8 @@
 // also brings window to front
 -(void)configure:(BOOL)isInstalled
 {
-    //yosemite
-    // 10.10.0
-    NSOperatingSystemVersion yosemite = {10,10,0};
-    
-    //set window title
-    [self window].title = [NSString stringWithFormat:@"version %@", getAppVersion()];
-    
-    //yosemite doesn't support emojis :P
-    if(YES != [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:yosemite])
-    {
-        //init status msg
-        [self.statusMsg setStringValue:@"signing info via the UI"];
-    }
-    //el capitan+ supports emojis
-    else
-    {
-        //init status msg
-        [self.statusMsg setStringValue:@"evil maids: stay out! 🙅‍♀️🚪"];
-    }
+    //init status msg
+    [self.statusMsg setStringValue:@"evil maids: stay out! 🙅‍♀️🚪"];
     
     //enable 'uninstall' button when app is installed already
     if(YES == isInstalled)

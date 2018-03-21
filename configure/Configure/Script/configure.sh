@@ -38,7 +38,7 @@ if [ "${1}" == "-install" ]; then
     mv "Do Not Disturb.app" /Applications
 
     #remove xattrz
-    xattr -rc "/Applications/Do Not Disturb.app"
+    /usr/bin/xattr -rc "/Applications/Do Not Disturb.app"
 
     #first time
     # kick of main app w/ -install & -welcome flag
@@ -79,7 +79,7 @@ elif [ "${1}" == "-uninstall" ]; then
     echo "unloaded launch daemon"
 
     #kick off main app w/ uninstall flag
-    open "/Applications/Do Not Disturb.app" "--args" "-uninstall"
+    open -g -j "/Applications/Do Not Disturb.app" "--args" "-uninstall"
 
     #give it a second
     # time to remove login item, etc
@@ -94,7 +94,7 @@ elif [ "${1}" == "-uninstall" ]; then
         rm -rf $INSTALL_DIRECTORY
 
     #partial
-    # just delete daemon
+    # just delete daemon, leaving prefs, etc
     else
         rm -rf "$INSTALL_DIRECTORY/Do Not Disturb.bundle"
     fi

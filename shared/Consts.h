@@ -193,7 +193,7 @@
 #define PREF_EXECUTION_PATH @"executePath"
 
 //pref
-// monitor stuffz
+// monitor stuff
 #define PREF_MONITOR_ACTION @"monitorAction"
 
 //prefs

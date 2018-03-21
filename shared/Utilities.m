@@ -39,6 +39,36 @@ NSOperatingSystemVersion getOSVersion()
     return [[NSProcessInfo processInfo] operatingSystemVersion];
 }
 
+//get path to (main) app
+// login item is in app bundle, so parse up to get main app
+NSString* getMainAppPath()
+{
+    //path components
+    NSArray *pathComponents = nil;
+    
+    //path to config (main) app
+    NSString* mainApp = nil;
+    
+    //get path components
+    // then build full path to main app
+    pathComponents = [[[NSBundle mainBundle] bundlePath] pathComponents];
+    if(pathComponents.count > 4)
+    {
+        //init path to full (main) app
+        mainApp = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
+    }
+    
+    //when (still) nil
+    // use default path
+    if(nil == mainApp)
+    {
+        //default
+        mainApp = [@"/Applications" stringByAppendingPathComponent:APP_NAME];
+    }
+    
+    return mainApp;
+}
+
 //get name of logged in user
 NSString* getConsoleUser()
 {

@@ -54,7 +54,7 @@
         preferences = @{PREF_PASSIVE_MODE:@NO, PREF_NO_ICON_MODE:@NO, PREF_NO_UPDATES_MODE:@NO, PREF_START_MODE:@YES};
         
         //get path to main app
-        mainApp = [NSURL fileURLWithPath:[self getAppPath]];
+        mainApp = [NSURL fileURLWithPath:getMainAppPath()];
         
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"waiting for %@ to terminate", mainApp.path]);
@@ -203,7 +203,7 @@ bail:
         //want button in center
         self.touchBar.principalItemIdentifier = @".button";
         
-        //activate so toolbar shows up
+        //activate so touch bar shows up
         [NSApp activateIgnoringOtherApps:YES];
     }
     
@@ -232,7 +232,7 @@ bail:
     if(YES == [identifier isEqualToString: @".icon" ])
     {
         //init icon view
-        iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, 32.0, 32.0)];
+        iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, 30.0, 30.0)];
         
         //enable layer
         [iconView setWantsLayer:YES];
@@ -270,7 +270,7 @@ bail:
     else if(YES == [identifier isEqualToString:@".button"])
     {
         //init button
-        touchBarItem.view = [NSButton buttonWithTitle: @"dismiss" target:self action: @selector(touchBarButtonHandler:)];
+        touchBarItem.view = [NSButton buttonWithTitle: @"Dismiss" target:self action: @selector(touchBarButtonHandler:)];
     }
     
     return touchBarItem;
@@ -289,35 +289,6 @@ bail:
     return;
 }
 
-//get path to (main) app
-// login item is in app bundle, so parse up to get main app
--(NSString*)getAppPath
-{
-    //path components
-    NSArray *pathComponents = nil;
-    
-    //path to config (main) app
-    NSString* mainApp = nil;
-    
-    //get path components
-    // then build full path to main app
-    pathComponents = [[[NSBundle mainBundle] bundlePath] pathComponents];
-    if(pathComponents.count > 4)
-    {
-        //init path to full (main) app
-        mainApp = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
-    }
-    
-    //when (still) nil
-    // use default path
-    if(nil == mainApp)
-    {
-        //default
-        mainApp = [@"/Applications" stringByAppendingPathComponent:APP_NAME];
-    }
-    
-    return mainApp;
-}
 
 //is there an update?
 -(void)check4Update

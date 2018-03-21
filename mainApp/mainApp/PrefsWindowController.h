@@ -28,6 +28,27 @@
 //tool bar id for 'general'
 #define TOOLBAR_GENERAL_ID @"general"
 
+//passive mode button
+#define BUTTON_PASSIVE_MODE 1
+
+//no icon mode button
+#define BUTTON_NO_ICON_MODE 2
+
+//touch id mode button
+#define BUTTON_TOUCHID_MODE 3
+
+//start mode button
+#define BUTTON_START_MODE 4
+
+//execute action button
+#define BUTTON_EXECUTE_ACTION 5
+
+//monitor button
+#define BUTTON_MONITOR_ACTION 6
+
+//no updates button
+#define BUTTON_NO_UPDATES_MODE 7
+
 @interface PrefsWindowController : NSWindowController <NSTextFieldDelegate>
 
 /* PROPERTIES */
@@ -44,29 +65,11 @@
 //general prefs view
 @property (weak) IBOutlet NSView *generalView;
 
-//passive mode button
-@property (weak) IBOutlet NSButton *passiveMode;
-
-//icon-less (headless) mode button
-@property (weak) IBOutlet NSButton *headlessMode;
-
-//touchID mode button
-@property (weak) IBOutlet NSButton *touchIDMode;
-
-//(automatically) start mode button
-@property (weak) IBOutlet NSButton *startMode;
-
 //action view
 @property (weak) IBOutlet NSView *actionView;
 
-//execute action button
-@property (weak) IBOutlet NSButton *executeAction;
-
 //execute path
 @property (weak) IBOutlet NSTextField *executePath;
-
-//monitor button
-@property (weak) IBOutlet NSButton *monitorAction;
 
 /* LINK VIEW */
 
@@ -104,9 +107,6 @@
 
 //update view
 @property (weak) IBOutlet NSView *updateView;
-
-//update mode
-@property (weak) IBOutlet NSButton *updateMode;
 
 //update button
 @property (weak) IBOutlet NSButton *updateButton;
