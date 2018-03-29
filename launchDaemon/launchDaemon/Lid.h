@@ -57,4 +57,7 @@ BOOL authViaTouchID(void);
 //proces lid open event
 -(void)processEvent;
 
+//execute action
+-(int)executeAction:(NSString*)path user:(NSString*)user;
+
 @end

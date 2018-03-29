@@ -97,15 +97,7 @@
     
     //get pid(s) of login item for user
     loginItemPID = [getProcessIDs(loginItemBinary, getuid()) firstObject];
-    
-    //didn't find it?
-    // try lookup bundle as login items sometimes show up as that
-    if(nil == loginItemPID)
-    {
-        //lookup via bundle
-        loginItemPID = [getProcessIDs(HELPER_ID, getuid()) firstObject];
-    }
-    
+        
     //already running and no restart?
     if( (nil != loginItemPID) &&
         (YES != shouldRestart) )

@@ -12,11 +12,15 @@
 #import "consts.h"
 #import "logging.h"
 #import "Preferences.h"
+#import "FrameworkInterface.h"
 
 /* GLOBALS */
 
 //lid obj
 extern Lid* lid;
+
+//DnD framework interface obj
+extern FrameworkInterface* framework;
 
 @implementation Preferences
 
@@ -88,10 +92,36 @@ bail:
     return loaded;
 }
 
-//get prefs
--(NSDictionary*)get
+//get all prefs
+// or a specific one...
+-(NSDictionary*)get:(NSString*)preference
 {
-    return self.preferences;
+    //current preferences
+    NSDictionary* currentPrefs = nil;
+    
+    //none specified?
+    // just will return all
+    if(nil == preference)
+    {
+        //all
+        currentPrefs = self.preferences;
+    }
+    //grab just the one user requested
+    else
+    {
+        //registered devices?
+        // first get most recent list from server
+        if(YES == [preference isEqualToString:PREF_REGISTERED_DEVICES])
+        {
+            //get most recent list
+            [self updateRegisteredDevices];
+        }
+        
+        //grab requested pref
+        currentPrefs = @{preference:self.preferences[preference]};
+    }
+    
+    return currentPrefs;
 }
 
 //set
@@ -213,6 +243,66 @@ bail:
     return updated;
 }
 
+//ping server for registered devices
+// then update preferences with this list...
+-(void)updateRegisteredDevices
+{
+    //current devices
+    NSDictionary* currentDevices = nil;
+    
+    //client
+    DNDClientMac *client;
+    
+    //registered devices
+    NSMutableDictionary* devices = nil;
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"updating registered devices");
+    
+    //alloc dictionary
+    devices = [NSMutableDictionary dictionary];
+    
+    //get current devices
+    currentDevices = [self get:PREF_REGISTERED_DEVICES];
+    
+    //init client
+    client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:true background:true];
+    if(nil == client)
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to initialize client");
+        
+        //bail
+        goto bail;
+    }
+    
+    //get list of registered devices from server
+    // build (updated) list of devices id : device name mappings
+    for(NSString* deviceID in [client getShadowSync].state.reported.endpoints)
+    {
+        //add current device name
+        devices[deviceID] = currentDevices[PREF_REGISTERED_DEVICES][deviceID];
+    }
+    
+    //no registered devices?
+    // remove key from preferences
+    if(0 == devices.count)
+    {
+        //unset
+        [self set:PREF_REGISTERED_DEVICES value:nil];
+    }
+    //otherwise
+    // update preferences with (current) registered devices
+    else
+    {
+        //update
+        [self set:PREF_REGISTERED_DEVICES value:devices];
+    }
+    
+bail:
+    
+    return;
+}
 //save to disk
 -(BOOL)save
 {

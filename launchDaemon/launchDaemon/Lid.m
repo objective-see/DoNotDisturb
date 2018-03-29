@@ -66,7 +66,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     }
     
     //get prefs
-    currentPrefs = [preferences get];
+    currentPrefs = [preferences get:nil];
 
     //if user explicity set disabled
     // bail here, to ignore everything
@@ -227,9 +227,6 @@ bail:
 //init
 - (id)init
 {
-    //current preferences
-    NSDictionary* currentPrefs = nil;
-    
     //super
     self = [super init];
     if(nil != self)
@@ -259,38 +256,13 @@ bail:
         // a) there's an identity
         // b) there's a registered device
         if( (nil != framework.identity) &&
-            (nil == [preferences get][PREF_REGISTERED_DEVICES]) )
+            (0 != [[preferences get:PREF_REGISTERED_DEVICES][PREF_REGISTERED_DEVICES] count]) )
         {
             //init client
             if(YES != [self clientInit])
             {
                 //err msg
                 logMsg(LOG_ERR, @"failed to initialize DnD client");
-            }
-        }
-        
-        //check if user has unregistered device
-        // if so, set flag, disconnect and unset client
-        if(nil != self.client)
-        {
-            //dbg msg
-            logMsg(LOG_DEBUG, @"getting registered device list from server");
-            
-            //now get current prefs
-            // this will also sync to get latest list of registered devices
-            currentPrefs = [preferences get];
-            
-            //any registered devices?
-            if(0 == [currentPrefs[PREF_REGISTERED_DEVICES] count])
-            {
-                //disconnect client
-                [self.client disconnect];
-                
-                //unset
-                self.client = nil;
-                
-                //dbg msg
-                logMsg(LOG_DEBUG, @"no registered devices, so disconnected client");
             }
         }
     }
@@ -304,12 +276,15 @@ bail:
     //flag
     BOOL initialized = NO;
     
+    //dbg msg
+    logMsg(LOG_DEBUG, @"initilizing DnD client");
+    
     //init client
     client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:true background:true];
     if(nil == self.client)
     {
         //err msg
-        logMsg(LOG_ERR, @"failed to initialize DnD client for lid events");
+        logMsg(LOG_ERR, @"failed to initialize client");
         
         //bail
         goto bail;
@@ -480,11 +455,8 @@ bail:
     //timestamp
     NSDate* timestamp = nil;
     
-    //registered devices
-    __block NSMutableDictionary* devices = nil;
-    
     //get current prefs
-    currentPrefs = [preferences get];
+    currentPrefs = [preferences get:nil];
     
     //init timestamp
     timestamp = [NSDate date];
@@ -526,16 +498,17 @@ bail:
 
     //execute cmd?
     if( (YES == [currentPrefs[PREF_EXECUTE_ACTION] boolValue]) &&
-        (0 != [currentPrefs[PREF_EXECUTION_PATH] length] ) )
+        (0 != [currentPrefs[PREF_EXECUTE_PATH] length] ) )
     {
+        
         //dbg msg
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"executing: %@", currentPrefs[PREF_EXECUTION_PATH]]);
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"executing: %@ as %@", currentPrefs[PREF_EXECUTE_PATH], currentPrefs[PREF_EXECUTE_USER]]);
         
         //exec payload
-        if(YES != [self executeAction:currentPrefs[PREF_EXECUTION_PATH]])
+        if(YES != [self executeAction:currentPrefs[PREF_EXECUTE_PATH] user:currentPrefs[PREF_EXECUTE_USER]])
         {
             //err msg
-            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to execute %@", currentPrefs[PREF_EXECUTION_PATH]]);
+            logMsg(LOG_ERR|LOG_TO_FILE, [NSString stringWithFormat:@"failed to execute %@", currentPrefs[PREF_EXECUTE_PATH]]);
         }
     }
     
@@ -549,11 +522,14 @@ bail:
         if(YES != [self clientInit])
         {
             //err msg
-            logMsg(LOG_ERR, @"failed to initialize DnD client");
+            logMsg(LOG_ERR, @"failed to initialize client for framework");
             
             //bail
             goto bail;
         }
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, @"(re)initialized client for framework");
     }
     
     //send to server
@@ -578,31 +554,10 @@ bail:
             //log
             logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
             
-            //alloc dictionary
-            devices = [NSMutableDictionary dictionary];
+            //after getting server response
+            // update list of registered devices...
+            [preferences updateRegisteredDevices];
             
-            //get list of registered devices
-            // build (updated) list of devices id : device name mappings
-            for(NSString* deviceID in [self.client getShadowSync].state.reported.endpoints)
-            {
-                //add current device name
-                devices[deviceID] = currentPrefs[PREF_REGISTERED_DEVICES][deviceID];
-            }
-            
-            //no registered devices?
-            // remove key from preferences
-            if(0 == devices.count)
-            {
-                //unset
-                [preferences set:PREF_REGISTERED_DEVICES value:nil];
-            }
-            //otherwise
-            // update preferences with (current) registered devices
-            else
-            {
-                //update
-                [preferences set:PREF_REGISTERED_DEVICES value:devices];
-            }
         }];
         
         //wait for dismiss
@@ -666,7 +621,7 @@ bail:
                 self.client = nil;
                 
                 //dbg msg
-                logMsg(LOG_DEBUG, @"'wait/dismiss' dispatch group notified, disconnected client");
+                logMsg(LOG_DEBUG, @"'wait/dismiss' dispatch group notified, disconnected/unset client");
                 
             });
         }
@@ -689,7 +644,7 @@ bail:
 }
 
 //(framework) callback delegate
-// invoked when user dimisses event on phone
+// invoked when user dimisses event via phone
 -(void)didGetDismissEvent:(Event *)event
 {
     //broadcast event to everybody
@@ -699,32 +654,38 @@ bail:
 }
 
 //execute action
--(BOOL)executeAction:(NSString*)path
+-(int)executeAction:(NSString*)path user:(NSString*)user
 {
-    //flag
-    BOOL executed = NO;
+    //results
+    NSDictionary* results = nil;
     
-    //return (from 'system()')
-    int status = -1;
+    //result
+    int result = -1;
     
-    //execute it
-    // ...quick and dirty
-    status = system(path.UTF8String);
-    if(-1 == status)
+    //exec script
+    // su man -c catman
+    results = execTask(@"/usr/bin/su", @[user, @"-c", path], YES);
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"executed %@ as %@, results:%@", path, user, results]);
+    
+    //grab result
+    if(nil != results)
     {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"execing %@ failed with %d", path, status]);
-        
-        //bail
-        goto bail;
+        //grab
+        result = [results[EXIT_CODE] intValue];
     }
     
-    //happy
-    executed = YES;
+    //no output means error
+    // i.e. task exception, etc
+    else
+    {
+        result = -1;
+    }
     
 bail:
     
-    return executed;
+    return result;
 }
 
 @end

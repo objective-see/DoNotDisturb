@@ -53,13 +53,13 @@ extern FrameworkInterface* framework;
 
 //XPC method
 // returns preferences to client
--(void)getPreferences:(void (^)(NSDictionary* alert))reply
+-(void)getPreferences:(NSString*)preference reply:(void (^)(NSDictionary* preferences))reply
 {
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC request: get preferences");
     
     //get current prefs
-    reply([preferences get]);
+    reply([preferences get:preference]);
     
     return;
 }
@@ -267,6 +267,9 @@ bail:
     // on event; just log to the log file for now...
     dismissObserver = [[NSNotificationCenter defaultCenter] addObserverForName:DISMISS_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification)
     {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"'DISMISS_NOTIFICATION' notification triggered");
+        
         //signal that a response came in
         dispatch_semaphore_signal(semaphore);
          

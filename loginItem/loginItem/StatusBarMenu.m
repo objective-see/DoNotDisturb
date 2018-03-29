@@ -81,7 +81,7 @@ enum menuItems
         }
         
         //get prefs via XPC
-        preferences = [self.daemonComms getPreferences];
+        preferences = [self.daemonComms getPreferences:nil];
          
         //set state based on (existing) preferences
         self.isDisabled = [preferences[PREF_IS_DISABLED] boolValue];
@@ -302,6 +302,9 @@ bail:
     //set to disabled
     if(YES == self.isDisabled)
     {
+        //set 'disabled' icon
+        self.statusItem.image = [NSImage imageNamed:@"statusIconDisabled"];
+        
         //update status
         [self.statusItem.menu itemWithTag:status].title = @"DND: disabled";
         
@@ -312,6 +315,9 @@ bail:
     //set to enabled
     else
     {
+        //set 'enabled' icon
+        self.statusItem.image = [NSImage imageNamed:@"statusIcon"];
+        
         //update status
         [self.statusItem.menu itemWithTag:status].title = @"DND: enabled";
         

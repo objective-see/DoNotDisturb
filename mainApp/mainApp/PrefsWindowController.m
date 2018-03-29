@@ -65,8 +65,8 @@
     //view
     NSView* view = nil;
     
-    //registered device names
-    NSMutableString* registeredDevices = nil;
+    //registered devices
+    NSDictionary* registeredDevices = nil;
     
     //height of toolbar
     float toolbarHeight = 0.0f;
@@ -75,7 +75,7 @@
     [[[self.window.contentView subviews] lastObject] removeFromSuperview];
     
     //get (latest) prefs
-    self.preferences = [self.daemonComms getPreferences];
+    self.preferences = [self.daemonComms getPreferences:nil];
     
     //assign view
     switch(((NSToolbarItem*)sender).tag)
@@ -110,10 +110,10 @@
             ((NSButton*)[view viewWithTag:BUTTON_EXECUTE_ACTION]).state = [self.preferences[PREF_EXECUTE_ACTION] boolValue];
             
             //set 'execute action' 
-            if(0 != [self.preferences[PREF_EXECUTION_PATH] length])
+            if(0 != [self.preferences[PREF_EXECUTE_PATH] length])
             {
                 //set
-                self.executePath.stringValue = self.preferences[PREF_EXECUTION_PATH];
+                self.executePath.stringValue = self.preferences[PREF_EXECUTE_PATH];
             }
             
             //set state of 'execute action' to match
@@ -127,9 +127,12 @@
         //link/unlink
         case TOOLBAR_LINK:
             
+            //get registered devices
+            registeredDevices = [self.daemonComms getPreferences:PREF_REGISTERED_DEVICES];
+            
             //if devices are registered
             // show linked devices view...
-            if(nil != self.preferences[PREF_REGISTERED_DEVICES])
+            if(0 != registeredDevices[PREF_REGISTERED_DEVICES])
             {
                 //set view
                 view = self.linkedView;
@@ -143,18 +146,15 @@
                 //set inset
                 self.deviceNames.textContainerInset = NSMakeSize(5.0, 10.0);
                 
-                //init string
-                registeredDevices = [NSMutableString string];
+                //reset
+                self.deviceNames.string = @"";
                 
                 //populate text view w/ registered devices
-                for(NSString* deviceToken in self.preferences[PREF_REGISTERED_DEVICES])
+                for(NSString* deviceToken in registeredDevices[PREF_REGISTERED_DEVICES])
                 {
                     //append
-                    [registeredDevices appendString:[NSString stringWithFormat:@"📱%@", self.preferences[PREF_REGISTERED_DEVICES][deviceToken]]];
+                    [self.deviceNames.string stringByAppendingString:[NSString stringWithFormat:@"%@📱%@\n", self.deviceNames.string, registeredDevices[PREF_REGISTERED_DEVICES][deviceToken]]];
                 }
-                     
-                //add
-                self.deviceNames.string = registeredDevices;
             }
             
             //no device registered
@@ -462,7 +462,7 @@
     
     //send to daemon
     // will update preferences
-    [self.daemonComms updatePreferences:@{PREF_EXECUTION_PATH:self.executePath.stringValue}];
+    [self.daemonComms updatePreferences:@{PREF_EXECUTE_PATH:self.executePath.stringValue, PREF_EXECUTE_USER:getConsoleUser()}];
     
 bail:
 
@@ -475,7 +475,7 @@ bail:
 {
     //send to daemon
     // will update preferences
-    [self.daemonComms updatePreferences:@{PREF_EXECUTION_PATH:self.executePath.stringValue}];
+    [self.daemonComms updatePreferences:@{PREF_EXECUTE_PATH:self.executePath.stringValue, PREF_EXECUTE_USER:getConsoleUser()}];
  
     return;
 }

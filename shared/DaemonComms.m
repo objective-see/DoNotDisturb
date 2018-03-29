@@ -84,7 +84,7 @@
 
 //get preferences
 // note: synchronous
--(NSDictionary*)getPreferences
+-(NSDictionary*)getPreferences:(NSString*)preference
 {
     //preferences
     __block NSDictionary* preferences = nil;
@@ -107,7 +107,7 @@
         //signal sema
         dispatch_semaphore_signal(semaphore);
           
-    }] getPreferences:^(NSDictionary* preferencesFromDaemon)
+    }] getPreferences:preference reply:^(NSDictionary* preferencesFromDaemon)
     {
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got preferences: %@", preferencesFromDaemon]);

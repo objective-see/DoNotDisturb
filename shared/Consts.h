@@ -182,7 +182,11 @@
 
 //pref
 // execution path
-#define PREF_EXECUTION_PATH @"executePath"
+#define PREF_EXECUTE_PATH @"executePath"
+
+//pref
+// execution user
+#define PREF_EXECUTE_USER @"executeUser"
 
 //pref
 // monitor stuff

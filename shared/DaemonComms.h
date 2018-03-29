@@ -29,7 +29,7 @@
 
 //get preferences
 // note: synchronous
--(NSDictionary*)getPreferences;
+-(NSDictionary*)getPreferences:(NSString*)preference;
 
 //update (save) preferences
 -(void)updatePreferences:(NSDictionary*)preferences;

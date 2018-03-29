@@ -78,8 +78,8 @@ int main(int argc, const char * argv[])
             goto bail;
         }
         
-        //get current prefs
-        currentPrefs = [preferences get];
+        //get all current prefs
+        currentPrefs = [preferences get:nil];
         
         //uninstall?
         // delete DND identity and exit
@@ -214,7 +214,7 @@ BOOL uninstall()
     
     //no client id?
     // no need to delete identity
-    if(nil == [preferences get][PREF_CLIENT_ID])
+    if(nil == [preferences get:nil][PREF_CLIENT_ID])
     {
         //dbg msg
         logMsg(LOG_DEBUG, @"no client ID found, so no identity to delete");

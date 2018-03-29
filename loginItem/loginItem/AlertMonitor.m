@@ -188,9 +188,6 @@
     //set subtitle
     notification.subtitle = [NSString stringWithFormat:@"Lid Opened: %@", [dateFormat stringFromDate:alert[ALERT_TIMESTAMP]]];
     
-    //set informative text
-    //notification.informativeText = @"<blah>";
-    
     //set delegate to self
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
     
@@ -199,6 +196,8 @@
     
     //init/show touch bar
     [((AppDelegate*)[[NSApplication sharedApplication] delegate]) initTouchBar];
+    
+    return;
 }
 
 //delegate method
@@ -207,21 +206,5 @@
 {
     return YES;
 }
-
-/*
- 
-do we want to do anything if user dismisses? (tell daemon?)
- note: this doesn't actually getted called for 'ok'/dismiss:(
- 
-//delegate method
-// automatically invoked when user interacts w/ the notification popup
--(void)userNotificationCenter:(NSUserNotificationCenter *)center didActivateNotification:(NSUserNotification *)notification
-{
-    //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"user interacted w/ alert: %ld", (long)notification.activationType]);
-    
-    return;
-}
-*/
 
 @end

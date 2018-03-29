@@ -42,7 +42,7 @@ void logMsg(int level, NSString* msg)
     }
     
     //debug mode logic
-    #ifndef NDEBUG
+    #ifdef DEBUG
     
     //in debug mode promote debug msgs to LOG_NOTICE
     // OS X only shows LOG_NOTICE and above

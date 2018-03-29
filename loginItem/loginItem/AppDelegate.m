@@ -43,7 +43,7 @@
     
     //get preferences
     // sends XPC message to daemon
-    preferences = [self.daemonComms getPreferences];
+    preferences = [self.daemonComms getPreferences:nil];
     
     //no preferences yet? ... first run
     // a) set some defaults for login item (passive mode, etc)
@@ -250,7 +250,7 @@ bail:
         icon = [NSImage imageNamed:@"dndIcon"];
         
         //set size
-        icon.size = CGSizeMake(32, 32);
+        icon.size = CGSizeMake(30, 30);
         
         //add image
         iconView.image = icon;

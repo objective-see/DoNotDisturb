@@ -23,6 +23,8 @@
 @synthesize errorWindowController;
 @synthesize configureWindowController;
 
+//TODO: make state (disabled, lid shut, etc) queryable...
+
 //main app interface
 -(void)applicationDidFinishLaunching:(NSNotification *)notification
 {
@@ -103,6 +105,7 @@ bail:
 -(BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)sender
 {
     #pragma unused(sender)
+    
     return YES;
 }
 
@@ -189,7 +192,7 @@ bail:
 }
 
 //menu handler for 'about'
-- (IBAction)displayAboutWindow:(id)sender
+-(IBAction)displayAboutWindow:(id)sender
 {
     #pragma unused(sender)
     

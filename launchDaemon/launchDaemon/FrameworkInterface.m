@@ -52,8 +52,8 @@ extern Preferences* preferences;
     //dbg msg
     logMsg(LOG_DEBUG, @"initializing DnD identity");
     
-    //get current prefs
-    currentPrefs = [preferences get];
+    //get all current prefs
+    currentPrefs = [preferences get:nil];
     
     //init digita CA path
     digitaCAPath = [[NSBundle mainBundle] pathForResource:@"rootCA" ofType:@"pem"];

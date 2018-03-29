@@ -22,7 +22,7 @@
 -(void)recvRegistrationACK:(void (^)(NSDictionary* registrationInfo))reply;
 
 //get preferences
--(void)getPreferences:(void (^)(NSDictionary* preferences))reply;
+-(void)getPreferences:(NSString*)preference reply:(void (^)(NSDictionary* preferences))reply;
 
 //update preferences
 -(void)updatePreferences:(NSDictionary*)preferences;
