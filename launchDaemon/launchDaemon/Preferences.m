@@ -263,7 +263,7 @@ bail:
     devices = [NSMutableDictionary dictionary];
     
     //get current devices
-    currentDevices = [self get:PREF_REGISTERED_DEVICES];
+    currentDevices = self.preferences[PREF_REGISTERED_DEVICES];
     
     //init client
     client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:true background:true];

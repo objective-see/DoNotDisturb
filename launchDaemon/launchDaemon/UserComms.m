@@ -56,7 +56,7 @@ extern FrameworkInterface* framework;
 -(void)getPreferences:(NSString*)preference reply:(void (^)(NSDictionary* preferences))reply
 {
     //dbg msg
-    logMsg(LOG_DEBUG, @"XPC request: get preferences");
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"XPC request: get preferences (pref: %@)", preference]);
     
     //get current prefs
     reply([preferences get:preference]);
