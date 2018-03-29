@@ -117,8 +117,13 @@ bail:
             [self updateRegisteredDevices];
         }
         
-        //grab requested pref
-        currentPrefs = @{preference:self.preferences[preference]};
+        //check
+        // then grab requested pref
+        if(nil != self.preferences[preference])
+        {
+            //grab
+            currentPrefs = @{preference:self.preferences[preference]};
+        }
     }
     
     return currentPrefs;
@@ -263,7 +268,22 @@ bail:
     devices = [NSMutableDictionary dictionary];
     
     //get current devices
+    // aren't any, just bail
     currentDevices = self.preferences[PREF_REGISTERED_DEVICES];
+    if(0 == currentDevices.count)
+    {
+        //bail
+        goto bail;
+    }
+    
+    //sanity check
+    // only happens w/ 0 registered devices
+    // and since devices have to be registered via computer, server won't have more...
+    if(nil == framework.identity)
+    {
+        //bail
+        goto bail;
+    }
     
     //init client
     client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:true background:true];
@@ -275,6 +295,9 @@ bail:
         //bail
         goto bail;
     }
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"asking server for list of registered endpoints");
     
     //get list of registered devices from server
     // build (updated) list of devices id : device name mappings

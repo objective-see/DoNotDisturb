@@ -81,6 +81,9 @@ int main(int argc, const char * argv[])
         //get all current prefs
         currentPrefs = [preferences get:nil];
         
+        //init framework obj
+        framework = [[FrameworkInterface alloc] init];
+        
         //uninstall?
         // delete DND identity and exit
         // note: only called (via script) during full uninstall
@@ -119,9 +122,6 @@ int main(int argc, const char * argv[])
         //register for shutdown
         // allows to close logging, etc.
         register4Shutdown();
-        
-        //init framework obj
-        framework = [[FrameworkInterface alloc] init];
         
         //1st time identity generatation is done on demand
         // subsequent times though, can just always do here
@@ -221,17 +221,6 @@ BOOL uninstall()
         
         //happy
         uninstalled = YES;
-        
-        //bail
-        goto bail;
-    }
-    
-    //init framework obj
-    framework = [[FrameworkInterface alloc] init];
-    if(nil == framework)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"failed to alloc/init framework interface");
         
         //bail
         goto bail;
