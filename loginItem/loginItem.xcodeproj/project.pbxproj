@@ -29,6 +29,10 @@
 		CD3307E820376CCB00F10D71 /* dndIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CD3307E720376CCB00F10D71 /* dndIcon.png */; };
 		CD981A8D2069049B001B875B /* statusIconDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = CD981A8B2069049A001B875B /* statusIconDisabled.png */; };
 		CD981A8E2069049B001B875B /* statusIconDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD981A8C2069049A001B875B /* statusIconDisabled@2x.png */; };
+		CDFB7888206E2F3400ABDD04 /* statusIconWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFB7884206E2F3400ABDD04 /* statusIconWhite.png */; };
+		CDFB7889206E2F3400ABDD04 /* statusIconDisabledWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFB7885206E2F3400ABDD04 /* statusIconDisabledWhite.png */; };
+		CDFB788A206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFB7886206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png */; };
+		CDFB788B206E2F3400ABDD04 /* statusIconWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFB7887206E2F3400ABDD04 /* statusIconWhite@2x.png */; };
 		CE968A9C1FCC590200AD6B78 /* statusIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE968A9A1FCC590200AD6B78 /* statusIcon.png */; };
 		CE968A9D1FCC590200AD6B78 /* statusIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE968A9B1FCC590200AD6B78 /* statusIcon@2x.png */; };
 /* End PBXBuildFile section */
@@ -70,6 +74,10 @@
 		CD3307E720376CCB00F10D71 /* dndIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dndIcon.png; path = ../shared/images/dndIcon.png; sourceTree = "<group>"; };
 		CD981A8B2069049A001B875B /* statusIconDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIconDisabled.png; sourceTree = "<group>"; };
 		CD981A8C2069049A001B875B /* statusIconDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusIconDisabled@2x.png"; sourceTree = "<group>"; };
+		CDFB7884206E2F3400ABDD04 /* statusIconWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIconWhite.png; sourceTree = "<group>"; };
+		CDFB7885206E2F3400ABDD04 /* statusIconDisabledWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIconDisabledWhite.png; sourceTree = "<group>"; };
+		CDFB7886206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusIconDisabledWhite@2x.png"; sourceTree = "<group>"; };
+		CDFB7887206E2F3400ABDD04 /* statusIconWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusIconWhite@2x.png"; sourceTree = "<group>"; };
 		CE968A9A1FCC590200AD6B78 /* statusIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIcon.png; sourceTree = "<group>"; };
 		CE968A9B1FCC590200AD6B78 /* statusIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusIcon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -97,6 +105,10 @@
 		7D3B75091F13354900568828 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				CDFB7885206E2F3400ABDD04 /* statusIconDisabledWhite.png */,
+				CDFB7886206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png */,
+				CDFB7884206E2F3400ABDD04 /* statusIconWhite.png */,
+				CDFB7887206E2F3400ABDD04 /* statusIconWhite@2x.png */,
 				CD981A8B2069049A001B875B /* statusIconDisabled.png */,
 				CD981A8C2069049A001B875B /* statusIconDisabled@2x.png */,
 				CD3307E320376B8300F10D71 /* upArrowSmall@2x.png */,
@@ -259,10 +271,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D16D6951F64E43300DB3161 /* UpdateWindow.xib in Resources */,
+				CDFB788B206E2F3400ABDD04 /* statusIconWhite@2x.png in Resources */,
 				CD3307E620376BA200F10D71 /* upArrowSmall.png in Resources */,
 				CD3307E420376B8300F10D71 /* upArrowSmall@2x.png in Resources */,
 				7D7755F01F02E05B00D0017D /* MainMenu.xib in Resources */,
+				CDFB7889206E2F3400ABDD04 /* statusIconDisabledWhite.png in Resources */,
 				CE968A9C1FCC590200AD6B78 /* statusIcon.png in Resources */,
+				CDFB7888206E2F3400ABDD04 /* statusIconWhite.png in Resources */,
+				CDFB788A206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png in Resources */,
 				7D3B75151F13354900568828 /* MainMenu.xib in Resources */,
 				CD3307E22037648B00F10D71 /* StatusBarPopover.xib in Resources */,
 				CD981A8E2069049B001B875B /* statusIconDisabled@2x.png in Resources */,

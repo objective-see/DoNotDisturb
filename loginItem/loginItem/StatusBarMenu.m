@@ -50,12 +50,6 @@ enum menuItems
         //init status item
         statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];
         
-        //set image
-        self.statusItem.image = [NSImage imageNamed:@"statusIcon"];
-        
-        //tell OS to handle image
-        self.statusItem.image.template = YES;
-    
         //set menu
         self.statusItem.menu = menu;
         
@@ -80,6 +74,9 @@ enum menuItems
             [self showPopover];
         }
         
+        //set notification for when theme toggles
+        [[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(interfaceChanged:) name:@"AppleInterfaceThemeChangedNotification" object:nil];
+        
         //get prefs via XPC
         preferences = [self.daemonComms getPreferences:nil];
          
@@ -91,6 +88,71 @@ enum menuItems
     }
     
     return self;
+}
+
+//set status bar icon
+// takes into account dark mode
+-(void)setIcon
+{
+    //dark mode
+    BOOL darkMode = NO;
+    
+    //set dark mode
+    // !nil if dark mode is enabled
+    darkMode = (nil != [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"]);
+    
+    //enabled
+    if(YES != self.isDisabled)
+    {
+        //alternate is always white
+        self.statusItem.alternateImage = [NSImage imageNamed:@"statusIconWhite"];
+        
+        //normal (non) dark mode
+        if(YES != darkMode)
+        {
+            //set icon
+            self.statusItem.image = [NSImage imageNamed:@"statusIcon"];
+        }
+        //dark mode
+        else
+        {
+            //set icon
+            self.statusItem.image = [NSImage imageNamed:@"statusIconWhite"];
+        }
+    }
+    //disabled
+    else
+    {
+        //alternate is always white
+        self.statusItem.alternateImage = [NSImage imageNamed:@"statusIconDisabledWhite"];
+        
+        //normal (non) dark mode
+        if(YES != darkMode)
+        {
+            //set icon
+            self.statusItem.image = [NSImage imageNamed:@"statusIconDisabled"];
+        }
+        //dark mode
+        else
+        {
+            //set icon
+            self.statusItem.image = [NSImage imageNamed:@"statusIconDisabledWhite"];
+        }
+    }
+    
+    return;
+}
+
+//callback for when theme changes
+// just invoke helper method to change icon
+-(void)interfaceChanged:(NSNotification *)notification
+{
+    #pragma unused(notification)
+    
+    //set icon
+    [self setIcon];
+    
+    return;
 }
 
 //show popver
@@ -303,7 +365,7 @@ bail:
     if(YES == self.isDisabled)
     {
         //set 'disabled' icon
-        self.statusItem.image = [NSImage imageNamed:@"statusIconDisabled"];
+        //self.statusItem.image = [self setIcon];//[NSImage imageNamed:@"statusIconDisabled"];
         
         //update status
         [self.statusItem.menu itemWithTag:status].title = @"DND: disabled";
@@ -316,7 +378,7 @@ bail:
     else
     {
         //set 'enabled' icon
-        self.statusItem.image = [NSImage imageNamed:@"statusIcon"];
+        //self.statusItem.image = [NSImage imageNamed:@"statusIcon"];
         
         //update status
         [self.statusItem.menu itemWithTag:status].title = @"DND: enabled";
@@ -324,6 +386,9 @@ bail:
         //change text
         [self.statusItem.menu itemWithTag:toggleStatus].title = @"Disable";
     }
+    
+    //set icon
+    [self setIcon];
     
     return;
 }
