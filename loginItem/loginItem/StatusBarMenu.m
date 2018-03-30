@@ -101,6 +101,9 @@ enum menuItems
     // !nil if dark mode is enabled
     darkMode = (nil != [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"]);
     
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"setting icon (dark mode: %d)", darkMode]);
+    
     //enabled
     if(YES != self.isDisabled)
     {
@@ -343,7 +346,6 @@ bail:
         
         //bail
         goto bail;
-
     }
     
     //open log
@@ -364,9 +366,6 @@ bail:
     //set to disabled
     if(YES == self.isDisabled)
     {
-        //set 'disabled' icon
-        //self.statusItem.image = [self setIcon];//[NSImage imageNamed:@"statusIconDisabled"];
-        
         //update status
         [self.statusItem.menu itemWithTag:status].title = @"DND: disabled";
         
@@ -377,9 +376,6 @@ bail:
     //set to enabled
     else
     {
-        //set 'enabled' icon
-        //self.statusItem.image = [NSImage imageNamed:@"statusIcon"];
-        
         //update status
         [self.statusItem.menu itemWithTag:status].title = @"DND: enabled";
         

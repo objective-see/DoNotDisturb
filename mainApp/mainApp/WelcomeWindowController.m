@@ -165,7 +165,7 @@
                  self.activityMessage.textColor = [NSColor redColor];
                  
                  //show err msg
-                 self.activityMessage.stringValue = @"Error generating QR code";
+                 self.activityMessage.stringValue = @"Error Generating QR Code";
                  
              });
              

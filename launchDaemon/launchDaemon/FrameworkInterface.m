@@ -60,7 +60,7 @@ extern Preferences* preferences;
     if(nil == digitaCAPath)
     {
         //err msg
-        logMsg(LOG_ERR, @"fail to locate Digita's CA path");
+        logMsg(LOG_ERR, @"failed to locate Digita's CA path");
         
         //bail
         goto bail;
@@ -71,7 +71,7 @@ extern Preferences* preferences;
     if(nil == csrPath)
     {
         //err msg
-        logMsg(LOG_ERR, @"fail to locate CSR path");
+        logMsg(LOG_ERR, @"failed to locate CSR path");
         
         //bail
         goto bail;
@@ -82,7 +82,7 @@ extern Preferences* preferences;
     if(nil == awsCAPath)
     {
         //err msg
-        logMsg(LOG_ERR, @"fail to locate AWS CA path");
+        logMsg(LOG_ERR, @"failed to locate AWS CA path");
         
         //bail
         goto bail;
@@ -128,7 +128,7 @@ extern Preferences* preferences;
             (nil != error) )
         {
             //err msg
-            logMsg(LOG_ERR, @"fail to get/create CSR identity");
+            logMsg(LOG_ERR, @"failed to get/create CSR identity");
             
             //bail
             goto bail;
@@ -139,7 +139,7 @@ extern Preferences* preferences;
         if(nil == csrClient)
         {
             //err msg
-            logMsg(LOG_ERR, @"fail to get/create CSR client");
+            logMsg(LOG_ERR, @"failed to get/create CSR client");
             
             //bail
             goto bail;
@@ -150,7 +150,7 @@ extern Preferences* preferences;
         if(nil == self.identity)
         {
             //err msg
-            logMsg(LOG_ERR, @"fail to get/create DND identity");
+            logMsg(LOG_ERR, @"failed to get/create DND identity");
             
             //bail
             goto bail;

@@ -271,20 +271,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D16D6951F64E43300DB3161 /* UpdateWindow.xib in Resources */,
-				CDFB788B206E2F3400ABDD04 /* statusIconWhite@2x.png in Resources */,
 				CD3307E620376BA200F10D71 /* upArrowSmall.png in Resources */,
 				CD3307E420376B8300F10D71 /* upArrowSmall@2x.png in Resources */,
 				7D7755F01F02E05B00D0017D /* MainMenu.xib in Resources */,
-				CDFB7889206E2F3400ABDD04 /* statusIconDisabledWhite.png in Resources */,
 				CE968A9C1FCC590200AD6B78 /* statusIcon.png in Resources */,
+				CE968A9D1FCC590200AD6B78 /* statusIcon@2x.png in Resources */,
 				CDFB7888206E2F3400ABDD04 /* statusIconWhite.png in Resources */,
+				CDFB788B206E2F3400ABDD04 /* statusIconWhite@2x.png in Resources */,
+				CDFB7889206E2F3400ABDD04 /* statusIconDisabledWhite.png in Resources */,
 				CDFB788A206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png in Resources */,
 				7D3B75151F13354900568828 /* MainMenu.xib in Resources */,
 				CD3307E22037648B00F10D71 /* StatusBarPopover.xib in Resources */,
+				CD981A8D2069049B001B875B /* statusIconDisabled.png in Resources */,
 				CD981A8E2069049B001B875B /* statusIconDisabled@2x.png in Resources */,
 				CD3307E820376CCB00F10D71 /* dndIcon.png in Resources */,
-				CD981A8D2069049B001B875B /* statusIconDisabled.png in Resources */,
-				CE968A9D1FCC590200AD6B78 /* statusIcon@2x.png in Resources */,
 				7DD25FF01F23B73C00277EC4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -330,8 +330,11 @@
     //grab size while still on main thread
     qrcSize = self.qrcImageView.frame.size;
     
+    //set msg color
+    self.activityMessage.textColor = [NSColor blackColor];
+    
     //set msg
-    self.activityMessage.stringValue = @"Generating QR Code...";
+    self.activityMessage.stringValue = @"Generating QR Code\nplease wait...";
     
     //make sure it's showing
     self.activityMessage.hidden = NO;
@@ -369,7 +372,7 @@
                 self.activityMessage.textColor = [NSColor redColor];
                 
                 //show err msg
-                self.activityMessage.stringValue = @"Error generating QR code";
+                self.activityMessage.stringValue = @"Error Generating QR Code";
                 
             });
             

@@ -117,8 +117,7 @@ bail:
             [self updateRegisteredDevices];
         }
         
-        //check
-        // then grab requested pref
+        //now grab requested pref
         if(nil != self.preferences[preference])
         {
             //grab

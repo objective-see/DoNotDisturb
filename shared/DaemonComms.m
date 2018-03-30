@@ -46,15 +46,15 @@
     
     //request qrc info
     [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
-      {
+    {
           //err msg
           logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'qrcRequest' method on launch daemon (error: %@)", proxyError]);
           
-      }] qrcRequest:^(NSData* qrcInfo)
-     {
+    }] qrcRequest:^(NSData* qrcInfo)
+    {
          //respond with info
          reply(qrcInfo);
-     }];
+    }];
     
     return;
 }
