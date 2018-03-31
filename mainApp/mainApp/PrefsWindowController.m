@@ -153,8 +153,11 @@
                 for(NSString* deviceToken in registeredDevices[PREF_REGISTERED_DEVICES])
                 {
                     //append
-                    [self.deviceNames.string stringByAppendingString:[NSString stringWithFormat:@"%@📱%@\n", self.deviceNames.string, registeredDevices[PREF_REGISTERED_DEVICES][deviceToken]]];
+                    self.deviceNames.string = [self.deviceNames.string stringByAppendingString:[NSString stringWithFormat: @"📱%@\n", registeredDevices[PREF_REGISTERED_DEVICES][deviceToken]]];
                 }
+                
+                //remove final newline
+                self.deviceNames.string = [self.deviceNames.string stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
             }
             
             //no device registered

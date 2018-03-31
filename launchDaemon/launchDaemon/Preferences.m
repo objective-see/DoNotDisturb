@@ -128,7 +128,7 @@ bail:
     return currentPrefs;
 }
 
-//set
+//set & save
 // directly override value
 -(void)set:(NSString*)key value:(id)value
 {
@@ -303,7 +303,7 @@ bail:
     for(NSString* deviceID in [client getShadowSync].state.reported.endpoints)
     {
         //add current device name
-        devices[deviceID] = currentDevices[PREF_REGISTERED_DEVICES][deviceID];
+        devices[deviceID] = currentDevices[deviceID];
     }
     
     //no registered devices?
@@ -325,6 +325,7 @@ bail:
     
     return;
 }
+
 //save to disk
 -(BOOL)save
 {
