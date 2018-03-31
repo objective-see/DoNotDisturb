@@ -49,7 +49,7 @@
 //no updates button
 #define BUTTON_NO_UPDATES_MODE 7
 
-@interface PrefsWindowController : NSWindowController <NSTextFieldDelegate>
+@interface PrefsWindowController : NSWindowController <NSTextFieldDelegate, NSToolbarDelegate>
 
 /* PROPERTIES */
 
@@ -72,6 +72,12 @@
 @property (weak) IBOutlet NSTextField *executePath;
 
 /* LINK VIEW */
+
+//overlay view
+@property (strong) IBOutlet NSView *overlayView;
+
+//overlay spinner
+@property (weak) IBOutlet NSProgressIndicator *overlayIndicator;
 
 //link toolbar item
 @property (weak) IBOutlet NSToolbarItem *linkToolbarItem;

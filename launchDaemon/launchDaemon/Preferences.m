@@ -111,7 +111,9 @@ bail:
     {
         //registered devices?
         // first get most recent list from server
-        if(YES == [preference isEqualToString:PREF_REGISTERED_DEVICES])
+        // but only if there is at least one (local) device...
+        if( (YES == [preference isEqualToString:PREF_REGISTERED_DEVICES]) &&
+            (0 != [currentPrefs[PREF_REGISTERED_DEVICES] count]) )
         {
             //get most recent list
             [self updateRegisteredDevices];

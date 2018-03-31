@@ -27,7 +27,9 @@
 @synthesize daemonComms;
 @synthesize executePath;
 @synthesize generalView;
+@synthesize overlayView;
 @synthesize updateButton;
+@synthesize overlayIndicator;
 @synthesize updateWindowController;
 
 //init 'general' view
@@ -58,6 +60,12 @@
     return;
 }
 
+//required for toolbar item enable/disable
+-(BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
+{
+    return [toolbarItem isEnabled] ;
+}
+
 //toolbar view handler
 // toggle view based on user selection
 -(IBAction)toolbarButtonHandler:(id)sender
@@ -66,7 +74,7 @@
     NSView* view = nil;
     
     //registered devices
-    NSDictionary* registeredDevices = nil;
+    __block NSDictionary* registeredDevices = nil;
     
     //height of toolbar
     float toolbarHeight = 0.0f;
@@ -77,12 +85,15 @@
     //get (latest) prefs
     self.preferences = [self.daemonComms getPreferences:nil];
     
+    //get height of toolbar
+    toolbarHeight = [self toolbarHeight];
+    
     //assign view
     switch(((NSToolbarItem*)sender).tag)
     {
         //general
         case TOOLBAR_GENERAL:
-            
+        {
             //set view
             view = self.generalView;
             
@@ -99,10 +110,11 @@
             ((NSButton*)[view viewWithTag:BUTTON_START_MODE]).state = [self.preferences[PREF_START_MODE] boolValue];
                          
             break;
+        }
             
         //action
         case TOOLBAR_ACTION:
-            
+        {
             //set view
             view = self.actionView;
             
@@ -123,56 +135,53 @@
             ((NSButton*)[view viewWithTag:BUTTON_MONITOR_ACTION]).state = [self.preferences[PREF_MONITOR_ACTION] boolValue];
             
             break;
-            
+        }
+        
         //link/unlink
+        // first show overlay view
         case TOOLBAR_LINK:
+        {
+            //set overlay view's rect
+            self.overlayView.frame = CGRectMake(0, toolbarHeight, self.window.contentView.frame.size.width, self.window.contentView.frame.size.height-toolbarHeight);
             
-            //get registered devices
-            registeredDevices = [self.daemonComms getPreferences:PREF_REGISTERED_DEVICES];
+            //start spinner
+            [self.overlayIndicator startAnimation:nil];
             
-            //if devices are registered
-            // show linked devices view...
-            if(0 != registeredDevices[PREF_REGISTERED_DEVICES])
+            //show overlay view
+            [self.window.contentView addSubview:self.overlayView];
+            
+            //disable all toolbar items
+            for(NSToolbarItem* toolbarItem in self.toolbar.items)
             {
-                //set view
-                view = self.linkedView;
-            
-                //set host name
-                self.hostName.stringValue = [[NSHost currentHost] localizedName];
-                
-                //set font
-                self.deviceNames.font = [NSFont fontWithName:@"Avenir Next Condensed Regular" size:20];
-                
-                //set inset
-                self.deviceNames.textContainerInset = NSMakeSize(5.0, 10.0);
-                
-                //reset
-                self.deviceNames.string = @"";
-                
-                //populate text view w/ registered devices
-                for(NSString* deviceToken in registeredDevices[PREF_REGISTERED_DEVICES])
-                {
-                    //append
-                    self.deviceNames.string = [self.deviceNames.string stringByAppendingString:[NSString stringWithFormat: @"📱%@\n", registeredDevices[PREF_REGISTERED_DEVICES][deviceToken]]];
-                }
-                
-                //remove final newline
-                self.deviceNames.string = [self.deviceNames.string stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+                //disable
+                toolbarItem.enabled = NO;
             }
             
-            //no device registered
-            // generate/show QRC so user can link
-            else
-            {
-                //set view
-                view = self.linkView;
-            }
+            //now get registered devices
+            // this can ping server, so do in background
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+            ^{
+                //get devices
+                registeredDevices = [self.daemonComms getPreferences:PREF_REGISTERED_DEVICES];
+                
+                //nap to allow msg to show up
+                [NSThread sleepForTimeInterval:0.5];
+                
+                //update UI
+                dispatch_async(dispatch_get_main_queue(),
+                ^{
+                    //process / update UI
+                    [self processRegisteredDevices:registeredDevices];
+                    
+                });
+            });
             
             break;
+        }
             
         //update
         case TOOLBAR_UPDATE:
-            
+        {
             //set view
             view = self.updateView;
             
@@ -180,19 +189,87 @@
             ((NSButton*)[view viewWithTag:BUTTON_NO_UPDATES_MODE]).state = [self.preferences[PREF_NO_UPDATES_MODE] boolValue];
             
             break;
+        }
             
         default:
             return;
     }
-    
-    //get height of toolbar
-    toolbarHeight = [self toolbarHeight];
     
     //set frame rect
     view.frame = CGRectMake(0, toolbarHeight, self.window.contentView.frame.size.width, self.window.contentView.frame.size.height-toolbarHeight);
     
     //add to window
     [self.window.contentView addSubview:view];
+    
+    return;
+}
+
+//once daemon (and possibly server) has responded
+// show either 'link/QRC' view or 'linked' view w/ devices
+-(void)processRegisteredDevices:(NSDictionary*)registeredDevices
+{
+    //view
+    NSView* view = nil;
+    
+    //height of toolbar
+    float toolbarHeight = 0.0f;
+    
+    //get height of toolbar
+    toolbarHeight = [self toolbarHeight];
+    
+    //remove overlay subview
+    [[[self.window.contentView subviews] lastObject] removeFromSuperview];
+    
+    //if devices are registered
+    // show linked devices view...
+    if(0 != registeredDevices[PREF_REGISTERED_DEVICES])
+    {
+        //set view
+        view = self.linkedView;
+        
+        //set host name
+        self.hostName.stringValue = [[NSHost currentHost] localizedName];
+        
+        //set font
+        self.deviceNames.font = [NSFont fontWithName:@"Avenir Next Condensed Regular" size:20];
+        
+        //set inset
+        self.deviceNames.textContainerInset = NSMakeSize(5.0, 10.0);
+        
+        //reset
+        self.deviceNames.string = @"";
+        
+        //populate text view w/ registered devices
+        for(NSString* deviceToken in registeredDevices[PREF_REGISTERED_DEVICES])
+        {
+            //append
+            self.deviceNames.string = [self.deviceNames.string stringByAppendingString:[NSString stringWithFormat: @"📱%@\n", registeredDevices[PREF_REGISTERED_DEVICES][deviceToken]]];
+        }
+        
+        //remove final newline
+        self.deviceNames.string = [self.deviceNames.string stringByTrimmingCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    }
+    
+    //no device registered
+    // show 'generate QRC' view so user can link
+    else
+    {
+        //set view
+        view = self.linkView;
+    }
+    
+    //set frame rect
+    view.frame = CGRectMake(0, toolbarHeight, self.window.contentView.frame.size.width, self.window.contentView.frame.size.height-toolbarHeight);
+    
+    //add to window
+    [self.window.contentView addSubview:view];
+    
+    //enable all toolbar items
+    for(NSToolbarItem* toolbarItem in self.toolbar.items)
+    {
+        //disable
+        toolbarItem.enabled = YES;
+    }
     
     return;
 }
