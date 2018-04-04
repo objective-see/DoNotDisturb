@@ -192,6 +192,10 @@
 // monitor stuff
 #define PREF_MONITOR_ACTION @"monitorAction"
 
+//pref
+// disable camera
+#define PREF_NO_CAMERA @"noCamera"
+
 //prefs
 // update mode
 #define PREF_NO_UPDATES_MODE @"noUpdatesMode"

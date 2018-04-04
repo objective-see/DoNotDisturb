@@ -79,8 +79,13 @@
     //height of toolbar
     float toolbarHeight = 0.0f;
     
-    //remove previous subview
-    [[[self.window.contentView subviews] lastObject] removeFromSuperview];
+    //when we've prev added a view
+    // remove the prev view cuz adding a new one
+    if(nil != sender)
+    {
+        //remove
+        [[[self.window.contentView subviews] lastObject] removeFromSuperview];
+    }
     
     //get (latest) prefs
     self.preferences = [self.daemonComms getPreferences:nil];
@@ -133,6 +138,9 @@
             
             //set 'monitor' button state
             ((NSButton*)[view viewWithTag:BUTTON_MONITOR_ACTION]).state = [self.preferences[PREF_MONITOR_ACTION] boolValue];
+            
+            //set 'disable camera' button state
+            ((NSButton*)[view viewWithTag:BUTTON_NO_CAMERA]).state = [self.preferences[PREF_NO_CAMERA] boolValue];
             
             break;
         }
@@ -360,6 +368,15 @@
         {
             //set pref
             preferences[PREF_MONITOR_ACTION] = state;
+            
+            break;
+        }
+            
+        //no camera
+        case BUTTON_NO_CAMERA:
+        {
+            //set pref
+            preferences[PREF_NO_CAMERA] = state;
             
             break;
         }
