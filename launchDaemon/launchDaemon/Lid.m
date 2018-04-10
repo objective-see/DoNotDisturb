@@ -200,6 +200,9 @@ BOOL authViaTouchID()
             return;
         }
         
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"got user auth event: %@", authEvent]);
+        
         //ignore unsuccessful auth id attempts
         if(noErr != authEvent.result)
         {
