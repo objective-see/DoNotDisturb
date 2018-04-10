@@ -10,7 +10,6 @@
 
 @implementation AuthEvent
 
-
 //for pretty print
 -(NSString *)description
 {

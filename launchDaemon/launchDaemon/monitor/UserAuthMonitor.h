@@ -32,9 +32,6 @@
 //flag to stop
 @property(nonatomic)BOOL shouldStop;
 
-//lastest successful auth event obj
-@property(nonatomic, retain) AuthEvent* authEvent;
-
 /* METHODS */
 
 //thread function

@@ -402,12 +402,8 @@ bail:
     //set timestamp
     event.timestamp = [NSDate date];
     
-    //save if successful
-    if(noErr == event.result)
-    {
-        //save
-        self.authEvent = event;
-    }
+    //set touch id flag
+    event.wasTouchID = [event.text containsString:@"Touch ID authentication"];
     
     //broadcast event
     [[NSNotificationCenter defaultCenter] postNotificationName:AUTH_NOTIFICATION object:nil userInfo:@{AUTH_NOTIFICATION:event}];

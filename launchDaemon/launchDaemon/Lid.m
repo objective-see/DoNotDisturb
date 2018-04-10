@@ -115,6 +115,9 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         // wait up to 5 seconds, and ignore event if user auth'd via biometrics
         if(YES == [currentPrefs[PREF_TOUCHID_MODE] boolValue])
         {
+            //dbg msg
+            logMsg(LOG_DEBUG, @"'touch id' mode enabled, waiting up to 5 seconds for biometric auth event");
+            
             //user auth'd via touchID?
             if(YES == authViaTouchID())
             {
@@ -128,7 +131,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
             }
             
             //dbg msg
-            logMsg(LOG_DEBUG, @"no touchID auth event found, so will process event");
+            logMsg(LOG_DEBUG, @"no touch id auth event found, so will process event");
         }
         
         //process event
@@ -159,59 +162,78 @@ bail:
 BOOL authViaTouchID()
 {
     //result
-    BOOL touchIDAuth = NO;
+    __block BOOL touchIDAuth = NO;
     
     //user auth events monitor
     UserAuthMonitor* userAuthMonitor = nil;
     
-    //auth event
-    AuthEvent* authEvent = nil;
+    //notifcation
+    __block id userAuthObserver = nil;
     
+    //auth event
+    __block AuthEvent* authEvent = nil;
+    
+    //wait semaphore
+    dispatch_semaphore_t semaphore = 0;
+
     //init user auth monitor
     userAuthMonitor = [[UserAuthMonitor alloc] init];
     
+    //init sema
+    semaphore = dispatch_semaphore_create(0);
+    
     //kick off monitor for user auth events
     // do in background as it should never return
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        //monitor
-        if(YES != [userAuthMonitor start])
-        {
-            //err msg
-            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to initialize user auth monitoring (for touchID events)"]);
-        }
-        
-    });
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+    ^{
     
-    //check up to 5 seconds
-    for(int i=0; i<=5; i++)
+    //register listener for user auth events
+    // executes block to process auth events as they come in
+    userAuthObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AUTH_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue]
+                                                                              usingBlock:^(NSNotification *notification)
     {
-        //try grab
-        authEvent = userAuthMonitor.authEvent;
-        if( (nil != authEvent) &&
-            ([authEvent.timestamp timeIntervalSinceNow] >= -5) )
+        //grab event
+        authEvent = notification.userInfo[AUTH_NOTIFICATION];
+        if(YES != [authEvent isKindOfClass:[AuthEvent class]])
         {
-            //dbg msg
-            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"user auth'd: %@", userAuthMonitor.authEvent]);
-            
-            //touch ID?
-            if(YES == authEvent.wasTouchID)
-            {
-                //happy
-                touchIDAuth =  YES;
-            }
-            
-            //either way break
-            // as auth event happened
-            break;
+            //ignore
+            return;
         }
         
-        //nap 1 second
-        [NSThread sleepForTimeInterval:1.0];
+        //ignore unsuccessful auth id attempts
+        if(noErr != authEvent.result)
+        {
+            //ignore
+            return;
+        }
+            
+        //set touch id flag
+        touchIDAuth = authEvent.wasTouchID;
+        
+        //signal sema
+        // either way, got an auth event and touch id flag has been set
+        dispatch_semaphore_signal(semaphore);
+        
+    }];
+    
+    //monitor
+    if(YES != [userAuthMonitor start])
+    {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to initialize user auth monitoring (for touchID events)"]);
     }
     
+    });
+    
+    //wait for touch id auth
+    // ...up to five seconds
+    dispatch_semaphore_wait(semaphore, dispatch_time(0, 5*NSEC_PER_SEC));
+
     //tell user auth monitor to sleep
     [userAuthMonitor stop];
+    
+    //remove auth observer
+    [[NSNotificationCenter defaultCenter] removeObserver:userAuthObserver];
            
 bail:
       
