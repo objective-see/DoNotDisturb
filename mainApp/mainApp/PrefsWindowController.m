@@ -139,8 +139,8 @@
             //set 'monitor' button state
             ((NSButton*)[view viewWithTag:BUTTON_MONITOR_ACTION]).state = [self.preferences[PREF_MONITOR_ACTION] boolValue];
             
-            //set 'disable camera' button state
-            ((NSButton*)[view viewWithTag:BUTTON_NO_CAMERA]).state = [self.preferences[PREF_NO_CAMERA] boolValue];
+            //set 'no remote tasking' button state
+            ((NSButton*)[view viewWithTag:BUTTON_NO_REMOTE_TASKING]).state = [self.preferences[PREF_NO_REMOTE_TASKING] boolValue];
             
             break;
         }
@@ -373,10 +373,10 @@
         }
             
         //no camera
-        case BUTTON_NO_CAMERA:
+        case BUTTON_NO_REMOTE_TASKING:
         {
             //set pref
-            preferences[PREF_NO_CAMERA] = state;
+            preferences[PREF_NO_REMOTE_TASKING] = state;
             
             break;
         }
@@ -402,7 +402,7 @@
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
         ^{
             //restart
-            [((AppDelegate*)[[NSApplication sharedApplication] delegate]) startLoginItem:TRUE];
+            [((AppDelegate*)[[NSApplication sharedApplication] delegate]) startLoginItem:YES];
         });
     }
     

@@ -285,7 +285,7 @@ bail:
     }
     
     //init client
-    client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:true background:true];
+    client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:YES background:YES taskable:NO];
     if(nil == client)
     {
         //err msg
@@ -296,7 +296,7 @@ bail:
     }
     
     //dbg msg
-    logMsg(LOG_DEBUG, @"asking server for list of registered endpoints");
+    logMsg(LOG_DEBUG, @"asking server for list of registered endpoints...");
     
     //get list of registered devices from server
     // build (updated) list of devices id : device name mappings

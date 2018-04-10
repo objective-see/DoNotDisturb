@@ -193,8 +193,8 @@
 #define PREF_MONITOR_ACTION @"monitorAction"
 
 //pref
-// disable camera
-#define PREF_NO_CAMERA @"noCamera"
+// no remote tasking
+#define PREF_NO_REMOTE_TASKING @"noRemoteTasking"
 
 //prefs
 // update mode

@@ -99,7 +99,7 @@ extern Preferences* preferences;
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"using existing client id: %@", clientID]);
         
         //init
-        identity = [[DNDIdentity alloc] init:clientID caPath:digitaCAPath error:&error];
+        self.identity = [[DNDIdentity alloc] init:clientID caPath:digitaCAPath error:&error];
     }
     
     //when not doing full init
@@ -135,7 +135,7 @@ extern Preferences* preferences;
         }
         
         //alloc/init csr client
-        csrClient = [[DNDClientCsr alloc] initWithDndIdentity:csrIdentity sendCA:false background:true];
+        csrClient = [[DNDClientCsr alloc] initWithDndIdentity:csrIdentity sendCA:NO background:YES taskable:NO];
         if(nil == csrClient)
         {
             //err msg

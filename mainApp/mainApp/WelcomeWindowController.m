@@ -213,14 +213,14 @@
                      self.deviceName.stringValue = registrationInfo[KEY_DEVICE_NAME];
                  }
                  
-                //remove prev. subview
-                [[[self.window.contentView subviews] lastObject] removeFromSuperview];
+                 //remove prev. subview
+                 [[[self.window.contentView subviews] lastObject] removeFromSuperview];
 
-                //set view
-                [self.window.contentView addSubview:self.linkedView];
+                 //set view
+                 [self.window.contentView addSubview:self.linkedView];
                  
-                //make 'done' button first responder
-                [self.window makeFirstResponder:[self.linkedView viewWithTag:VIEW_LINKED]];
+                 //make 'done' button first responder
+                 [self.window makeFirstResponder:[self.linkedView viewWithTag:VIEW_LINKED]];
                  
              });
              

@@ -46,8 +46,8 @@
 //monitor button
 #define BUTTON_MONITOR_ACTION 6
 
-//no camera button
-#define BUTTON_NO_CAMERA 7
+//no remote tasking button
+#define BUTTON_NO_REMOTE_TASKING 7
 
 //no updates button
 #define BUTTON_NO_UPDATES_MODE 8

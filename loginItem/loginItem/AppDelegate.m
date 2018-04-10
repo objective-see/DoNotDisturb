@@ -51,7 +51,7 @@
     if(0 == preferences.count)
     {
         //set some default prefs
-        preferences = @{PREF_PASSIVE_MODE:@NO, PREF_NO_ICON_MODE:@NO, PREF_NO_UPDATES_MODE:@NO, PREF_START_MODE:@YES};
+        preferences = @{PREF_PASSIVE_MODE:@NO, PREF_NO_ICON_MODE:@NO, PREF_NO_UPDATES_MODE:@NO, PREF_START_MODE:@YES, PREF_NO_REMOTE_TASKING:@NO};
         
         //get path to main app
         mainApp = [NSURL fileURLWithPath:getMainAppPath()];
@@ -62,7 +62,7 @@
         //set up notification for main app exit
         // wait until it's exited to complete initializations
         self.appObserver = [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName:NSWorkspaceDidTerminateApplicationNotification object:nil queue:nil usingBlock:^(NSNotification *notification)
-         {
+        {
              //ignore others
              if(YES != [MAIN_APP_ID isEqualToString:[((NSRunningApplication*)notification.userInfo[NSWorkspaceApplicationKey]) bundleIdentifier]])
              {

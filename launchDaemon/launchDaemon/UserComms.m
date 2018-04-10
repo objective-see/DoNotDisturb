@@ -148,7 +148,7 @@ bail:
     }
     
     //init client
-    client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:true background:true];
+    client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:YES background:YES taskable:YES];
     if(nil == client)
     {
         //bail

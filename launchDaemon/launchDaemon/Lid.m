@@ -277,10 +277,10 @@ bail:
     BOOL initialized = NO;
     
     //dbg msg
-    logMsg(LOG_DEBUG, @"initilizing DnD client");
+    logMsg(LOG_DEBUG, @"initializing DnD client");
     
     //init client
-    client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:true background:true];
+    client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:YES background:YES taskable:YES];
     if(nil == self.client)
     {
         //err msg
@@ -294,7 +294,7 @@ bail:
     client.delegate = self;
     
     //indicate we want tasking
-    [client handleTasksWithFramework];
+    [client handleTasksWithFramework:[[preferences get:nil][PREF_NO_REMOTE_TASKING] boolValue]];
     
     //happy
     initialized = YES;
