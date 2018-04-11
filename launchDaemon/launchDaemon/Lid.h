@@ -57,7 +57,7 @@ BOOL authViaTouchID(void);
 -(void)unregister4Notifications;
 
 //proces lid open event
--(void)processEvent;
+-(void)processEvent:(NSDate*)timestamp;
 
 //execute action
 -(int)executeAction:(NSString*)path user:(NSString*)user;

@@ -58,12 +58,21 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     //preferences
     NSDictionary* currentPrefs = nil;
     
+    //timestamp
+    NSDate* timestamp = nil;
+    
+    //init timestamp
+    timestamp = [NSDate date];
+    
     //ignore any messages that are related to lid state
     if(kIOPMMessageClamshellStateChange != messageType)
     {
         //bail
         goto bail;
     }
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"got 'kIOPMMessageClamshellStateChange' message");
     
     //get prefs
     currentPrefs = [preferences get:nil];
@@ -78,9 +87,6 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         //bail
         goto bail;
     }
-    
-    //dbg msg
-    logMsg(LOG_DEBUG, @"got 'kIOPMMessageClamshellStateChange' message");
     
     //get state
     lidState = ((int) messageArgument & kClamshellStateBit);
@@ -137,7 +143,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         
         //process event
         // report to user, execute actions, etc
-        [lid processEvent];
+        [lid processEvent:timestamp];
     }
     
     //(new) close?
@@ -465,7 +471,7 @@ bail:
 
 //proces lid open event
 // report to user, execute cmd, send alert to server, etc
--(void)processEvent
+-(void)processEvent:(NSDate*)timestamp
 {
     //monitor obj
     Monitor* monitor = nil;
@@ -476,14 +482,8 @@ bail:
     //current prefs
     NSDictionary* currentPrefs = nil;
     
-    //timestamp
-    NSDate* timestamp = nil;
-    
     //get current prefs
     currentPrefs = [preferences get:nil];
-    
-    //init timestamp
-    timestamp = [NSDate date];
     
     //only add events to queue
     // when client is not running in passive mode
