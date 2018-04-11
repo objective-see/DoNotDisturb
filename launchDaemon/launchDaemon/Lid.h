@@ -48,7 +48,20 @@ BOOL authViaTouchID(void);
 //dispatch group flag
 @property BOOL dispatchGroupEmpty;
 
+//dispatch blocks
+@property(nonatomic, retain)NSMutableArray* dispatchBlocks;
+
 /* METHODS */
+
+//check if client should be init'd
+-(BOOL)shouldInitClient;
+
+//init dnd client
+-(BOOL)clientInit;
+
+//cancel all dipatch blocks
+// also leave dispatch group
+-(void)dismissAll;
 
 //register for notifications
 -(BOOL)register4Notifications;

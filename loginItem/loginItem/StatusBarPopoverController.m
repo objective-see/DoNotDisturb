@@ -11,7 +11,7 @@
 @implementation StatusBarPopoverController
 
 //'close' button handler
-// ->simply close popover
+// simply close popover
 -(IBAction)interactionHandler:(NSControl *)sender
 {
     //close

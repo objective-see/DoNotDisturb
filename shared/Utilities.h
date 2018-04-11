@@ -75,7 +75,7 @@ BOOL setFileOwner(NSString* path, NSNumber* groupID, NSNumber* ownerID, BOOL rec
 NSMutableDictionary* execTask(NSString* binaryPath, NSArray* arguments, BOOL shouldWait);
 
 //toggle login item
-// ->either add (install) or remove (uninstall)
+// either add (install) or remove (uninstall)
 BOOL toggleLoginItem(NSURL* loginItem, int toggleFlag);
 
 //touchID capable?

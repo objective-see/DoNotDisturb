@@ -180,18 +180,12 @@ bail:
             //dbg msg
             logMsg(LOG_DEBUG, @"unregistered for lid change notifications");
             
-            //disconnect any client(s)
-            if(nil != lid.client)
-            {
-                //disconnect
-                [lid.client disconnect];
-                
-                //unset
-                lid.client = nil;
-                
-                //dbg msg
-                logMsg(LOG_DEBUG, @"disconnected client");
-            }
+            //dismiss all
+            // will also disconnect client
+            [lid dismissAll];
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"dismissed all alerts & disconnected any connected client");
             
             //finally broadcast dimiss to dismiss any alerts
             [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_NOTIFICATION object:nil userInfo:nil];
@@ -206,7 +200,7 @@ bail:
             
             //register for lid notifications
             [lid register4Notifications];
-            
+        
             //dbg msg
             logMsg(LOG_DEBUG, @"registered for lid change notifications");
         }

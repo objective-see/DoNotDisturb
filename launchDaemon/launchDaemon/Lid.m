@@ -252,10 +252,11 @@ BOOL authViaTouchID()
 
 @synthesize client;
 @synthesize dispatchGroup;
+@synthesize dispatchBlocks;
 @synthesize dispatchGroupEmpty;
 
 //init
-- (id)init
+-(id)init
 {
     //super
     self = [super init];
@@ -282,11 +283,11 @@ BOOL authViaTouchID()
         //start empty
         self.dispatchGroupEmpty = YES;
         
-        //init client device, when:
-        // a) there's an identity
-        // b) there's a registered device
-        if( (nil != framework.identity) &&
-            (0 != [[preferences get:PREF_REGISTERED_DEVICES][PREF_REGISTERED_DEVICES] count]) )
+        //init array for blocks
+        dispatchBlocks = [NSMutableArray array];
+        
+        //should init client?
+        if(YES == [self shouldInitClient])
         {
             //init client
             if(YES != [self clientInit])
@@ -294,10 +295,25 @@ BOOL authViaTouchID()
                 //err msg
                 logMsg(LOG_ERR, @"failed to initialize DnD client");
             }
+            //dbg msg
+            else
+            {
+                //dbg msg
+                logMsg(LOG_DEBUG, @"initialized DnD client for framework");
+            }
         }
     }
     
     return self;
+}
+
+//init client device, when:
+// a) there's an identity
+// b) there's a registered device
+-(BOOL)shouldInitClient
+{
+    return ( (nil != framework.identity) &&
+             (0 != [[preferences get:PREF_REGISTERED_DEVICES][PREF_REGISTERED_DEVICES] count]) );
 }
 
 //init dnd client
@@ -539,8 +555,7 @@ bail:
     //before sending it to server
     // check and init client if needed
     if( (nil == self.client) &&
-        (nil != framework.identity) &&
-        (nil != currentPrefs[PREF_REGISTERED_DEVICES]) )
+        (YES == [self shouldInitClient]) )
     {
         //init client
         if(YES != [self clientInit])
@@ -553,7 +568,7 @@ bail:
         }
         
         //dbg msg
-        logMsg(LOG_DEBUG, @"(re)initialized client for framework");
+        logMsg(LOG_DEBUG, @"(re)initialized DnD client for framework");
     }
     
     //send to server
@@ -610,6 +625,24 @@ bail:
 // note: handles multiple client via dispatch group
 -(void)wait4Dismiss
 {
+    //dispatch block
+    dispatch_block_t dispatchBlock = nil;
+    
+    //init dispatch block
+    dispatchBlock = dispatch_block_create(DISPATCH_BLOCK_ASSIGN_CURRENT, ^{
+        
+        //debug msg
+        logMsg(LOG_DEBUG, @"leaving 'wait/dismiss' dispatch group");
+        
+        //done
+        // so leave!
+        dispatch_group_leave(self.dispatchGroup);
+        
+    });
+    
+    //save it
+    [self.dispatchBlocks addObject:dispatchBlock];
+    
     //enter dispatch group
     dispatch_group_enter(self.dispatchGroup);
     
@@ -632,7 +665,7 @@ bail:
             [self.client listenOnDelegate:nil];
             
             //'register' notification code
-            // will be invoked when *everything* times out
+            // will be invoked when *everything* times out or is dismissed
             dispatch_group_notify(self.dispatchGroup, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),^{
                 
                 //unset flag
@@ -653,16 +686,24 @@ bail:
     }//sync
     
     //wait for 5 minutes
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (60 * 5) * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (60 * 5) * NSEC_PER_SEC), dispatch_get_main_queue(), dispatchBlock);
+    
+    return;
+}
+
+//cancel all dipatch blocks
+// also leave dispatch group
+-(void)dismissAll
+{
+    //cancel & leave
+    for(dispatch_block_t dispatchBlock in self.dispatchBlocks)
+    {
+        //cancel
+        dispatch_block_cancel(dispatchBlock);
         
-        //debug msg
-        logMsg(LOG_DEBUG, @"leaving 'wait/dismiss' dispatch group");
-        
-        //done
-        // so leave!
+        //leave dispatch group
         dispatch_group_leave(self.dispatchGroup);
-        
-    });
+    }
     
     return;
 }
