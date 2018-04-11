@@ -112,13 +112,14 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"[NEW EVENT] lid state: open (sleep state: %d)", sleepState]);
         
         //touch id mode?
-        // wait up to 5 seconds, and ignore event if user auth'd via biometrics
+        // wait up to 10 seconds, and ignore event if user auth'd via biometrics
         if(YES == [currentPrefs[PREF_TOUCHID_MODE] boolValue])
         {
             //dbg msg
-            logMsg(LOG_DEBUG, @"'touch id' mode enabled, waiting up to 5 seconds for biometric auth event");
+            logMsg(LOG_DEBUG, @"'touch id' mode enabled, waiting up to 10 seconds for biometric auth event");
             
             //user auth'd via touchID?
+            // will wait for up to 10 seconds
             if(YES == authViaTouchID())
             {
                 //dbg msg
@@ -157,7 +158,7 @@ bail:
 }
 
 //check if user auth'd
-// a) within last 5 seconds
+// a) within last 10 seconds
 // b) via biometrics (touchID)
 BOOL authViaTouchID()
 {
@@ -230,16 +231,14 @@ BOOL authViaTouchID()
     
     //wait for touch id auth
     // ...up to five seconds
-    dispatch_semaphore_wait(semaphore, dispatch_time(0, 5*NSEC_PER_SEC));
+    dispatch_semaphore_wait(semaphore, dispatch_time(0, 10*NSEC_PER_SEC));
 
-    //tell user auth monitor to sleep
+    //tell user auth monitor to stop
     [userAuthMonitor stop];
     
     //remove auth observer
     [[NSNotificationCenter defaultCenter] removeObserver:userAuthObserver];
-           
-bail:
-      
+    
     return touchIDAuth;
 }
 

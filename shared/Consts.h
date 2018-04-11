@@ -289,7 +289,7 @@
 #define DISMISS_NOTIFICATION @"com.objective-see.dnd.dismissNotification"
 
 //monitoring timeout
-#define MONITORING_TIMEOUT 60
+#define MONITORING_TIMEOUT 60*3
 
 #endif
 

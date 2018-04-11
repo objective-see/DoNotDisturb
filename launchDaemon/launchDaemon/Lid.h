@@ -16,9 +16,11 @@
 /* FUNCTIONS */
 
 //check if user auth'd
-// a) within last 5 seconds
+// a) within last 10 seconds
 // b) via biometrics (touchID)
 BOOL authViaTouchID(void);
+
+/* CLASS INTERFACE */
 
 @interface Lid : NSObject <DNDClientMacDelegate>
 {
