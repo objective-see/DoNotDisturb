@@ -632,7 +632,15 @@ bail:
     dispatchBlock = dispatch_block_create(DISPATCH_BLOCK_ASSIGN_CURRENT, ^{
         
         //debug msg
-        logMsg(LOG_DEBUG, @"leaving 'wait/dismiss' dispatch group");
+        logMsg(LOG_DEBUG, @"'dispatch_after()' triggered, so leaving 'wait/dismiss' dispatch group");
+        
+        //sync
+        @synchronized(self)
+        {
+            //remove from array
+            // will always be first object
+            [self.dispatchBlocks removeObjectAtIndex:0];
+        }
         
         //done
         // so leave!
@@ -692,17 +700,21 @@ bail:
 }
 
 //cancel all dipatch blocks
-// also leave dispatch group
+// also for each, leave dispatch group
 -(void)dismissAll
 {
-    //cancel & leave
-    for(dispatch_block_t dispatchBlock in self.dispatchBlocks)
+    //sync
+    @synchronized(self)
     {
-        //cancel
-        dispatch_block_cancel(dispatchBlock);
-        
-        //leave dispatch group
-        dispatch_group_leave(self.dispatchGroup);
+        //cancel & leave
+        for(dispatch_block_t dispatchBlock in self.dispatchBlocks)
+        {
+            //cancel
+            dispatch_block_cancel(dispatchBlock);
+            
+            //leave dispatch group
+            dispatch_group_leave(self.dispatchGroup);
+        }
     }
     
     return;
