@@ -80,7 +80,7 @@
 @property (strong) IBOutlet NSView *overlayView;
 
 //overlay spinner
-@property (weak) IBOutlet NSProgressIndicator *overlayIndicator;
+@property (weak) IBOutlet NSProgressIndicator *overlayProgressIndicator;
 
 //link toolbar item
 @property (weak) IBOutlet NSToolbarItem *linkToolbarItem;
@@ -89,7 +89,7 @@
 @property (strong) IBOutlet NSView *linkView;
 
 //spinner
-@property (weak) IBOutlet NSProgressIndicator *activityIndicator;
+@property (weak) IBOutlet NSProgressIndicator *qrcProgressIndicator;
 
 //activity msg
 @property (weak) IBOutlet NSTextField *activityMessage;

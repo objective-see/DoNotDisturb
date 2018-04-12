@@ -10,7 +10,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PrefsWindowController">
             <connections>
                 <outlet property="actionView" destination="fC3-ls-u3Y" id="S6u-FV-nN2"/>
-                <outlet property="activityIndicator" destination="0Gl-xo-o2X" id="fuq-yO-hmI"/>
                 <outlet property="activityMessage" destination="Lu9-bx-bBG" id="zN9-HV-VG6"/>
                 <outlet property="deviceNames" destination="9cB-rx-0JH" id="LPu-cT-OQ0"/>
                 <outlet property="executePath" destination="eWd-63-7Gn" id="Qy2-9f-I1y"/>
@@ -20,9 +19,12 @@
                 <outlet property="linkView" destination="ICa-qr-QQQ" id="1hF-ig-dAy"/>
                 <outlet property="linkedView" destination="1qc-X7-qCq" id="Ahu-eY-Eu6"/>
                 <outlet property="overlayIndicator" destination="0Gl-xo-o2X" id="SrN-vr-oHl"/>
+                <outlet property="overlayProgressIndicator" destination="0Gl-xo-o2X" id="hpx-ja-sqR"/>
                 <outlet property="overlayView" destination="eIC-x2-6gx" id="L2p-BI-mWK"/>
                 <outlet property="qrcImageView" destination="2xF-jM-X4o" id="NnB-tX-U6C"/>
                 <outlet property="qrcPanel" destination="vdL-RT-p6a" id="KrV-Fe-sK0"/>
+                <outlet property="qrcProcessIndicator" destination="pUS-KZ-De6" id="WE6-m9-pNk"/>
+                <outlet property="qrcProgressIndicator" destination="pUS-KZ-De6" id="EYG-28-zkH"/>
                 <outlet property="toolbar" destination="V8g-Ya-LK4" id="SH2-6E-QST"/>
                 <outlet property="updateButton" destination="Mtn-pi-zIl" id="Oe1-Jy-nMH"/>
                 <outlet property="updateIndicator" destination="o0T-ra-4H0" id="DwL-OB-WQR"/>

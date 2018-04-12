@@ -1,7 +1,7 @@
 github "Alamofire/Alamofire" "4.7.1"
 github "Alamofire/AlamofireImage" "3.3.1"
 github "DigitaSecurity/CocoaMQTT" "0c56a9397d5d3fcea4472671e24014a5f31f9b15"
-github "DigitaSecurity/dnd" "fc6eded433bd8303b7b3adf2c0f6c04d28e7e864"
+github "DigitaSecurity/dnd" "c2bcefb89b268e6ca3a959e83953208194e1d686"
 github "SnapKit/SnapKit" "4.0.0"
 github "SwiftyJSON/SwiftyJSON" "4.0.0"
 github "emaloney/CleanroomLogger" "5.1.0"

@@ -239,7 +239,7 @@
     self.installButton.enabled = NO;
     
     //show spinner
-    [self.activityIndicator setHidden:NO];
+    self.activityIndicator.hidden = NO;
     
     //start spinner
     [self.activityIndicator startAnimation:nil];
@@ -305,7 +305,7 @@
     [self.activityIndicator stopAnimation:nil];
     
     //hide spinner
-    [self.activityIndicator setHidden:YES];
+    self.activityIndicator.hidden = YES;
     
     //grab exiting frame
     statusMsgFrame = self.statusMsg.frame;

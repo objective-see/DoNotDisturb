@@ -29,8 +29,8 @@
 @synthesize generalView;
 @synthesize overlayView;
 @synthesize updateButton;
-@synthesize overlayIndicator;
 @synthesize updateWindowController;
+@synthesize overlayProgressIndicator;
 
 //init 'general' view
 // add it, and make it selected
@@ -153,7 +153,7 @@
             self.overlayView.frame = CGRectMake(0, toolbarHeight, self.window.contentView.frame.size.width, self.window.contentView.frame.size.height-toolbarHeight);
             
             //start spinner
-            [self.overlayIndicator startAnimation:nil];
+            [self.overlayProgressIndicator startAnimation:nil];
             
             //show overlay view
             [self.window.contentView addSubview:self.overlayView];
@@ -224,6 +224,9 @@
     
     //get height of toolbar
     toolbarHeight = [self toolbarHeight];
+    
+    //stop overlay activity indicator
+    [self.overlayProgressIndicator stopAnimation:nil];
     
     //remove overlay subview
     [[[self.window.contentView subviews] lastObject] removeFromSuperview];
@@ -436,8 +439,11 @@
     //make sure it's showing
     self.activityMessage.hidden = NO;
     
+    //show spinner
+    self.qrcProgressIndicator.hidden = NO;
+    
     //start spinnner
-    [self.activityIndicator startAnimation:nil];
+    [self.qrcProgressIndicator startAnimation:nil];
     
     //show qrc sheet
     // block executed when sheet is closed
@@ -463,7 +469,10 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 //stop spinner
-                [self.activityIndicator stopAnimation:nil];
+                [self.qrcProgressIndicator stopAnimation:nil];
+                
+                //hide spinner
+                self.qrcProgressIndicator.hidden = YES;
             
                 //set message color to red
                 self.activityMessage.textColor = [NSColor redColor];
@@ -522,7 +531,7 @@
 {
     //stop spinner
     // will also hide it
-    [self.activityIndicator stopAnimation:nil];
+    [self.qrcProgressIndicator stopAnimation:nil];
     
     //hide message
     self.activityMessage.hidden = YES;
