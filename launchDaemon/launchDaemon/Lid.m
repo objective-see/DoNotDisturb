@@ -337,10 +337,10 @@ BOOL authViaTouchID()
     }
     
     //set delegate
-    client.delegate = self;
+    self.client.delegate = self;
     
     //indicate we want tasking
-    [client handleTasksWithFramework:[[preferences get:nil][PREF_NO_REMOTE_TASKING] boolValue]];
+    [self.client handleTasksWithFramework:[[preferences get:nil][PREF_NO_REMOTE_TASKING] boolValue]];
     
     //happy
     initialized = YES;
