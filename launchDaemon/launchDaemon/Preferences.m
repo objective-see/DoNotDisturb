@@ -207,12 +207,12 @@ bail:
     }
     
     //updating list of registered devices?
-    // its a dictionary so requires an extra merge
+    // it's a dictionary so requires an extra merge
     if( (nil != updates[PREF_REGISTERED_DEVICES]) &&
         (nil != self.preferences[PREF_REGISTERED_DEVICES]) )
     {
         //merge
-        [self.preferences addEntriesFromDictionary:updates[PREF_REGISTERED_DEVICES]];
+        [self.preferences[PREF_REGISTERED_DEVICES] addEntriesFromDictionary:updates[PREF_REGISTERED_DEVICES]];
     }
     
     //for all other prefs or for 1st device

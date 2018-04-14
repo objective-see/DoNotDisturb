@@ -83,7 +83,7 @@ OSStatus verifyApp(NSString* path, NSString* signingAuth)
 {
     //status
     OSStatus status = !noErr;
-
+    
     //signing req string
     NSString *requirementString = nil;
     
@@ -140,7 +140,6 @@ bail:
         //free
         CFRelease(requirementRef);
         requirementRef = NULL;
-        
     }
     
     //free static code
