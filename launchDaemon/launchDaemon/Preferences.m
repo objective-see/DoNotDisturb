@@ -251,6 +251,9 @@ bail:
     //client
     DNDClientMac *client;
     
+    //shadow
+    MacShadow* macShadow = nil;
+    
     //registered devices
     NSMutableDictionary* devices = nil;
     
@@ -292,10 +295,28 @@ bail:
     //dbg msg
     logMsg(LOG_DEBUG, @"asking server for list of registered endpoints...");
     
+    //get shadow
+    macShadow = [client getShadowSync];
+    if(nil == macShadow)
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to get mac shadow sync");
+        
+        //bail
+        goto bail;
+    }
+    
     //get list of registered devices from server
     // build (updated) list of devices id : device name mappings
-    for(NSString* deviceID in [client getShadowSync].state.reported.endpoints)
+    for(NSString* deviceID in macShadow.state.reported.endpoints)
     {
+        //sanity check
+        if(nil == currentDevices[deviceID])
+        {
+            //skip
+            continue;
+        }
+        
         //add current device name
         devices[deviceID] = currentDevices[deviceID];
     }

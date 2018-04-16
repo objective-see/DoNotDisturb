@@ -227,9 +227,6 @@ enum menuItems
 //menu handler
 -(void)handler:(id)sender
 {
-    //path components
-    NSArray *pathComponents = nil;
-    
     //path to config (main) app
     NSString* mainApp = nil;
     
@@ -272,21 +269,8 @@ enum menuItems
         // will show preferences
         case showPrefs:
         {
-            //get path components
-            pathComponents = [[[NSBundle mainBundle] bundlePath] pathComponents];
-            if(pathComponents.count > 4)
-            {
-                //init path to full (main) app
-                mainApp = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(0, pathComponents.count - 4)]];
-            }
-            
-            //when nil
-            // use default path
-            if(nil == mainApp)
-            {
-                //default
-                mainApp = [@"/Applications" stringByAppendingPathComponent:APP_NAME];
-            }
+            //get path to main app
+            mainApp = getMainAppPath();
             
             //launch main app
             if(nil == [[NSWorkspace sharedWorkspace] launchApplicationAtURL:[NSURL fileURLWithPath:mainApp] options:0 configuration:@{} error:&error])
