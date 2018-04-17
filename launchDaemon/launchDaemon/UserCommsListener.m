@@ -1,12 +1,11 @@
 //
 //  file: UserCommsListener.m
-//  project: DnD (launch daemon)
+//  project: DND (launch daemon)
 //  description: XPC listener for connections for user components
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
-
 
 #import "Consts.h"
 #import "Logging.h"

@@ -1,14 +1,15 @@
 //
-//  userAuthMonitor.h
-//  mainApp
+//  file: UserAuthEvent.h
+//  project: DND (launch daemon)
+//  description: user authentication event monitor (header)
 //
-//  Created by Patrick Wardle on 1/29/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "AuthEvent.h"
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 /* DEFINES */
 

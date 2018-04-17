@@ -1,16 +1,15 @@
 //
-//  Configure.h
-//  Do Not Disturb
+//  file: Configure.h
+//  project: DND (config)
+//  description: configure DND, install/uninstall (header)
 //
-//  Created by Patrick Wardle on 7/7/16.
-//  Copyright (c) 2016 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
-
-#ifndef DND_Configure_h
-#define DND_Configure_h
 
 #import "HelperComms.h"
-#import <Foundation/Foundation.h>
+
+@import Foundation;
 
 @interface Configure : NSObject
 {
@@ -44,4 +43,3 @@
 
 @end
 
-#endif

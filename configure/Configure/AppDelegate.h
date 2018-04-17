@@ -1,3 +1,11 @@
+//
+//  file: AppDelegate.h
+//  project: DND (config)
+//  description: application delegate (header)
+//
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
+//
 
 @import Cocoa;
 
@@ -14,7 +22,6 @@ typedef void (^block)(NSNumber*);
 {
     
 }
-
 
 //config object
 @property(nonatomic, retain) Configure* configureObj;

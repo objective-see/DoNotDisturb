@@ -1,9 +1,10 @@
 //
-//  AboutWindowController.h
-//  Do Not Disturb
+//  file: AboutWindowController.h
+//  project: DND (config)
+//  description: window showing 'about' info (header)
 //
-//  Created by Patrick Wardle on 7/15/16.
-//  Copyright (c) 2016 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
@@ -23,6 +24,5 @@
 
 //'support us' button
 @property (weak, atomic) IBOutlet NSButton *supportUs;
-
 
 @end

@@ -1,13 +1,11 @@
 //
 //  file: UserComms.h
-//  project: DnD (launch daemon)
+//  project: DND (launch daemon)
 //  description: interface for user componets (header)
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
-
-
 
 @import Foundation;
 #import "UserCommsInterface.h"

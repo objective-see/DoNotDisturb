@@ -6,7 +6,7 @@
 #  description: install/uninstall
 #
 #  created by Patrick Wardle
-#  copyright (c) 2017 Objective-See. All rights reserved.
+#  copyright (c) 2018 Objective-See. All rights reserved.
 #
 
 INSTALL_DIRECTORY="/Library/Objective-See/DND"
@@ -38,7 +38,7 @@ if [ "${1}" == "-install" ]; then
     mv "Do Not Disturb.app" /Applications
 
     #remove xattrz
-    /usr/bin/xattr -rc "/Applications/Do Not Disturb.app"
+    xattr -rc "/Applications/Do Not Disturb.app"
 
     #first time
     # kick of main app w/ -install & -welcome flag

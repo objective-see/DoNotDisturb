@@ -1,17 +1,19 @@
 //
-//  Lid.h
-//  launchDaemon
+//  file: Lid.h
+//  project: DND (launch daemon)
+//  description: monitor and alert logic for lid open events (header)
 //
-//  Created by user on 11/25/17.
-//  Copyright © 2017 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Utilities.h"
 #import <dnd/dnd-Swift.h>
 
+@import Foundation;
+
 #import <IOKit/IOKitLib.h>
 #import <IOKit/pwr_mgt/IOPM.h>
-#import <Foundation/Foundation.h>
 
 /* FUNCTIONS */
 

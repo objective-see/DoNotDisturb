@@ -1,12 +1,11 @@
 //
-//  Preferences.m
-//  launchDaemon
+//  file: Preferences.m
+//  project: DND (launch daemon)
+//  description: store/retrieve user preferences
 //
-//  Created by Patrick Wardle on 2/22/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
-
-#import <Foundation/Foundation.h>
 
 #import "Lid.h"
 #import "consts.h"
@@ -19,7 +18,7 @@
 //lid obj
 extern Lid* lid;
 
-//DnD framework interface obj
+//DND framework interface obj
 extern FrameworkInterface* framework;
 
 @implementation Preferences

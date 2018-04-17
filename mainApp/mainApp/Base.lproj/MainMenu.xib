@@ -16,9 +16,9 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu title="Main Menu" systemMenu="main" id="vG3-92-ajA">
             <items>
-                <menuItem title="DnD" id="R8B-Wd-oK9" userLabel="Do Not Disturb">
+                <menuItem title="DND" id="R8B-Wd-oK9" userLabel="Do Not Disturb">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="DnD" systemMenu="apple" id="l2x-Sw-2Zo">
+                    <menu key="submenu" title="DND" systemMenu="apple" id="l2x-Sw-2Zo">
                         <items>
                             <menuItem title="Preferences" id="nwx-Qf-8X8">
                                 <modifierMask key="keyEquivalentModifierMask"/>

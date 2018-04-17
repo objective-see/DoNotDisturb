@@ -1,10 +1,10 @@
 //
 //  file: DaemonComms.m
-//  project: DnD (shared)
-//  description: talk to daemon
+//  project: DND (shared)
+//  description: interface to talk to daemon
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"

@@ -1,10 +1,10 @@
 //
 //  file: Update.m
-//  project: DnD (shared)
-//  description: checks for new versions of DnD
+//  project: DND (shared)
+//  description: checks for new versions of DND
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"

@@ -1,11 +1,14 @@
 //
-//  Monitor.h
-//  
+//  file: USBMonitor.h
+//  project: DND (launch daemon)
+//  description: USB device monitor (header)
 //
-//  Created by user on 12/9/17.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
+#import <IOKit/usb/IOUSBLib.h>
 
 @interface USBMonitor : NSObject
 

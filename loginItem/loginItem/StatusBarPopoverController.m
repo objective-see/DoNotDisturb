@@ -1,9 +1,11 @@
 //
-//  StatusBarPopoverController.m
-//  Do Not Disturb
+//  file: StatusBarPopoverController.h
+//  project: DND (login item)
+//  description: controller for status bar popover
 //
-//  Created by Patrick Wardle on 12/19/15.
-//  Copyright (c) 2015 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
+//
 
 #import "AppDelegate.h"
 #import "StatusBarPopoverController.h"

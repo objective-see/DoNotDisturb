@@ -1,16 +1,17 @@
 //
-//  Logging.h
-//  Do Not Disturb
+//  file: Logging.h
+//  project: DND (shared)
+//  description: logging (header)
 //
-//  Created by Patrick Wardle on 12/21/14.
-//  Copyright (c) 2015 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #ifndef __DND__Logging__
 #define __DND__Logging__
 
+@import Foundation;
 #import <syslog.h>
-#import <Foundation/Foundation.h>
 
 //log to file flag
 #define LOG_TO_FILE 0x10

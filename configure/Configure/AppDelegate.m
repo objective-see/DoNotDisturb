@@ -1,3 +1,11 @@
+//
+//  file: AppDelegate.m
+//  project: DND (config)
+//  description: application delegate
+//
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
+//
 
 @import Sentry;
 

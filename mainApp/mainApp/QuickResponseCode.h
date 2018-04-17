@@ -1,14 +1,15 @@
 //
-//  QuickResponseCode.h
-//  mainApp
+//  file: QuickResponseCode.h
+//  project: DND (main app)
+//  description: QR Code logic (header)
 //
-//  Created by Patrick Wardle on 1/25/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "DaemonComms.h"
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface QuickResponseCode : NSObject
 

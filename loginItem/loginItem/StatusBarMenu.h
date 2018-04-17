@@ -1,10 +1,10 @@
 //
 //  file: StatusBarMenu.h
-//  project: DnD (login item)
+//  project: DND (login item)
 //  description: menu handler for status bar icon (header)
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "DaemonComms.h"

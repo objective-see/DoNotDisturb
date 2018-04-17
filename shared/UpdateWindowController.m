@@ -1,10 +1,10 @@
 //
 //  file: UpdateWindowController.m
-//  project: DnD (shared)
+//  project: DND (shared)
 //  description: window handler for update window/popup
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
@@ -106,7 +106,7 @@
 -(IBAction)buttonHandler:(id)sender
 {
     //handle 'update' / 'more info', etc
-    // open DnD's webpage, if they *didn't* click 'close'
+    // open DND's webpage, if they *didn't* click 'close'
     if(YES != [((NSButton*)sender).title isEqualToString:@"close"])
     {
         //open URL

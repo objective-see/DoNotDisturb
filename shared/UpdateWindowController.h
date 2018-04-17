@@ -1,10 +1,10 @@
 //
 //  file: UpdateWindowController.m
-//  project: DnD (shared)
+//  project: DND (shared)
 //  description: window handler for update window/popup (header)
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

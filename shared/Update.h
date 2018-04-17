@@ -1,19 +1,17 @@
 //
 //  file: Update.h
-//  project: DnD (shared)
-//  description: checks for new versions of DnD (header)
+//  project: DND (shared)
+//  description: checks for new versions of DND (header)
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 
 #ifndef Update_h
 #define Update_h
 
-#import <Cocoa/Cocoa.h>
-#import <Foundation/Foundation.h>
-
+@import Foundation;
 
 @interface Update : NSObject
 

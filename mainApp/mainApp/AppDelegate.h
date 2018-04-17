@@ -1,10 +1,10 @@
 //
 //  file: AppDelegate.h
-//  project: DnD (main app)
+//  project: DND (main app)
 //  description: application delegate (header)
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

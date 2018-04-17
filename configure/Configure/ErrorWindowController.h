@@ -1,10 +1,12 @@
 //
-//  ErrorWindowController.h
-//  Do Not Disturb
+//  file: ErrorWindowController.h
+//  project: DND (config)
+//  description: error window (header)
 //
-//  Created by Patrick Wardle on 7/7/16.
-//  Copyright (c) 2016 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
+
 
 #import <Cocoa/Cocoa.h>
 

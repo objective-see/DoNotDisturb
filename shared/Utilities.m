@@ -1,10 +1,10 @@
 //
 //  file: Utilities.m
-//  project: DnD (shared)
+//  project: DND (shared)
 //  description: various helper/utility functions
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
@@ -19,7 +19,6 @@
 #import <sys/socket.h>
 #import <sys/sysctl.h>
 #import <Security/Security.h>
-#import <Foundation/Foundation.h>
 #import <CommonCrypto/CommonDigest.h>
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <SystemConfiguration/SystemConfiguration.h>

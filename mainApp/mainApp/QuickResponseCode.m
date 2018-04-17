@@ -1,9 +1,10 @@
 //
-//  QuickResponseCode.m
-//  mainApp
+//  file: QuickResponseCode.m
+//  project: DND (main app)
+//  description: QR Code logic
 //
-//  Created by Patrick Wardle on 1/25/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Logging.h"

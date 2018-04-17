@@ -1,9 +1,10 @@
 //
-//  DownloadMonitor.m
-//  launchDaemon
+//  file: DownloadMonitor.m
+//  project: DND (launch daemon)
+//  description: download file monitor
 //
-//  Created by Patrick Wardle on 2/15/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Logging.h"
@@ -67,11 +68,6 @@
     
     //extract metadata items
     items = notification.userInfo[@"kMDQueryUpdateAddedItems"];
-    if(0 == items.count)
-    {
-        //bail
-        goto bail;
-    }
     
     //process each
     // extract and log path
@@ -79,18 +75,17 @@
     {
         //extract path
         path = [item valueForAttribute:(NSString *)kMDItemPath];
-        if(0 != path.length)
+        if(0 == path.length)
         {
-            //dbg msg and log
-            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: downloaded file: %@", path]);
-            
+            //skip
+            continue;
         }
+        
+        //dbg msg and log
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: downloaded file: %@", path]);
     }
-    
-bail:
     
     return;
 }
-
 
 @end

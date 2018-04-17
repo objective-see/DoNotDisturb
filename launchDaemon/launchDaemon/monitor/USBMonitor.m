@@ -1,11 +1,11 @@
 //
-//  Monitor.m
-//  
+//  file: USBMonitor.m
+//  project: DND (launch daemon)
+//  description: USB device monitor
 //
-//  Created by user on 12/9/17.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
-
-#import <IOKit/usb/IOUSBLib.h>
 
 #import "Consts.h"
 #import "Logging.h"
@@ -61,6 +61,7 @@ void usbDeviceAppeared(void *refCon, io_iterator_t iterator)
         goto bail;
     }
     
+    //TODO: mem leak?
     //drain iterator
     while(IOIteratorNext(iterator)) {};
     

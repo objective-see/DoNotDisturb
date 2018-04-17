@@ -1,10 +1,10 @@
 //
 //  file: main.m
 //  project: DND (login item)
-//  description: main; 'nuff said
+//  description: main interface to login item
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 @import Cocoa;

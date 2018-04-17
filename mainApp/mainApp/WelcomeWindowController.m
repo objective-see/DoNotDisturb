@@ -1,9 +1,10 @@
 //
-//  WelcomeWindowController.m
-//  mainApp
+//  file: WelcomeWindowController.m
+//  project: DND (main app)
+//  description: 'welcome' window logic/controller
 //
-//  Created by Patrick Wardle on 1/25/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"

@@ -1,12 +1,13 @@
 //
-//  AuthEvent.h
-//  launchDaemon
+//  file: AuthEvent.h
+//  project: DND (launch daemon)
+//  description: user authentication event object (header)
 //
-//  Created by Patrick Wardle on 2/7/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface AuthEvent : NSObject
 

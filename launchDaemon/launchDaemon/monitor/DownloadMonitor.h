@@ -1,12 +1,13 @@
 //
-//  DownloadMonitor.h
-//  launchDaemon
+//  file: DownloadMonitor.h
+//  project: DND (launch daemon)
+//  description: download file monitor (header)
 //
-//  Created by Patrick Wardle on 2/15/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 
 @interface DownloadMonitor : NSObject <NSMetadataQueryDelegate>
 

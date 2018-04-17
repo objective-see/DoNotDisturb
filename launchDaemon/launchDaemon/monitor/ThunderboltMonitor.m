@@ -1,8 +1,10 @@
 //
-//  Monitor.m
-//  
+//  file: ThunderboltMonitor.m
+//  project: DND (launch daemon)
+//  description: thunderbolt device monitor
 //
-//  Created by user on 12/9/17.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import <IOKit/usb/IOUSBLib.h>
@@ -99,8 +101,8 @@ bail:
     return;
 }
 
-//process new USB insertion
-// get info about device and log
+//process new thunerbolt (PCI) insertion
+// get info about device (name/properties) and log
 -(void)handleNewDevice:(io_iterator_t)iterator
 {
     //usb device
@@ -113,7 +115,7 @@ bail:
     CFMutableDictionaryRef deviceProperties = NULL;
     
     //process
-    while ((device = IOIteratorNext(iterator)))
+    while((device = IOIteratorNext(iterator)))
     {
         //log msg
         logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: pci device inserted"]);
@@ -125,18 +127,29 @@ bail:
             logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"pci device name: %s", deviceName]);
         }
         
+        //get device properties
         if( (kIOReturnSuccess == IORegistryEntryCreateCFProperties(device, &deviceProperties, kCFAllocatorDefault, kNilOptions)) &&
             (NULL != deviceProperties) )
         {
             //dbg msg & log
             logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"pci device properties: %@", deviceProperties]);
-            
-            //release
-            CFRelease(deviceProperties);
         }
         
-        //release
+        //release device props
+        if(NULL != deviceProperties)
+        {
+            //release
+            CFRelease(deviceProperties);
+            
+            //unset
+            deviceProperties = NULL;
+        }
+        
+        //release device
         IOObjectRelease(device);
+        
+        //unset
+        device = 0;
     }
     
     return;

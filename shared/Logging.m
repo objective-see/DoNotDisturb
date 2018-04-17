@@ -1,9 +1,10 @@
 //
-//  Logging.c
-//  Do Not Disturb
+//  file: Logging.h
+//  project: DND (shared)
+//  description: logging
 //
-//  Created by Patrick Wardle on 12/21/14.
-//  Copyright (c) 2015 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"

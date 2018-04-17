@@ -1,10 +1,10 @@
 //
 //  file: Utilities.h
-//  project: DnD (shared)
+//  project: DND (shared)
 //  description: various helper/utility functions (header)
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #ifndef Utilities_h

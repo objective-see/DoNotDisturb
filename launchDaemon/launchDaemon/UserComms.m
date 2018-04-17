@@ -1,10 +1,10 @@
 //
 //  file: UserComms.m
-//  project: DnD (launch daemon)
+//  project: DND (launch daemon)
 //  description: interface for user componets
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
@@ -74,21 +74,21 @@ extern FrameworkInterface* framework;
     //dbg msg
     logMsg(LOG_DEBUG, @"XPC request: qrc request");
     
-    //need DnD identity obj?
+    //need DND identity obj?
     if(nil == framework.identity)
     {
         //create it
         if(YES != [framework initIdentity:YES])
         {
             //err msg
-            logMsg(LOG_ERR, @"failed to initialize DnD identity");
+            logMsg(LOG_ERR, @"failed to initialize DND identity");
             
             //bail
             goto bail;
         }
         
         //dbg msg
-        logMsg(LOG_DEBUG, @"created DnD identity");
+        logMsg(LOG_DEBUG, @"created DND identity");
     }
     
     //get qrc data

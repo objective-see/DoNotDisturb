@@ -1,9 +1,10 @@
 //
-//  Configure.m
-//  Do Not Disturb
+//  file: Configure.h
+//  project: DND (config)
+//  description: configure DND, install/uninstall (header)
 //
-//  Created by Patrick Wardle on 7/7/16.
-//  Copyright (c) 2016 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
@@ -11,7 +12,7 @@
 #import "Configure.h"
 #import "Utilities.h"
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 #import <Security/Authorization.h>
 #import <ServiceManagement/ServiceManagement.h>
 

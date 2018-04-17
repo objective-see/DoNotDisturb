@@ -1,10 +1,6 @@
-//
-//  Lid.m
-//  launchDaemon
-//
-//  Created by user on 11/25/17.
-//  Copyright (c) 2017 Objective-See. All rights reserved.
-//
+//  file: Lid.m
+//  project: DND (launch daemon)
+//  description: monitor and alert logic for lid open events
 
 // code inspired by:
 //  https://github.com/zarigani/ClamshellWake/blob/master/ClamshellWake.cpp
@@ -12,7 +8,6 @@
 
 // note: manually get state from terminal via:
 //       ioreg -r -k AppleClamshellState -d 4 | grep AppleClamshellState
-
 
 #import "Lid.h"
 #import "Consts.h"
@@ -43,7 +38,7 @@ extern UserAuthMonitor* userAuthMonitor;
 //preferences obj
 extern Preferences* preferences;
 
-//DnD framework interface obj
+//DND framework interface obj
 extern FrameworkInterface* framework;
 
 //callback for power/lid events
@@ -82,7 +77,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
     if(YES == [currentPrefs[PREF_IS_DISABLED] boolValue])
     {
         //dbg msg
-        logMsg(LOG_DEBUG, @"client disabled DnD, so ignoring lid event");
+        logMsg(LOG_DEBUG, @"client disabled DND, so ignoring lid event");
         
         //bail
         goto bail;
@@ -190,14 +185,13 @@ BOOL authViaTouchID()
     semaphore = dispatch_semaphore_create(0);
     
     //kick off monitor for user auth events
-    // do in background as it should never return
+    // do in background, as it should never return
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
     ^{
     
     //register listener for user auth events
     // executes block to process auth events as they come in
-    userAuthObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AUTH_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue]
-                                                                              usingBlock:^(NSNotification *notification)
+    userAuthObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AUTH_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification)
     {
         //grab event
         authEvent = notification.userInfo[AUTH_NOTIFICATION];
@@ -293,13 +287,13 @@ BOOL authViaTouchID()
             if(YES != [self clientInit])
             {
                 //err msg
-                logMsg(LOG_ERR, @"failed to initialize DnD client");
+                logMsg(LOG_ERR, @"failed to initialize DND client");
             }
             //dbg msg
             else
             {
                 //dbg msg
-                logMsg(LOG_DEBUG, @"initialized DnD client for framework");
+                logMsg(LOG_DEBUG, @"initialized DND client for framework");
             }
         }
     }
@@ -323,7 +317,7 @@ BOOL authViaTouchID()
     BOOL initialized = NO;
     
     //dbg msg
-    logMsg(LOG_DEBUG, @"initializing DnD client");
+    logMsg(LOG_DEBUG, @"initializing DND client");
     
     //init client
     client = [[DNDClientMac alloc] initWithDndIdentity:framework.identity sendCA:YES background:YES taskable:YES];
@@ -568,7 +562,7 @@ bail:
         }
         
         //dbg msg
-        logMsg(LOG_DEBUG, @"(re)initialized DnD client for framework");
+        logMsg(LOG_DEBUG, @"(re)initialized DND client for framework");
     }
     
     //send to server
@@ -731,6 +725,7 @@ bail:
 }
 
 //execute action
+// note: executed with user's permissions
 -(int)executeAction:(NSString*)path user:(NSString*)user
 {
     //results

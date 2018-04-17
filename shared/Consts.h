@@ -1,10 +1,10 @@
 //
 //  file: Const.h
-//  project: DnD (shared)
+//  project: DND (shared)
 //  description: #defines and what not
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #ifndef Const_h

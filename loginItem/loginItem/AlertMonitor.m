@@ -1,10 +1,10 @@
 //
 //  file: AlertMonitor.m
-//  project: DnD (login item)
+//  project: DND (login item)
 //  description: monitor for alerts from daemom
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"

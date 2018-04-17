@@ -1,9 +1,10 @@
 //
-//  FrameworkInterface.m
-//  launchDaemon
+//  file: FrameworkInterface.m
+//  project: DND (launch daemon)
+//  description: interface to Digita Security's (swift) framework
 //
-//  Created by Patrick Wardle on 3/1/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
@@ -18,7 +19,7 @@ extern Preferences* preferences;
 
 @synthesize identity;
 
-//initialize an identity for DnD comms
+//initialize an identity for DND comms
 // generates client id, etc. and then creates identity
 -(BOOL)initIdentity:(BOOL)full
 {
@@ -50,7 +51,7 @@ extern Preferences* preferences;
     NSDictionary* currentPrefs = nil;
     
     //dbg msg
-    logMsg(LOG_DEBUG, @"initializing DnD identity");
+    logMsg(LOG_DEBUG, @"initializing DND identity");
     
     //get all current prefs
     currentPrefs = [preferences get:nil];
@@ -108,7 +109,7 @@ extern Preferences* preferences;
         (self.identity == nil) )
     {
         //err msg
-        logMsg(LOG_ERR, @"failed to init *existing* DnD identity (full init: false)");
+        logMsg(LOG_ERR, @"failed to init *existing* DND identity (full init: false)");
         
         //bail
         goto bail;
@@ -170,7 +171,7 @@ extern Preferences* preferences;
     
 bail:
     
-    //don't need this anymore
+    //don't need csr id anymore
     if(nil != csrIdentity)
     {
         //delete

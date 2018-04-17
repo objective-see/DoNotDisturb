@@ -369,7 +369,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"\n\nrm -rf   \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/Do Not Disturb.bundle\"\ncp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb.bundle\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"";
+			shellScript = "cp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"\n\nrm -rf \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/Do Not Disturb.bundle\"\ncp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb.bundle\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"";
 		};
 /* End PBXShellScriptBuildPhase section */
 

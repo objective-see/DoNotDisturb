@@ -1,9 +1,10 @@
 //
-//  ConfigureWindowController.m
-//  Do Not Disturb
+//  file: ConfigureWindowController.m
+//  project: DND (config)
+//  description: configure (install/uninstall) window
 //
-//  Created by Patrick Wardle on 7/7/16.
-//  Copyright (c) 2016 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"

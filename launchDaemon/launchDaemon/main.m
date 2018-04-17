@@ -1,10 +1,10 @@
 //
 //  file: main.m
-//  project: DnD (launch daemon)
+//  project: DND (launch daemon)
 //  description: main interface/entry point for launch daemon
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Lid.h"
@@ -36,7 +36,7 @@ Queue* eventQueue = nil;
 //user auth event listener
 UserAuthMonitor* userAuthMonitor = nil;
 
-//DnD framework interface
+//DND framework interface
 FrameworkInterface* framework = nil;
 
 //dispatch source for SIGTERM
@@ -58,7 +58,7 @@ int main(int argc, const char * argv[])
         NSDictionary* currentPrefs = nil;
         
         //dbg msg
-        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"DnD launch daemon started (args: %@)", [[NSProcessInfo processInfo] arguments]]);
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"DND launch daemon started (args: %@)", [[NSProcessInfo processInfo] arguments]]);
         
         //init crash reporting client
         SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];
@@ -131,14 +131,14 @@ int main(int argc, const char * argv[])
             if(YES != [framework initIdentity:YES])
             {
                 //err msg
-                logMsg(LOG_ERR, @"failed to generate DnD identity");
+                logMsg(LOG_ERR, @"failed to generate DND identity");
                 
                 //bail
                 goto bail;
             }
             
             //dbg msg
-            logMsg(LOG_DEBUG, @"initialized DnD identity");
+            logMsg(LOG_DEBUG, @"initialized DND identity");
         }
     
         //init global lid object
@@ -231,7 +231,7 @@ BOOL uninstall()
     if(YES != [framework initIdentity:NO])
     {
         //err msg
-        logMsg(LOG_ERR, @"failed to init DnD identity");
+        logMsg(LOG_ERR, @"failed to init DND identity");
         
         //bail
         goto bail;
@@ -241,7 +241,7 @@ BOOL uninstall()
     if(YES != [framework.identity deleteIdentityWithDeleteAssociatedCA:YES])
     {
         //err msg
-        logMsg(LOG_ERR, @"failed to delete DnD identity");
+        logMsg(LOG_ERR, @"failed to delete DND identity");
         
         //bail
         goto bail;

@@ -1,15 +1,15 @@
 //
-//  Monitor.m
-//  launchDaemon
+//  file: Monitor.m
+//  project: DND (launch daemon)
+//  description: monitor all things
 //
-//  Created by Patrick Wardle on 2/13/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
 #import "Logging.h"
 #import "Monitor.h"
-
 
 @implementation Monitor
 
@@ -72,8 +72,7 @@
     {
         //register listener for user auth events
         // on event; just log to the log file for now...
-        self.userAuthObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AUTH_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue]
-                                                                              usingBlock:^(NSNotification *notification)
+        self.userAuthObserver = [[NSNotificationCenter defaultCenter] addObserverForName:AUTH_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification)
         {
             //dbg msg & log
             logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: user authentication %@", notification.userInfo[AUTH_NOTIFICATION]]);

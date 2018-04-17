@@ -1,10 +1,10 @@
 //
 //  file: StatusBarMenu.m
-//  project: DnD (login item)
+//  project: DND (login item)
 //  description: menu handler for status bar icon
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
@@ -15,7 +15,6 @@
 #import "StatusBarMenu.h"
 #import "UserCommsInterface.h"
 #import "StatusBarPopoverController.h"
-
 
 //menu items
 enum menuItems

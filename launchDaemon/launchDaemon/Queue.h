@@ -1,10 +1,10 @@
 //
 //  file: Queue.h
-//  project: DnD (launch daemon)
+//  project: DND (launch daemon)
 //  description: a queue implementation (header)
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 @import Foundation;

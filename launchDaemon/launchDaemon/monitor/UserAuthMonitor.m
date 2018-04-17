@@ -1,9 +1,10 @@
 //
-//  userAuthMonitor.m
-//  mainApp
+//  file: UserAuthEvent.m
+//  project: DND (launch daemon)
+//  description: user authentication event monitor
 //
-//  Created by Patrick Wardle on 1/29/18.
-//  Copyright © 2018 Objective-See. All rights reserved.
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 //disable incomplete/umbrella warnings
@@ -395,8 +396,8 @@ bail:
 }
 
 //handle auth event
-// a) save successful auths
-// b) broadcast all auth events
+// a) complete event init
+// b) broadcast event to all
 -(void)handleAuthEvent:(AuthEvent*)event
 {
     //set timestamp

@@ -1,10 +1,10 @@
 //
 //  file: AppDelegate.m
-//  project: DnD (login item)
+//  project: DND (login item)
 //  description: app delegate for login item
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
@@ -36,7 +36,7 @@
     NSURL* mainApp = nil;
     
     //dbg msg
-    logMsg(LOG_DEBUG, @"starting DnD login item");
+    logMsg(LOG_DEBUG, @"starting DND login item");
     
     //init deamon comms
     daemonComms = [[DaemonComms alloc] init];

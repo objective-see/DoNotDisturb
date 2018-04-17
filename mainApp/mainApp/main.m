@@ -4,7 +4,7 @@
 //  description: main interface, toggle login item, or just kick off app interface
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 @import Cocoa;

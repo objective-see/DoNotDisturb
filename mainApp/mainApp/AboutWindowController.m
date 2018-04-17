@@ -1,10 +1,10 @@
 //
 //  file: AboutWindowController.m
-//  project: DnD (main app)
+//  project: DND (main app)
 //  description: 'about' window controller
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"

@@ -1,10 +1,10 @@
 //
 //  file: NSMutableArray+QueueAdditions.m
-//  project: DnD (launch daemon)
+//  project: DND (launch daemon)
 //  description: queue implementation via NSMutableArray
 //
 //  created by Patrick Wardle
-//  copyright (c) 2017 Objective-See. All rights reserved.
+//  copyright (c) 2018 Objective-See. All rights reserved.
 //
 //  note: based on https://github.com/esromneb/ios-queue-object/blob/master/NSMutableArray%2BQueueAdditions.m
 
