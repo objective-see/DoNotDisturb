@@ -656,7 +656,7 @@
 					"$(PROJECT_DIR)/launchDaemon/libs",
 				);
 				OTHER_CODE_SIGN_FLAGS = "-o hard,kill";
-				OTHER_LDFLAGS = "-Wl,-sectcreate,__RESTRICT,__restrict,/dev/null";
+				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "Do Not Disturb";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
