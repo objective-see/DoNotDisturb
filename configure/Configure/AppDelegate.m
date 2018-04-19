@@ -16,7 +16,6 @@
 #import "AppDelegate.h"
 #import "HelperComms.h"
 
-#import <syslog.h>
 #import <Security/Authorization.h>
 #import <ServiceManagement/ServiceManagement.h>
 

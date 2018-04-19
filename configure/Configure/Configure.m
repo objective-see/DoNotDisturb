@@ -31,7 +31,7 @@
     if(YES != [self initHelper])
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to init helper tool");
+        logMsg(LOG_ERR, @"ERROR: failed to init helper tool");
         
         //bail
         goto bail;
@@ -146,7 +146,7 @@ bail:
     if(YES != [self blessHelper])
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to install helper tool");
+        logMsg(LOG_ERR, @"ERROR: failed to install helper tool");
         
         //bail
         goto bail;
@@ -157,7 +157,7 @@ bail:
     if(nil == xpcComms)
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to connect to helper tool");
+        logMsg(LOG_ERR, @"ERROR: failed to connect to helper tool");
         
         //bail
         goto bail;
@@ -197,7 +197,7 @@ bail:
     if(errAuthorizationSuccess != AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment, kAuthorizationFlagDefaults, &authRef))
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to create authorization");
+        logMsg(LOG_ERR, @"ERROR: failed to create authorization");
         
         //bail
         goto bail;
@@ -222,7 +222,7 @@ bail:
     if(errAuthorizationSuccess != AuthorizationCopyRights(authRef, &authRights, kAuthorizationEmptyEnvironment, authFlags, NULL))
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to copy authorization rights");
+        logMsg(LOG_ERR, @"ERROR: failed to copy authorization rights");
         
         //bail
         goto bail;
@@ -232,7 +232,7 @@ bail:
     if(YES != (BOOL)SMJobBless(kSMDomainSystemLaunchd, (__bridge CFStringRef)(INSTALLER_HELPER_ID), authRef, &error))
     {
         //err msg
-        syslog(LOG_ERR, "ERROR: failed to bless job (%s)", ((__bridge NSError*)error).description.UTF8String);
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"ERROR: failed to bless job (error: %@)", error]);
         
         //bail
         goto bail;
@@ -274,7 +274,7 @@ bail:
     if(YES == self.gotHelp)
     {
         //dbg msg
-        syslog(LOG_NOTICE, "invoking XPC method: remove");
+        logMsg(LOG_DEBUG, @"invoking XPC method: remove");
         
         //remove
         [self.xpcComms remove];

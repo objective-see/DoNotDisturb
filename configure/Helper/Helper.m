@@ -9,8 +9,6 @@
 
 @import Foundation;
 
-#include <syslog.h>
-
 #import "Logging.h"
 #import "XPCProtocol.h"
 #import "HelperListener.h"
@@ -45,7 +43,7 @@ int main(int argc, const char * argv[])
         }
         
         //dbg msg
-        logMsg(LOG_NOTICE, @"listening for client XPC connections...");
+        logMsg(LOG_DEBUG, @"listening for client XPC connections...");
     
         //run loop
         [[NSRunLoop currentRunLoop] run];
