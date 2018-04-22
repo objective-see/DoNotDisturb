@@ -9,8 +9,6 @@
 
 @import Cocoa;
 
-//TODO: detect if installed for another user?
-
 int main(int argc, char *argv[])
 {
     return NSApplicationMain(argc,  (const char **) argv);

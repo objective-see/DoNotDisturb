@@ -30,8 +30,6 @@
 @synthesize errorWindowController;
 @synthesize configureWindowController;
 
-//TODO: make state (disabled, lid shut, etc) queryable...
-
 //main app interface
 -(void)applicationDidFinishLaunching:(NSNotification *)notification
 {

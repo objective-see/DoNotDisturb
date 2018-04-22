@@ -62,8 +62,7 @@ BOOL authViaTouchID(void);
 -(BOOL)clientInit;
 
 //cancel all dipatch blocks
-// also leave dispatch group
--(void)dismissAll;
+-(void)cancelDispatchBlocks;
 
 //register for notifications
 -(BOOL)register4Notifications;

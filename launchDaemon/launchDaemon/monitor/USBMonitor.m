@@ -40,6 +40,9 @@ void usbDeviceAppeared(void *refCon, io_iterator_t iterator)
     //iterator
     io_iterator_t iterator = 0;
     
+    //device
+    io_service_t device = 0;
+    
     //create notification port
     self.notificationPort = IONotificationPortCreate(kIOMasterPortDefault);
     
@@ -61,9 +64,20 @@ void usbDeviceAppeared(void *refCon, io_iterator_t iterator)
         goto bail;
     }
     
-    //TODO: mem leak?
-    //drain iterator
-    while(IOIteratorNext(iterator)) {};
+    //process existing devices
+    // also 'drains' interator...
+    device = IOIteratorNext(iterator);
+    while(0 != device)
+    {
+        //record device name/properties
+        [self logDeviceProperties:device];
+        
+        //release
+        IOObjectRelease(device);
+        
+        //get next
+        device = IOIteratorNext(iterator);
+    }
     
     //happy
     initialized = YES;
@@ -107,37 +121,57 @@ bail:
     //usb device
     io_service_t device;
     
+    //process
+    while((device = IOIteratorNext(iterator)))
+    {
+        //log msg
+        logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: usb device inserted"]);
+        
+        //record device name/properties
+        [self logDeviceProperties:device];
+        
+        //release device
+        IOObjectRelease(device);
+        
+        //unset
+        device = 0;
+    }
+    
+    return;
+}
+
+//log name/properties of a device
+-(void)logDeviceProperties:(io_service_t)device
+{
     //device name
     io_name_t deviceName = {0};
     
     //device properties
     CFMutableDictionaryRef deviceProperties = NULL;
     
-    //process
-    while ((device = IOIteratorNext(iterator)))
+    //get device name
+    if(KERN_SUCCESS == IORegistryEntryGetName(device, deviceName))
     {
-        //log msg
-        logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: usb device inserted"]);
-        
-        //get device name
-        if(KERN_SUCCESS == IORegistryEntryGetName(device, deviceName))
-        {
-            //dbg msg & log
-            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"USB device name: %s", deviceName]);
-        }
-        
-        if( (kIOReturnSuccess == IORegistryEntryCreateCFProperties(device, &deviceProperties, kCFAllocatorDefault, kNilOptions)) &&
-            (NULL != deviceProperties) )
-        {
-            //dbg msg & log
-            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"USB device properties: %@", deviceProperties]);
-            
-            //release
-            CFRelease(deviceProperties);
-        }
-        
+        //dbg msg & log
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"usb device name: %s", deviceName]);
+    }
+    
+    //get device properties
+    if( (kIOReturnSuccess == IORegistryEntryCreateCFProperties(device, &deviceProperties, kCFAllocatorDefault, kNilOptions)) &&
+        (NULL != deviceProperties) )
+    {
+        //dbg msg & log
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"usb device properties: %@", deviceProperties]);
+    }
+    
+    //release device props
+    if(NULL != deviceProperties)
+    {
         //release
-        IOObjectRelease(device);
+        CFRelease(deviceProperties);
+        
+        //unset
+        deviceProperties = NULL;
     }
     
     return;

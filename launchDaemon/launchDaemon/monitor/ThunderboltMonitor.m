@@ -18,11 +18,13 @@
 @synthesize runLoopSource;
 @synthesize notificationPort;
 
-//callback for USB devices
+//TODO: buy thunderbolt device to test more!
+
+//callback for thunderbolt devices
 void tbDeviceAppeared(void *refCon, io_iterator_t iterator)
 {
     //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"monitor event: usb device inserted"]);
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"monitor event: thunderbolt device inserted"]);
     
     //process new device
     [(__bridge ThunderboltMonitor *)refCon handleNewDevice:iterator];
@@ -30,7 +32,8 @@ void tbDeviceAppeared(void *refCon, io_iterator_t iterator)
     return;
 }
 
-//start USB monitoring
+//start thunderbolt monitoring
+// also record all existing connected devices
 -(BOOL)start
 {
     //status
@@ -41,6 +44,9 @@ void tbDeviceAppeared(void *refCon, io_iterator_t iterator)
 
     //iterator
     io_iterator_t iterator = 0;
+    
+    //device
+    io_service_t device = 0;
     
     //create notification port
     self.notificationPort = IONotificationPortCreate(kIOMasterPortDefault);
@@ -53,7 +59,7 @@ void tbDeviceAppeared(void *refCon, io_iterator_t iterator)
     
     //add notification
     // pass in 'self' so can access obj-c methods in callbacks
-    status = IOServiceAddMatchingNotification(self.notificationPort, kIOMatchedNotification, IOServiceMatching("IOPCIDevice"), tbDeviceAppeared,(__bridge void *)self, &iterator);
+    status = IOServiceAddMatchingNotification(self.notificationPort, kIOMatchedNotification, IOServiceMatching("IOThunderboltPort"), tbDeviceAppeared,(__bridge void *)self, &iterator);
     if(kIOReturnSuccess != status)
     {
         //err
@@ -63,8 +69,20 @@ void tbDeviceAppeared(void *refCon, io_iterator_t iterator)
         goto bail;
     }
     
-    //drain iterator
-    while(IOIteratorNext(iterator)) {};
+    //process existing devices
+    // also 'drains' interator...
+    device = IOIteratorNext(iterator);
+    while(0 != device)
+    {
+        //record device name/properties
+        [self logDeviceProperties:device];
+        
+        //release
+        IOObjectRelease(device);
+        
+        //get next
+        device = IOIteratorNext(iterator);
+    }
     
     //happy
     initialized = YES;
@@ -106,50 +124,59 @@ bail:
 -(void)handleNewDevice:(io_iterator_t)iterator
 {
     //usb device
-    io_service_t device;
-    
-    //device name
-    io_name_t deviceName = {0};
-    
-    //device properties
-    CFMutableDictionaryRef deviceProperties = NULL;
+    io_service_t device = 0;
     
     //process
     while((device = IOIteratorNext(iterator)))
     {
         //log msg
-        logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: pci device inserted"]);
+        logMsg(LOG_TO_FILE, [NSString stringWithFormat:@"monitor event: thunderbolt device inserted"]);
         
-        //get device name
-        if(KERN_SUCCESS == IORegistryEntryGetName(device, deviceName))
-        {
-            //dbg msg & log
-            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"pci device name: %s", deviceName]);
-        }
-        
-        //get device properties
-        if( (kIOReturnSuccess == IORegistryEntryCreateCFProperties(device, &deviceProperties, kCFAllocatorDefault, kNilOptions)) &&
-            (NULL != deviceProperties) )
-        {
-            //dbg msg & log
-            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"pci device properties: %@", deviceProperties]);
-        }
-        
-        //release device props
-        if(NULL != deviceProperties)
-        {
-            //release
-            CFRelease(deviceProperties);
-            
-            //unset
-            deviceProperties = NULL;
-        }
+        //record device name/properties
+        [self logDeviceProperties:device];
         
         //release device
         IOObjectRelease(device);
         
         //unset
         device = 0;
+    }
+    
+    return;
+}
+
+//log name/properties of a device
+-(void)logDeviceProperties:(io_service_t)device
+{
+    //device name
+    io_name_t deviceName = {0};
+    
+    //device properties
+    CFMutableDictionaryRef deviceProperties = NULL;
+    
+    //get device name
+    if(KERN_SUCCESS == IORegistryEntryGetName(device, deviceName))
+    {
+        //dbg msg & log
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"thunderbolt device name: %s", deviceName]);
+    }
+    
+    //get device properties
+    if( (kIOReturnSuccess == IORegistryEntryCreateCFProperties(device, &deviceProperties, kCFAllocatorDefault, kNilOptions)) &&
+        (NULL != deviceProperties) )
+    {
+        //dbg msg & log
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"thunderbolt device properties: %@", deviceProperties]);
+    }
+    
+    //release device props
+    if(NULL != deviceProperties)
+    {
+        //release
+        CFRelease(deviceProperties);
+        
+        //unset
+        deviceProperties = NULL;
     }
     
     return;

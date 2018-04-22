@@ -250,4 +250,14 @@
     return;
 }
 
+//open link to app in browser
+-(IBAction)downloadApp:(id)sender
+{
+    //open URL
+    // invokes user's default browser
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:IOS_APP_URL]];
+    
+    return;
+}
+
 @end

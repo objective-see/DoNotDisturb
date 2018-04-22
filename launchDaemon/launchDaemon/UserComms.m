@@ -244,7 +244,7 @@ bail:
 }
 
 //process alert dismiss request from client
-// blocks until framework tell us it was dismissed via the phone
+// blocks until framework tell us it was dismissed via the phone || login item said 'disable'
 -(void)alertDismiss:(void (^)(NSDictionary* alert))reply
 {
     //alert details
@@ -264,7 +264,7 @@ bail:
     logMsg(LOG_DEBUG, @"XPC request: alert dismiss");
     
     //register listener for user auth events
-    // on event; just log to the log file for now...
+    // signal wait semaphore when notification is triggered
     dismissObserver = [[NSNotificationCenter defaultCenter] addObserverForName:DISMISS_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification)
     {
         //dbg msg
@@ -272,7 +272,6 @@ bail:
         
         //signal that a response came in
         dispatch_semaphore_signal(semaphore);
-         
     }];
     
     //XPC is async
@@ -280,7 +279,7 @@ bail:
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
     //log to file
-    logMsg(LOG_DEBUG|LOG_TO_FILE, @"sending alert dismiss (from phone) to login item");
+    logMsg(LOG_DEBUG|LOG_TO_FILE, @"sending 'alert dismiss' to login item");
     
     //return alert
     reply(alert);

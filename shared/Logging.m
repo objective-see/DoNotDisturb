@@ -87,25 +87,13 @@ NSString* logFilePath()
 //log to file
 void log2File(NSString* msg)
 {
-    //append timestamp
-    // write msg out to disk
-    [logFileHandle writeData:[[NSString stringWithFormat:@"%@: %@\n", [NSDate date], msg] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    return;
-}
-
-//de-init logging
-void deinitLogging()
-{
-    //dbg msg
-    // and to file
-    logMsg(LOG_DEBUG|LOG_TO_FILE, @"logging ending");
-    
-    //close file handle
-    [logFileHandle closeFile];
-    
-    //nil out
-    logFileHandle = nil;
+    //sync
+    @synchronized(logFileHandle)
+    {
+        //append timestamp
+        // write msg out to disk
+        [logFileHandle writeData:[[NSString stringWithFormat:@"%@: %@\n", [NSDate date], msg] dataUsingEncoding:NSUTF8StringEncoding]];
+    }
     
     return;
 }
@@ -169,8 +157,27 @@ BOOL initLogging()
     //happy
     bRet = YES;
     
-//bail
 bail:
     
     return bRet;
+}
+
+//de-init logging
+void deinitLogging()
+{
+    //dbg msg
+    // and to file
+    logMsg(LOG_DEBUG|LOG_TO_FILE, @"logging ending");
+    
+    //sync
+    @synchronized(logFileHandle)
+    {
+        //close file handle
+        [logFileHandle closeFile];
+        
+        //unset
+        logFileHandle = nil;
+    }
+    
+    return;
 }

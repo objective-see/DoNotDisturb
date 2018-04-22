@@ -27,7 +27,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="800" height="500"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1028"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
             <value key="minSize" type="size" width="800" height="500"/>
             <value key="maxSize" type="size" width="800" height="500"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
@@ -130,7 +130,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="mobilePhone" id="ijd-WJ-9VT"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" preferredMaxLayoutWidth="388" translatesAutoresizingMaskIntoConstraints="NO" id="OFG-Gz-3rE">
-                    <rect key="frame" x="18" y="136" width="764" height="75"/>
+                    <rect key="frame" x="18" y="157" width="764" height="54"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Download 'Do Not Disturb' from the iOS App Store" id="MAH-fc-gnv">
                         <font key="font" size="32" name="AvenirNextCondensed-Regular"/>
@@ -176,6 +176,17 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="laptop" id="tNr-00-iNk"/>
                 </imageView>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9FN-FI-sj3">
+                    <rect key="frame" x="345" y="100" width="110" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="appStore" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="cPG-lr-39E">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="downloadApp:" target="-2" id="IrW-7u-1OG"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="775" y="647"/>
         </customView>
@@ -314,6 +325,7 @@
     </objects>
     <resources>
         <image name="alert" width="256" height="208"/>
+        <image name="appStore" width="120" height="40"/>
         <image name="connected" width="128" height="128"/>
         <image name="dndIcon" width="256" height="256"/>
         <image name="dndText" width="164.57142639160156" height="21.188571929931641"/>

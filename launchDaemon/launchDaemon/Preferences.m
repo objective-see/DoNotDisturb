@@ -179,12 +179,12 @@ bail:
             //dbg msg
             logMsg(LOG_DEBUG, @"unregistered for lid change notifications");
             
-            //dismiss all
-            // will also disconnect client
-            [lid dismissAll];
+            //cancel all lid notifications
+            // ...will also disconnect client
+            [lid cancelDispatchBlocks];
             
             //dbg msg
-            logMsg(LOG_DEBUG, @"dismissed all alerts & disconnected any connected client");
+            logMsg(LOG_DEBUG, @"cancelled all dispatch blocks (disconnecting any connected iOS client)");
             
             //finally broadcast dimiss to dismiss any alerts
             [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_NOTIFICATION object:nil userInfo:nil];

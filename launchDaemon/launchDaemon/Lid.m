@@ -626,15 +626,7 @@ bail:
     dispatchBlock = dispatch_block_create(DISPATCH_BLOCK_ASSIGN_CURRENT, ^{
         
         //debug msg
-        logMsg(LOG_DEBUG, @"'dispatch_after()' triggered, so leaving 'wait/dismiss' dispatch group");
-        
-        //sync
-        @synchronized(self)
-        {
-            //remove from array
-            // will always be first object
-            [self.dispatchBlocks removeObjectAtIndex:0];
-        }
+        logMsg(LOG_DEBUG, @"dispatch block invoked, so leaving 'wait/dismiss' dispatch group");
         
         //done
         // so leave!
@@ -642,8 +634,12 @@ bail:
         
     });
     
-    //save it
-    [self.dispatchBlocks addObject:dispatchBlock];
+    //sync
+    @synchronized(self)
+    {
+        //save it
+        [self.dispatchBlocks addObject:dispatchBlock];
+    }
     
     //enter dispatch group
     dispatch_group_enter(self.dispatchGroup);
@@ -688,27 +684,50 @@ bail:
     }//sync
     
     //wait for 5 minutes
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (60 * 5) * NSEC_PER_SEC), dispatch_get_main_queue(), dispatchBlock);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (60 * 5) * NSEC_PER_SEC), dispatch_get_main_queue(),
+    ^{
+        //dbg msg
+        logMsg(LOG_DEBUG, @"dismiss timeout hit");
+        
+        //invoke dispatch block
+        dispatchBlock();
+        
+        //sync
+        @synchronized(self)
+        {
+            //remove it
+            [self.dispatchBlocks removeObject:dispatchBlock];
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"removed dispatch block from array");
+        }
+        
+     });
     
     return;
 }
 
-//cancel all dipatch blocks
-// also for each, leave dispatch group
--(void)dismissAll
+//cancel and remove all dipatch blocks
+-(void)cancelDispatchBlocks
 {
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"canceling %lu dispatch blocks", (unsigned long)self.dispatchBlocks.count]);
+    
     //sync
     @synchronized(self)
     {
-        //cancel & leave
+        //cancel all
         for(dispatch_block_t dispatchBlock in self.dispatchBlocks)
         {
             //cancel
             dispatch_block_cancel(dispatchBlock);
             
-            //leave dispatch group
+            //leave
             dispatch_group_leave(self.dispatchGroup);
         }
+        
+        //now, remove all from saved list
+        [self.dispatchBlocks removeAllObjects];
     }
     
     return;

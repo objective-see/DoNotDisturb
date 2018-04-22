@@ -37,6 +37,7 @@
 		CD17D58B201A7F8500F798D7 /* WelcomeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D589201A7F8500F798D7 /* WelcomeWindowController.m */; };
 		CD17D58C201A7F8500F798D7 /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D58A201A7F8500F798D7 /* Welcome.xib */; };
 		CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58E201A827A00F798D7 /* QuickResponseCode.m */; };
+		CD1FD56B2089224F00151D1C /* appStore.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD1FD56A2089224E00151D1C /* appStore.pdf */; };
 		CD20A0CE205797030044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0CD205797030044BCC5 /* Sentry.framework */; };
 		CD20A0DA20579B290044BCC5 /* Sentry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD20A0CD205797030044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CD2F407F204B417E0066673E /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F407E204B417E0066673E /* alert.png */; };
@@ -125,6 +126,7 @@
 		CD17D58A201A7F8500F798D7 /* Welcome.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Welcome.xib; sourceTree = "<group>"; };
 		CD17D58D201A827A00F798D7 /* QuickResponseCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickResponseCode.h; sourceTree = "<group>"; };
 		CD17D58E201A827A00F798D7 /* QuickResponseCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickResponseCode.m; sourceTree = "<group>"; };
+		CD1FD56A2089224E00151D1C /* appStore.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = appStore.pdf; path = ../shared/images/appStore.pdf; sourceTree = "<group>"; };
 		CD20A0CD205797030044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
 		CD2F407E204B417E0066673E /* alert.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alert.png; sourceTree = "<group>"; };
 		CD2F4080204B41C90066673E /* hacker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hacker.png; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 		7D564DE21F18445400B8AAD6 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				CD1FD56A2089224E00151D1C /* appStore.pdf */,
 				7D564DE31F18446200B8AAD6 /* Consts.h */,
 				7D2582551F19FAD700D28B95 /* DaemonComms.h */,
 				7D2582561F19FAD700D28B95 /* DaemonComms.m */,
@@ -366,6 +369,7 @@
 			files = (
 				CD32542B204E0E420059951B /* closeAlt.png in Resources */,
 				CD17D56E20178DFC00F798D7 /* mobilePhone.png in Resources */,
+				CD1FD56B2089224F00151D1C /* appStore.pdf in Resources */,
 				CD2F407F204B417E0066673E /* alert.png in Resources */,
 				CD17D58C201A7F8500F798D7 /* Welcome.xib in Resources */,
 				CE0F559C1FD408BB00529259 /* dndText.png in Resources */,

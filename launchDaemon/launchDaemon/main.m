@@ -273,7 +273,7 @@ void register4Shutdown()
     dispatchSource = dispatch_source_create(DISPATCH_SOURCE_TYPE_SIGNAL, SIGTERM, 0, dispatch_get_main_queue());
     
     //set handler
-    // disable kext & close logging
+    // close logging
     dispatch_source_set_event_handler(dispatchSource, ^{
         
         //close logging
