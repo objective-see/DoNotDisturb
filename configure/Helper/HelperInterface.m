@@ -336,17 +336,10 @@ bail:
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"executed script: %@", results]);
     
     //grab result
-    if(nil != results)
+    if(nil != results[EXIT_CODE])
     {
         //grab
         result = [results[EXIT_CODE] intValue];
-    }
-    
-    //no output means error
-    // i.e. task exception, etc
-    else
-    {
-        result = -1;
     }
     
     //(re)set current working directory

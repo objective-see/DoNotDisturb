@@ -14,6 +14,7 @@
 @implementation Monitor
 
 @synthesize usbMonitor;
+@synthesize volumeMonitor;
 @synthesize processMonitor;
 @synthesize dimisssObserver;
 @synthesize downloadMonitor;
@@ -62,6 +63,12 @@
     
     //start monitoring for downloads
     [self.downloadMonitor start];
+    
+    //(mounted) volume monitor
+    volumeMonitor = [[VolumeMonitor alloc] init];
+    
+    //start monitoring for volumes
+    [self.volumeMonitor start];
     
     //alloc/init user auth monitor
     userAuthMonitor = [[UserAuthMonitor alloc] init];
@@ -183,7 +190,18 @@ bail:
         self.userAuthMonitor = nil;
     }
 
+    //stop (mounted) volume monitoring
+    if(nil != self.volumeMonitor)
+    {
+        //stop
+        [self.volumeMonitor start];
+        
+        //unset
+        self.volumeMonitor = nil;
+    }
+    
     //remove user auth event notification observer
+    // note: just remove observer, since other code still needs these events
     if(nil != self.userAuthObserver)
     {
         //remove
@@ -192,6 +210,9 @@ bail:
         //unset
         self.userAuthObserver = nil;
     }
+    
+    //dbg/log msg
+    logMsg(LOG_DEBUG|LOG_TO_FILE, @"stopped all monitoring");
     
     return;
 }

@@ -30,7 +30,7 @@
 -(void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     //app preferences
-    NSDictionary* preferences = nil;
+    __block NSDictionary* preferences = nil;
     
     //path to main app
     NSURL* mainApp = nil;
@@ -53,8 +53,15 @@
         //set some default prefs
         preferences = @{PREF_PASSIVE_MODE:@NO, PREF_NO_ICON_MODE:@NO, PREF_NO_UPDATES_MODE:@NO, PREF_START_MODE:@YES, PREF_NO_REMOTE_TASKING:@NO};
         
+        //set defaults prefs
+        [self.daemonComms updatePreferences:preferences];
+        
         //get path to main app
         mainApp = [NSURL fileURLWithPath:getMainAppPath()];
+        
+        //launch main app
+        // passing in '-welcome'
+        [[NSWorkspace sharedWorkspace] launchApplicationAtURL:mainApp options:0 configuration:@{NSWorkspaceLaunchConfigurationArguments: @[CMDLINE_FLAG_WELCOME]} error:nil];
         
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"waiting for %@ to terminate", mainApp.path]);
@@ -66,6 +73,7 @@
              //ignore others
              if(YES != [MAIN_APP_ID isEqualToString:[((NSRunningApplication*)notification.userInfo[NSWorkspaceApplicationKey]) bundleIdentifier]])
              {
+                 //ignore
                  return;
              }
              
@@ -78,8 +86,9 @@
              //unset
              self.appObserver = nil;
              
-             //set defaults prefs
-             [self.daemonComms updatePreferences:preferences];
+            //(re)load prefs
+            // main app should have set em all now
+            preferences = [self.daemonComms getPreferences:nil];
              
              //complete initializations
              [self completeInitialization:preferences firstTime:YES];

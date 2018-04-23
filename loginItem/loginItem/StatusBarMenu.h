@@ -7,8 +7,9 @@
 //  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
+@import Cocoa;
+
 #import "DaemonComms.h"
-#import <Cocoa/Cocoa.h>
 
 @interface StatusBarMenu : NSObject <NSPopoverDelegate>
 {

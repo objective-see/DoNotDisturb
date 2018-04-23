@@ -11,7 +11,6 @@
 #import "DaemonComms.h"
 #import "QuickResponseCode.h"
 
-#import <Cocoa/Cocoa.h>
 #import <CoreImage/CoreImage.h>
 
 @implementation QuickResponseCode

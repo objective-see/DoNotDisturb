@@ -71,7 +71,13 @@
             [self.window.contentView addSubview:self.welcomeView];
             
             //make 'next' button first responder
-            [self.window makeFirstResponder:[self.welcomeView viewWithTag:VIEW_APP_INFO]];
+            // calling this without a timeout sometimes fails :/
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (100 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+                
+                //set first responder
+                [self.window makeFirstResponder:[self.welcomeView viewWithTag:VIEW_APP_INFO]];
+                
+            });
             
             break;
         }

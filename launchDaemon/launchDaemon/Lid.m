@@ -754,24 +754,17 @@ bail:
     int result = -1;
     
     //exec script
-    // su man -c catman
+    // su man -c <user> <path>
     results = execTask(@"/usr/bin/su", @[user, @"-c", path], YES);
     
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"executed %@ as %@, results:%@", path, user, results]);
     
     //grab result
-    if(nil != results)
+    if(nil != results[EXIT_CODE])
     {
         //grab
         result = [results[EXIT_CODE] intValue];
-    }
-    
-    //no output means error
-    // i.e. task exception, etc
-    else
-    {
-        result = -1;
     }
     
 bail:

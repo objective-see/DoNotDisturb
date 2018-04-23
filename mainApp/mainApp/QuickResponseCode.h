@@ -7,9 +7,10 @@
 //  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
-#import "DaemonComms.h"
-
+@import Cocoa;
 @import Foundation;
+
+#import "DaemonComms.h"
 
 @interface QuickResponseCode : NSObject
 

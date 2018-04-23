@@ -146,7 +146,7 @@
     //start (helper) login item
     // 'open -g' prevents focus loss
     taskResults = execTask(OPEN, @[@"-g", loginItem], NO);
-    if( (nil == taskResults) ||
+    if( (nil == taskResults[EXIT_CODE]) ||
         (0 != [taskResults[EXIT_CODE] intValue]) )
     {
         //bail

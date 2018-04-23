@@ -42,6 +42,7 @@
 		7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF671F1DC42700B33214 /* Utilities.m */; };
 		7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */; };
 		7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF751F1E9CE700B33214 /* Queue.m */; };
+		CD20869B208E8F0200BA1D0A /* VolumeMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD208698208E8B1200BA1D0A /* VolumeMonitor.m */; };
 		CD20A0CA205793040044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; };
 		CD20A0CB205793100044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; };
 		CD20A0CC205793680044BCC5 /* Sentry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -157,6 +158,8 @@
 		7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		7DD2BF741F1E9CE700B33214 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
 		7DD2BF751F1E9CE700B33214 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
+		CD208698208E8B1200BA1D0A /* VolumeMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VolumeMonitor.m; sourceTree = "<group>"; };
+		CD208699208E8B1200BA1D0A /* VolumeMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VolumeMonitor.h; sourceTree = "<group>"; };
 		CD20A0C9205793040044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
 		CD22786420463EB000C72C76 /* dnd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = dnd.framework; path = ../Carthage/Build/Mac/dnd.framework; sourceTree = "<group>"; };
 		CD22786720463F7700C72C76 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -327,6 +330,8 @@
 				CD256DF52050DE4C00768457 /* USBMonitor.m */,
 				CD256DF72050DE4C00768457 /* UserAuthMonitor.h */,
 				CD256DED2050DE4B00768457 /* UserAuthMonitor.m */,
+				CD208699208E8B1200BA1D0A /* VolumeMonitor.h */,
+				CD208698208E8B1200BA1D0A /* VolumeMonitor.m */,
 			);
 			path = monitor;
 			sourceTree = "<group>";
@@ -441,6 +446,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD20869B208E8F0200BA1D0A /* VolumeMonitor.m in Sources */,
 				CD256E022050DE9B00768457 /* ProcListener.m in Sources */,
 				CD256E032050DE9B00768457 /* AuthEvent.m in Sources */,
 				CD256E042050DE9B00768457 /* DownloadMonitor.m in Sources */,

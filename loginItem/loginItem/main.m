@@ -22,7 +22,7 @@ int main(int argc, const char * argv[])
     int iReturn = -1;
     
     //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: DND login item (args: %@)", [[NSProcessInfo processInfo] arguments]]);
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: login item (args: %@)", [[NSProcessInfo processInfo] arguments]]);
     
     //init crash reporting client
     SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];

@@ -24,7 +24,6 @@
 #import <sys/ioctl.h>
 #import <sys/types.h>
 #import <bsm/libbsm.h>
-#import <Cocoa/Cocoa.h>
 #import <bsm/audit_kevents.h>
 #import <security/audit/audit_ioctl.h>
 #import <SystemConfiguration/SystemConfiguration.h>

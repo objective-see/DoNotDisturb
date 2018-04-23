@@ -40,17 +40,6 @@ if [ "${1}" == "-install" ]; then
     #remove xattrz
     xattr -rc "/Applications/Do Not Disturb.app"
 
-    #first time
-    # kick of main app w/ -install & -welcome flag
-    if [ ! -f "$INSTALL_DIRECTORY/preferences.plist" ]; then
-        open "/Applications/Do Not Disturb.app/" "--args" "-install" "-welcome"
-
-    #otherwise
-    # just install (no welcome)
-    else
-        open -g -j "/Applications/Do Not Disturb.app/" "--args" "-install"
-    fi
-
     #start login item
     open -g -j "/Applications/Do Not Disturb.app/Contents/Library/LoginItems/Do Not Disturb Helper.app"
 
@@ -77,13 +66,6 @@ elif [ "${1}" == "-uninstall" ]; then
     rm /Library/LaunchDaemons/com.objective-see.dnd.plist
 
     echo "unloaded launch daemon"
-
-    #kick off main app w/ uninstall flag
-    open -g -j "/Applications/Do Not Disturb.app" "--args" "-uninstall"
-
-    #give it a second
-    # time to remove login item, etc
-    sleep 1.0
 
     #uninstall & remove main app/helper app
     rm -rf "/Applications/Do Not Disturb.app"

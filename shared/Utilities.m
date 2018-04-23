@@ -767,6 +767,9 @@ BOOL toggleLoginItem(NSURL* loginItem, int toggleFlag)
         //grab existing login items
         loginItems = LSSharedFileListCopySnapshot(loginItemsRef, nil);
         
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"found %lu login items", (unsigned long)((__bridge NSArray *)loginItems).count]);
+        
         //iterate over all login items
         // look for self, then remove it
         for(id item in (__bridge NSArray *)loginItems)
@@ -778,7 +781,7 @@ BOOL toggleLoginItem(NSURL* loginItem, int toggleFlag)
                 //skip
                 continue;
             }
-
+            
             //current login item match self?
             if(YES == [(__bridge NSURL *)currentLoginItem isEqual:loginItem])
             {
@@ -790,7 +793,6 @@ BOOL toggleLoginItem(NSURL* loginItem, int toggleFlag)
                     
                     //bail
                     goto bail;
-    
                 }
                 
                 //dbg msg

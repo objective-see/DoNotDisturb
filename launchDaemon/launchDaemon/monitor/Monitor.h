@@ -9,6 +9,7 @@
 
 #import "USBMonitor.h"
 #import "ProcListener.h"
+#import "VolumeMonitor.h"
 #import "DownloadMonitor.h"
 #import "UserAuthMonitor.h"
 #import "ThunderboltMonitor.h"
@@ -42,6 +43,9 @@
 
 //thunderbolt monitor
 @property(nonatomic, retain)ThunderboltMonitor* thunberboltMonitor;
+
+//(mounted) volume monitor
+@property(nonatomic, retain)VolumeMonitor* volumeMonitor;
 
 /* METHODS */
 

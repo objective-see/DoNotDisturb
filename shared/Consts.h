@@ -40,9 +40,8 @@
 //sentry crash reporting URL
 #define CRASH_REPORTING_URL @"https://b6e82fd3037642edbc63b1ded9be53d3:87738f112d454de5a89a9864aae73b23@sentry.io/289135"
 
-//TODO: update
 //iOS companion app URL
-#define IOS_APP_URL @"https://itunes.apple.com/us/app/xyz"
+#define IOS_APP_URL @"https://itunes.apple.com/us/app/do-not-disturb-companion/id1345055731?mt=8"
 
 //action to install
 // also button title

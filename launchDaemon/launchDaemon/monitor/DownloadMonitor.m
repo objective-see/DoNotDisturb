@@ -42,8 +42,11 @@
 }
 
 //stop monitoring
-- (void)stop
+-(void)stop
 {
+    //remove notification
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:NSMetadataQueryDidUpdateNotification object:query];
+    
     //stop
     [self.query stopQuery];
     
