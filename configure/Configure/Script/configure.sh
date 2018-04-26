@@ -75,6 +75,14 @@ elif [ "${1}" == "-uninstall" ]; then
     if [[ "${2}" -eq "1" ]]; then
         rm -rf $INSTALL_DIRECTORY
 
+        #no other objective-see tools?
+        # then delete that directory too
+        baseDir=$(dirname $INSTALL_DIRECTORY)
+
+        if [ ! "$(ls -A $baseDir)" ]; then
+            rm -rf $baseDir
+        fi
+
     #partial
     # just delete daemon, leaving prefs, etc
     else
