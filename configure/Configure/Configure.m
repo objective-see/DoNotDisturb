@@ -400,12 +400,16 @@ bail:
         //err msg
         logMsg(LOG_ERR, @"failed to uninstall login item");
         
-        //bail
-        goto bail;
+        //keep going though...
     }
     
-    //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"uninstalled login item (%@)", loginItem]);
+    #ifdef DEBUG
+    else
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"uninstalled login item (%@)", loginItem]);
+    }
+    #endif
     
     //uninstall
     // also sets return var/flag
