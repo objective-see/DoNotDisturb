@@ -205,6 +205,10 @@ bail:
         }
     }
     
+    //sync prefs
+    @synchronized(self.preferences)
+    {
+    
     //updating list of registered devices?
     // it's a dictionary so requires an extra merge
     if( (nil != updates[PREF_REGISTERED_DEVICES]) &&
@@ -221,6 +225,8 @@ bail:
         //merge
         [self.preferences addEntriesFromDictionary:updates];
     }
+        
+    }//sync
     
     //save
     if(YES != [self save])
@@ -244,9 +250,6 @@ bail:
 // then update preferences with this list...
 -(void)updateRegisteredDevices
 {
-    //current devices
-    NSDictionary* currentDevices = nil;
-    
     //client
     DNDClientMac *client;
     
@@ -262,10 +265,9 @@ bail:
     //alloc dictionary
     devices = [NSMutableDictionary dictionary];
     
-    //get current devices
-    // aren't any, just bail
-    currentDevices = self.preferences[PREF_REGISTERED_DEVICES];
-    if(0 == currentDevices.count)
+    //aren't any registered devices?
+    // just bail
+    if(0 == [self.preferences[PREF_REGISTERED_DEVICES] count])
     {
         //bail
         goto bail;
@@ -305,20 +307,26 @@ bail:
         goto bail;
     }
     
+    //sync prefs
+    @synchronized(self.preferences)
+    {
+    
     //get list of registered devices from server
     // build (updated) list of devices id : device name mappings
     for(NSString* deviceID in macShadow.state.reported.endpoints)
     {
         //sanity check
-        if(nil == currentDevices[deviceID])
+        if(nil == self.preferences[PREF_REGISTERED_DEVICES][deviceID])
         {
             //skip
             continue;
         }
         
         //add current device name
-        devices[deviceID] = currentDevices[deviceID];
+        devices[deviceID] = self.preferences[PREF_REGISTERED_DEVICES][deviceID];
     }
+        
+    }//sync
     
     //no registered devices?
     // remove key from preferences

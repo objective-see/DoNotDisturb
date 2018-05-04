@@ -43,13 +43,13 @@
 //iOS companion app URL
 #define IOS_APP_URL @"https://itunes.apple.com/us/app/do-not-disturb-companion/id1345055731?mt=8"
 
-//action to install
-// also button title
-#define ACTION_INSTALL @"Install"
+//URL to check for network connectivity
+// checked before sending alerts to registed iOS devices
+#define AM_I_ONLINE_URL @"https://iot.us-east-1.amazonaws.com/"
 
-//action to uninstall
-// also button title
-#define ACTION_UNINSTALL @"Uninstall"
+//button title
+// upgrade
+#define ACTION_UPGRADE @"Upgrade"
 
 //button title
 // close
@@ -143,12 +143,6 @@
 
 //product version url
 #define PRODUCT_VERSIONS_URL @"https://objective-see.com/products.json"
-
-//flag to uninstall
-#define ACTION_UNINSTALL_FLAG 0
-
-//flag to install
-#define ACTION_INSTALL_FLAG 1
 
 //login item name
 #define LOGIN_ITEM_NAME @"Do Not Disturb Helper"

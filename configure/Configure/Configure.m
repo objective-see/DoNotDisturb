@@ -418,8 +418,6 @@ bail:
     //wait for install to be completed by XPC
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
-bail:
-    
     return wasUninstalled;
 }
 @end

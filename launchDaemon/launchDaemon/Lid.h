@@ -37,6 +37,7 @@ BOOL authViaTouchID(void);
     
     //notification object
     io_object_t notification;
+    
 }
 
 /* PROPERTIES */
@@ -52,6 +53,9 @@ BOOL authViaTouchID(void);
 
 //dispatch blocks
 @property(nonatomic, retain)NSMutableArray* dispatchBlocks;
+
+//latest undeliveried alert
+@property(nonatomic, retain)NSDate* undeliveredAlert;
 
 /* METHODS */
 

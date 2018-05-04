@@ -53,11 +53,16 @@
     //init status msg
     [self.statusMsg setStringValue:@"evil maids: stay out! 🙅‍♀️🚪"];
     
-    //enable 'uninstall' button when app is installed already
+    //app already installed?
+    // enable 'uninstall' button
+    // change install button to say 'upgrade'
     if(YES == isInstalled)
     {
-        //enable
+        //enable 'uninstall'
         self.uninstallButton.enabled = YES;
+        
+        //set to 'upgrade'
+        self.installButton.title = ACTION_UPGRADE;
     }
     //otherwise disable
     else

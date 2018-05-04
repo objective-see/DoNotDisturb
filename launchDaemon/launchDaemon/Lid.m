@@ -247,7 +247,9 @@ BOOL authViaTouchID()
 @synthesize client;
 @synthesize dispatchGroup;
 @synthesize dispatchBlocks;
+@synthesize undeliveredAlert;
 @synthesize dispatchGroupEmpty;
+
 
 //init
 -(id)init
@@ -485,10 +487,7 @@ bail:
 {
     //monitor obj
     Monitor* monitor = nil;
-    
-    //console user
-    NSString* consoleUser = nil;
-    
+
     //current prefs
     NSDictionary* currentPrefs = nil;
     
@@ -565,41 +564,43 @@ bail:
         logMsg(LOG_DEBUG, @"(re)initialized DND client for framework");
     }
     
-    //send to server
-    // and wait for dismiss
+    //registered device?
+    // send to alert to server
     if(nil != self.client)
     {
-        //get user
-        consoleUser = getConsoleUser();
-        if(0 == consoleUser.length)
+        //dbg msg
+        logMsg(LOG_DEBUG, @"found registerd device/client, will try send alert to server");
+        
+        //no undelivered alert?
+        // spawn off thread to deliver
+        if(nil == self.undeliveredAlert)
         {
-            //defult
-            consoleUser = @"unknown";
+            //dbg msg
+            logMsg(LOG_DEBUG, @"no (prev) alerts undelivered");
+            
+            //save timestamp
+            self.undeliveredAlert = timestamp;
+            
+            //send to server
+            // will wait up to x minutes if there's no network connectivity
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                //wait
+                [self send2Server];
+                
+            });
         }
         
-        //dbg msg
-        // and log to file
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to server (user: %@)", consoleUser]);
-        
-        //send
-        [self.client sendAlertWithUuid:[NSUUID UUID] userName:consoleUser date:timestamp completion:^(NSNumber* response)
+        //aleady send(ind) alert
+        // just update, so if network comes online, will use this one (as latest)
+        else
         {
-            //log
-            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
+            //dbg msg
+            logMsg(LOG_DEBUG, @"previously alert undelivered, just updating that...");
             
-            //after getting server response
-            // update list of registered devices...
-            [preferences updateRegisteredDevices];
-            
-        }];
-        
-        //wait for dismiss
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            //wait
-            [self wait4Dismiss];
-            
-        });
+            //save timestamp
+            self.undeliveredAlert = timestamp;
+        }
     }
     
     //didn't send
@@ -611,6 +612,83 @@ bail:
     }
     
 bail:
+    
+    return;
+}
+
+//send alert to server
+// contains extra logic to check/wait for network connectivty
+-(void)send2Server
+{
+    //flag
+    BOOL sent = NO;
+    
+    //console user
+    NSString* consoleUser = nil;
+    
+    //get user
+    consoleUser = getConsoleUser();
+    if(0 == consoleUser.length)
+    {
+        //defult
+        consoleUser = @"unknown";
+    }
+    
+    //check for online
+    // then send alert!
+    for(NSUInteger i=0; i<60; i+=5)
+    {
+        //online?
+        if(nil != [NSString stringWithContentsOfURL:[NSURL URLWithString:AM_I_ONLINE_URL] encoding:NSUTF8StringEncoding error:nil])
+        {
+            //dbg msg
+            // and log to file
+            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to server (user: %@)", consoleUser]);
+            
+            //send
+            [self.client sendAlertWithUuid:[NSUUID UUID] userName:consoleUser date:self.undeliveredAlert completion:^(NSNumber* response)
+            {
+                 //log
+                 logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
+                
+                 //after getting server response
+                 // always update list of registered devices
+                 [preferences updateRegisteredDevices];
+                 
+            }];
+            
+            //set flag
+            sent = YES;
+            
+            //unset
+            self.undeliveredAlert = nil;
+            
+            //wait for dismiss
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                
+                //wait
+                [self wait4Dismiss];
+                
+            });
+            
+            //done
+            break;
+        }
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, @"could not reach endpoint - network offline?");
+        
+        //not online....so nap
+        [NSThread sleepForTimeInterval:5];
+    }
+    
+    //check
+    // log err
+    if(YES != sent)
+    {
+        //log
+        logMsg(LOG_DEBUG|LOG_TO_FILE, @"server endpoint not reachable (network offline?), alert not delivered");
+    }
     
     return;
 }
@@ -754,7 +832,7 @@ bail:
     int result = -1;
     
     //exec script
-    // su man -c <user> <path>
+    // su -c <user> <path>
     results = execTask(@"/usr/bin/su", @[user, @"-c", path], YES);
     
     //dbg msg
