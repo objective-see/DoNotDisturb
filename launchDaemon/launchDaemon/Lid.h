@@ -75,7 +75,11 @@ BOOL authViaTouchID(void);
 -(void)unregister4Notifications;
 
 //proces lid open event
--(void)processEvent:(NSDate*)timestamp;
+-(void)processEvent:(NSDate*)timestamp user:(NSString*)user;
+
+//wait for dismiss
+// note: handles multiple client via dispatch group
+-(void)wait4Dismiss;
 
 //execute action
 -(int)executeAction:(NSString*)path user:(NSString*)user;

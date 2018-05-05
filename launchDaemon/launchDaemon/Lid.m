@@ -138,7 +138,7 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         
         //process event
         // report to user, execute actions, etc
-        [lid processEvent:timestamp];
+        [lid processEvent:timestamp user:getConsoleUser()];
     }
     
     //(new) close?
@@ -483,7 +483,7 @@ bail:
 
 //proces lid open event
 // report to user, execute cmd, send alert to server, etc
--(void)processEvent:(NSDate*)timestamp
+-(void)processEvent:(NSDate*)timestamp user:(NSString*)user
 {
     //monitor obj
     Monitor* monitor = nil;
@@ -572,7 +572,7 @@ bail:
         logMsg(LOG_DEBUG, @"found registerd device/client, will try send alert to server");
         
         //no undelivered alert?
-        // spawn off thread to deliver
+        // spawn off dispatch to deliver
         if(nil == self.undeliveredAlert)
         {
             //dbg msg
@@ -586,7 +586,7 @@ bail:
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
                 //wait
-                [self send2Server];
+                [self send2Server:user];
                 
             });
         }
@@ -618,44 +618,53 @@ bail:
 
 //send alert to server
 // contains extra logic to check/wait for network connectivty
--(void)send2Server
+-(void)send2Server:(NSString*)user
 {
     //flag
     BOOL sent = NO;
     
-    //console user
-    NSString* consoleUser = nil;
+    //response
+    __block NSNumber* response = nil;
     
-    //get user
-    consoleUser = getConsoleUser();
-    if(0 == consoleUser.length)
+    //no user?
+    // set to default, but will try again
+    if(0 == user.length)
     {
-        //defult
-        consoleUser = @"unknown";
+        //default
+        user = USER_UNKNOWN;
     }
     
-    //check for online
-    // then send alert!
-    for(NSUInteger i=0; i<60; i+=5)
+    //try send up to 10 times
+    // basically gives time for network to reconnect if lid-shut disconnected wifi, etc...
+    for(NSUInteger i=0; i<10; i++)
     {
-        //online?
-        if(nil != [NSString stringWithContentsOfURL:[NSURL URLWithString:AM_I_ONLINE_URL] encoding:NSUTF8StringEncoding error:nil])
+        //unknown user?
+        // try get user again
+        if(YES == [user isEqualToString:USER_UNKNOWN])
         {
-            //dbg msg
-            // and log to file
-            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to server (user: %@)", consoleUser]);
-            
-            //send
-            [self.client sendAlertWithUuid:[NSUUID UUID] userName:consoleUser date:self.undeliveredAlert completion:^(NSNumber* response)
+            //get user
+            user = getConsoleUser();
+            if(0 == user.length)
             {
-                 //log
-                 logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
-                
-                 //after getting server response
-                 // always update list of registered devices
-                 [preferences updateRegisteredDevices];
-                 
-            }];
+                //default
+                user = USER_UNKNOWN;
+            }
+        }
+        
+        //dbg msg
+        // and log to file
+        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to server (user: %@)", user]);
+        
+        //send
+        response = [self.client sendAlertSyncWithUuid:[NSUUID UUID] userName:user date:self.undeliveredAlert];
+        if(nil != response)
+        {
+            //log
+            logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"response from server: %@", response]);
+            
+            //after getting server response
+            // update list of registered devices
+            [preferences updateRegisteredDevices];
             
             //set flag
             sent = YES;
@@ -678,8 +687,9 @@ bail:
         //dbg msg
         logMsg(LOG_DEBUG, @"could not reach endpoint - network offline?");
         
-        //not online....so nap
-        [NSThread sleepForTimeInterval:5];
+        //not online
+        //... so tak a nap
+        [NSThread sleepForTimeInterval:i*1.5];
     }
     
     //check
@@ -687,7 +697,7 @@ bail:
     if(YES != sent)
     {
         //log
-        logMsg(LOG_DEBUG|LOG_TO_FILE, @"server endpoint not reachable (network offline?), alert not delivered");
+        logMsg(LOG_DEBUG|LOG_TO_FILE, @"unable to deliver alert (network offline?)");
     }
     
     return;

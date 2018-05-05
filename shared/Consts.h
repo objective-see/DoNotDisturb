@@ -43,28 +43,19 @@
 //iOS companion app URL
 #define IOS_APP_URL @"https://itunes.apple.com/us/app/do-not-disturb-companion/id1345055731?mt=8"
 
-//URL to check for network connectivity
-// checked before sending alerts to registed iOS devices
-#define AM_I_ONLINE_URL @"https://iot.us-east-1.amazonaws.com/"
-
-//button title
-// upgrade
+//button title: upgrade
 #define ACTION_UPGRADE @"Upgrade"
 
-//button title
-// close
+//button title: close
 #define ACTION_CLOSE @"Close"
 
-//button title
-// next
+//button title: next
 #define ACTION_NEXT @"Next »"
 
-//button title
-// no
+//button title: no
 #define ACTION_NO @"No"
 
-//button title
-// yes
+//button title: yes
 #define ACTION_YES @"Yes!"
 
 //frame shift
@@ -287,6 +278,9 @@
 
 //monitoring timeout
 #define MONITORING_TIMEOUT 60*3
+
+//unknown user
+#define USER_UNKNOWN @"unknown"
 
 #endif
 
