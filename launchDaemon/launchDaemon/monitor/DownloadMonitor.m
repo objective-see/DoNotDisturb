@@ -18,23 +18,23 @@
 // note: will only detect files downloaded from apps such as browsers (that have 'kMDItemWhereFroms' key set)
 -(void)start
 {
-    //has to be run on the main thread!
-    dispatch_async(dispatch_get_main_queue(), ^{
-    
     //alloc/init query
     query = [[NSMetadataQuery alloc] init];
     
-    //add observer
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDownloadEvent:) name:NSMetadataQueryDidUpdateNotification object:query];
+    //has to be run on the main thread!
+    dispatch_async(dispatch_get_main_queue(), ^{
+    
+        //add observer
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDownloadEvent:) name:NSMetadataQueryDidUpdateNotification object:self.query];
         
-    //set delegate
-    self.query.delegate = self;
+        //set delegate
+        self.query.delegate = self;
         
-    //set predicate
-    self.query.predicate = [NSPredicate predicateWithFormat:@"%K like '*'", @"kMDItemWhereFroms"];
+        //set predicate
+        self.query.predicate = [NSPredicate predicateWithFormat:@"%K like '*'", @"kMDItemWhereFroms"];
         
-    //start
-    [query startQuery];
+        //start
+        [self.query startQuery];
         
     });
     

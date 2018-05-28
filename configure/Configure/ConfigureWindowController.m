@@ -50,6 +50,9 @@
 // also brings window to front
 -(void)configure:(BOOL)isInstalled
 {
+    //set title
+    self.window.title = [NSString stringWithFormat:@"Do Not Disturb (v. %@)", getAppVersion()];
+    
     //init status msg
     [self.statusMsg setStringValue:@"evil maids: stay out! 🙅‍♀️🚪"];
     
