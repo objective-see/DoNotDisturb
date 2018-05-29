@@ -301,17 +301,12 @@ bail:
     //define block
     void (^block)(NSNumber *) = ^(NSNumber *result)
     {
-        //callback from XPC will be a bg thread
-        // so since we're updating UI, invoke on main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
+       //signal sema
+       dispatch_semaphore_signal(semaphore);
             
-            //signal sema
-            dispatch_semaphore_signal(semaphore);
-            
-            //save result
-            wasInstalled = (BOOL)(result.intValue == 0);
-            
-        });
+       //save result
+       wasInstalled = (BOOL)(result.intValue == 0);
+
     };
     
     //install
@@ -377,17 +372,11 @@ bail:
     //define block
     void (^block)(NSNumber *) = ^(NSNumber *result)
     {
-        //callback from XPC will be a bg thread
-        // so since we're updating UI, invoke on main thread
-        dispatch_async(dispatch_get_main_queue(), ^{
+        //signal sema
+        dispatch_semaphore_signal(semaphore);
             
-            //signal sema
-            dispatch_semaphore_signal(semaphore);
-            
-            //save result
-            wasUninstalled = (BOOL)(result.intValue == 0);
-            
-        });
+        //save result
+        wasUninstalled = (BOOL)(result.intValue == 0);
     };
     
     //init path to login item
@@ -412,7 +401,7 @@ bail:
     #endif
     
     //uninstall
-    // also sets return var/flag
+    // also sets return var/flag in block
     [xpcComms uninstall:full reply:block];
     
     //wait for install to be completed by XPC
