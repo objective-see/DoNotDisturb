@@ -418,7 +418,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#for normal builds\n# ->just copy into app\nmkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\ncp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"";
+			shellScript = "mkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#archiving\nif [[ $BUILT_PRODUCTS_DIR = *\"ArchiveIntermediates\"* ]]; then\n   cp -R -f \"$PROJECT_TEMP_ROOT/UninstalledProducts/macosx/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#normal build\nelse\n   cp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -584,6 +584,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd";
 				PRODUCT_NAME = "Do Not Disturb";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -605,6 +606,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd";
 				PRODUCT_NAME = "Do Not Disturb";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

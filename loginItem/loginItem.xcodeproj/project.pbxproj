@@ -451,6 +451,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.helper";
 				PRODUCT_NAME = "Do Not Disturb Helper";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -471,6 +472,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.helper";
 				PRODUCT_NAME = "Do Not Disturb Helper";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};

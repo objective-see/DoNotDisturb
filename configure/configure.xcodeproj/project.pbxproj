@@ -11,7 +11,7 @@
 		4BE4906110445E13006BE471 /* Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4BE4905510445DDD006BE471 /* Helper.m */; };
 		4BE4906410445F2F006BE471 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4906310445F2F006BE471 /* Security.framework */; };
 		4BE4906810445F36006BE471 /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BE4906710445F36006BE471 /* ServiceManagement.framework */; };
-		4BE49092104463A0006BE471 /* com.objective-see.dnd.installer.helper in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4BE4905D10445E0A006BE471 /* com.objective-see.dnd.installer.helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		4BE49092104463A0006BE471 /* com.objective-see.dnd.installer.helper in Copy Helper */ = {isa = PBXBuildFile; fileRef = 4BE4905D10445E0A006BE471 /* com.objective-see.dnd.installer.helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		BF04235611C0531400431286 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF04235511C0531400431286 /* AppDelegate.m */; };
 		BF65C19111B985C0007C20AB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF65C19011B985C0007C20AB /* MainMenu.xib */; };
@@ -26,7 +26,7 @@
 		CD17D55E201148F900F798D7 /* configure.sh in Resources */ = {isa = PBXBuildFile; fileRef = CD17D55D201148F900F798D7 /* configure.sh */; };
 		CD17D56320116C3800F798D7 /* com.objective-see.dnd.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD17D56220116C3800F798D7 /* com.objective-see.dnd.plist */; };
 		CD20A0D02057992F0044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0CF2057992F0044BCC5 /* Sentry.framework */; };
-		CD20A0D320579A380044BCC5 /* Sentry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD20A0CF2057992F0044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CD20A0D320579A380044BCC5 /* Sentry.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0CF2057992F0044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CD2F4082204B462E0066673E /* dndText.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24A20226DFB0032F2E6 /* dndText.png */; };
 		CD3307AE203567D500F10D71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CD3307AD203567D400F10D71 /* Assets.xcassets */; };
 		CD73DA912004629D001FFC84 /* HelperInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CD73DA902004629D001FFC84 /* HelperInterface.m */; };
@@ -53,24 +53,26 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		4BE49098104463C5006BE471 /* CopyFiles */ = {
+		4BE49098104463C5006BE471 /* Copy Helper */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = Contents/Library/LaunchServices;
 			dstSubfolderSpec = 1;
 			files = (
-				4BE49092104463A0006BE471 /* com.objective-see.dnd.installer.helper in CopyFiles */,
+				4BE49092104463A0006BE471 /* com.objective-see.dnd.installer.helper in Copy Helper */,
 			);
+			name = "Copy Helper";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD20A0D220579A1B0044BCC5 /* CopyFiles */ = {
+		CD20A0D220579A1B0044BCC5 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CD20A0D320579A380044BCC5 /* Sentry.framework in CopyFiles */,
+				CD20A0D320579A380044BCC5 /* Sentry.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -286,9 +288,9 @@
 				8D1107290486CEB800E47090 /* Resources */,
 				8D11072C0486CEB800E47090 /* Sources */,
 				8D11072E0486CEB800E47090 /* Frameworks */,
-				4BE49098104463C5006BE471 /* CopyFiles */,
+				4BE49098104463C5006BE471 /* Copy Helper */,
 				CD17D55F20115E5E00F798D7 /* ShellScript */,
-				CD20A0D220579A1B0044BCC5 /* CopyFiles */,
+				CD20A0D220579A1B0044BCC5 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -369,7 +371,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"\n\nrm -rf \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/Do Not Disturb.bundle\"\ncp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb.bundle\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"";
+			shellScript = "#archiving\nif [[ $BUILT_PRODUCTS_DIR = *\"ArchiveIntermediates\"* ]]; then\n\ncp -R -f \"$PROJECT_TEMP_ROOT/UninstalledProducts/macosx/Do Not Disturb.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"\ncp -R -f \"$PROJECT_TEMP_ROOT/UninstalledProducts/macosx/Do Not Disturb.bundle\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"\n\n#normal build\nelse\n\ncp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"\nrm -rf \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources/Do Not Disturb.bundle\"\ncp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb.bundle\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Resources\"\n\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -489,6 +491,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer";
 				PRODUCT_NAME = "Do Not Disturb Installer";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
 				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
@@ -511,6 +514,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.installer";
 				PRODUCT_NAME = "Do Not Disturb Installer";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = NO;
 				VALID_ARCHS = x86_64;
 			};
 			name = Release;
