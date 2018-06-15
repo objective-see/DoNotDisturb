@@ -591,7 +591,7 @@ bail:
             });
         }
         
-        //aleady send(ind) alert
+        //already send(ing) alert
         // just update, so if network comes online, will use this one (as latest)
         else
         {
@@ -669,9 +669,6 @@ bail:
             //set flag
             sent = YES;
             
-            //unset
-            self.undeliveredAlert = nil;
-            
             //wait for dismiss
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
@@ -699,6 +696,10 @@ bail:
         //log
         logMsg(LOG_DEBUG|LOG_TO_FILE, @"unable to deliver alert (network offline?)");
     }
+    
+    //unset
+    // even if we failed to send
+    self.undeliveredAlert = nil;
     
     return;
 }
