@@ -7,11 +7,11 @@
 //  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
-#import "Lid.h"
 #import "main.h"
-#import "Consts.h"
 #import "Queue.h"
+#import "Consts.h"
 #import "Logging.h"
+#import "Triggers.h"
 #import "Utilities.h"
 #import "Preferences.h"
 #import "UserAuthMonitor.h"
@@ -27,7 +27,7 @@ Preferences* preferences = nil;
 
 //lid object
 // registers for notifications, gets state, etc
-Lid* lid = nil;
+Triggers* triggers = nil;
 
 //queue object
 // contains watch items that should be processed
@@ -48,7 +48,7 @@ int main(int argc, const char * argv[])
 {
     //return
     int result = -1;
-    
+
     @autoreleasepool
     {
         //user comms listener (XPC) obj
@@ -123,6 +123,7 @@ int main(int argc, const char * argv[])
         // allows to close logging, etc.
         register4Shutdown();
         
+        
         //1st time identity generatation is done on demand
         // subsequent times though, can just always do here
         if(nil != currentPrefs[PREF_CLIENT_ID])
@@ -141,30 +142,27 @@ int main(int argc, const char * argv[])
             logMsg(LOG_DEBUG, @"initialized DND identity");
         }
     
-        //init global lid object
-        lid = [[Lid alloc] init];
-        
-        //dbg msg
-        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"lid state: %d", getLidState()]);
+        //init global triggers object
+        triggers = [[Triggers alloc] init];
         
         //not (prev) disabled?
-        // register for lid notifications
+        // toggle all triggers based on their setting
         if(YES != [currentPrefs[PREF_IS_DISABLED] boolValue])
         {
-            //register for lid notifications
-            [lid register4Notifications];
+            //toggle all triggers
+            [triggers toggle:ALL_TRIGGERS state:NSOnState];
             
             //dbg msg
-            logMsg(LOG_DEBUG, @"registered for lid change notifications");
+            logMsg(LOG_DEBUG, @"toggled (all) triggers");
         }
         
         //(prev) disabled
         else
         {
             //dbg msg
-            logMsg(LOG_DEBUG, @"currently disabled, so did not register for lid change notifications");
+            logMsg(LOG_DEBUG, @"user set 'disabled' preference, so did not register for any triggers");
         }
-    
+
         //init global queue
         eventQueue = [[Queue alloc] init];
 
@@ -185,9 +183,6 @@ int main(int argc, const char * argv[])
         //dbg msg
         logMsg(LOG_DEBUG, @"listening for client XPC connections");
         
-        //run loop
-        [[NSRunLoop currentRunLoop] run];
-    
     }//pool
     
     //happy

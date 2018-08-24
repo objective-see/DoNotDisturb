@@ -18,10 +18,25 @@
 @property (strong) IBOutlet NSView *welcomeView;
 
 //app info view
+@property (strong) IBOutlet NSView *triggerView;
+
+//app info view
 @property (strong) IBOutlet NSView *appInfo;
 
 //config view
 @property (strong) IBOutlet NSView *qrcView;
+
+//button
+// trigger for lid opens
+@property (weak) IBOutlet NSButton *lidTrigger;
+
+//button
+// trigger for device insertions
+@property (weak) IBOutlet NSButton *deviceTrigger;
+
+//button
+// trigger for power events
+@property (weak) IBOutlet NSButton *powerTrigger;
 
 //activity indicator
 @property (weak) IBOutlet NSProgressIndicator *activityIndicator;

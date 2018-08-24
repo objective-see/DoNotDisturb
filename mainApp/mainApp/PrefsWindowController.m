@@ -48,13 +48,12 @@
     //set general prefs as default
     [self toolbarButtonHandler:nil];
     
-    //enable touchID mode option
-    // if: < 10.13.4 (check first!) && no touch bar
-    if( (YES == [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 13, 4}]) &&
-        (YES == hasTouchID()) )
+    //clamshell?
+    // enable laptop trigger option
+    if(stateUnavailable != getLidState())
     {
         //enable button
-        ((NSButton*)[self.generalView viewWithTag:BUTTON_TOUCHID_MODE]).enabled = YES;
+        ((NSButton*)[self.triggersView viewWithTag:BUTTON_LID_TRIGGER]).enabled = YES;
     }
     
     return;
@@ -63,7 +62,7 @@
 //required for toolbar item enable/disable
 -(BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 {
-    return [toolbarItem isEnabled] ;
+    return [toolbarItem isEnabled];
 }
 
 //toolbar view handler
@@ -109,11 +108,29 @@
             ((NSButton*)[view viewWithTag:BUTTON_NO_ICON_MODE]).state = [self.preferences[PREF_NO_ICON_MODE] boolValue];
             
             //set 'touch id' button state
-            ((NSButton*)[view viewWithTag:BUTTON_TOUCHID_MODE]).state = [self.preferences[PREF_TOUCHID_MODE] boolValue];
+            ((NSButton*)[view viewWithTag:BUTTON_AUTH_MODE]).state = [self.preferences[PREF_AUTH_MODE] boolValue];
             
-            //set 'start mode' button state
-            ((NSButton*)[view viewWithTag:BUTTON_START_MODE]).state = [self.preferences[PREF_START_MODE] boolValue];
-                         
+            //set 'no remote tasking' button state
+            ((NSButton*)[view viewWithTag:BUTTON_TASKING_MODE]).state = [self.preferences[PREF_NO_REMOTE_TASKING] boolValue];
+            
+            break;
+        }
+            
+        //triggers
+        case TOOLBAR_TRIGGERS:
+        {
+            //set view
+            view = self.triggersView;
+            
+            //set 'lap lid' trigger button state
+            ((NSButton*)[view viewWithTag:BUTTON_LID_TRIGGER]).state = [self.preferences[PREF_LID_TRIGGER] boolValue];
+            
+            //set 'usb device' trigger button state
+            ((NSButton*)[view viewWithTag:BUTTON_DEVICE_TRIGGER]).state = [self.preferences[PREF_DEVICE_TRIGGER] boolValue];
+            
+            //set 'power events' trigger button state
+            ((NSButton*)[view viewWithTag:BUTTON_POWER_TRIGGER]).state = [self.preferences[PREF_POWER_TRIGGER] boolValue];
+            
             break;
         }
             
@@ -139,8 +156,8 @@
             //set 'monitor' button state
             ((NSButton*)[view viewWithTag:BUTTON_MONITOR_ACTION]).state = [self.preferences[PREF_MONITOR_ACTION] boolValue];
             
-            //set 'no remote tasking' button state
-            ((NSButton*)[view viewWithTag:BUTTON_NO_REMOTE_TASKING]).state = [self.preferences[PREF_NO_REMOTE_TASKING] boolValue];
+            //set 'photo action' button state
+            ((NSButton*)[view viewWithTag:BUTTON_PHOTO_ACTION]).state = [self.preferences[PREF_PHOTO_ACTION] boolValue];
             
             break;
         }
@@ -304,6 +321,8 @@
     //set appropriate preference
     switch(((NSButton*)sender).tag)
     {
+        /* GENERAL PREFS */
+            
         //passive mode
         case BUTTON_PASSIVE_MODE:
         {
@@ -323,35 +342,54 @@
             break;
         }
             
-        //touch id mode
-        case BUTTON_TOUCHID_MODE:
+        //auth mode
+        case BUTTON_AUTH_MODE:
         {
             //set pref
-            preferences[PREF_TOUCHID_MODE] = state;
+            preferences[PREF_AUTH_MODE] = state;
             
             break;
         }
             
-        //start mode
-        // also toggle here...
-        case BUTTON_START_MODE:
+        //remote tasking
+        case BUTTON_TASKING_MODE:
         {
             //set pref
-            preferences[PREF_START_MODE] = state;
-            
-            //toggle login item in background
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-            ^{
-                //toggle
-                if(YES != toggleLoginItem([NSURL fileURLWithPath:[((AppDelegate*)[[NSApplication sharedApplication] delegate]) path2LoginItem]], [preferences[PREF_START_MODE] intValue]))
-                {
-                    //err msg
-                    logMsg(LOG_ERR, @"failed to toggle login item");
-                }
-            });
+            preferences[PREF_NO_REMOTE_TASKING] = state;
             
             break;
         }
+        
+        /* TRIGGER PREFS */
+            
+        //lid trigger
+        case BUTTON_LID_TRIGGER:
+        {
+            //set pref
+            preferences[PREF_LID_TRIGGER] = state;
+            
+            break;
+        }
+            
+        //usb device trigger
+        case BUTTON_DEVICE_TRIGGER:
+        {
+            //set pref
+            preferences[PREF_DEVICE_TRIGGER] = state;
+            
+            break;
+        }
+            
+        //power trigger
+        case BUTTON_POWER_TRIGGER:
+        {
+            //set pref
+            preferences[PREF_POWER_TRIGGER] = state;
+            
+            break;
+        }
+            
+        /* ACTION PREFS */
             
         //execute action
         // also toggle state of path
@@ -375,14 +413,16 @@
             break;
         }
             
-        //no camera
-        case BUTTON_NO_REMOTE_TASKING:
+        //monitor mode
+        case BUTTON_PHOTO_ACTION:
         {
             //set pref
-            preferences[PREF_NO_REMOTE_TASKING] = state;
+            preferences[PREF_PHOTO_ACTION] = state;
             
             break;
         }
+            
+        /* UPDATE PREFS */
         
         //(no) update mode
         case BUTTON_NO_UPDATES_MODE:
@@ -395,7 +435,7 @@
     }
     
     //tell daemon to update preferences
-    [daemonComms updatePreferences:preferences];
+    [self.daemonComms updatePreferences:preferences];
     
     //restart login item if user toggle'd icon state
     // note: this has to be done after the prefs are written out by the daemon

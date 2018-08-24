@@ -17,13 +17,16 @@
 #define TOOLBAR_GENERAL 0
 
 //action view
-#define TOOLBAR_ACTION 1
+#define TOOLBAR_TRIGGERS 1
+
+//action view
+#define TOOLBAR_ACTION 2
 
 //link view
-#define TOOLBAR_LINK 2
+#define TOOLBAR_LINK 3
 
 //update view
-#define TOOLBAR_UPDATE 3
+#define TOOLBAR_UPDATE 4
 
 //tool bar id for 'general'
 #define TOOLBAR_GENERAL_ID @"general"
@@ -34,23 +37,34 @@
 //no icon mode button
 #define BUTTON_NO_ICON_MODE 2
 
-//touch id mode button
-#define BUTTON_TOUCHID_MODE 3
+//auth mode button
+#define BUTTON_AUTH_MODE 3
 
-//start mode button
-#define BUTTON_START_MODE 4
+//remote tasking
+#define BUTTON_TASKING_MODE 4
+
+
+//lid open trigger
+#define BUTTON_LID_TRIGGER 5
+
+//usb device trigger
+#define BUTTON_DEVICE_TRIGGER 6
+
+//power events trigger
+#define BUTTON_POWER_TRIGGER 7
+
 
 //execute action button
-#define BUTTON_EXECUTE_ACTION 5
+#define BUTTON_EXECUTE_ACTION 8
 
 //monitor button
-#define BUTTON_MONITOR_ACTION 6
+#define BUTTON_MONITOR_ACTION 9
 
-//no remote tasking button
-#define BUTTON_NO_REMOTE_TASKING 7
+//snap picture button
+#define BUTTON_PHOTO_ACTION 10
 
 //no updates button
-#define BUTTON_NO_UPDATES_MODE 8
+#define BUTTON_NO_UPDATES_MODE 11
 
 @interface PrefsWindowController : NSWindowController <NSTextFieldDelegate, NSToolbarDelegate>
 
@@ -67,6 +81,9 @@
 
 //general prefs view
 @property (weak) IBOutlet NSView *generalView;
+
+//triggers view
+@property (strong) IBOutlet NSView *triggersView;
 
 //action view
 @property (weak) IBOutlet NSView *actionView;

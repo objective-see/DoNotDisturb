@@ -55,8 +55,11 @@
 		CD256E062050DE9B00768457 /* ThunderboltMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DF32050DE4C00768457 /* ThunderboltMonitor.m */; };
 		CD256E072050DE9B00768457 /* USBMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DF52050DE4C00768457 /* USBMonitor.m */; };
 		CD256E082050DE9B00768457 /* UserAuthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DED2050DE4B00768457 /* UserAuthMonitor.m */; };
+		CD2C85F42119D9D5007CF784 /* LidTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = CD27BC6321139AD70017AEFD /* LidTrigger.m */; };
+		CD2C85F82119FC02007CF784 /* DeviceTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2C85F52119FB2A007CF784 /* DeviceTrigger.m */; };
+		CD2C85FC211A0084007CF784 /* PowerTrigger.m in Sources */ = {isa = PBXBuildFile; fileRef = CD2C85FA211A006F007CF784 /* PowerTrigger.m */; };
 		CDA993A62048905D00C1E9CD /* FrameworkInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA993A42048905D00C1E9CD /* FrameworkInterface.m */; };
-		CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */ = {isa = PBXBuildFile; fileRef = CE60F9C81FC9BBE500EFFDDA /* Lid.m */; };
+		CE60F9C91FC9BBE500EFFDDA /* Triggers.m in Sources */ = {isa = PBXBuildFile; fileRef = CE60F9C81FC9BBE500EFFDDA /* Triggers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -179,13 +182,19 @@
 		CD256DF82050DE4C00768457 /* Monitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Monitor.h; path = launchDaemon/monitor/Monitor.h; sourceTree = SOURCE_ROOT; };
 		CD256DFF2050DE6600768457 /* ProcListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ProcListener.h; path = launchDaemon/monitor/ProcListener.h; sourceTree = SOURCE_ROOT; };
 		CD256E002050DE6600768457 /* ProcListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ProcListener.m; path = launchDaemon/monitor/ProcListener.m; sourceTree = SOURCE_ROOT; };
+		CD27BC6321139AD70017AEFD /* LidTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LidTrigger.m; path = triggers/LidTrigger.m; sourceTree = "<group>"; };
+		CD27BC6421139AD70017AEFD /* LidTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LidTrigger.h; path = triggers/LidTrigger.h; sourceTree = "<group>"; };
+		CD2C85F52119FB2A007CF784 /* DeviceTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceTrigger.m; path = triggers/DeviceTrigger.m; sourceTree = "<group>"; };
+		CD2C85F62119FB2A007CF784 /* DeviceTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceTrigger.h; path = triggers/DeviceTrigger.h; sourceTree = "<group>"; };
+		CD2C85F9211A006F007CF784 /* PowerTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PowerTrigger.h; path = triggers/PowerTrigger.h; sourceTree = "<group>"; };
+		CD2C85FA211A006F007CF784 /* PowerTrigger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PowerTrigger.m; path = triggers/PowerTrigger.m; sourceTree = "<group>"; };
 		CD3307C5203639AD00F10D71 /* procInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = procInfo.h; path = launchDaemon/libs/procInfo.h; sourceTree = "<group>"; };
 		CD3307C82036518400F10D71 /* main.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = main.h; sourceTree = "<group>"; };
 		CDA993A32048905D00C1E9CD /* FrameworkInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrameworkInterface.h; sourceTree = "<group>"; };
 		CDA993A42048905D00C1E9CD /* FrameworkInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrameworkInterface.m; sourceTree = "<group>"; };
 		CDAAC245202259B50032F2E6 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = ../../shared/Consts.h; sourceTree = "<group>"; };
-		CE60F9C71FC9BBE500EFFDDA /* Lid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lid.h; sourceTree = "<group>"; };
-		CE60F9C81FC9BBE500EFFDDA /* Lid.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lid.m; sourceTree = "<group>"; };
+		CE60F9C71FC9BBE500EFFDDA /* Triggers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Triggers.h; sourceTree = "<group>"; };
+		CE60F9C81FC9BBE500EFFDDA /* Triggers.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Triggers.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,12 +286,13 @@
 		7D7755D21F02DF9500D0017D /* src */ = {
 			isa = PBXGroup;
 			children = (
+				CD27BC6221139A800017AEFD /* triggers */,
 				CD256DEC2050DE3200768457 /* monitor */,
 				7D7756071F05D62E00D0017D /* shared */,
 				7DD2BF721F1E9CE700B33214 /* NSMutableArray+QueueAdditions.h */,
 				7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */,
-				CE60F9C71FC9BBE500EFFDDA /* Lid.h */,
-				CE60F9C81FC9BBE500EFFDDA /* Lid.m */,
+				CE60F9C71FC9BBE500EFFDDA /* Triggers.h */,
+				CE60F9C81FC9BBE500EFFDDA /* Triggers.m */,
 				CDA993A32048905D00C1E9CD /* FrameworkInterface.h */,
 				CDA993A42048905D00C1E9CD /* FrameworkInterface.m */,
 				CD227869204648E000C72C76 /* Preferences.h */,
@@ -334,6 +344,19 @@
 				CD208698208E8B1200BA1D0A /* VolumeMonitor.m */,
 			);
 			path = monitor;
+			sourceTree = "<group>";
+		};
+		CD27BC6221139A800017AEFD /* triggers */ = {
+			isa = PBXGroup;
+			children = (
+				CD2C85F9211A006F007CF784 /* PowerTrigger.h */,
+				CD2C85FA211A006F007CF784 /* PowerTrigger.m */,
+				CD2C85F62119FB2A007CF784 /* DeviceTrigger.h */,
+				CD2C85F52119FB2A007CF784 /* DeviceTrigger.m */,
+				CD27BC6421139AD70017AEFD /* LidTrigger.h */,
+				CD27BC6321139AD70017AEFD /* LidTrigger.m */,
+			);
+			name = triggers;
 			sourceTree = "<group>";
 		};
 		CD3307C42036399900F10D71 /* Supporting Files */ = {
@@ -446,6 +469,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD2C85FC211A0084007CF784 /* PowerTrigger.m in Sources */,
+				CD2C85F82119FC02007CF784 /* DeviceTrigger.m in Sources */,
+				CD2C85F42119D9D5007CF784 /* LidTrigger.m in Sources */,
 				CD20869B208E8F0200BA1D0A /* VolumeMonitor.m in Sources */,
 				CD256E022050DE9B00768457 /* ProcListener.m in Sources */,
 				CD256E032050DE9B00768457 /* AuthEvent.m in Sources */,
@@ -457,7 +483,7 @@
 				CD22786C20464A6E00C72C76 /* Preferences.m in Sources */,
 				CDA993A62048905D00C1E9CD /* FrameworkInterface.m in Sources */,
 				7D46FEFF1F5E41F000FEB0F8 /* UserCommsListener.m in Sources */,
-				CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */,
+				CE60F9C91FC9BBE500EFFDDA /* Triggers.m in Sources */,
 				7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */,
 				7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */,
 				7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */,

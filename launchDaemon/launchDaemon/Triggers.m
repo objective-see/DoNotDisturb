@@ -1,19 +1,16 @@
-//  file: Lid.m
+//  file: Triggers.m
 //  project: DND (launch daemon)
-//  description: monitor and alert logic for lid open events
+//  description: generic management of various triggers
+//
+//  created by Patrick Wardle
+//  copyright (c) 2018 Objective-See. All rights reserved.
+//
 
-// code inspired by:
-//  https://github.com/zarigani/ClamshellWake/blob/master/ClamshellWake.cpp
-//  https://github.com/dustinrue/ControlPlane/blob/master/Source/LaptopLidEvidenceSource.m
-
-// note: manually get state from terminal via:
-//       ioreg -r -k AppleClamshellState -d 4 | grep AppleClamshellState
-
-#import "Lid.h"
 #import "Consts.h"
 #import "Queue.h"
 #import "Logging.h"
 #import "Monitor.h"
+#import "Triggers.h"
 #import "AuthEvent.h"
 #import "Utilities.h"
 #import "Preferences.h"
@@ -22,12 +19,8 @@
 
 /* GLOBALS */
 
-//last state
-// sometimes multiple notifications are delivered!?
-LidState lastLidState;
-
-//lid obj
-extern Lid* lid;
+//trigger obj
+extern Triggers* triggers;
 
 //queue object
 extern Queue* eventQueue;
@@ -40,123 +33,6 @@ extern Preferences* preferences;
 
 //DND framework interface obj
 extern FrameworkInterface* framework;
-
-//callback for power/lid events
-static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageType, void *messageArgument)
-{
-    //lid state
-    int lidState = stateUnavailable;
-    
-    //sleep bit
-    int sleepState = -1;
-    
-    //preferences
-    NSDictionary* currentPrefs = nil;
-    
-    //timestamp
-    NSDate* timestamp = nil;
-    
-    //init timestamp
-    timestamp = [NSDate date];
-    
-    //ignore any messages that are related to lid state
-    if(kIOPMMessageClamshellStateChange != messageType)
-    {
-        //bail
-        goto bail;
-    }
-    
-    //dbg msg
-    logMsg(LOG_DEBUG, @"got 'kIOPMMessageClamshellStateChange' message");
-    
-    //get prefs
-    currentPrefs = [preferences get:nil];
-
-    //if user explicity set disabled
-    // bail here, to ignore everything
-    if(YES == [currentPrefs[PREF_IS_DISABLED] boolValue])
-    {
-        //dbg msg
-        logMsg(LOG_DEBUG, @"client disabled DND, so ignoring lid event");
-        
-        //bail
-        goto bail;
-    }
-    
-    //get state
-    lidState = ((int) messageArgument & kClamshellStateBit);
-    
-    //get sleep state
-    sleepState = !!(((int)messageArgument & kClamshellSleepBit));
-    
-    //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"lid state: %@ (sleep bit: %d)", (lidState) ? @"closed" : @"open", sleepState]);
-    
-    //(new) open?
-    // OS sometimes delivers 2x events, so ignore same same
-    if( (stateOpen == lidState) &&
-        (stateOpen != lastLidState) )
-    {
-        //ignore if lid isn't really open
-        // on reboot, OS may deliver 'open' message if external monitors are connected
-        if(stateOpen != getLidState())
-        {
-            //bail
-            goto bail;
-        }
-        
-        //update 'prev' state
-        lastLidState = stateOpen;
-        
-        //dbg msg
-        // log to file
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"[NEW EVENT] lid state: open (sleep state: %d)", sleepState]);
-        
-        //touch id mode?
-        // wait up to 10 seconds, and ignore event if user auth'd via biometrics
-        if(YES == [currentPrefs[PREF_TOUCHID_MODE] boolValue])
-        {
-            //dbg msg
-            logMsg(LOG_DEBUG, @"'touch id' mode enabled, waiting up to 10 seconds for biometric auth event");
-            
-            //user auth'd via touchID?
-            // will wait for up to 10 seconds
-            if(YES == authViaTouchID())
-            {
-                //dbg msg
-                // log to file
-                logMsg(LOG_DEBUG|LOG_TO_FILE, @"user authenticated via touchID, so ignoring event");
-                
-                //bail
-                // will ignore the event
-                goto bail;
-            }
-            
-            //dbg msg
-            logMsg(LOG_DEBUG, @"no touch id auth event found, so will process event");
-        }
-        
-        //process event
-        // report to user, execute actions, etc
-        [lid processEvent:timestamp user:getConsoleUser()];
-    }
-    
-    //(new) close?
-    // OS sometimes delivers 2x events, so ignore same same
-    else if( (stateClosed == lidState) &&
-             (stateClosed != lastLidState) )
-    {
-        //update 'prev' state
-        lastLidState = stateClosed;
-        
-        //dbg msg
-        logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"[NEW EVENT] lid state: closed (sleep state: %d)", sleepState]);
-    }
-    
-bail:
-    
-    return;
-}
 
 //check if user auth'd
 // a) within last 10 seconds
@@ -230,7 +106,7 @@ BOOL authViaTouchID()
     });
     
     //wait for touch id auth
-    // ...up to five seconds
+    // ...up to ten seconds for event
     dispatch_semaphore_wait(semaphore, dispatch_time(0, 10*NSEC_PER_SEC));
 
     //tell user auth monitor to stop
@@ -242,14 +118,18 @@ BOOL authViaTouchID()
     return touchIDAuth;
 }
 
-@implementation Lid
+@implementation Triggers
+
 
 @synthesize client;
+
+@synthesize lidTrigger;
+@synthesize powerTrigger;
+@synthesize deviceTrigger;
 @synthesize dispatchGroup;
 @synthesize dispatchBlocks;
 @synthesize undeliveredAlert;
 @synthesize dispatchGroupEmpty;
-
 
 //init
 -(id)init
@@ -258,21 +138,15 @@ BOOL authViaTouchID()
     self = [super init];
     if(nil != self)
     {
-        //init
-        dispatchQ = NULL;
+        //init lid (trigger) obj
+        lidTrigger = [[LidTrigger alloc] init];
         
-        //init
-        notificationPort = NULL;
+        //init device (trigger) obj
+        deviceTrigger = [[DeviceTrigger alloc] init];
         
-        //init
-        notification = 0;
+        //init power (trigger) obj
+        powerTrigger = [[PowerTrigger alloc] init];
         
-        //init to current state
-        lastLidState = getLidState();
-        
-        //dbg msg
-        logMsg(LOG_DEBUG, [NSString stringWithFormat:@"initial lid state: %d", lastLidState]);
-            
         //init dispatch group for dismiss events
         dispatchGroup = dispatch_group_create();
         
@@ -346,144 +220,86 @@ bail:
     return initialized;
 }
 
-//register for notifications
--(BOOL)register4Notifications
+//toggle trigger(s)
+-(void)toggle:(NSUInteger)type state:(NSControlStateValue)state
 {
-    //return var
-    BOOL registered = NO;
+    //current prefs
+    NSDictionary* currentPrefs = nil;
     
-    //status var
-    kern_return_t status = kIOReturnError;
+    //dbd msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"toggling trigger (type: %lu, state: %lu)", (unsigned long)type, state]);
     
-    //root domain for power management
-    io_service_t powerManagementRD = MACH_PORT_NULL;
-    
-    //dbg msg
-    logMsg(LOG_DEBUG, @"registering for lid notifications");
-    
-    //make sure state is ok
-    if(stateUnavailable == getLidState())
+    //enable based on type
+    switch(type)
     {
-        //err msg
-        logMsg(LOG_ERR, @"failed to get lid state, so aborting lid notifications registration");
+        //all
+        // based on triggers
+        case ALL_TRIGGERS:
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"toggling all triggers");
+            
+            //get current prefs
+            currentPrefs = [preferences get:nil];
+            
+            //lid trigger?
+            if(YES == [currentPrefs[PREF_LID_TRIGGER] boolValue])
+            {
+                //toggle
+                [self.lidTrigger toggle:state];
+            }
+            
+            //device trigger?
+            if(YES == [currentPrefs[PREF_DEVICE_TRIGGER] boolValue])
+            {
+                //toggle
+                [self.deviceTrigger toggle:state];
+            }
+            
+            //power trigger
+            if(YES == [currentPrefs[PREF_POWER_TRIGGER] boolValue])
+            {
+                //toggle
+                [self.powerTrigger toggle:state];
+            }
+            
+            break;
+            
+        //lid trigger
+        case LID_TRIGGER:
+            
+            //toggle
+            [self.lidTrigger toggle:state];
+            
+            break;
         
-        //error
-        goto bail;
-    }
+        //device trigger
+        case DEVICE_TRIGGER:
+            
+            //toggle
+            [self.deviceTrigger toggle:state];
+            
+            break;
+            
+        //power trigger
+        case POWER_TRIGGER:
+            
+            //toggle
+            [self.powerTrigger toggle:state];
+            
+            break;
 
-    //create queue
-    dispatchQ = dispatch_queue_create(NULL, DISPATCH_QUEUE_SERIAL);
-    if(NULL == dispatchQ)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"failed to create dispatch queue for lid notifications");
-        
-        //error
-        goto bail;
-    }
-    
-    //set target
-    dispatch_set_target_queue(dispatchQ, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0));
-    
-    //create notification port
-    notificationPort = IONotificationPortCreate(kIOMasterPortDefault);
-    if(NULL == notificationPort)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"failed to create notification port for lid notifications");
-        
-        //error
-        goto bail;
-    }
-    
-    //set dispatch queue
-    IONotificationPortSetDispatchQueue(notificationPort, dispatchQ);
-    
-    //get matching service for power management root domain
-    powerManagementRD = IOServiceGetMatchingService(kIOMasterPortDefault, IOServiceMatching("IOPMrootDomain"));
-    if(0 == powerManagementRD)
-    {
-        //err msg
-        logMsg(LOG_ERR, @"failed to get power management root domain for lid notifications");
-        
-        //error
-        goto bail;
-    }
-    
-    //add interest notification
-    status = IOServiceAddInterestNotification(notificationPort, powerManagementRD, kIOGeneralInterest,
-                                     pmDomainChange, &lidState, &notification);
-    if(KERN_SUCCESS != status)
-    {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to get add interest notifcation for lid notifications (error: 0x:%x)", status]);
-        
-        //error
-        goto bail;
-    }
-    
-    //happy
-    registered = YES;
-
-bail:
-
-    //release
-    if(MACH_PORT_NULL != powerManagementRD)
-    {
-        //release
-        IOObjectRelease(powerManagementRD);
-        
-        //unset
-        powerManagementRD = MACH_PORT_NULL;
-    }
-    
-    return registered;
-}
-
-//unregister for notifications
--(void)unregister4Notifications
-{
-    //dbg msg
-    logMsg(LOG_DEBUG, @"unregistering lid notifications");
-    
-    //release notification
-    if(0 != notification)
-    {
-        //release
-        IOObjectRelease(notification);
-        
-        //unset
-        notification = 0;
-        
-        //dbg msg
-        logMsg(LOG_DEBUG, @"released service interest notification");
-    }
-    
-    //destroy notification port
-    if(NULL != notificationPort)
-    {
-        //set queue to NULL
-        IONotificationPortSetDispatchQueue(notificationPort, NULL);
-        
-        //unset dispatch queue
-        dispatchQ = NULL;
-
-        //destroy port
-        IONotificationPortDestroy(notificationPort);
-        
-        //unset
-        notificationPort = NULL;
-        
-        //dbg msg
-        logMsg(LOG_DEBUG, @"destroyed notification port");
+            
+        default:
+            break;
     }
     
     return;
 }
 
-//proces lid open event
+//proces trigger event
 // report to user, execute cmd, send alert to server, etc
--(void)processEvent:(NSDate*)timestamp user:(NSString*)user
+-(void)processEvent:(NSUInteger)type info:(NSDictionary*)info
 {
     //monitor obj
     Monitor* monitor = nil;
@@ -494,13 +310,38 @@ bail:
     //get current prefs
     currentPrefs = [preferences get:nil];
     
+    //auth mode?
+    // wait up to 10 seconds, and ignore event if user auth'd via biometrics or apple watch
+    if(YES == [currentPrefs[PREF_AUTH_MODE] boolValue])
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"'auth' mode enabled, waiting up to 10 seconds for biometric auth || apple watch event");
+        
+        //TODO: add apple watch
+        
+        //user auth'd via touchID?
+        // will wait for up to 10 seconds
+        if(YES == authViaTouchID())
+        {
+            //dbg msg
+            // log to file
+            logMsg(LOG_DEBUG|LOG_TO_FILE, @"user authenticated via touchID, so ignoring event");
+            
+            //bail
+            goto bail;
+        }
+        
+        //dbg msg
+        logMsg(LOG_DEBUG, @"no touch id auth event found, so will continue processing event");
+    }
+    
     //only add events to queue
     // when client is not running in passive mode
     if(YES != [currentPrefs[PREF_PASSIVE_MODE] boolValue])
     {
         //add to global queue
         // this will trigger processing of alert to user
-        [eventQueue enqueue:@{ALERT_TIMESTAMP:timestamp}];
+        [eventQueue enqueue:@{ALERT_TYPE:[NSNumber numberWithInteger:type], ALERT_TIMESTAMP:[NSDate date], ALERT_INFO:info}];
     }
     //passive mode
     // just log a msg about this fact
@@ -533,7 +374,6 @@ bail:
     if( (YES == [currentPrefs[PREF_EXECUTE_ACTION] boolValue]) &&
         (0 != [currentPrefs[PREF_EXECUTE_PATH] length] ) )
     {
-        
         //dbg msg
         logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"executing: %@ as %@", currentPrefs[PREF_EXECUTE_PATH], currentPrefs[PREF_EXECUTE_USER]]);
         
@@ -565,7 +405,7 @@ bail:
     }
     
     //registered device?
-    // send to alert to server
+    // send alert to server
     if(nil != self.client)
     {
         //dbg msg
@@ -579,14 +419,14 @@ bail:
             logMsg(LOG_DEBUG, @"no (prev) alerts undelivered");
             
             //save timestamp
-            self.undeliveredAlert = timestamp;
+            self.undeliveredAlert = [NSDate date];
             
             //send to server
             // will wait up to x minutes if there's no network connectivity
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 
                 //wait
-                [self send2Server:user];
+                [self send2Server:getConsoleUser()];
                 
             });
         }
@@ -599,7 +439,7 @@ bail:
             logMsg(LOG_DEBUG, @"previously alert undelivered, just updating that...");
             
             //save timestamp
-            self.undeliveredAlert = timestamp;
+            self.undeliveredAlert = [NSDate date];
         }
     }
     
@@ -608,7 +448,7 @@ bail:
     else
     {
         //dbg msg
-        logMsg(LOG_DEBUG, @"did not send to server - no client/registered device");
+        logMsg(LOG_DEBUG, @"did not send to server, as there's no client/registered device");
     }
     
 bail:

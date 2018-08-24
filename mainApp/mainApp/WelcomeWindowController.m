@@ -15,10 +15,11 @@
 #import "WelcomeWindowController.h"
 
 #define VIEW_WELCOME 0
-#define VIEW_APP_INFO 1
-#define SKIP_LINKING 2
-#define VIEW_QRC 3
-#define VIEW_LINKED 4
+#define SELECT_TRIGGERS 1
+#define VIEW_APP_INFO 2
+#define SKIP_LINKING 3
+#define VIEW_QRC 4
+#define VIEW_LINKED 5
 
 @implementation WelcomeWindowController
 
@@ -75,9 +76,35 @@
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (100 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
                 
                 //set first responder
-                [self.window makeFirstResponder:[self.welcomeView viewWithTag:VIEW_APP_INFO]];
+                [self.window makeFirstResponder:[self.welcomeView viewWithTag:SELECT_TRIGGERS]];
                 
             });
+            
+            break;
+        }
+            
+        //select triggers info
+        case SELECT_TRIGGERS:
+        {
+            //remove prev. subview
+            [[[self.window.contentView subviews] lastObject] removeFromSuperview];
+            
+            //no a laptop?
+            // uncheck and disable laptop lid trigger
+            if(stateUnavailable == getLidState())
+            {
+                //uncheck
+                self.lidTrigger.state = NSOffState;
+                
+                //disable
+                self.lidTrigger.enabled = NO;
+            }
+            
+            //set view
+            [self.window.contentView addSubview:self.triggerView];
+            
+            //make 'next' button first responder
+            [self.window makeFirstResponder:[self.triggerView viewWithTag:VIEW_APP_INFO]];
             
             break;
         }
@@ -85,6 +112,12 @@
         //app info
         case VIEW_APP_INFO:
         {
+            //save trigger prefs
+            [self setTriggers];
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, @"saved triggers");
+    
             //remove prev. subview
             [[[self.window.contentView subviews] lastObject] removeFromSuperview];
             
@@ -130,6 +163,29 @@
             break;
         }
     }
+    
+    return;
+}
+
+//get user's prefs for triggers
+// then send them to daemon to save into prefs
+-(void)setTriggers
+{
+    //daemon comms
+    DaemonComms* daemonComms = nil;
+    
+    //alloc/init
+    daemonComms = [[DaemonComms alloc] init];
+    
+    //dbg msg
+    logMsg(LOG_DEBUG, @"setting trigger prefs");
+    
+    //send to daemon
+    // will update preferences
+    [daemonComms updatePreferences:@{PREF_LID_TRIGGER:[NSNumber numberWithInteger:self.lidTrigger.state],
+                                     PREF_DEVICE_TRIGGER:[NSNumber numberWithInteger:self.deviceTrigger.state],
+                                     PREF_POWER_TRIGGER:[NSNumber numberWithInteger:self.powerTrigger.state]}];
+    
     return;
 }
 

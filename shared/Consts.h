@@ -149,6 +149,18 @@
 #define PREF_IS_DISABLED @"disabled"
 
 //prefs
+// lid trigger
+#define PREF_LID_TRIGGER @"lidTrigger"
+
+//prefs
+// device trigger
+#define PREF_DEVICE_TRIGGER @"deviceTrigger"
+
+//prefs
+// power trigger
+#define PREF_POWER_TRIGGER @"powerTrigger"
+
+//prefs
 // passive mode
 #define PREF_PASSIVE_MODE @"passiveMode"
 
@@ -157,8 +169,8 @@
 #define PREF_NO_ICON_MODE @"noIconMode"
 
 //prefs
-// touchID mode
-#define PREF_TOUCHID_MODE @"touchIDMode"
+// auth mode
+#define PREF_AUTH_MODE @"touchIDMode"
 
 //prefs
 // start mode
@@ -181,12 +193,29 @@
 #define PREF_MONITOR_ACTION @"monitorAction"
 
 //pref
+// auto take photo
+#define PREF_PHOTO_ACTION @"photoAction"
+
+//pref
 // no remote tasking
 #define PREF_NO_REMOTE_TASKING @"noRemoteTasking"
 
 //prefs
 // update mode
 #define PREF_NO_UPDATES_MODE @"noUpdatesMode"
+
+//trigger: all
+// based on prefs
+#define ALL_TRIGGERS 0x0
+
+//trigger: lid
+#define LID_TRIGGER 0x1
+
+//trigger: devices
+#define DEVICE_TRIGGER 0x2
+
+//trigger: power
+#define POWER_TRIGGER 0x3
 
 //log file
 #define LOG_FILE_NAME @"DND.log"
@@ -195,8 +224,19 @@
 // timestamp
 #define ALERT_TIMESTAMP @"timestamp"
 
+//alert key
+// type (lid, usb, power)
+#define ALERT_TYPE @"eventType"
+
+//alert key
+// info (specific to event type)
+#define ALERT_INFO @"info"
+
 //key for device name
 #define KEY_DEVICE_NAME @"deviceName"
+
+//key for power type
+#define KEY_POWER_TYPE @"powerType"
 
 //key for host name
 #define KEY_HOST_NAME @"hostName"

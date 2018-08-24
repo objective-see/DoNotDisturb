@@ -7,16 +7,16 @@
 //  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
-#import "Lid.h"
 #import "consts.h"
 #import "logging.h"
+#import "Triggers.h"
 #import "Preferences.h"
 #import "FrameworkInterface.h"
 
 /* GLOBALS */
 
-//lid obj
-extern Lid* lid;
+//trigger obj
+extern Triggers* triggers;
 
 //DND framework interface obj
 extern FrameworkInterface* framework;
@@ -160,28 +160,27 @@ bail:
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"updating preferences (%@)", updates]);
     
     //user setting state?
-    // toggle the state of the daemon (lid) watcher too
+    // toggle the state of the daemon triggers too
     if(nil != updates[PREF_IS_DISABLED])
     {
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"client toggling state: %@", updates[PREF_IS_DISABLED]]);
         
-        //disable?
+        //disable triggers
         if(YES == [updates[PREF_IS_DISABLED] boolValue])
         {
             //dbg msg
             // and log to file
             logMsg(LOG_DEBUG|LOG_TO_FILE, @"disabling...");
             
-            //unregister for lid notifications
-            [lid unregister4Notifications];
+            //turn off all triggers
+            [triggers toggle:ALL_TRIGGERS state:NSOffState];
             
             //dbg msg
-            logMsg(LOG_DEBUG, @"unregistered for lid change notifications");
+            logMsg(LOG_DEBUG, @"disabled triggers");
             
-            //cancel all lid notifications
-            // ...will also disconnect client
-            [lid cancelDispatchBlocks];
+            //cancel all dispatch blocks
+            [triggers cancelDispatchBlocks];
             
             //dbg msg
             logMsg(LOG_DEBUG, @"cancelled all dispatch blocks (disconnecting any connected iOS client)");
@@ -190,18 +189,81 @@ bail:
             [[NSNotificationCenter defaultCenter] postNotificationName:DISMISS_NOTIFICATION object:nil userInfo:nil];
         }
         
-        //enable?
+        //enable triggers
         else
         {
             //dbg msg
             // and log to file
             logMsg(LOG_DEBUG|LOG_TO_FILE, @"enabling...");
             
-            //register for lid notifications
-            [lid register4Notifications];
-        
+            //turn off all triggers
+            [triggers toggle:ALL_TRIGGERS state:NSOnState];
+            
             //dbg msg
-            logMsg(LOG_DEBUG, @"registered for lid change notifications");
+            logMsg(LOG_DEBUG, @"enabled (all) triggers");
+        }
+    }
+    
+    //toggle lid triggers
+    if(nil != updates[PREF_LID_TRIGGER])
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"toggling lid notifications");
+        
+        //enable lid trigger
+        if(YES == [updates[PREF_LID_TRIGGER] boolValue])
+        {
+            //enable
+            [triggers toggle:LID_TRIGGER state:NSOnState];
+        }
+        
+        //disable lid trigger
+        else
+        {
+            //disable
+            [triggers toggle:LID_TRIGGER state:NSOffState];
+        }
+    }
+    
+    //toggle device triggers
+    if(nil != updates[PREF_DEVICE_TRIGGER])
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"toggling device notifications");
+        
+        //enable device trigger
+        if(YES == [updates[PREF_DEVICE_TRIGGER] boolValue])
+        {
+            //enable
+            [triggers toggle:DEVICE_TRIGGER state:NSOnState];
+        }
+        
+        //disable device trigger
+        else
+        {
+            //disable
+            [triggers toggle:DEVICE_TRIGGER state:NSOffState];
+        }
+    }
+    
+    //toggle power triggers
+    if(nil != updates[PREF_POWER_TRIGGER])
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"toggling power notifications");
+        
+        //enable power trigger
+        if(YES == [updates[PREF_POWER_TRIGGER] boolValue])
+        {
+            //enable
+            [triggers toggle:POWER_TRIGGER state:NSOnState];
+        }
+        
+        //disable power trigger
+        else
+        {
+            //disable
+            [triggers toggle:POWER_TRIGGER state:NSOffState];
         }
     }
     

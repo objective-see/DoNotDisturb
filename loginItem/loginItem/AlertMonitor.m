@@ -38,10 +38,6 @@
     // call daemon and block, then display, and repeat!
     while(YES)
     {
-        //pool
-        @autoreleasepool
-        {
-            
         //dbg msg
         logMsg(LOG_DEBUG, @"requesting alert(s) from daemon, will block");
         
@@ -84,8 +80,6 @@
         //wait for alert to be received
         dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
     
-        }//pool
-            
     }//forevers
     
     return;
@@ -186,7 +180,29 @@
     notification.title = @"⚠️ Do Not Disturb Alert";
     
     //set subtitle
-    notification.subtitle = [NSString stringWithFormat:@"Lid Opened: %@", [dateFormat stringFromDate:alert[ALERT_TIMESTAMP]]];
+    // based on trigger type (lid, usb, etc.)
+    switch([alert[ALERT_TYPE] integerValue])
+    {
+        //lid
+        case LID_TRIGGER:
+            notification.subtitle = [NSString stringWithFormat:@"Lid Opened: %@", [dateFormat stringFromDate:alert[ALERT_TIMESTAMP]]];
+            break;
+            
+        //device
+        case DEVICE_TRIGGER:
+            notification.subtitle = [NSString stringWithFormat:@"Device Inserted: %@", alert[ALERT_INFO][KEY_DEVICE_NAME]];
+            break;
+            
+        //power
+        case POWER_TRIGGER:
+            notification.subtitle = [NSString stringWithFormat:@"Power Event: %@", alert[ALERT_INFO][KEY_POWER_TYPE]];
+            break;
+            
+        default:
+            break;
+    }
+    
+    
     
     //set delegate to self
     [[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];

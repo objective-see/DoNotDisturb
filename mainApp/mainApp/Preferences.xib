@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
         <capability name="box content view" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -24,6 +24,7 @@
                 <outlet property="qrcPanel" destination="vdL-RT-p6a" id="KrV-Fe-sK0"/>
                 <outlet property="qrcProgressIndicator" destination="pUS-KZ-De6" id="EYG-28-zkH"/>
                 <outlet property="toolbar" destination="V8g-Ya-LK4" id="SH2-6E-QST"/>
+                <outlet property="triggersView" destination="BuY-2M-Ecx" id="hrr-N9-ajg"/>
                 <outlet property="updateButton" destination="Mtn-pi-zIl" id="Oe1-Jy-nMH"/>
                 <outlet property="updateIndicator" destination="o0T-ra-4H0" id="DwL-OB-WQR"/>
                 <outlet property="updateLabel" destination="Oe2-Ye-1s6" id="1gP-K0-cpP"/>
@@ -52,22 +53,27 @@
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="J66-tT-qAf"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="6nW-4K-zf4"/>
-                    <toolbarItem implicitItemIdentifier="99F00439-5E3B-4FBB-BC65-3E1F7EBDDBC6" explicitItemIdentifier="general" label="general" paletteLabel="general" image="prefsGeneral" selectable="YES" id="Twx-TJ-y2Q">
+                    <toolbarItem implicitItemIdentifier="99F00439-5E3B-4FBB-BC65-3E1F7EBDDBC6" explicitItemIdentifier="general" label="general" paletteLabel="general" image="dndIcon" selectable="YES" id="Twx-TJ-y2Q">
                         <connections>
                             <action selector="toolbarButtonHandler:" target="-2" id="9JH-zR-BcH"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="48B3FCFA-8A19-4D19-A840-E21E6D564389" explicitItemIdentifier="action" label="action" paletteLabel="action" tag="1" image="prefsAction" selectable="YES" id="hqU-b9-59A">
+                    <toolbarItem implicitItemIdentifier="0204F7A2-F780-423C-89FB-28784C971A9A" explicitItemIdentifier="triggers" label="triggers" paletteLabel="triggers" tag="1" image="prefsTriggers" selectable="YES" id="pr7-Pz-jdz">
+                        <connections>
+                            <action selector="toolbarButtonHandler:" target="-2" id="jYk-kP-mSc"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="48B3FCFA-8A19-4D19-A840-E21E6D564389" explicitItemIdentifier="action" label="action" paletteLabel="action" tag="2" image="prefsAction" selectable="YES" id="hqU-b9-59A">
                         <connections>
                             <action selector="toolbarButtonHandler:" target="-2" id="dy9-vy-N89"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="B0FD7AF2-DAC5-45EF-A31B-2E2C7CB85294" explicitItemIdentifier="update" label="update" paletteLabel="update" tag="3" image="prefsUpdate" selectable="YES" id="2Fi-c8-fnE">
+                    <toolbarItem implicitItemIdentifier="B0FD7AF2-DAC5-45EF-A31B-2E2C7CB85294" explicitItemIdentifier="update" label="update" paletteLabel="update" tag="4" image="prefsUpdate" selectable="YES" id="2Fi-c8-fnE">
                         <connections>
                             <action selector="toolbarButtonHandler:" target="-2" id="jeu-wN-mgR"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="5DB39F09-CC43-4EC3-BF61-362FDA2DF782" explicitItemIdentifier="link" label="link" paletteLabel="link" tag="2" image="prefsLink" selectable="YES" id="43J-tU-rUa">
+                    <toolbarItem implicitItemIdentifier="5DB39F09-CC43-4EC3-BF61-362FDA2DF782" explicitItemIdentifier="link" label="link" paletteLabel="link" tag="3" image="prefsLink" selectable="YES" id="43J-tU-rUa">
                         <connections>
                             <action selector="toolbarButtonHandler:" target="-2" id="tSK-K0-f7H"/>
                         </connections>
@@ -75,6 +81,8 @@
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="Twx-TJ-y2Q"/>
+                    <toolbarItem reference="J66-tT-qAf"/>
+                    <toolbarItem reference="pr7-Pz-jdz"/>
                     <toolbarItem reference="J66-tT-qAf"/>
                     <toolbarItem reference="hqU-b9-59A"/>
                     <toolbarItem reference="J66-tT-qAf"/>
@@ -153,7 +161,7 @@
                 <button fixedFrame="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="ANF-lj-j0H">
                     <rect key="frame" x="37" y="156" width="29" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="Fpb-6d-DfT">
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Fpb-6d-DfT">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="14" name="Consolas-Bold"/>
                     </buttonCell>
@@ -164,7 +172,7 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F9r-H0-4xe">
                     <rect key="frame" x="72" y="157" width="471" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="'Touch ID' Mode" id="l1H-sS-Md8">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Authentication Mode" id="l1H-sS-Md8">
                         <font key="font" size="13" name="Menlo-Bold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -173,13 +181,13 @@
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="BhQ-tq-9gJ">
                     <rect key="frame" x="72" y="138" width="508" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Suppress alerts if proceeded by a Touch ID login (10.13.4+)." id="yKN-Kc-8Q2">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Ignore events if computer unlocked via Touch ID or Apple Watch." id="yKN-Kc-8Q2">
                         <font key="font" size="13" name="Menlo-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="OkJ-ds-qSY">
+                <button fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="OkJ-ds-qSY">
                     <rect key="frame" x="37" y="99" width="29" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="HEY-GS-vSr">
@@ -208,30 +216,95 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" tag="4" translatesAutoresizingMaskIntoConstraints="NO" id="5ep-7h-VpU">
-                    <rect key="frame" x="37" y="42" width="29" height="18"/>
+            </subviews>
+            <point key="canvasLocation" x="852" y="437"/>
+        </customView>
+        <customView id="BuY-2M-Ecx" userLabel="Triggers">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="322"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="QSk-EX-Gs3">
+                    <rect key="frame" x="37" y="270" width="29" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="J3b-LL-38M">
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" enabled="NO" inset="2" id="4Ia-YW-I03">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" size="14" name="Consolas-Bold"/>
                     </buttonCell>
                     <connections>
-                        <action selector="togglePreference:" target="-2" id="5gO-Zo-43d"/>
+                        <action selector="togglePreference:" target="-2" id="ko3-U3-K1d"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yza-iC-hAP">
-                    <rect key="frame" x="72" y="42" width="160" height="19"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c2q-TO-7Hx">
+                    <rect key="frame" x="72" y="271" width="160" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Start at Login" id="ksD-bk-5jE">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Laptop Lid Open" id="svL-i1-bx7">
                         <font key="font" size="13" name="Menlo-Bold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="LOC-tP-KQd">
-                    <rect key="frame" x="72" y="22" width="475" height="19"/>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="9cA-xI-Rkq">
+                    <rect key="frame" x="72" y="253" width="475" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Automatically start login item." id="k4V-lS-86b">
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Alert when your laptop lid is opened." id="eYK-5x-T41">
+                        <font key="font" size="13" name="Menlo-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button fixedFrame="YES" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="Tdc-FL-Prs">
+                    <rect key="frame" x="37" y="213" width="29" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Lxz-uf-N9R">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="14" name="Consolas-Bold"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="togglePreference:" target="-2" id="C4T-Ye-XAC"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wzx-aD-Ob5">
+                    <rect key="frame" x="72" y="214" width="161" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="USB Device Insertion" id="a2r-f0-Qw2">
+                        <font key="font" size="13" name="Menlo-Bold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="xBV-DA-rOc">
+                    <rect key="frame" x="72" y="195" width="475" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Alert when a USB device is plugged in." id="yaL-Sz-w38">
+                        <font key="font" size="13" name="Menlo-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button fixedFrame="YES" tag="7" translatesAutoresizingMaskIntoConstraints="NO" id="G6G-cU-bdG">
+                    <rect key="frame" x="37" y="156" width="29" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oKm-iS-CO8">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="14" name="Consolas-Bold"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="togglePreference:" target="-2" id="whf-Fn-MSZ"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CjK-AK-Uzg">
+                    <rect key="frame" x="72" y="157" width="471" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Power Events" id="YR8-oc-TgU">
+                        <font key="font" size="13" name="Menlo-Bold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="7Cw-J0-A9x">
+                    <rect key="frame" x="72" y="118" width="490" height="38"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Alert when the your computer is powered on, awakened, or when the screen saver is stopped. " id="yW3-Uo-Ir7">
                         <font key="font" size="13" name="Menlo-Regular"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -244,7 +317,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="311"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button fixedFrame="YES" tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="1z0-vD-5Vz">
+                <button fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="1z0-vD-5Vz">
                     <rect key="frame" x="37" y="259" width="29" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="0eO-nb-SYy">
@@ -273,8 +346,8 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <button fixedFrame="YES" tag="6" translatesAutoresizingMaskIntoConstraints="NO" id="Od2-P2-SXK">
-                    <rect key="frame" x="37" y="201" width="29" height="18"/>
+                <button fixedFrame="YES" tag="9" translatesAutoresizingMaskIntoConstraints="NO" id="Od2-P2-SXK">
+                    <rect key="frame" x="37" y="202" width="29" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="qyn-YP-C2s">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -285,7 +358,7 @@
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BXf-fg-RpF">
-                    <rect key="frame" x="72" y="201" width="59" height="19"/>
+                    <rect key="frame" x="72" y="203" width="59" height="19"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Monitor" id="YH2-4b-Iv5">
                         <font key="font" size="13" name="Menlo-Bold"/>
@@ -302,6 +375,26 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button fixedFrame="YES" tag="10" translatesAutoresizingMaskIntoConstraints="NO" id="C6E-J8-lhh">
+                    <rect key="frame" x="37" y="132" width="29" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ngn-La-kHu">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" size="14" name="Consolas-Bold"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="togglePreference:" target="-2" id="d0h-1p-AtX"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Np1-aP-w1p">
+                    <rect key="frame" x="72" y="133" width="98" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Snap Picture" id="BQ4-1f-ZXw">
+                        <font key="font" size="13" name="Menlo-Bold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eWd-63-7Gn">
                     <rect key="frame" x="198" y="257" width="354" height="24"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -313,6 +406,15 @@
                     <connections>
                         <outlet property="delegate" destination="-2" id="DAs-b2-8Zb"/>
                     </connections>
+                </textField>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="cuP-oI-A6A">
+                    <rect key="frame" x="72" y="113" width="475" height="19"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Automatically take a picture via the webcam." id="7Xg-3U-FQp">
+                        <font key="font" size="13" name="Menlo-Regular"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
                 </textField>
             </subviews>
             <point key="canvasLocation" x="911" y="901.5"/>
@@ -366,7 +468,7 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button fixedFrame="YES" tag="8" translatesAutoresizingMaskIntoConstraints="NO" id="dml-JS-liI">
+                <button fixedFrame="YES" tag="11" translatesAutoresizingMaskIntoConstraints="NO" id="dml-JS-liI">
                     <rect key="frame" x="37" y="220" width="29" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ljs-bE-JTP">
@@ -445,7 +547,7 @@
                     <rect key="frame" x="322" y="115" width="258" height="153"/>
                     <clipView key="contentView" id="FSf-NQ-BdZ">
                         <rect key="frame" x="1" y="1" width="256" height="151"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView editable="NO" selectable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="9cB-rx-0JH">
                                 <rect key="frame" x="0.0" y="0.0" width="256" height="151"/>
@@ -604,6 +706,7 @@
         <image name="close" width="24" height="24"/>
         <image name="closeAlt" width="24" height="24"/>
         <image name="connected" width="128" height="128"/>
+        <image name="dndIcon" width="256" height="256"/>
         <image name="dndText" width="164.57142639160156" height="21.188571929931641"/>
         <image name="imageCell:eTI-5p-4rR:image" width="256" height="256">
             <mutableData key="keyedArchiveRepresentation">
@@ -5125,9 +5228,9 @@ IGsABCB5AAQgfQAEIIQABCCJAAQglgAEIJkABCCmAAQgqwAEILMABCC2AAQguwAEIMMABCDGAAQg2AAE
 INsABCDgAAAAAAAABAEAAAAAAAAAVgAAAAAAAAAAAAAAAAAEIOI
 </mutableData>
         </image>
-        <image name="prefsAction" width="32" height="32"/>
-        <image name="prefsGeneral" width="32" height="32"/>
-        <image name="prefsLink" width="32" height="32"/>
-        <image name="prefsUpdate" width="32" height="32"/>
+        <image name="prefsAction" width="256" height="256"/>
+        <image name="prefsLink" width="256" height="256"/>
+        <image name="prefsTriggers" width="224" height="205"/>
+        <image name="prefsUpdate" width="256" height="256"/>
     </resources>
 </document>

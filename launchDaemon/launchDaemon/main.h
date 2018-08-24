@@ -7,6 +7,8 @@
 //  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
+@import Foundation;
+
 /* FUNCTIONS */
 
 //uninstall
