@@ -11,14 +11,17 @@
 
 #import "Lid.h"
 #import "Consts.h"
-#import "Queue.h"
 #import "Logging.h"
 #import "Monitor.h"
 #import "AuthEvent.h"
 #import "Utilities.h"
+#import "XPCListener.h"
 #import "Preferences.h"
 #import "UserAuthMonitor.h"
 #import "FrameworkInterface.h"
+
+#import "XPCUserProto.h"
+
 
 /* GLOBALS */
 
@@ -29,9 +32,6 @@ LidState lastLidState;
 //lid obj
 extern Lid* lid;
 
-//queue object
-extern Queue* eventQueue;
-
 //user auth event listener
 extern UserAuthMonitor* userAuthMonitor;
 
@@ -40,6 +40,9 @@ extern Preferences* preferences;
 
 //DND framework interface obj
 extern FrameworkInterface* framework;
+
+//XPC listener
+extern XPCListener* xpcListener;
 
 //callback for power/lid events
 static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageType, void *messageArgument)
@@ -245,11 +248,13 @@ BOOL authViaTouchID()
 @implementation Lid
 
 @synthesize client;
+@synthesize userObserver;
 @synthesize dispatchGroup;
 @synthesize dispatchBlocks;
+@synthesize dismissObserver;
 @synthesize undeliveredAlert;
+@synthesize undeliveredAlerts;
 @synthesize dispatchGroupEmpty;
-
 
 //init
 -(id)init
@@ -267,6 +272,9 @@ BOOL authViaTouchID()
         //init
         notification = 0;
         
+        //alloc array for alerts
+        undeliveredAlerts = [NSMutableArray array];
+        
         //init to current state
         lastLidState = getLidState();
         
@@ -281,6 +289,43 @@ BOOL authViaTouchID()
         
         //init array for blocks
         dispatchBlocks = [NSMutableArray array];
+        
+        //register listener for dismiss alerts
+        // when it fires, invoke (user) XPC method to dismiss alert
+        self.dismissObserver = [[NSNotificationCenter defaultCenter] addObserverForName:DISMISS_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification)
+        {
+            //dbg msg
+            logMsg(LOG_DEBUG, @"'DISMISS_NOTIFICATION' triggered, will send XPC msg to user (login item) to dismiss any alerts");
+            
+            //send XPC msg to dismiss
+            [[xpcListener.connection remoteObjectProxy] alertDismiss];
+        }];
+        
+        //register listener for new client/user (login item)
+        // when it fires, invoke (user) XPC method to deliver any alerts that occured when user wasn't logged in
+        self.userObserver = [[NSNotificationCenter defaultCenter] addObserverForName:USER_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification)
+        {
+            //dbg msg
+            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"'USER_NOTIFICATION' triggered, will send XPC msg to user (login item) to display %lu undelivered alerts", self.undeliveredAlerts.count]);
+            
+            //sync to access
+            @synchronized(self.undeliveredAlerts)
+            {
+                //send each alert to user
+                for(NSDictionary* alert in self.undeliveredAlerts)
+                {
+                    //send XPC msg to user, to display alert
+                    [[xpcListener.connection remoteObjectProxy] alertShow:alert];
+                    
+                    //dbg msg
+                    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"(re)delivered alert: %@", alert]);
+                }
+                
+                //remove all
+                [self.undeliveredAlerts removeAllObjects];
+            }
+            
+        }];
         
         //should init client?
         if(YES == [self shouldInitClient])
@@ -336,7 +381,7 @@ BOOL authViaTouchID()
     self.client.delegate = self;
     
     //indicate we want tasking
-    [self.client handleTasksWithFramework:[[preferences get:nil][PREF_NO_REMOTE_TASKING] boolValue]];
+    [self.client handleTasksWithFramework:[[preferences get:nil][PREF_NO_REMOTE_TASKING] boolValue] imageDelegate:self];
     
     //happy
     initialized = YES;
@@ -491,16 +536,37 @@ bail:
     //current prefs
     NSDictionary* currentPrefs = nil;
     
+    //alert
+    NSDictionary* alert;
+
+    //init alert
+    alert = @{ALERT_TIMESTAMP:timestamp};
+    
     //get current prefs
     currentPrefs = [preferences get:nil];
-    
+
     //only add events to queue
     // when client is not running in passive mode
     if(YES != [currentPrefs[PREF_PASSIVE_MODE] boolValue])
     {
-        //add to global queue
-        // this will trigger processing of alert to user
-        [eventQueue enqueue:@{ALERT_TIMESTAMP:timestamp}];
+        //send to client
+        // this will fail (but we'll handle) if no clients are connected
+        [[xpcListener.connection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+        {
+            //err msg
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to invoke USER XPC method: 'alertShow' (error: %@)", proxyError]);
+            
+            //save undelivered alert
+            @synchronized(self.undeliveredAlerts)
+            {
+                //save
+                [self.undeliveredAlerts addObject:alert];
+            }
+            
+            //dbg msg
+            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"saved %@, will deliver when user (login item) connects", alert]);
+        
+        }] alertShow:alert];
     }
     //passive mode
     // just log a msg about this fact
@@ -533,7 +599,6 @@ bail:
     if( (YES == [currentPrefs[PREF_EXECUTE_ACTION] boolValue]) &&
         (0 != [currentPrefs[PREF_EXECUTE_PATH] length] ) )
     {
-        
         //dbg msg
         logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"executing: %@ as %@", currentPrefs[PREF_EXECUTE_PATH], currentPrefs[PREF_EXECUTE_USER]]);
         
@@ -656,7 +721,7 @@ bail:
         logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to server (user: %@)", user]);
         
         //send
-        response = [self.client sendAlertSyncWithUuid:[NSUUID UUID] userName:user date:self.undeliveredAlert];
+        response = [self.client sendAlertSyncWithUuid:[NSUUID UUID] userName:user date:self.undeliveredAlert photo:NO];
         if(nil != response)
         {
             //log
@@ -685,7 +750,7 @@ bail:
         logMsg(LOG_DEBUG, @"could not reach endpoint - network offline?");
         
         //not online
-        //... so tak a nap
+        //... so take a nap
         [NSThread sleepForTimeInterval:i*1.5];
     }
     
@@ -859,6 +924,28 @@ bail:
 bail:
     
     return result;
+}
+
+//framework delegate method
+// send XPC message to user (login item) to take picture
+-(void)captureImageWithCompletion:(void (^ _Nonnull)(NSData * _Nullable))completion
+{
+    //request to user (login item) to take a picture
+    [[xpcListener.connection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+    {
+        //err msg
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to invoke USER XPC method: 'capture picture' (error: %@)", proxyError]);
+        
+        //error
+        completion(nil);
+        
+    }] captureImage:^(NSData* image)
+    {
+        //pass back to framework
+        completion(image);
+    }];
+    
+    return;
 }
 
 @end

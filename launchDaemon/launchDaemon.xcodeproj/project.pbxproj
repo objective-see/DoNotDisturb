@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		209E459F203DF5D500900B89 /* Do Not Disturb in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D7755D01F02DF9500D0017D /* Do Not Disturb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		209E45B0203DF64E00900B89 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A2203DF64E00900B89 /* Realm.framework */; };
 		209E45B1203DF64E00900B89 /* AlamofireImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A3203DF64E00900B89 /* AlamofireImage.framework */; };
 		209E45B2203DF64E00900B89 /* CleanroomLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A4203DF64E00900B89 /* CleanroomLogger.framework */; };
@@ -19,33 +18,31 @@
 		209E45B9203DF64E00900B89 /* CocoaMQTT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45AB203DF64E00900B89 /* CocoaMQTT.framework */; };
 		209E45BB203DF64E00900B89 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45AD203DF64E00900B89 /* RealmSwift.framework */; };
 		209E45BC203DF64E00900B89 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45AE203DF64E00900B89 /* dnd.framework */; };
-		20C87249204609A900F1275D /* Alamofire.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45A7203DF64E00900B89 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C8724A204609A900F1275D /* AlamofireImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45A3203DF64E00900B89 /* AlamofireImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C8724C204609A900F1275D /* CleanroomLogger.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45A4203DF64E00900B89 /* CleanroomLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C8724D204609A900F1275D /* CocoaAsyncSocket.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45A5203DF64E00900B89 /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C8724E204609A900F1275D /* CocoaMQTT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45AB203DF64E00900B89 /* CocoaMQTT.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C8724F204609A900F1275D /* CommonCrypto.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45A6203DF64E00900B89 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C87250204609A900F1275D /* dnd.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45AE203DF64E00900B89 /* dnd.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C87252204609A900F1275D /* Realm.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45A2203DF64E00900B89 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C87253204609A900F1275D /* RealmSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45AD203DF64E00900B89 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C87255204609A900F1275D /* SwiftyJSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45AA203DF64E00900B89 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C87256204609A900F1275D /* SwiftyTimer.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 209E45A8203DF64E00900B89 /* SwiftyTimer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		20C8725B20460A7E00F1275D /* deviceCSRRequest.p12 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 20C8725820460A7D00F1275D /* deviceCSRRequest.p12 */; };
-		20C8725C20460A7E00F1275D /* rootCA.pem in CopyFiles */ = {isa = PBXBuildFile; fileRef = 20C8725920460A7E00F1275D /* rootCA.pem */; };
-		20C8725D20460A7E00F1275D /* awsRootCA.pem in CopyFiles */ = {isa = PBXBuildFile; fileRef = 20C8725A20460A7E00F1275D /* awsRootCA.pem */; };
-		7D46FEFF1F5E41F000FEB0F8 /* UserCommsListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D46FEFD1F5E41F000FEB0F8 /* UserCommsListener.m */; };
+		20C87249204609A900F1275D /* Alamofire.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A7203DF64E00900B89 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C8724A204609A900F1275D /* AlamofireImage.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A3203DF64E00900B89 /* AlamofireImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C8724C204609A900F1275D /* CleanroomLogger.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A4203DF64E00900B89 /* CleanroomLogger.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C8724D204609A900F1275D /* CocoaAsyncSocket.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A5203DF64E00900B89 /* CocoaAsyncSocket.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C8724E204609A900F1275D /* CocoaMQTT.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45AB203DF64E00900B89 /* CocoaMQTT.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C8724F204609A900F1275D /* CommonCrypto.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A6203DF64E00900B89 /* CommonCrypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C87250204609A900F1275D /* dnd.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45AE203DF64E00900B89 /* dnd.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C87252204609A900F1275D /* Realm.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A2203DF64E00900B89 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C87253204609A900F1275D /* RealmSwift.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45AD203DF64E00900B89 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C87255204609A900F1275D /* SwiftyJSON.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45AA203DF64E00900B89 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C87256204609A900F1275D /* SwiftyTimer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 209E45A8203DF64E00900B89 /* SwiftyTimer.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		20C8725B20460A7E00F1275D /* deviceCSRRequest.p12 in Copy Certs */ = {isa = PBXBuildFile; fileRef = 20C8725820460A7D00F1275D /* deviceCSRRequest.p12 */; };
+		20C8725C20460A7E00F1275D /* rootCA.pem in Copy Certs */ = {isa = PBXBuildFile; fileRef = 20C8725920460A7E00F1275D /* rootCA.pem */; };
+		20C8725D20460A7E00F1275D /* awsRootCA.pem in Copy Certs */ = {isa = PBXBuildFile; fileRef = 20C8725A20460A7E00F1275D /* awsRootCA.pem */; };
+		7D46FEFF1F5E41F000FEB0F8 /* XPCListener.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D46FEFD1F5E41F000FEB0F8 /* XPCListener.m */; };
 		7D4FF8C41F0E1402001A4A68 /* libbsm.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D4FF8C31F0E1402001A4A68 /* libbsm.tbd */; };
-		7D4FF8CD1F0EF2F9001A4A68 /* UserComms.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4FF8CC1F0EF2F9001A4A68 /* UserComms.m */; };
+		7D4FF8CD1F0EF2F9001A4A68 /* XPCDaemon.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D4FF8CC1F0EF2F9001A4A68 /* XPCDaemon.m */; };
 		7D6E87701F3AE6FA00D6BD7C /* libprocInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7D6E876F1F3AE6FA00D6BD7C /* libprocInfo.a */; };
 		7D7755D41F02DF9500D0017D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7755D31F02DF9500D0017D /* main.m */; };
 		7D7755FC1F02EBBE00D0017D /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7755FA1F02EBBE00D0017D /* Logging.m */; };
 		7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF671F1DC42700B33214 /* Utilities.m */; };
 		7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */; };
-		7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF751F1E9CE700B33214 /* Queue.m */; };
 		CD20869B208E8F0200BA1D0A /* VolumeMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD208698208E8B1200BA1D0A /* VolumeMonitor.m */; };
 		CD20A0CA205793040044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; };
-		CD20A0CB205793100044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; };
-		CD20A0CC205793680044BCC5 /* Sentry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CD20A0CC205793680044BCC5 /* Sentry.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0C9205793040044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CD22786620463F0700C72C76 /* dnd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD22786420463EB000C72C76 /* dnd.framework */; };
 		CD22786C20464A6E00C72C76 /* Preferences.m in Sources */ = {isa = PBXBuildFile; fileRef = CD22786A204648E000C72C76 /* Preferences.m */; };
 		CD256E022050DE9B00768457 /* ProcListener.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256E002050DE6600768457 /* ProcListener.m */; };
@@ -56,6 +53,7 @@
 		CD256E072050DE9B00768457 /* USBMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DF52050DE4C00768457 /* USBMonitor.m */; };
 		CD256E082050DE9B00768457 /* UserAuthMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = CD256DED2050DE4B00768457 /* UserAuthMonitor.m */; };
 		CDA993A62048905D00C1E9CD /* FrameworkInterface.m in Sources */ = {isa = PBXBuildFile; fileRef = CDA993A42048905D00C1E9CD /* FrameworkInterface.m */; };
+		CDD3ADF3213527F1004F805F /* Do Not Disturb in CopyFiles */ = {isa = PBXBuildFile; fileRef = 7D7755D01F02DF9500D0017D /* Do Not Disturb */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */ = {isa = PBXBuildFile; fileRef = CE60F9C81FC9BBE500EFFDDA /* Lid.m */; };
 /* End PBXBuildFile section */
 
@@ -70,57 +68,50 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		209E459E203DF5B200900B89 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 6;
-			files = (
-				209E459F203DF5D500900B89 /* Do Not Disturb in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		20C8722C2046079F00F1275D /* CopyFiles */ = {
+		20C8722C2046079F00F1275D /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CD20A0CC205793680044BCC5 /* Sentry.framework in CopyFiles */,
-				20C87249204609A900F1275D /* Alamofire.framework in CopyFiles */,
-				20C8724A204609A900F1275D /* AlamofireImage.framework in CopyFiles */,
-				20C8724C204609A900F1275D /* CleanroomLogger.framework in CopyFiles */,
-				20C8724D204609A900F1275D /* CocoaAsyncSocket.framework in CopyFiles */,
-				20C8724E204609A900F1275D /* CocoaMQTT.framework in CopyFiles */,
-				20C8724F204609A900F1275D /* CommonCrypto.framework in CopyFiles */,
-				20C87250204609A900F1275D /* dnd.framework in CopyFiles */,
-				20C87252204609A900F1275D /* Realm.framework in CopyFiles */,
-				20C87253204609A900F1275D /* RealmSwift.framework in CopyFiles */,
-				20C87255204609A900F1275D /* SwiftyJSON.framework in CopyFiles */,
-				20C87256204609A900F1275D /* SwiftyTimer.framework in CopyFiles */,
+				CD20A0CC205793680044BCC5 /* Sentry.framework in Copy Frameworks */,
+				20C87249204609A900F1275D /* Alamofire.framework in Copy Frameworks */,
+				20C8724A204609A900F1275D /* AlamofireImage.framework in Copy Frameworks */,
+				20C8724C204609A900F1275D /* CleanroomLogger.framework in Copy Frameworks */,
+				20C8724D204609A900F1275D /* CocoaAsyncSocket.framework in Copy Frameworks */,
+				20C8724E204609A900F1275D /* CocoaMQTT.framework in Copy Frameworks */,
+				20C8724F204609A900F1275D /* CommonCrypto.framework in Copy Frameworks */,
+				20C87250204609A900F1275D /* dnd.framework in Copy Frameworks */,
+				20C87252204609A900F1275D /* Realm.framework in Copy Frameworks */,
+				20C87253204609A900F1275D /* RealmSwift.framework in Copy Frameworks */,
+				20C87255204609A900F1275D /* SwiftyJSON.framework in Copy Frameworks */,
+				20C87256204609A900F1275D /* SwiftyTimer.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		20C8725720460A2300F1275D /* CopyFiles */ = {
+		20C8725720460A2300F1275D /* Copy Certs */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				20C8725B20460A7E00F1275D /* deviceCSRRequest.p12 in CopyFiles */,
-				20C8725C20460A7E00F1275D /* rootCA.pem in CopyFiles */,
-				20C8725D20460A7E00F1275D /* awsRootCA.pem in CopyFiles */,
+				20C8725B20460A7E00F1275D /* deviceCSRRequest.p12 in Copy Certs */,
+				20C8725C20460A7E00F1275D /* rootCA.pem in Copy Certs */,
+				20C8725D20460A7E00F1275D /* awsRootCA.pem in Copy Certs */,
 			);
+			name = "Copy Certs";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7D7755CE1F02DF9500D0017D /* CopyFiles */ = {
+		CDD3ADF2213527E0004F805F /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
 			files = (
+				CDD3ADF3213527F1004F805F /* Do Not Disturb in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -141,12 +132,11 @@
 		20C8725920460A7E00F1275D /* rootCA.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = rootCA.pem; sourceTree = "<group>"; };
 		20C8725A20460A7E00F1275D /* awsRootCA.pem */ = {isa = PBXFileReference; lastKnownFileType = text; path = awsRootCA.pem; sourceTree = "<group>"; };
 		7D2582591F1A872400D28B95 /* com.objective-see.dnd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "com.objective-see.dnd.plist"; path = "launchDaemon/com.objective-see.dnd.plist"; sourceTree = "<group>"; };
-		7D46FEFD1F5E41F000FEB0F8 /* UserCommsListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCommsListener.m; sourceTree = "<group>"; };
-		7D46FEFE1F5E41F000FEB0F8 /* UserCommsListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCommsListener.h; sourceTree = "<group>"; };
+		7D46FEFD1F5E41F000FEB0F8 /* XPCListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPCListener.m; sourceTree = "<group>"; };
+		7D46FEFE1F5E41F000FEB0F8 /* XPCListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPCListener.h; sourceTree = "<group>"; };
 		7D4FF8C31F0E1402001A4A68 /* libbsm.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbsm.tbd; path = usr/lib/libbsm.tbd; sourceTree = SDKROOT; };
-		7D4FF8CB1F0EF2F9001A4A68 /* UserComms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserComms.h; sourceTree = "<group>"; };
-		7D4FF8CC1F0EF2F9001A4A68 /* UserComms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserComms.m; sourceTree = "<group>"; };
-		7D4FF8CE1F0EF360001A4A68 /* UserCommsInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserCommsInterface.h; path = ../../shared/UserCommsInterface.h; sourceTree = "<group>"; };
+		7D4FF8CB1F0EF2F9001A4A68 /* XPCDaemon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPCDaemon.h; sourceTree = "<group>"; };
+		7D4FF8CC1F0EF2F9001A4A68 /* XPCDaemon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPCDaemon.m; sourceTree = "<group>"; };
 		7D6E876F1F3AE6FA00D6BD7C /* libprocInfo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprocInfo.a; path = launchDaemon/libs/libprocInfo.a; sourceTree = "<group>"; };
 		7D7755D01F02DF9500D0017D /* Do Not Disturb */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Do Not Disturb"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D7755D31F02DF9500D0017D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -156,8 +146,6 @@
 		7DD2BF671F1DC42700B33214 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Utilities.m; path = ../../shared/Utilities.m; sourceTree = "<group>"; };
 		7DD2BF721F1E9CE700B33214 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
 		7DD2BF731F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
-		7DD2BF741F1E9CE700B33214 /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
-		7DD2BF751F1E9CE700B33214 /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
 		CD208698208E8B1200BA1D0A /* VolumeMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VolumeMonitor.m; sourceTree = "<group>"; };
 		CD208699208E8B1200BA1D0A /* VolumeMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VolumeMonitor.h; sourceTree = "<group>"; };
 		CD20A0C9205793040044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
@@ -184,6 +172,8 @@
 		CDA993A32048905D00C1E9CD /* FrameworkInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FrameworkInterface.h; sourceTree = "<group>"; };
 		CDA993A42048905D00C1E9CD /* FrameworkInterface.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FrameworkInterface.m; sourceTree = "<group>"; };
 		CDAAC245202259B50032F2E6 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = ../../shared/Consts.h; sourceTree = "<group>"; };
+		CDFA088421367FB00089758C /* XPCUserProto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCUserProto.h; path = ../../shared/XPCUserProto.h; sourceTree = "<group>"; };
+		CDFA088521367FB00089758C /* XPCDaemonProto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCDaemonProto.h; path = ../../shared/XPCDaemonProto.h; sourceTree = "<group>"; };
 		CE60F9C71FC9BBE500EFFDDA /* Lid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lid.h; sourceTree = "<group>"; };
 		CE60F9C81FC9BBE500EFFDDA /* Lid.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lid.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -204,7 +194,6 @@
 				209E45B9203DF64E00900B89 /* CocoaMQTT.framework in Frameworks */,
 				209E45BB203DF64E00900B89 /* RealmSwift.framework in Frameworks */,
 				209E45BC203DF64E00900B89 /* dnd.framework in Frameworks */,
-				CD20A0CB205793100044BCC5 /* Sentry.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -287,14 +276,12 @@
 				CDA993A42048905D00C1E9CD /* FrameworkInterface.m */,
 				CD227869204648E000C72C76 /* Preferences.h */,
 				CD22786A204648E000C72C76 /* Preferences.m */,
-				7DD2BF741F1E9CE700B33214 /* Queue.h */,
-				7DD2BF751F1E9CE700B33214 /* Queue.m */,
 				CD3307C82036518400F10D71 /* main.h */,
 				7D7755D31F02DF9500D0017D /* main.m */,
-				7D4FF8CB1F0EF2F9001A4A68 /* UserComms.h */,
-				7D4FF8CC1F0EF2F9001A4A68 /* UserComms.m */,
-				7D46FEFE1F5E41F000FEB0F8 /* UserCommsListener.h */,
-				7D46FEFD1F5E41F000FEB0F8 /* UserCommsListener.m */,
+				7D4FF8CB1F0EF2F9001A4A68 /* XPCDaemon.h */,
+				7D4FF8CC1F0EF2F9001A4A68 /* XPCDaemon.m */,
+				7D46FEFE1F5E41F000FEB0F8 /* XPCListener.h */,
+				7D46FEFD1F5E41F000FEB0F8 /* XPCListener.m */,
 			);
 			name = src;
 			path = launchDaemon;
@@ -308,7 +295,8 @@
 				7DD2BF671F1DC42700B33214 /* Utilities.m */,
 				7D7755FA1F02EBBE00D0017D /* Logging.m */,
 				7D7755FB1F02EBBE00D0017D /* Logging.h */,
-				7D4FF8CE1F0EF360001A4A68 /* UserCommsInterface.h */,
+				CDFA088421367FB00089758C /* XPCUserProto.h */,
+				CDFA088521367FB00089758C /* XPCDaemonProto.h */,
 			);
 			name = shared;
 			sourceTree = "<group>";
@@ -353,12 +341,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2063725E203DC70A006D4C38 /* Build configuration list for PBXNativeTarget "launchDaemonBundle" */;
 			buildPhases = (
-				20637257203DC70A006D4C38 /* Sources */,
 				20637258203DC70A006D4C38 /* Frameworks */,
-				20637259203DC70A006D4C38 /* Resources */,
-				209E459E203DF5B200900B89 /* CopyFiles */,
-				20C8722C2046079F00F1275D /* CopyFiles */,
-				20C8725720460A2300F1275D /* CopyFiles */,
+				20C8722C2046079F00F1275D /* Copy Frameworks */,
+				20C8725720460A2300F1275D /* Copy Certs */,
+				CDD3ADF2213527E0004F805F /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -376,7 +362,6 @@
 			buildPhases = (
 				7D7755CC1F02DF9500D0017D /* Sources */,
 				7D7755CD1F02DF9500D0017D /* Frameworks */,
-				7D7755CE1F02DF9500D0017D /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -393,7 +378,7 @@
 		7D7755C81F02DF9400D0017D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Objective-See";
 				TargetAttributes = {
 					2063725A203DC70A006D4C38 = {
@@ -424,24 +409,7 @@
 		};
 /* End PBXProject section */
 
-/* Begin PBXResourcesBuildPhase section */
-		20637259203DC70A006D4C38 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		20637257203DC70A006D4C38 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		7D7755CC1F02DF9500D0017D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -456,13 +424,12 @@
 				CD256E082050DE9B00768457 /* UserAuthMonitor.m in Sources */,
 				CD22786C20464A6E00C72C76 /* Preferences.m in Sources */,
 				CDA993A62048905D00C1E9CD /* FrameworkInterface.m in Sources */,
-				7D46FEFF1F5E41F000FEB0F8 /* UserCommsListener.m in Sources */,
+				7D46FEFF1F5E41F000FEB0F8 /* XPCListener.m in Sources */,
 				CE60F9C91FC9BBE500EFFDDA /* Lid.m in Sources */,
 				7DD2BF761F1E9CE700B33214 /* NSMutableArray+QueueAdditions.m in Sources */,
 				7DD2BF681F1DC42700B33214 /* Utilities.m in Sources */,
-				7DD2BF771F1E9CE700B33214 /* Queue.m in Sources */,
 				7D7755D41F02DF9500D0017D /* main.m in Sources */,
-				7D4FF8CD1F0EF2F9001A4A68 /* UserComms.m in Sources */,
+				7D4FF8CD1F0EF2F9001A4A68 /* XPCDaemon.m in Sources */,
 				7D7755FC1F02EBBE00D0017D /* Logging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

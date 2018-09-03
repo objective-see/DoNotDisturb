@@ -114,6 +114,9 @@
 //daemon mach name
 #define DAEMON_MACH_SERVICE @"com.objective-see.dndDaemon"
 
+//user (login item) mach name
+#define USER_MACH_SERVICE @"com.objective-see.dndUser"
+
 //product url
 #define PRODUCT_URL @"https://objective-see.com/products/dnd.html"
 
@@ -275,6 +278,9 @@
 
 //dismiss event notification
 #define DISMISS_NOTIFICATION @"com.objective-see.dnd.dismissNotification"
+
+//new user/client notification
+#define USER_NOTIFICATION @"com.objective-see.dnd.userNotification"
 
 //monitoring timeout
 #define MONITORING_TIMEOUT 60*3

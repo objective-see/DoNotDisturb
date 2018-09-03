@@ -11,9 +11,8 @@
 #import "Logging.h"
 #import "Utilities.h"
 #import "AppDelegate.h"
-#import "DaemonComms.h"
 #import "StatusBarMenu.h"
-#import "UserCommsInterface.h"
+#import "XPCDaemonClient.h"
 #import "StatusBarPopoverController.h"
 
 //menu items
@@ -44,7 +43,7 @@ enum menuItems
     if(self != nil)
     {
         //init daemon comms
-        daemonComms = [[DaemonComms alloc] init];
+        daemonComms = [[XPCDaemonClient alloc] init];
         
         //init status item
         statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSSquareStatusItemLength];

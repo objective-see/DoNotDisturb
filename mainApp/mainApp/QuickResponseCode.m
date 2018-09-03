@@ -8,7 +8,7 @@
 //
 
 #import "Logging.h"
-#import "DaemonComms.h"
+#import "XPCDaemonClient.h"
 #import "QuickResponseCode.h"
 
 #import <CoreImage/CoreImage.h>
@@ -27,7 +27,7 @@
     {
         //init daemon comms
         // will connect, etc.
-        daemonComms = [[DaemonComms alloc] init];
+        daemonComms = [[XPCDaemonClient alloc] init];
     }
     
     return self;

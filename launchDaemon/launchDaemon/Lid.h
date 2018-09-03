@@ -24,7 +24,7 @@ BOOL authViaTouchID(void);
 
 /* CLASS INTERFACE */
 
-@interface Lid : NSObject <DNDClientMacDelegate>
+@interface Lid : NSObject <DNDClientMacDelegate, DNDClientMacTaskingDelegate>
 {
     //lid state
     LidState lidState;
@@ -54,8 +54,17 @@ BOOL authViaTouchID(void);
 //dispatch blocks
 @property(nonatomic, retain)NSMutableArray* dispatchBlocks;
 
-//latest undeliveried alert
+//latest undelivered alert
 @property(nonatomic, retain)NSDate* undeliveredAlert;
+
+//observer for dismiss alerts
+@property(nonatomic, retain)id dismissObserver;
+
+//observer for new client/user (login item)
+@property(nonatomic, retain)id userObserver;
+
+//undelivered alerts
+@property(nonatomic, retain)NSMutableArray* undeliveredAlerts;
 
 /* METHODS */
 

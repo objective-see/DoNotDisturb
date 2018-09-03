@@ -1,2 +1,2 @@
-github "DigitaSecurity/dnd" "master"
-github "getsentry/sentry-cocoa" "3.12.0"
+github "DigitaSecurity/dnd" "cameraUpdates"
+github "getsentry/sentry-cocoa" "4.1.0"

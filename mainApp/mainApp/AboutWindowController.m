@@ -34,8 +34,13 @@
     //super
     [super windowDidLoad];
     
-    //make white
-    [self.window setBackgroundColor: NSColor.whiteColor];
+    //not in dark mode?
+    // make window white
+    if(YES != [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"])
+    {
+        //make white
+        self.window.backgroundColor = NSColor.whiteColor;
+    }
     
     //grab app version
     version = getAppVersion();

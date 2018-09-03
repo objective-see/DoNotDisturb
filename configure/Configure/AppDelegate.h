@@ -12,7 +12,6 @@
 #import "Configure.h"
 #import "HelperComms.h"
 #import "AboutWindowController.h"
-#import "ErrorWindowController.h"
 #import "ConfigureWindowController.h"
 
 //block for install/uninstall
@@ -30,10 +29,10 @@ typedef void (^block)(NSNumber*);
 @property(nonatomic) BOOL gotHelp;
 
 //daemom comms object
-@property(nonatomic, retain) HelperComms* xpcComms;
+@property(nonatomic, retain)HelperComms* xpcComms;
 
 //status msg
-@property (nonatomic, weak) IBOutlet NSTextField *statusMsg;
+@property (nonatomic, weak)IBOutlet NSTextField *statusMsg;
 
 //about window controller
 @property(nonatomic, retain)AboutWindowController* aboutWindowController;
@@ -41,16 +40,10 @@ typedef void (^block)(NSNumber*);
 //configure window controller
 @property(nonatomic, retain)ConfigureWindowController* configureWindowController;
 
-//error window controller
-@property(nonatomic, retain)ErrorWindowController* errorWindowController;
-
 
 /* METHODS */
 
 //display configuration window w/ 'install' || 'uninstall' button
 -(void)displayConfigureWindow:(BOOL)isInstalled;
-
-//display error window
--(void)displayErrorWindow:(NSDictionary*)errorInfo;
 
 @end

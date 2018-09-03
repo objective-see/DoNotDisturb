@@ -8,6 +8,7 @@
 //
 
 @import Cocoa;
+
 #import <objc/message.h>
 
 @interface WelcomeWindowController : NSWindowController

@@ -10,14 +10,14 @@
 @import Cocoa;
 @import Foundation;
 
-#import "DaemonComms.h"
+#import "XPCDaemonClient.h"
 
 @interface QuickResponseCode : NSObject
 
 /* PROPERTIES */
 
 //daemon comms obj
-@property(nonatomic, retain)DaemonComms* daemonComms;
+@property(nonatomic, retain)XPCDaemonClient* daemonComms;
 
 
 /* METHODS */

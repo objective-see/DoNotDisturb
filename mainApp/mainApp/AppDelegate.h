@@ -9,7 +9,7 @@
 
 @import Cocoa;
 
-#import "DaemonComms.h"
+#import "XPCDaemonClient.h"
 #import "AboutWindowController.h"
 #import "PrefsWindowController.h"
 #import "UpdateWindowController.h"

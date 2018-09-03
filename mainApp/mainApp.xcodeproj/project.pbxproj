@@ -8,14 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		7D16D69A1F65EF9900DB3161 /* Update.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D16D6991F65EF9900DB3161 /* Update.m */; };
-		7D2582571F19FAD700D28B95 /* DaemonComms.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2582561F19FAD700D28B95 /* DaemonComms.m */; };
+		7D2582571F19FAD700D28B95 /* XPCDaemonClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D2582561F19FAD700D28B95 /* XPCDaemonClient.m */; };
 		7D46FF041F5F496800FEB0F8 /* patrons.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7D46FF031F5F496800FEB0F8 /* patrons.txt */; };
 		7D564DAE1F18434F00B8AAD6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D564DAD1F18434F00B8AAD6 /* AppDelegate.m */; };
 		7D564DB11F18434F00B8AAD6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D564DB01F18434F00B8AAD6 /* main.m */; };
 		7D564DB61F18434F00B8AAD6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D564DB41F18434F00B8AAD6 /* MainMenu.xib */; };
 		7D564DD61F18441500B8AAD6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D564DBF1F18441500B8AAD6 /* Assets.xcassets */; };
 		7D564DDA1F18441500B8AAD6 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D564DC31F18441500B8AAD6 /* AboutWindowController.m */; };
-		7D564DDB1F18441500B8AAD6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D564DC51F18441500B8AAD6 /* MainMenu.xib */; };
 		7D564DDC1F18441500B8AAD6 /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D564DC71F18441500B8AAD6 /* AboutWindow.xib */; };
 		7D564DDF1F18441500B8AAD6 /* HyperlinkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D564DCE1F18441500B8AAD6 /* HyperlinkTextField.m */; };
 		7D564DE61F18446200B8AAD6 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D564DE41F18446200B8AAD6 /* Logging.m */; };
@@ -38,8 +37,7 @@
 		CD17D58C201A7F8500F798D7 /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D58A201A7F8500F798D7 /* Welcome.xib */; };
 		CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D58E201A827A00F798D7 /* QuickResponseCode.m */; };
 		CD1FD56B2089224F00151D1C /* appStore.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CD1FD56A2089224E00151D1C /* appStore.pdf */; };
-		CD20A0CE205797030044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0CD205797030044BCC5 /* Sentry.framework */; };
-		CD20A0DA20579B290044BCC5 /* Sentry.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD20A0CD205797030044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CD20A0DA20579B290044BCC5 /* Sentry.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0CD205797030044BCC5 /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CD2F407F204B417E0066673E /* alert.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F407E204B417E0066673E /* alert.png */; };
 		CD2F4081204B41C90066673E /* hacker.png in Resources */ = {isa = PBXBuildFile; fileRef = CD2F4080204B41C90066673E /* hacker.png */; };
 		CD325425204DEAEA0059951B /* dndText@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD325424204DEAEA0059951B /* dndText@2x.png */; };
@@ -68,14 +66,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD20A0D920579B170044BCC5 /* CopyFiles */ = {
+		CD20A0D920579B170044BCC5 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CD20A0DA20579B290044BCC5 /* Sentry.framework in CopyFiles */,
+				CD20A0DA20579B290044BCC5 /* Sentry.framework in Copy Frameworks */,
 			);
+			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -83,9 +82,9 @@
 /* Begin PBXFileReference section */
 		7D16D6981F65EF9900DB3161 /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Update.h; path = ../shared/Update.h; sourceTree = "<group>"; };
 		7D16D6991F65EF9900DB3161 /* Update.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Update.m; path = ../shared/Update.m; sourceTree = "<group>"; };
-		7D2582551F19FAD700D28B95 /* DaemonComms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaemonComms.h; path = ../shared/DaemonComms.h; sourceTree = "<group>"; };
-		7D2582561F19FAD700D28B95 /* DaemonComms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaemonComms.m; path = ../shared/DaemonComms.m; sourceTree = "<group>"; };
-		7D2582581F19FB6000D28B95 /* UserCommsInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserCommsInterface.h; path = ../shared/UserCommsInterface.h; sourceTree = "<group>"; };
+		7D2582551F19FAD700D28B95 /* XPCDaemonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCDaemonClient.h; path = ../shared/XPCDaemonClient.h; sourceTree = "<group>"; };
+		7D2582561F19FAD700D28B95 /* XPCDaemonClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPCDaemonClient.m; path = ../shared/XPCDaemonClient.m; sourceTree = "<group>"; };
+		7D2582581F19FB6000D28B95 /* XPCDaemonProto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCDaemonProto.h; path = ../shared/XPCDaemonProto.h; sourceTree = "<group>"; };
 		7D46FF031F5F496800FEB0F8 /* patrons.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = patrons.txt; sourceTree = "<group>"; };
 		7D564DA91F18434F00B8AAD6 /* Do Not Disturb.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Do Not Disturb.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D564DAC1F18434F00B8AAD6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -152,7 +151,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CDAAC238201FD4660032F2E6 /* LocalAuthentication.framework in Frameworks */,
-				CD20A0CE205797030044BCC5 /* Sentry.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,11 +274,11 @@
 			children = (
 				CD1FD56A2089224E00151D1C /* appStore.pdf */,
 				7D564DE31F18446200B8AAD6 /* Consts.h */,
-				7D2582551F19FAD700D28B95 /* DaemonComms.h */,
-				7D2582561F19FAD700D28B95 /* DaemonComms.m */,
+				7D2582551F19FAD700D28B95 /* XPCDaemonClient.h */,
+				7D2582561F19FAD700D28B95 /* XPCDaemonClient.m */,
 				7D564DE51F18446200B8AAD6 /* Logging.h */,
 				7D564DE41F18446200B8AAD6 /* Logging.m */,
-				7D2582581F19FB6000D28B95 /* UserCommsInterface.h */,
+				7D2582581F19FB6000D28B95 /* XPCDaemonProto.h */,
 				7D16D6981F65EF9900DB3161 /* Update.h */,
 				7D16D6991F65EF9900DB3161 /* Update.m */,
 				7D564DE91F1855E900B8AAD6 /* UpdateWindowController.h */,
@@ -313,7 +311,7 @@
 				7D564DA71F18434F00B8AAD6 /* Resources */,
 				7DD25FEE1F23B5AE00277EC4 /* CopyFiles */,
 				7D16D6971F650FF400DB3161 /* ShellScript */,
-				CD20A0D920579B170044BCC5 /* CopyFiles */,
+				CD20A0D920579B170044BCC5 /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -330,7 +328,7 @@
 		7D564DA11F18434F00B8AAD6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Objective-See";
 				TargetAttributes = {
 					7D564DA81F18434F00B8AAD6 = {
@@ -338,7 +336,7 @@
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -396,7 +394,6 @@
 				CDAAC21D201D77390032F2E6 /* unconnected.png in Resources */,
 				CD2F4081204B41C90066673E /* hacker.png in Resources */,
 				CE968A9F1FCC66A300AD6B78 /* prefsAction.png in Resources */,
-				7D564DDB1F18441500B8AAD6 /* MainMenu.xib in Resources */,
 				CDAAC217201D54C30032F2E6 /* prefsLink.png in Resources */,
 				CE133C5F1FD756CC00A29D67 /* dndIcon.png in Resources */,
 				7D564DEB1F1855E900B8AAD6 /* UpdateWindow.xib in Resources */,
@@ -418,7 +415,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#archiving\nif [[ $BUILT_PRODUCTS_DIR = *\"ArchiveIntermediates\"* ]]; then\n   cp -R -f \"$PROJECT_TEMP_ROOT/UninstalledProducts/macosx/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#normal build\nelse\n   cp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\nfi";
+			shellScript = "mkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#archiving\nif [[ $BUILT_PRODUCTS_DIR = *\"ArchiveIntermediates\"* ]]; then\n   cp -R -f \"$PROJECT_TEMP_ROOT/UninstalledProducts/macosx/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#normal build\nelse\n   cp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -429,7 +426,7 @@
 			files = (
 				7D564DEA1F1855E900B8AAD6 /* UpdateWindowController.m in Sources */,
 				CD17D58F201A827A00F798D7 /* QuickResponseCode.m in Sources */,
-				7D2582571F19FAD700D28B95 /* DaemonComms.m in Sources */,
+				7D2582571F19FAD700D28B95 /* XPCDaemonClient.m in Sources */,
 				7D564DE61F18446200B8AAD6 /* Logging.m in Sources */,
 				7D16D69A1F65EF9900DB3161 /* Update.m in Sources */,
 				7D564DB11F18434F00B8AAD6 /* main.m in Sources */,
@@ -580,7 +577,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = mainApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "";
+				OTHER_CODE_SIGN_FLAGS = "-o hard,kill,library";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd";
 				PRODUCT_NAME = "Do Not Disturb";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -601,7 +598,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = mainApp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "-o hard,kill";
+				OTHER_CODE_SIGN_FLAGS = "-o hard,kill,library";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd";
 				PRODUCT_NAME = "Do Not Disturb";

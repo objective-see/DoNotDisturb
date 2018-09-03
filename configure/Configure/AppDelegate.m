@@ -27,7 +27,6 @@
 @synthesize configureObj;
 
 @synthesize aboutWindowController;
-@synthesize errorWindowController;
 @synthesize configureWindowController;
 
 //main app interface
@@ -41,6 +40,7 @@
     //start crash handler
     [SentryClient.sharedClient startCrashHandlerWithError:nil];
     
+    /* TODO: uncomment
     //make sure system is supported (lid)
     // if not, will inform user via alert
     if(YES != [self isSupported])
@@ -51,6 +51,8 @@
         //exit
         [NSApp terminate:self];
     }
+     
+    */
     
     //alloc/init Config obj
     configureObj = [[Configure alloc] init];
@@ -139,59 +141,6 @@ bail:
     
     //configure it
     [self.configureWindowController configure:isInstalled];
-    
-    return;
-}
-
-//display error window
--(void)displayErrorWindow:(NSDictionary*)errorInfo
-{
-    //alloc error window
-    errorWindowController = [[ErrorWindowController alloc] initWithWindowNibName:@"ErrorWindowController"];
-    
-    //main thread
-    // just show UI alert, unless its fatal (then load URL)
-    if(YES == [NSThread isMainThread])
-    {
-        //non-fatal errors
-        // show error error popup
-        if(YES != [errorInfo[KEY_ERROR_URL] isEqualToString:FATAL_ERROR_URL])
-        {
-            //display it
-            // call this first to so that outlets are connected
-            [self.errorWindowController display];
-            
-            //configure it
-            [self.errorWindowController configure:errorInfo];
-        }
-        //fatal error
-        // launch browser to go to fatal error page, then exit
-        else
-        {
-            //launch browser
-            [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:errorInfo[KEY_ERROR_URL]]];
-            
-            //then exit
-            [NSApp terminate:self];
-        }
-    }
-    //background thread
-    // have to show error window on main thread
-    else
-    {
-        //show alert
-        // in main UI thread
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            
-            //display it
-            // call this first to so that outlets are connected
-            [self.errorWindowController display];
-            
-            //configure it
-            [self.errorWindowController configure:errorInfo];
-            
-        });
-    }
     
     return;
 }

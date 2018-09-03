@@ -1,28 +1,24 @@
 //
-//  file: UserComms.h
+//  file: XPCDaemon.h
 //  project: DND (launch daemon)
-//  description: interface for user componets (header)
+//  description: interface for user XPC methods (header)
 //
 //  created by Patrick Wardle
 //  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 @import Foundation;
-#import "UserCommsInterface.h"
 #import <dnd/dnd-Swift.h>
 
-@interface UserComms : NSObject <UserProtocol, DNDClientMacDelegate>
+#import "XPCDaemonProto.h"
+
+
+@interface XPCDaemon : NSObject <XPCDaemonProtocol, DNDClientMacDelegate>
 {
     
 }
 
 /* PROPERTIES */
-
-//client status
-@property NSInteger currentStatus;
-
-//last alert
-@property(nonatomic,retain)NSDictionary* dequeuedAlert;
 
 //registration info from server
 @property(nonatomic,retain)NSDictionary *registrationInfo;

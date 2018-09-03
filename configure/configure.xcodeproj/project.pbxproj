@@ -16,12 +16,10 @@
 		BF04235611C0531400431286 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF04235511C0531400431286 /* AppDelegate.m */; };
 		BF65C19111B985C0007C20AB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BF65C19011B985C0007C20AB /* MainMenu.xib */; };
 		CD17D53B20104DD700F798D7 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D53820104DD700F798D7 /* Logging.m */; };
-		CD17D54D20104EE700F798D7 /* ErrorWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D54320104EE600F798D7 /* ErrorWindowController.xib */; };
 		CD17D54E20104EE700F798D7 /* AboutWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D54420104EE700F798D7 /* AboutWindow.xib */; };
 		CD17D54F20104EE700F798D7 /* Configure.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D54720104EE700F798D7 /* Configure.m */; };
 		CD17D55020104EE700F798D7 /* ConfigureWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D54820104EE700F798D7 /* ConfigureWindowController.m */; };
 		CD17D55120104EE700F798D7 /* ConfigureWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD17D54920104EE700F798D7 /* ConfigureWindowController.xib */; };
-		CD17D55220104EE700F798D7 /* ErrorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D54A20104EE700F798D7 /* ErrorWindowController.m */; };
 		CD17D55320104EE700F798D7 /* AboutWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD17D54B20104EE700F798D7 /* AboutWindowController.m */; };
 		CD17D55E201148F900F798D7 /* configure.sh in Resources */ = {isa = PBXBuildFile; fileRef = CD17D55D201148F900F798D7 /* configure.sh */; };
 		CD17D56320116C3800F798D7 /* com.objective-see.dnd.plist in Resources */ = {isa = PBXBuildFile; fileRef = CD17D56220116C3800F798D7 /* com.objective-see.dnd.plist */; };
@@ -40,6 +38,7 @@
 		CDAAC24B20226DFB0032F2E6 /* objectiveSee.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24720226DFB0032F2E6 /* objectiveSee.png */; };
 		CDAAC24C20226DFB0032F2E6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24820226DFB0032F2E6 /* logo.png */; };
 		CDAAC24D20226DFB0032F2E6 /* dndIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24920226DFB0032F2E6 /* dndIcon.png */; };
+		CDD3ADF621352879004F805F /* Sentry.framework.dSYM in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CDD3ADF521352879004F805F /* Sentry.framework.dSYM */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +74,17 @@
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CDD3ADF42135285B004F805F /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CDD3ADF621352879004F805F /* Sentry.framework.dSYM in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -95,16 +105,13 @@
 		CD17D53A20104DD700F798D7 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logging.h; path = ../../shared/Logging.h; sourceTree = "<group>"; };
 		CD17D53E20104E5A00F798D7 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = ../../shared/Consts.h; sourceTree = "<group>"; };
 		CD17D54220104EE600F798D7 /* AboutWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutWindowController.h; sourceTree = "<group>"; };
-		CD17D54320104EE600F798D7 /* ErrorWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorWindowController.xib; sourceTree = "<group>"; };
 		CD17D54420104EE700F798D7 /* AboutWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutWindow.xib; sourceTree = "<group>"; };
 		CD17D54520104EE700F798D7 /* Configure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Configure.h; sourceTree = "<group>"; };
 		CD17D54620104EE700F798D7 /* ConfigureWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigureWindowController.h; sourceTree = "<group>"; };
 		CD17D54720104EE700F798D7 /* Configure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Configure.m; sourceTree = "<group>"; };
 		CD17D54820104EE700F798D7 /* ConfigureWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigureWindowController.m; sourceTree = "<group>"; };
 		CD17D54920104EE700F798D7 /* ConfigureWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfigureWindowController.xib; sourceTree = "<group>"; };
-		CD17D54A20104EE700F798D7 /* ErrorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ErrorWindowController.m; sourceTree = "<group>"; };
 		CD17D54B20104EE700F798D7 /* AboutWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutWindowController.m; sourceTree = "<group>"; };
-		CD17D54C20104EE700F798D7 /* ErrorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ErrorWindowController.h; sourceTree = "<group>"; };
 		CD17D55D201148F900F798D7 /* configure.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = configure.sh; sourceTree = "<group>"; };
 		CD17D56220116C3800F798D7 /* com.objective-see.dnd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "com.objective-see.dnd.plist"; path = "../launchDaemon/launchDaemon/com.objective-see.dnd.plist"; sourceTree = "<group>"; };
 		CD18D64C200DA301005609F9 /* XPCProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCProtocol.h; path = Shared/XPCProtocol.h; sourceTree = SOURCE_ROOT; };
@@ -122,6 +129,7 @@
 		CDAAC24820226DFB0032F2E6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../../shared/images/logo.png; sourceTree = "<group>"; };
 		CDAAC24920226DFB0032F2E6 /* dndIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dndIcon.png; path = ../../shared/images/dndIcon.png; sourceTree = "<group>"; };
 		CDAAC24A20226DFB0032F2E6 /* dndText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dndText.png; path = ../../shared/images/dndText.png; sourceTree = "<group>"; };
+		CDD3ADF521352879004F805F /* Sentry.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Sentry.framework.dSYM; path = ../Carthage/Build/Mac/Sentry.framework.dSYM; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +166,7 @@
 		29B97314FDCFA39411CA2CEA /* SMJobBless */ = {
 			isa = PBXGroup;
 			children = (
+				CDD3ADF521352879004F805F /* Sentry.framework.dSYM */,
 				CD17D56120116C2000F798D7 /* SupportingFiles */,
 				CD17D55C201148F900F798D7 /* Script */,
 				CD73DA9C20049158001FFC84 /* Shared */,
@@ -192,9 +201,6 @@
 				CD17D54620104EE700F798D7 /* ConfigureWindowController.h */,
 				CD17D54820104EE700F798D7 /* ConfigureWindowController.m */,
 				CD17D54920104EE700F798D7 /* ConfigureWindowController.xib */,
-				CD17D54C20104EE700F798D7 /* ErrorWindowController.h */,
-				CD17D54A20104EE700F798D7 /* ErrorWindowController.m */,
-				CD17D54320104EE600F798D7 /* ErrorWindowController.xib */,
 				CD73DA98200490B4001FFC84 /* HelperComms.h */,
 				CD73DA97200490B4001FFC84 /* HelperComms.m */,
 				4BE4904C10445D49006BE471 /* Info.plist */,
@@ -271,6 +277,7 @@
 			buildPhases = (
 				4BE4905A10445E0A006BE471 /* Sources */,
 				4BE4905B10445E0A006BE471 /* Frameworks */,
+				CDD3ADF42135285B004F805F /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -309,7 +316,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1000;
 				TargetAttributes = {
 					4BE4905C10445E0A006BE471 = {
 						DevelopmentTeam = VBG97UB4TA;
@@ -344,7 +351,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD2F4082204B462E0066673E /* dndText.png in Resources */,
-				CD17D54D20104EE700F798D7 /* ErrorWindowController.xib in Resources */,
 				CDAAC24C20226DFB0032F2E6 /* logo.png in Resources */,
 				CD17D56320116C3800F798D7 /* com.objective-see.dnd.plist in Resources */,
 				CDAAC24B20226DFB0032F2E6 /* objectiveSee.png in Resources */,
@@ -392,7 +398,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD17D55220104EE700F798D7 /* ErrorWindowController.m in Sources */,
 				4BE4905110445D49006BE471 /* main.m in Sources */,
 				CD73DA942004633A001FFC84 /* HelperListener.m in Sources */,
 				CD17D55320104EE700F798D7 /* AboutWindowController.m in Sources */,
@@ -422,9 +427,10 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
 				INFOPLIST_FILE = Helper/Info.plist;
 				OTHER_LDFLAGS = (
@@ -450,9 +456,10 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = VBG97UB4TA;
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/../Carthage/Build/Mac";
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
 				INFOPLIST_FILE = Helper/Info.plist;
 				OTHER_LDFLAGS = (
@@ -540,7 +547,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Objective-See, LLC (VBG97UB4TA)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -592,7 +599,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Objective-See, LLC (VBG97UB4TA)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

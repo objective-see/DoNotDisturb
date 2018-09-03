@@ -9,7 +9,7 @@
 
 @import Cocoa;
 
-#import "DaemonComms.h"
+#import "XPCDaemonClient.h"
 
 @interface StatusBarMenu : NSObject <NSPopoverDelegate>
 {
@@ -23,7 +23,7 @@
 @property (retain, nonatomic)NSPopover *popover;
 
 //daemom comms object
-@property (nonatomic, retain)DaemonComms* daemonComms;
+@property (nonatomic, retain)XPCDaemonClient* daemonComms;
 
 //disabled flag
 @property BOOL isDisabled;

@@ -10,6 +10,9 @@
 #ifndef Utilities_h
 #define Utilities_h
 
+@import Sentry;
+@import AVFoundation;
+
 #import <AppKit/AppKit.h>
 #import <IOKit/IOKitLib.h>
 #import <IOKit/pwr_mgt/IOPM.h>
@@ -17,13 +20,21 @@
 #import <SystemConfiguration/SystemConfiguration.h>
 
 //enum of lid states
-typedef NS_ENUM(int, LidState) {
+typedef NS_ENUM(int, LidState)
+{
     stateUnavailable = -1,
     stateOpen = 0,
     stateClosed = 1
 };
 
 /* FUNCTIONS */
+
+//init crash reporting
+void initCrashReporting(void);
+
+//loads a framework
+// note: assumes it is in 'Framework' dir
+NSBundle* loadFramework(NSString* name);
 
 //get app's version
 // extracted from Info.plist
@@ -83,5 +94,9 @@ BOOL hasTouchID(void);
 
 //get current console user
 NSString* currentConsoleUser(SCDynamicStoreRef store);
+
+//macOS Mojave+
+// gotta request camera access
+void requestCameraAccess(void);
 
 #endif

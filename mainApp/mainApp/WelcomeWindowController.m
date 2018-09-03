@@ -10,7 +10,7 @@
 #import "Consts.h"
 #import "Logging.h"
 #import "Utilities.h"
-#import "DaemonComms.h"
+#import "XPCDaemonClient.h"
 #import "QuickResponseCode.h"
 #import "WelcomeWindowController.h"
 
@@ -34,8 +34,13 @@
     //center
     [self.window center];
     
-    //make white
-    [self.window setBackgroundColor: NSColor.whiteColor];
+    //not in dark mode?
+    // make window white
+    if(YES != [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"])
+    {
+        //make white
+        self.window.backgroundColor = NSColor.whiteColor;
+    }
     
     //when supported
     // indicate title bar is transparent (too)
@@ -53,6 +58,7 @@
 
     return;
 }
+
 
 //button handler for all views
 // show next view, sometimes, with view specific logic
@@ -100,8 +106,8 @@
         //skip
         case SKIP_LINKING:
         {
-            //bye
-            [NSApp terminate:self];
+            //bye!
+            [self terminate];
             
             break;
         }
@@ -124,14 +130,27 @@
         //linked view
         case VIEW_LINKED:
         {
-            //exit
-            [NSApp terminate:nil];
+            //bye!
+            [self terminate];
             
             break;
         }
     }
     return;
 }
+
+//exit app
+// performing any actions
+-(void)terminate
+{
+    //before exiting
+    // ask for camera
+    requestCameraAccess();
+    
+    //exit
+    [NSApp terminate:nil];
+}
+
 
 //generate a QRC
 // calls into daemon and then displays
@@ -141,7 +160,7 @@
     QuickResponseCode* qrcObj = nil;
     
     //daemon comms obj
-    __block DaemonComms* daemonComms = nil;
+    __block XPCDaemonClient* daemonComms = nil;
     
     //size
     CGSize qrcSize = {0};
@@ -193,7 +212,7 @@
          
         //init daemon comms
         // will connect, etc.
-        daemonComms = [[DaemonComms alloc] init];
+        daemonComms = [[XPCDaemonClient alloc] init];
          
         //call into daemon/framework
         // this will block until phone linking/registration is complete

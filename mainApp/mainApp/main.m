@@ -24,11 +24,8 @@ int main(int argc, const char * argv[])
     //dbg msg
     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: config/prefs app (args: %@)", [[NSProcessInfo processInfo] arguments]]);
     
-    //init crash reporting client
-    SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];
-    
-    //start crash handler
-    [SentryClient.sharedClient startCrashHandlerWithError:nil];
+    //init crash reporting
+    initCrashReporting();
     
     //already running?
     if(YES == isAppRunning([[NSBundle mainBundle] bundleIdentifier]))

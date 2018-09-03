@@ -1,7 +1,7 @@
 //
-//  file: DaemonComms.m
+//  file: XPCDaemonClient.m
 //  project: DND (shared)
-//  description: interface to talk to daemon
+//  description: talk to the daemon, via XPC (header)
 //
 //  created by Patrick Wardle
 //  copyright (c) 2018 Objective-See. All rights reserved.
@@ -9,9 +9,14 @@
 
 #import "Consts.h"
 #import "Logging.h"
-#import "DaemonComms.h"
+#import "XPCUserProto.h"
+#import "XPCDaemonClient.h"
 
-@implementation DaemonComms
+#ifdef XPC_USER
+#import "XPCUser.h"
+#endif
+
+@implementation XPCDaemonClient
 
 @synthesize daemon;
 @synthesize xpcServiceConnection;
@@ -28,7 +33,18 @@
         xpcServiceConnection = [[NSXPCConnection alloc] initWithMachServiceName:DAEMON_MACH_SERVICE options:0];
         
         //set remote object interface
-        self.xpcServiceConnection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(UserProtocol)];
+        self.xpcServiceConnection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(XPCDaemonProtocol)];
+    
+        #ifdef XPC_USER
+        
+        //set exported object interface (protocol)
+        self.xpcServiceConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(XPCUserProtocol)];
+        
+        //set exported object
+        // this will allow daemon to invoke user methods!
+        self.xpcServiceConnection.exportedObject = [[XPCUser alloc] init];
+        
+        #endif
         
         //resume
         [self.xpcServiceConnection resume];
@@ -144,66 +160,7 @@
     return;
 }
 
-//ask (and then block) for an alert
--(void)alertRequest:(void (^)(NSDictionary* alert))reply
-{
-    //dbg msg
-    logMsg(LOG_DEBUG, @"sending request, via XPC, for alert");
-    
-    //request alert
-    [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
-    {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'alertRequest' method on launch daemon (error: %@)", proxyError]);
-        
-    }] alertRequest:^(NSDictionary* alert)
-    {
-        //respond with alert
-        reply(alert);
-    }];
-    
-    return;
-}
-
-//send alert response back to the daemon
-// for now, it's just an 'ack' that it was recieved/shown
--(void)alertResponse
-{
-    //dbg msg
-    logMsg(LOG_DEBUG, @"sending request, via XPC, for alert response");
-    
-    //respond to alert
-    [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
-    {
-          //err msg
-          logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'alertResponse' method on launch daemon (error: %@)", proxyError]);
-          
-    }] alertResponse];
-    
-    return;
-}
-
-//ask (and then block) for an alert dismiss
--(void)alertDismiss:(void (^)(NSDictionary* alert))reply
-{
-    //dbg msg
-    logMsg(LOG_DEBUG, @"sending request, via XPC, for alert dismiss events");
-
-    //request alert
-    [[self.xpcServiceConnection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
-    {
-          //err msg
-          logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to execute 'alertDismiss' method on launch daemon (error: %@)", proxyError]);
-          
-    }] alertDismiss:^(NSDictionary* alert)
-    {
-         //respond with alert
-         reply(alert);
-    }];
-    
-    return;
-}
-
+//TODO: need?
 //close/cleanup connection
 -(void)close
 {

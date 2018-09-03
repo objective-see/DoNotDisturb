@@ -10,12 +10,11 @@
 #import "Lid.h"
 #import "main.h"
 #import "Consts.h"
-#import "Queue.h"
 #import "Logging.h"
 #import "Utilities.h"
 #import "Preferences.h"
+#import "XPCListener.h"
 #import "UserAuthMonitor.h"
-#import "UserCommsListener.h"
 #import "FrameworkInterface.h"
 
 @import Sentry;
@@ -29,10 +28,6 @@ Preferences* preferences = nil;
 // registers for notifications, gets state, etc
 Lid* lid = nil;
 
-//queue object
-// contains watch items that should be processed
-Queue* eventQueue = nil;
-
 //user auth event listener
 UserAuthMonitor* userAuthMonitor = nil;
 
@@ -41,6 +36,9 @@ FrameworkInterface* framework = nil;
 
 //dispatch source for SIGTERM
 dispatch_source_t dispatchSource = nil;
+
+//XPC listener
+XPCListener* xpcListener = nil;
 
 //main
 // init & kickoff stuffz
@@ -51,20 +49,14 @@ int main(int argc, const char * argv[])
     
     @autoreleasepool
     {
-        //user comms listener (XPC) obj
-        UserCommsListener* userCommsListener = nil;
-        
         //current preferences
         NSDictionary* currentPrefs = nil;
         
         //dbg msg
         logMsg(LOG_DEBUG, [NSString stringWithFormat:@"STARTED: launch daemon (args: %@)", [[NSProcessInfo processInfo] arguments]]);
         
-        //init crash reporting client
-        SentryClient.sharedClient = [[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:nil];
-        
-        //start crash handler
-        [SentryClient.sharedClient startCrashHandlerWithError:nil];
+        //init crash reporting
+        initCrashReporting();
         
         //alloc/init/load prefs
         // to here (early) as other logic (below) uses prefs
@@ -165,18 +157,12 @@ int main(int argc, const char * argv[])
             logMsg(LOG_DEBUG, @"currently disabled, so did not register for lid change notifications");
         }
     
-        //init global queue
-        eventQueue = [[Queue alloc] init];
-
-        //dbg msg
-        logMsg(LOG_DEBUG, @"initialized global queue");
-        
-        //alloc/init user comms XPC obj
-        userCommsListener = [[UserCommsListener alloc] init];
-        if(nil == userCommsListener)
+        //alloc/init XPC listener
+        xpcListener = [[XPCListener alloc] init];
+        if(nil == xpcListener)
         {
             //err msg
-            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to initialize user comms XPC listener"]);
+            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to initialize XPC listener"]);
             
             //bail
             goto bail;

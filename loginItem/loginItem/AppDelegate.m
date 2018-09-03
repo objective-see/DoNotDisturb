@@ -12,7 +12,7 @@
 #import "Logging.h"
 #import "Utilities.h"
 #import "AppDelegate.h"
-#import "AlertMonitor.h"
+#import "XPCDaemonClient.h"
 
 @interface AppDelegate ()
 
@@ -38,14 +38,14 @@
     //dbg msg
     logMsg(LOG_DEBUG, @"starting DND login item");
     
-    //init deamon comms
-    daemonComms = [[DaemonComms alloc] init];
-    
+    //init deamon client
+    daemonComms = [[XPCDaemonClient alloc] init];
+
     //get preferences
     // sends XPC message to daemon
     preferences = [self.daemonComms getPreferences:nil];
     
-    //no preferences yet? ... first run
+    //no preferences yet? ... first run on full (re)install
     // a) set some defaults for login item (passive mode, etc)
     // b) wait for main app to exit before checking in with daemon
     if(0 == preferences.count)
@@ -70,39 +70,44 @@
         // wait until it's exited to complete initializations
         self.appObserver = [[[NSWorkspace sharedWorkspace] notificationCenter] addObserverForName:NSWorkspaceDidTerminateApplicationNotification object:nil queue:nil usingBlock:^(NSNotification *notification)
         {
-             //ignore others
-             if(YES != [MAIN_APP_ID isEqualToString:[((NSRunningApplication*)notification.userInfo[NSWorkspaceApplicationKey]) bundleIdentifier]])
-             {
-                 //ignore
-                 return;
-             }
+            //ignore others
+            if(YES != [MAIN_APP_ID isEqualToString:[((NSRunningApplication*)notification.userInfo[NSWorkspaceApplicationKey]) bundleIdentifier]])
+            {
+                //ignore
+                return;
+            }
              
-             //dbg msg
-             logMsg(LOG_DEBUG, @"main application completed");
+            //dbg msg
+            logMsg(LOG_DEBUG, @"main application completed");
              
-             //remove observer
-             [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self.appObserver];
+            //remove observer
+            [[[NSWorkspace sharedWorkspace] notificationCenter] removeObserver:self.appObserver];
              
-             //unset
-             self.appObserver = nil;
-             
+            //unset
+            self.appObserver = nil;
+            
             //(re)load prefs
             // main app should have set em all now
             preferences = [self.daemonComms getPreferences:nil];
-             
-             //complete initializations
-             [self completeInitialization:preferences firstTime:YES];
-         }];
+            
+            //complete initializations
+            // will show popover, etc
+            [self completeInitialization:preferences firstTime:YES];
+            
+         }]; //main app (welcome screen) exited
     }
     
     //found prefs
     // main app already ran, so just complete init's
     else
     {
+        //might be an upgrade so ask for camera permissions
+        requestCameraAccess();
+        
         //complete initializations
         [self completeInitialization:preferences firstTime:NO];
     }
-
+    
 bail:
     
     return;
@@ -112,9 +117,6 @@ bail:
 // based on prefs, show status bar, check for updates, etc...
 -(void)completeInitialization:(NSDictionary*)preferences firstTime:(BOOL)firstTime
 {
-    //alert monitor obj
-    __block AlertMonitor* alertMonitor = nil;
-    
     //run with status bar icon?
     if(YES != [preferences[PREF_NO_ICON_MODE] boolValue])
     {
@@ -146,33 +148,6 @@ bail:
            
         });
     }
-    
-    //wait to checkin
-    // first time, need a bit to show the popover
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, firstTime * 5 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
-    {
-        //init alert monitor
-        alertMonitor = [[AlertMonitor alloc] init];
-        
-        //in background
-        // monitor / process alerts from daemon
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            //monitor
-            [alertMonitor monitor];
-            
-        });
-        
-        //in background
-        // wait for alert dimiss msgs from daemon
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            
-            //monitor
-            [alertMonitor dismissAlerts];
-            
-        });
-        
-    });
     
     return;
 }
@@ -238,7 +213,7 @@ bail:
     touchBarItem = [[NSCustomTouchBarItem alloc] initWithIdentifier:identifier];
     
     //icon
-    if(YES == [identifier isEqualToString: @".icon" ])
+    if(YES == [identifier isEqualToString:@".icon"])
     {
         //init icon view
         iconView = [[NSImageView alloc] initWithFrame:NSMakeRect(0, 0, 30.0, 30.0)];

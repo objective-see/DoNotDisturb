@@ -54,7 +54,7 @@
     self.window.title = [NSString stringWithFormat:@"Do Not Disturb (v. %@)", getAppVersion()];
     
     //init status msg
-    [self.statusMsg setStringValue:@"evil maids: stay out! 🙅‍♀️🚪"];
+    self.statusMsg.stringValue = @"evil maids: stay out! 🙅‍♀️🚪";
     
     //app already installed?
     // enable 'uninstall' button
@@ -96,8 +96,13 @@
     //make window front
     [NSApp activateIgnoringOtherApps:YES];
     
-    //make white
-    [self.window setBackgroundColor: NSColor.whiteColor];
+    //not in dark mode?
+    // make window white
+    if(YES != [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"])
+    {
+        //make white
+        self.window.backgroundColor = NSColor.whiteColor;
+    }
 
     return;
 }
@@ -293,18 +298,13 @@
     {
         //set result msg
         resultMsg = [NSMutableString stringWithFormat:@"Do Not Disturb %@ed!", action];
-        
-        //set font to black
-        resultMsgColor = [NSColor blackColor];
+    
     }
     //failure
     else
     {
         //set result msg
-        resultMsg = [NSMutableString stringWithFormat:@"error: %@ failed", action];
-        
-        //set font to red
-        resultMsgColor = [NSColor redColor];
+        resultMsg = [NSMutableString stringWithFormat:@"Error: %@ failed", action];
         
         //show 'get more info' button
         self.moreInfoButton.hidden = NO;

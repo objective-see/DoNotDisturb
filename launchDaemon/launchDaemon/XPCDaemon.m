@@ -1,27 +1,22 @@
 //
-//  file: UserComms.m
+//  file: XPCDaemon.m
 //  project: DND (launch daemon)
-//  description: interface for user componets
+//  description: interface for user XPC methods
 //
 //  created by Patrick Wardle
 //  copyright (c) 2018 Objective-See. All rights reserved.
 //
 
 #import "Consts.h"
-#import "Queue.h"
 #import "Logging.h"
-#import "UserComms.h"
+#import "XPCDaemon.h"
 #import "Preferences.h"
 #import "FrameworkInterface.h"
-#import "UserCommsInterface.h"
 
 #import <dnd/dnd-swift.h>
 
 //signing auth
 #define SIGNING_AUTH @"Developer ID Application: Objective-See, LLC (VBG97UB4TA)"
-
-//global queue object
-extern Queue* eventQueue;
 
 //global prefs obj
 extern Preferences* preferences;
@@ -29,10 +24,8 @@ extern Preferences* preferences;
 //framework interface obc
 extern FrameworkInterface* framework;
 
-@implementation UserComms
+@implementation XPCDaemon
 
-@synthesize currentStatus;
-@synthesize dequeuedAlert;
 @synthesize registrationInfo;
 @synthesize registrationSema;
 
@@ -44,8 +37,7 @@ extern FrameworkInterface* framework;
     self = [super init];
     if(nil != self)
     {
-        //set status
-        self.currentStatus = STATUS_CLIENT_UNKNOWN;
+        
     }
     
     return self;
@@ -200,48 +192,7 @@ bail:
     return;
 }
 
-//process alert request from client
-// blocks for queue item, then sends to client
--(void)alertRequest:(void (^)(NSDictionary* alert))reply
-{
-    //dbg msg
-    logMsg(LOG_DEBUG, @"XPC request: alert request");
-    
-    //reset
-    self.dequeuedAlert = nil;
-    
-    //read off queue
-    // will block until alert is ready
-    self.dequeuedAlert = [eventQueue peek];
 
-    //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"found alert on queue: %@", self.dequeuedAlert]);
-    
-    //log to file
-    logMsg(LOG_DEBUG|LOG_TO_FILE, [NSString stringWithFormat:@"sending alert to login item to display to user: %@", self.dequeuedAlert]);
-
-    //return alert
-    reply(self.dequeuedAlert);
-    
-    return;
-}
-
-//invoke when alert has been displayed
-// for now, just remove it from the queue
--(void)alertResponse
-{
-    //dbg msg
-    logMsg(LOG_DEBUG, @"XPC request: alert response");
-    
-    //remove
-    [eventQueue dequeue];
-    
-    //unset
-    self.dequeuedAlert = nil;
-    
-    //dbg msg
-    logMsg(LOG_DEBUG, @"removed alert, as it's been consumed by the user");
-}
 
 //process alert dismiss request from client
 // blocks until framework tell us it was dismissed via the phone || login item said 'disable'

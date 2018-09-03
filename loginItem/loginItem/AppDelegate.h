@@ -8,9 +8,10 @@
 //
 
 @import Cocoa;
+@import AVFoundation;
 
-#import "DaemonComms.h"
 #import "StatusBarMenu.h"
+#import "XPCDaemonClient.h"
 #import "UpdateWindowController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSTouchBarProvider, NSTouchBarDelegate>
@@ -30,7 +31,7 @@
 @property(nonatomic, retain)UpdateWindowController* updateWindowController;
 
 //daemon comms
-@property(nonatomic, retain)DaemonComms* daemonComms;
+@property(nonatomic, retain)XPCDaemonClient* daemonComms;
 
 //observer
 @property(nonatomic, retain)NSObject* appObserver;

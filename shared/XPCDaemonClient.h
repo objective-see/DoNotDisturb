@@ -1,7 +1,7 @@
 //
-//  file: DaemonComms.h
+//  file: XPCDaemonClient
 //  project: DND (shared)
-//  description: interface to talk to daemon (header)
+//  description: talk to the daemon, via XPC (header)
 //
 //  created by Patrick Wardle
 //  copyright (c) 2018 Objective-See. All rights reserved.
@@ -9,15 +9,22 @@
 
 @import Foundation;
 
-#import "UserCommsInterface.h"
+#import "XPCDaemonProto.h"
 
-@interface DaemonComms : NSObject
+@interface XPCDaemonClient : NSObject
+{
+    
+}
+
+/* PROPERTIES */
 
 //remote deamon proxy object
-@property(nonatomic, retain) id <UserProtocol> daemon;
+@property(nonatomic, retain) id <XPCDaemonProtocol> daemon;
 
 //xpc connection
 @property (atomic, strong, readwrite) NSXPCConnection* xpcServiceConnection;
+
+/* METHODS */
 
 //ask daemon for QRC info
 // name, uuid, key, key size, etc...
@@ -33,16 +40,6 @@
 
 //update (save) preferences
 -(void)updatePreferences:(NSDictionary*)preferences;
-
-//ask for alert
--(void)alertRequest:(void (^)(NSDictionary* alert))reply;
-
-//send alert response back to the daemon
-// for now, it's just an 'ack' that it was recieved/shown
--(void)alertResponse;
-
-//ask (and then block) for an alert dismiss
--(void)alertDismiss:(void (^)(NSDictionary* alert))reply;
 
 //close/cleanup connection
 -(void)close;

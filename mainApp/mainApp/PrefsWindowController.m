@@ -12,7 +12,7 @@
 #import "Logging.h"
 #import "Utilities.h"
 #import "AppDelegate.h"
-#import "DaemonComms.h"
+#import "XPCDaemonClient.h"
 #import "QuickResponseCode.h"
 #import "PrefsWindowController.h"
 #import "UpdateWindowController.h"
@@ -40,7 +40,7 @@
     self.window.title = [NSString stringWithFormat:@"Do Not Disturb (v. %@)", getAppVersion()];
     
     //init daemon comms
-    daemonComms = [[DaemonComms alloc] init];
+    daemonComms = [[XPCDaemonClient alloc] init];
     
     //make 'general' selected
     [self.toolbar setSelectedItemIdentifier:TOOLBAR_GENERAL_ID];
@@ -111,9 +111,12 @@
             //set 'touch id' button state
             ((NSButton*)[view viewWithTag:BUTTON_TOUCHID_MODE]).state = [self.preferences[PREF_TOUCHID_MODE] boolValue];
             
+            //set 'no remote tasking' button state
+            ((NSButton*)[view viewWithTag:BUTTON_NO_REMOTE_TASKING]).state = [self.preferences[PREF_NO_REMOTE_TASKING] boolValue];
+            
             //set 'start mode' button state
             ((NSButton*)[view viewWithTag:BUTTON_START_MODE]).state = [self.preferences[PREF_START_MODE] boolValue];
-                         
+            
             break;
         }
             
@@ -138,9 +141,6 @@
             
             //set 'monitor' button state
             ((NSButton*)[view viewWithTag:BUTTON_MONITOR_ACTION]).state = [self.preferences[PREF_MONITOR_ACTION] boolValue];
-            
-            //set 'no remote tasking' button state
-            ((NSButton*)[view viewWithTag:BUTTON_NO_REMOTE_TASKING]).state = [self.preferences[PREF_NO_REMOTE_TASKING] boolValue];
             
             break;
         }
@@ -419,7 +419,7 @@
     QuickResponseCode* qrcObj = nil;
     
     //daemon comms obj
-    __block DaemonComms* daemonComms = nil;
+    __block XPCDaemonClient* daemonComms = nil;
     
     //size
     CGSize qrcSize = {0};
@@ -499,7 +499,7 @@
          
         //init daemon comms
         // will connect, etc.
-        daemonComms = [[DaemonComms alloc] init];
+        daemonComms = [[XPCDaemonClient alloc] init];
         
         //call into daemon/framework
         // this will block until phone linking/registration is complete
@@ -518,7 +518,6 @@
                  [self toolbarButtonHandler:self.linkToolbarItem];
         
              });
-             
         }];
          
     }];

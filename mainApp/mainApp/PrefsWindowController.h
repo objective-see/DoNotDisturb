@@ -9,6 +9,7 @@
 
 @import Cocoa;
 
+#import "XPCDaemonClient.h"
 #import "UpdateWindowController.h"
 
 /* CONSTS */
@@ -57,7 +58,7 @@
 /* PROPERTIES */
 
 //daemon comms object
-@property (retain, nonatomic)DaemonComms* daemonComms;
+@property (retain, nonatomic)XPCDaemonClient* daemonComms;
 
 //preferences
 @property(nonatomic, retain)NSDictionary* preferences;

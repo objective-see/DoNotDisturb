@@ -23,6 +23,101 @@
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 
+//init crash reporting
+void initCrashReporting()
+{
+    //sentry
+    NSBundle *sentry = nil;
+    
+    //error
+    NSError* error = nil;
+    
+    //class
+    Class SentryClient = nil;
+    
+    //load senty
+    sentry = loadFramework(@"Sentry.framework");
+    if(nil == sentry)
+    {
+        //err msg
+        logMsg(LOG_ERR, @"failed to load 'Sentry' framework");
+        
+        //bail
+        goto bail;
+    }
+    
+    //get client class
+    SentryClient = NSClassFromString(@"SentryClient");
+    if(nil == SentryClient)
+    {
+        //bail
+        goto bail;
+    }
+    
+    //set shared client
+    [SentryClient setSharedClient:[[SentryClient alloc] initWithDsn:CRASH_REPORTING_URL didFailWithError:&error]];
+    if(nil != error)
+    {
+        //log error
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"initializing 'Sentry' failed with %@", error]);
+        
+        //bail
+        goto bail;
+    }
+    
+    //start crash handler
+    [[SentryClient sharedClient] startCrashHandlerWithError:&error];
+    if(nil != error)
+    {
+        //log error
+        logMsg(LOG_ERR, [NSString stringWithFormat:@"starting 'Sentry' crash handler failed with %@", error]);
+        
+        //bail
+        goto bail;
+    }
+    
+bail:
+    
+    return;
+}
+
+
+//loads a framework
+// note: assumes it is in 'Framework' dir
+NSBundle* loadFramework(NSString* name)
+{
+    //handle
+    NSBundle* framework = nil;
+    
+    //framework path
+    NSString* path = nil;
+    
+    //init path
+    path = [NSString stringWithFormat:@"%@/../Frameworks/%@", [NSProcessInfo.processInfo.arguments[0] stringByDeletingLastPathComponent], name];
+    
+    //standardize path
+    path = [path stringByStandardizingPath];
+    
+    //init framework (bundle)
+    framework = [NSBundle bundleWithPath:path];
+    if(NULL == framework)
+    {
+        //bail
+        goto bail;
+    }
+    
+    //load framework
+    if(YES != [framework loadAndReturnError:nil])
+    {
+        //bail
+        goto bail;
+    }
+    
+bail:
+    
+    return framework;
+}
+
 //get app's version
 // extracted from Info.plist
 NSString* getAppVersion()
@@ -929,9 +1024,41 @@ NSString* currentConsoleUser(SCDynamicStoreRef store)
         goto bail;
     }
     
-
 bail:
         
     return consoleUser;
+}
+
+//macOS Mojave+ gotta request camera access
+// note, we check first, to see if request was already made
+void requestCameraAccess()
+{
+    //on macOS 10.14+
+    // trigger request for camera access
+    if(@available(macOS 10.14, *))
+    {
+        //auth status
+        AVAuthorizationStatus authStatus = AVAuthorizationStatusNotDetermined;
+        
+        //get current status
+        authStatus = [AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo];
+        
+        //already requested?
+        if(authStatus != AVAuthorizationStatusNotDetermined)
+        {
+            //bail
+            goto bail;
+        }
+        
+        //request
+        [AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL granted)
+        {
+             //dbg msg
+             logMsg(LOG_DEBUG, [NSString stringWithFormat:@"user response for camera access: %d", granted]); 
+        }];
+    }
     
+bail:
+    
+    return;
 }

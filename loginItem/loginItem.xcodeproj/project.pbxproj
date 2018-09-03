@@ -11,7 +11,6 @@
 		7D16D6951F64E43300DB3161 /* UpdateWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D16D6911F64E43300DB3161 /* UpdateWindow.xib */; };
 		7D16D6961F64E43300DB3161 /* UpdateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D16D6931F64E43300DB3161 /* UpdateWindowController.m */; };
 		7D3B75141F13354900568828 /* StatusBarMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3B74FD1F13354900568828 /* StatusBarMenu.m */; };
-		7D3B75151F13354900568828 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D3B75011F13354900568828 /* MainMenu.xib */; };
 		7D3B75251F13357D00568828 /* Logging.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3B75231F13357D00568828 /* Logging.m */; };
 		7D5C5F521F200B9200C0E94A /* Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D5C5F511F200B9200C0E94A /* Utilities.m */; };
 		7D7755E81F02E05B00D0017D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D7755E71F02E05B00D0017D /* AppDelegate.m */; };
@@ -19,9 +18,7 @@
 		7D7755F01F02E05B00D0017D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7D7755EE1F02E05B00D0017D /* MainMenu.xib */; };
 		7DD25FF01F23B73C00277EC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7DD25FEF1F23B73C00277EC4 /* Assets.xcassets */; };
 		7DD260131F25307B00277EC4 /* HyperlinkTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD260121F25307B00277EC4 /* HyperlinkTextField.m */; };
-		7DD2BF6E1F1DDF1F00B33214 /* AlertMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF6D1F1DDF1F00B33214 /* AlertMonitor.m */; };
-		7DD2BF7A1F1EAC9C00B33214 /* DaemonComms.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF791F1EAC9C00B33214 /* DaemonComms.m */; };
-		CD20A0D720579AFD0044BCC5 /* Sentry.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD20A0D620579AFD0044BCC5 /* Sentry.framework */; };
+		7DD2BF7A1F1EAC9C00B33214 /* XPCDaemonClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 7DD2BF791F1EAC9C00B33214 /* XPCDaemonClient.m */; };
 		CD3307E020375ED000F10D71 /* StatusBarPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = CD3307DF20375ED000F10D71 /* StatusBarPopoverController.m */; };
 		CD3307E22037648B00F10D71 /* StatusBarPopover.xib in Resources */ = {isa = PBXBuildFile; fileRef = CD3307E12037648B00F10D71 /* StatusBarPopover.xib */; };
 		CD3307E420376B8300F10D71 /* popoverCloseAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = CD3307E320376B8300F10D71 /* popoverCloseAlt.png */; };
@@ -29,6 +26,9 @@
 		CD3307E820376CCB00F10D71 /* dndIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CD3307E720376CCB00F10D71 /* dndIcon.png */; };
 		CD981A8D2069049B001B875B /* statusIconDisabled.png in Resources */ = {isa = PBXBuildFile; fileRef = CD981A8B2069049A001B875B /* statusIconDisabled.png */; };
 		CD981A8E2069049B001B875B /* statusIconDisabled@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CD981A8C2069049A001B875B /* statusIconDisabled@2x.png */; };
+		CDD8075D2134E0930046594E /* Sentry.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CDD8075C2134E0930046594E /* Sentry.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CDFA0888213685370089758C /* XPCUser.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA0887213685370089758C /* XPCUser.m */; };
+		CDFA08AA213B3ECA0089758C /* Camera.m in Sources */ = {isa = PBXBuildFile; fileRef = CDFA08A9213B3ECA0089758C /* Camera.m */; };
 		CDFB7888206E2F3400ABDD04 /* statusIconWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFB7884206E2F3400ABDD04 /* statusIconWhite.png */; };
 		CDFB7889206E2F3400ABDD04 /* statusIconDisabledWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFB7885206E2F3400ABDD04 /* statusIconDisabledWhite.png */; };
 		CDFB788A206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFB7886206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png */; };
@@ -36,6 +36,20 @@
 		CE968A9C1FCC590200AD6B78 /* statusIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CE968A9A1FCC590200AD6B78 /* statusIcon.png */; };
 		CE968A9D1FCC590200AD6B78 /* statusIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CE968A9B1FCC590200AD6B78 /* statusIcon@2x.png */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CDD8075B2134E0670046594E /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CDD8075D2134E0930046594E /* Sentry.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		7D16D68F1F64E43300DB3161 /* Update.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Update.h; path = ../shared/Update.h; sourceTree = "<group>"; };
@@ -46,7 +60,6 @@
 		7D3B74FD1F13354900568828 /* StatusBarMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusBarMenu.m; sourceTree = "<group>"; };
 		7D3B74FF1F13354900568828 /* StatusBarMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarMenu.h; sourceTree = "<group>"; };
 		7D3B75021F13354900568828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = MainMenu.xib; sourceTree = "<group>"; };
-		7D3B75211F13357D00568828 /* UserCommsInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserCommsInterface.h; path = ../shared/UserCommsInterface.h; sourceTree = "<group>"; };
 		7D3B75221F13357D00568828 /* Consts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Consts.h; path = ../shared/Consts.h; sourceTree = "<group>"; };
 		7D3B75231F13357D00568828 /* Logging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Logging.m; path = ../shared/Logging.m; sourceTree = "<group>"; };
 		7D3B75241F13357D00568828 /* Logging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Logging.h; path = ../shared/Logging.h; sourceTree = "<group>"; };
@@ -61,11 +74,8 @@
 		7DD25FEF1F23B73C00277EC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7DD260111F25307B00277EC4 /* HyperlinkTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HyperlinkTextField.h; path = loginItem/3rdParty/HyperlinkTextField.h; sourceTree = "<group>"; };
 		7DD260121F25307B00277EC4 /* HyperlinkTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = HyperlinkTextField.m; path = loginItem/3rdParty/HyperlinkTextField.m; sourceTree = "<group>"; };
-		7DD2BF6C1F1DDF1F00B33214 /* AlertMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlertMonitor.h; sourceTree = "<group>"; };
-		7DD2BF6D1F1DDF1F00B33214 /* AlertMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlertMonitor.m; sourceTree = "<group>"; };
-		7DD2BF781F1EAC9C00B33214 /* DaemonComms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaemonComms.h; path = ../shared/DaemonComms.h; sourceTree = "<group>"; };
-		7DD2BF791F1EAC9C00B33214 /* DaemonComms.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaemonComms.m; path = ../shared/DaemonComms.m; sourceTree = "<group>"; };
-		CD20A0D620579AFD0044BCC5 /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
+		7DD2BF781F1EAC9C00B33214 /* XPCDaemonClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCDaemonClient.h; path = ../shared/XPCDaemonClient.h; sourceTree = "<group>"; };
+		7DD2BF791F1EAC9C00B33214 /* XPCDaemonClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = XPCDaemonClient.m; path = ../shared/XPCDaemonClient.m; sourceTree = "<group>"; };
 		CD3307DE20375ECF00F10D71 /* StatusBarPopoverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusBarPopoverController.h; sourceTree = "<group>"; };
 		CD3307DF20375ED000F10D71 /* StatusBarPopoverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusBarPopoverController.m; sourceTree = "<group>"; };
 		CD3307E12037648B00F10D71 /* StatusBarPopover.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StatusBarPopover.xib; sourceTree = "<group>"; };
@@ -74,6 +84,14 @@
 		CD3307E720376CCB00F10D71 /* dndIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dndIcon.png; path = ../shared/images/dndIcon.png; sourceTree = "<group>"; };
 		CD981A8B2069049A001B875B /* statusIconDisabled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIconDisabled.png; sourceTree = "<group>"; };
 		CD981A8C2069049A001B875B /* statusIconDisabled@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusIconDisabled@2x.png"; sourceTree = "<group>"; };
+		CDD8075C2134E0930046594E /* Sentry.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sentry.framework; path = ../Carthage/Build/Mac/Sentry.framework; sourceTree = "<group>"; };
+		CDFA088121367C690089758C /* XPC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = XPC.h; path = ../shared/XPC.h; sourceTree = "<group>"; };
+		CDFA088221367F980089758C /* XPCUserProto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCUserProto.h; path = ../shared/XPCUserProto.h; sourceTree = "<group>"; };
+		CDFA088321367F980089758C /* XPCDaemonProto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = XPCDaemonProto.h; path = ../shared/XPCDaemonProto.h; sourceTree = "<group>"; };
+		CDFA0886213685370089758C /* XPCUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XPCUser.h; sourceTree = "<group>"; };
+		CDFA0887213685370089758C /* XPCUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XPCUser.m; sourceTree = "<group>"; };
+		CDFA08A8213B3ECA0089758C /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		CDFA08A9213B3ECA0089758C /* Camera.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Camera.m; sourceTree = "<group>"; };
 		CDFB7884206E2F3400ABDD04 /* statusIconWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIconWhite.png; sourceTree = "<group>"; };
 		CDFB7885206E2F3400ABDD04 /* statusIconDisabledWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIconDisabledWhite.png; sourceTree = "<group>"; };
 		CDFB7886206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusIconDisabledWhite@2x.png"; sourceTree = "<group>"; };
@@ -81,17 +99,6 @@
 		CE968A9A1FCC590200AD6B78 /* statusIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = statusIcon.png; sourceTree = "<group>"; };
 		CE968A9B1FCC590200AD6B78 /* statusIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "statusIcon@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		7D7755E01F02E05B00D0017D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD20A0D720579AFD0044BCC5 /* Sentry.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		7D3B75001F13354900568828 /* Base.lproj */ = {
@@ -122,7 +129,10 @@
 		7D3B75201F13356900568828 /* shared */ = {
 			isa = PBXGroup;
 			children = (
+				CDFA088321367F980089758C /* XPCDaemonProto.h */,
+				CDFA088221367F980089758C /* XPCUserProto.h */,
 				CD3307E720376CCB00F10D71 /* dndIcon.png */,
+				CDFA088121367C690089758C /* XPC.h */,
 				7D16D68F1F64E43300DB3161 /* Update.h */,
 				7D16D6901F64E43300DB3161 /* Update.m */,
 				7D16D6911F64E43300DB3161 /* UpdateWindow.xib */,
@@ -130,9 +140,8 @@
 				7D16D6931F64E43300DB3161 /* UpdateWindowController.m */,
 				7D5C5F501F200B9200C0E94A /* Utilities.h */,
 				7D5C5F511F200B9200C0E94A /* Utilities.m */,
-				7DD2BF781F1EAC9C00B33214 /* DaemonComms.h */,
-				7DD2BF791F1EAC9C00B33214 /* DaemonComms.m */,
-				7D3B75211F13357D00568828 /* UserCommsInterface.h */,
+				7DD2BF781F1EAC9C00B33214 /* XPCDaemonClient.h */,
+				7DD2BF791F1EAC9C00B33214 /* XPCDaemonClient.m */,
 				7D3B75221F13357D00568828 /* Consts.h */,
 				7D3B75231F13357D00568828 /* Logging.m */,
 				7D3B75241F13357D00568828 /* Logging.h */,
@@ -162,8 +171,8 @@
 		7D7755E51F02E05B00D0017D /* src */ = {
 			isa = PBXGroup;
 			children = (
-				7DD2BF6C1F1DDF1F00B33214 /* AlertMonitor.h */,
-				7DD2BF6D1F1DDF1F00B33214 /* AlertMonitor.m */,
+				CDFA0886213685370089758C /* XPCUser.h */,
+				CDFA0887213685370089758C /* XPCUser.m */,
 				7D7755E61F02E05B00D0017D /* AppDelegate.h */,
 				7D7755E71F02E05B00D0017D /* AppDelegate.m */,
 				7D3B74FF1F13354900568828 /* StatusBarMenu.h */,
@@ -177,6 +186,8 @@
 				7D7755EE1F02E05B00D0017D /* MainMenu.xib */,
 				7D7755F11F02E05B00D0017D /* Info.plist */,
 				7D7755E91F02E05B00D0017D /* Supporting Files */,
+				CDFA08A8213B3ECA0089758C /* Camera.h */,
+				CDFA08A9213B3ECA0089758C /* Camera.m */,
 			);
 			name = src;
 			path = loginItem;
@@ -202,7 +213,7 @@
 		CD20A0D520579AE50044BCC5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CD20A0D620579AFD0044BCC5 /* Sentry.framework */,
+				CDD8075C2134E0930046594E /* Sentry.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -215,8 +226,8 @@
 			buildConfigurationList = 7D7755F41F02E05B00D0017D /* Build configuration list for PBXNativeTarget "loginItem" */;
 			buildPhases = (
 				7D7755DF1F02E05B00D0017D /* Sources */,
-				7D7755E01F02E05B00D0017D /* Frameworks */,
 				7D7755E11F02E05B00D0017D /* Resources */,
+				CDD8075B2134E0670046594E /* Copy Frameworks */,
 			);
 			buildRules = (
 			);
@@ -233,7 +244,7 @@
 		7D7755DB1F02E05B00D0017D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Objective-See";
 				TargetAttributes = {
 					7D7755E21F02E05B00D0017D = {
@@ -241,7 +252,7 @@
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.Mac = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -280,7 +291,6 @@
 				CDFB788B206E2F3400ABDD04 /* statusIconWhite@2x.png in Resources */,
 				CDFB7889206E2F3400ABDD04 /* statusIconDisabledWhite.png in Resources */,
 				CDFB788A206E2F3400ABDD04 /* statusIconDisabledWhite@2x.png in Resources */,
-				7D3B75151F13354900568828 /* MainMenu.xib in Resources */,
 				CD3307E22037648B00F10D71 /* StatusBarPopover.xib in Resources */,
 				CD981A8D2069049B001B875B /* statusIconDisabled.png in Resources */,
 				CD981A8E2069049B001B875B /* statusIconDisabled@2x.png in Resources */,
@@ -300,12 +310,13 @@
 				7D3B75141F13354900568828 /* StatusBarMenu.m in Sources */,
 				7D7755EB1F02E05B00D0017D /* main.m in Sources */,
 				7DD260131F25307B00277EC4 /* HyperlinkTextField.m in Sources */,
+				CDFA08AA213B3ECA0089758C /* Camera.m in Sources */,
 				7D3B75251F13357D00568828 /* Logging.m in Sources */,
 				7D5C5F521F200B9200C0E94A /* Utilities.m in Sources */,
 				CD3307E020375ED000F10D71 /* StatusBarPopoverController.m in Sources */,
 				7D7755E81F02E05B00D0017D /* AppDelegate.m in Sources */,
-				7DD2BF6E1F1DDF1F00B33214 /* AlertMonitor.m in Sources */,
-				7DD2BF7A1F1EAC9C00B33214 /* DaemonComms.m in Sources */,
+				7DD2BF7A1F1EAC9C00B33214 /* XPCDaemonClient.m in Sources */,
+				CDFA0888213685370089758C /* XPCUser.m in Sources */,
 				7D16D6941F64E43300DB3161 /* Update.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,7 +372,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Objective-See, LLC (VBG97UB4TA)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -416,7 +427,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Developer ID Application: Objective-See, LLC (VBG97UB4TA)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -439,6 +450,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -447,7 +459,8 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = loginItem/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../../../../../Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "";
+				OTHER_CFLAGS = "-DXPC_USER=1";
+				OTHER_CODE_SIGN_FLAGS = "-o hard,kill,library";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.helper";
 				PRODUCT_NAME = "Do Not Disturb Helper";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -459,6 +472,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -467,7 +481,8 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				INFOPLIST_FILE = loginItem/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../../../../../Frameworks";
-				OTHER_CODE_SIGN_FLAGS = "-o hard,kill";
+				OTHER_CFLAGS = "-DXPC_USER=1";
+				OTHER_CODE_SIGN_FLAGS = "-o hard,kill,library";
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.objective-see.dnd.helper";
 				PRODUCT_NAME = "Do Not Disturb Helper";
