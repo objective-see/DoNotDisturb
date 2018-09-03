@@ -242,13 +242,21 @@
         self.hostName.stringValue = [[NSHost currentHost] localizedName];
         
         //set font
-        self.deviceNames.font = [NSFont fontWithName:@"Avenir Next Condensed Regular" size:20];
+        self.deviceNames.font = [NSFont fontWithName:@"Avenir Next Condensed Regular" size:18];
         
         //set inset
         self.deviceNames.textContainerInset = NSMakeSize(5.0, 10.0);
         
         //reset
         self.deviceNames.string = @"";
+
+        //set background color
+        // dark mode: light gray
+        if(nil != [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"])
+        {
+            //light gray
+            self.deviceNames.backgroundColor = [NSColor lightGrayColor];
+        }
         
         //populate text view w/ registered devices
         for(NSString* deviceToken in registeredDevices[PREF_REGISTERED_DEVICES])
