@@ -5127,6 +5127,6 @@ INsABCDgAAAAAAAABAEAAAAAAAAAVgAAAAAAAAAAAAAAAAAEIOI
         <image name="prefsAction" width="64" height="64"/>
         <image name="prefsGeneral" width="64" height="64"/>
         <image name="prefsLink" width="64" height="64"/>
-        <image name="prefsUpdate" width="32" height="32"/>
+        <image name="prefsUpdate" width="64" height="64"/>
     </resources>
 </document>
