@@ -41,7 +41,4 @@
 //update (save) preferences
 -(void)updatePreferences:(NSDictionary*)preferences;
 
-//close/cleanup connection
--(void)close;
-
 @end

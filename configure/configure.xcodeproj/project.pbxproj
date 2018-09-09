@@ -38,7 +38,6 @@
 		CDAAC24B20226DFB0032F2E6 /* objectiveSee.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24720226DFB0032F2E6 /* objectiveSee.png */; };
 		CDAAC24C20226DFB0032F2E6 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24820226DFB0032F2E6 /* logo.png */; };
 		CDAAC24D20226DFB0032F2E6 /* dndIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = CDAAC24920226DFB0032F2E6 /* dndIcon.png */; };
-		CDD3ADF621352879004F805F /* Sentry.framework.dSYM in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CDD3ADF521352879004F805F /* Sentry.framework.dSYM */; };
 		CDFA08CF213E3C280089758C /* malwarebytes.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFA08CD213E3C280089758C /* malwarebytes.png */; };
 		CDFA08D1213E3DD50089758C /* digita.png in Resources */ = {isa = PBXBuildFile; fileRef = CDFA08D0213E3DD50089758C /* digita.png */; };
 /* End PBXBuildFile section */
@@ -82,7 +81,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CDD3ADF621352879004F805F /* Sentry.framework.dSYM in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -131,7 +129,6 @@
 		CDAAC24820226DFB0032F2E6 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo.png; path = ../../shared/images/logo.png; sourceTree = "<group>"; };
 		CDAAC24920226DFB0032F2E6 /* dndIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dndIcon.png; path = ../../shared/images/dndIcon.png; sourceTree = "<group>"; };
 		CDAAC24A20226DFB0032F2E6 /* dndText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dndText.png; path = ../../shared/images/dndText.png; sourceTree = "<group>"; };
-		CDD3ADF521352879004F805F /* Sentry.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = Sentry.framework.dSYM; path = ../Carthage/Build/Mac/Sentry.framework.dSYM; sourceTree = "<group>"; };
 		CDFA08CD213E3C280089758C /* malwarebytes.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = malwarebytes.png; path = Images/malwarebytes.png; sourceTree = "<group>"; };
 		CDFA08D0213E3DD50089758C /* digita.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = digita.png; path = Images/digita.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,7 +167,6 @@
 		29B97314FDCFA39411CA2CEA /* SMJobBless */ = {
 			isa = PBXGroup;
 			children = (
-				CDD3ADF521352879004F805F /* Sentry.framework.dSYM */,
 				CD17D56120116C2000F798D7 /* SupportingFiles */,
 				CD17D55C201148F900F798D7 /* Script */,
 				CD73DA9C20049158001FFC84 /* Shared */,

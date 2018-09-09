@@ -40,7 +40,6 @@
     //start crash handler
     [SentryClient.sharedClient startCrashHandlerWithError:nil];
     
-    /* TODO: uncomment
     //make sure system is supported (lid)
     // if not, will inform user via alert
     if(YES != [self isSupported])
@@ -51,8 +50,6 @@
         //exit
         [NSApp terminate:self];
     }
-     
-    */
     
     //alloc/init Config obj
     configureObj = [[Configure alloc] init];

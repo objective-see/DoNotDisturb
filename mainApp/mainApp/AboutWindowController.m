@@ -22,6 +22,8 @@
 {
     //center
     [self.window center];
+    
+    return;
 }
 
 //automatically invoked when window is loaded

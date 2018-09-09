@@ -160,17 +160,4 @@
     return;
 }
 
-//TODO: need?
-//close/cleanup connection
--(void)close
-{
-    //invalidate
-    [self.xpcServiceConnection invalidate];
-    
-    //unset
-    self.xpcServiceConnection = nil;
-    
-    return;
-}
-
 @end

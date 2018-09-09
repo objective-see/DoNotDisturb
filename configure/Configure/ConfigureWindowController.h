@@ -15,12 +15,24 @@
 }
 
 /* PROPERTIES */
-@property (weak, nonatomic) IBOutlet NSTextField *statusMsg;
-@property (weak, nonatomic) IBOutlet NSButton *installButton;
-@property (weak, nonatomic) IBOutlet NSButton *moreInfoButton;
-@property (weak, nonatomic) IBOutlet NSButton *uninstallButton;
-@property (weak, nonatomic) IBOutlet NSProgressIndicator *activityIndicator;
 
+//"friends of objective-see"
+@property (strong, nonatomic) IBOutlet NSView *friendsView;
+
+//status msg
+@property (weak, nonatomic) IBOutlet NSTextField *statusMsg;
+
+//install button
+@property (weak, nonatomic) IBOutlet NSButton *installButton;
+
+//more info button
+@property (weak, nonatomic) IBOutlet NSButton *moreInfoButton;
+
+//uninstall button
+@property (weak, nonatomic) IBOutlet NSButton *uninstallButton;
+
+//activity indicator (spinner)
+@property (weak, nonatomic) IBOutlet NSProgressIndicator *activityIndicator;
 
 /* METHODS */
 

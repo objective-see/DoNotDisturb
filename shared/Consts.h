@@ -71,6 +71,9 @@
 //flag to install
 #define ACTION_INSTALL_FLAG 1
 
+//next
+#define ACTION_NEXT_FLAG 2
+
 //flag for partial uninstall
 // leave preferences file, etc.
 #define UNINSTALL_PARTIAL 0

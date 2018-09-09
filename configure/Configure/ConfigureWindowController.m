@@ -18,6 +18,7 @@
 
 @synthesize statusMsg;
 @synthesize moreInfoButton;
+@synthesize friendsView;
 
 //automatically called when nib is loaded
 // just center window
@@ -110,42 +111,96 @@
 //button handler for uninstall/install
 -(IBAction)buttonHandler:(id)sender
 {
+    //frame
+    NSRect frame = {0};
+    
     //action
     NSInteger action = 0;
     
-    //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"handling action click: %@", ((NSButton*)sender).title]);
-    
-    //grab tag
+    //grab action
     action = ((NSButton*)sender).tag;
     
-    //close?
-    // close window to trigger exit logic
-    if(action == ACTION_CLOSE_FLAG)
+    //dbg msg
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"handling action click: %@ (tag: %ld)", ((NSButton*)sender).title, (long)action]);
+    
+    //handle various actions
+    switch(action)
     {
         //close
-        [self.window close];
-    }
-
-    //disable 'x' button
-    // don't want user killing app during install/upgrade
-    [[self.window standardWindowButton:NSWindowCloseButton] setEnabled:NO];
-    
-    //clear status msg
-    [self.statusMsg setStringValue:@""];
-    
-    //force redraw of status msg
-    // sometime doesn't refresh (e.g. slow VM)
-    [self.statusMsg setNeedsDisplay:YES];
-
-    //invoke logic to install/uninstall
-    // do in background so UI doesn't block
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
-    ^{
+        case ACTION_CLOSE_FLAG:
+            [self.window close];
+            break;
+            
         //install/uninstall
-        [self lifeCycleEvent:action];
-    });
-   
+        case ACTION_INSTALL_FLAG:
+        case ACTION_UNINSTALL_FLAG:
+        {
+            //disable 'x' button
+            // don't want user killing app during install/upgrade
+            [[self.window standardWindowButton:NSWindowCloseButton] setEnabled:NO];
+            
+            //clear status msg
+            [self.statusMsg setStringValue:@""];
+            
+            //force redraw of status msg
+            // sometime doesn't refresh (e.g. slow VM)
+            [self.statusMsg setNeedsDisplay:YES];
+            
+            //invoke logic to install/uninstall
+            // do in background so UI doesn't block
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+            ^{
+               
+               //install/uninstall
+               [self lifeCycleEvent:action];
+               
+            });
+            
+            break;
+        }
+        
+        //next
+        // show 'friends' view
+        case ACTION_NEXT_FLAG:
+        {
+            //unset window title
+            self.window.title = @"";
+            
+            //get main window's frame
+            frame = self.window.contentView.frame;
+            
+            //set origin to 0/0
+            frame.origin = CGPointZero;
+            
+            //increase y offset
+            frame.origin.y += 5;
+            
+            //reduce height
+            frame.size.height -= 5;
+            
+            //pre-req
+            [self.friendsView setWantsLayer:YES];
+            
+            //update overlay to take up entire window
+            self.friendsView.frame = frame;
+            
+            //set overlay's view color to white
+            self.friendsView.layer.backgroundColor = [NSColor whiteColor].CGColor;
+            
+            //nap for UI purposes
+            [NSThread sleepForTimeInterval:0.10f];
+            
+            //add to main window
+            [self.window.contentView addSubview:self.friendsView];
+            
+            //show
+            self.friendsView.hidden = NO;
+        }
+        
+        default:
+            break;
+    }
+    
     return;
 }
 
@@ -334,12 +389,11 @@
     //set status msg
     [self.statusMsg setStringValue:resultMsg];
     
-    //set button to close
-    self.installButton.title = ACTION_CLOSE;
+    //set button to 'next'
+    self.installButton.title = ACTION_NEXT;
     
-    //update it's tag
-    // will allow button handler method to detect the close
-    self.installButton.tag = -1;
+    //set tag to next
+    self.installButton.tag = ACTION_NEXT_FLAG;
     
     //enable
     self.installButton.enabled = YES;

@@ -42,9 +42,6 @@
 //automatically invoked when new client (attempts) to connect
 -(BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection;
 
-//automatically invoked when connection invalidated
--(void)connectionInvalidated:(NSXPCConnection *)connection;
-
 @end
 
 #endif /* XPC_h */

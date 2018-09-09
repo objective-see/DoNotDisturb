@@ -57,15 +57,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		7DD25FEE1F23B5AE00277EC4 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = Contents/Library/LoginItems;
-			dstSubfolderSpec = 1;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD20A0D920579B170044BCC5 /* Copy Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -309,7 +300,6 @@
 				7D564DA51F18434F00B8AAD6 /* Sources */,
 				7D564DA61F18434F00B8AAD6 /* Frameworks */,
 				7D564DA71F18434F00B8AAD6 /* Resources */,
-				7DD25FEE1F23B5AE00277EC4 /* CopyFiles */,
 				7D16D6971F650FF400DB3161 /* ShellScript */,
 				CD20A0D920579B170044BCC5 /* Copy Frameworks */,
 			);
@@ -415,7 +405,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#archiving\nif [[ $BUILT_PRODUCTS_DIR = *\"ArchiveIntermediates\"* ]]; then\n   cp -R -f \"$PROJECT_TEMP_ROOT/UninstalledProducts/macosx/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#normal build\nelse\n   cp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\nfi\n";
+			shellScript = "rm -rf   \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\nmkdir -p \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#archiving\nif [[ $BUILT_PRODUCTS_DIR = *\"ArchiveIntermediates\"* ]]; then\n   cp -R -f \"$PROJECT_TEMP_ROOT/UninstalledProducts/macosx/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\n\n#normal build\nelse\n    cp -R -f \"$BUILT_PRODUCTS_DIR/Do Not Disturb Helper.app\" \"$BUILT_PRODUCTS_DIR/$CONTENTS_FOLDER_PATH/Library/LoginItems\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
