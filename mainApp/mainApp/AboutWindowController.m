@@ -36,9 +36,9 @@
     //super
     [super windowDidLoad];
     
-    //not in dark mode?
-    // make window white
-    if(YES != [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"])
+    //not in mojave dark mode?
+    // make window color white
+    if(YES != isDarkMode())
     {
         //make white
         self.window.backgroundColor = NSColor.whiteColor;

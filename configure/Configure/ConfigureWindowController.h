@@ -16,6 +16,9 @@
 
 /* PROPERTIES */
 
+//config (main) view
+@property (weak) IBOutlet NSView *configView;
+
 //"friends of objective-see"
 @property (strong, nonatomic) IBOutlet NSView *friendsView;
 

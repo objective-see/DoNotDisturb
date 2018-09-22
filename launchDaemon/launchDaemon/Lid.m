@@ -294,11 +294,20 @@ BOOL authViaTouchID()
         // when it fires, invoke (user) XPC method to dismiss alert
         self.dismissObserver = [[NSNotificationCenter defaultCenter] addObserverForName:DISMISS_NOTIFICATION object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *notification)
         {
-            //dbg msg
-            logMsg(LOG_DEBUG, @"'DISMISS_NOTIFICATION' triggered, will send XPC msg to user (login item) to dismiss any alerts");
-            
-            //send XPC msg to dismiss
-            [[xpcListener.connection remoteObjectProxy] alertDismiss];
+            //connected login item?
+            if(nil != xpcListener.loginItem)
+            {
+                //dbg msg
+                logMsg(LOG_DEBUG, @"'DISMISS_NOTIFICATION' triggered, will send XPC msg to user (login item) to dismiss any alerts");
+                
+                //send XPC msg to dismiss
+                [[xpcListener.loginItem remoteObjectProxy] alertDismiss];
+            }
+            else
+            {
+                //dbg msg
+                logMsg(LOG_DEBUG, @"no client (login item) is connected, so nothing to dismiss...");
+            }
         }];
         
         //register listener for new client/user (login item)
@@ -315,7 +324,7 @@ BOOL authViaTouchID()
                 for(NSDictionary* alert in self.undeliveredAlerts)
                 {
                     //send XPC msg to user, to display alert
-                    [[xpcListener.connection remoteObjectProxy] alertShow:alert];
+                    [[xpcListener.loginItem remoteObjectProxy] alertShow:alert];
                     
                     //dbg msg
                     logMsg(LOG_DEBUG, [NSString stringWithFormat:@"(re)delivered alert: %@", alert]);
@@ -549,24 +558,34 @@ bail:
     // when client is not running in passive mode
     if(YES != [currentPrefs[PREF_PASSIVE_MODE] boolValue])
     {
-        //send to client
-        // this will fail (but we'll handle) if no clients are connected
-        [[xpcListener.connection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+        //connected client? (login item)
+        // deliver alert via XPC, to user
+        if(nil != xpcListener.loginItem)
         {
-            //err msg
-            logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to invoke USER XPC method: 'alertShow' (error: %@)", proxyError]);
-            
-            //save undelivered alert
-            @synchronized(self.undeliveredAlerts)
-            {
-                //save
-                [self.undeliveredAlerts addObject:alert];
-            }
-            
+            //send to client
+            // this will fail (but we'll handle) if no clients are connected
+            [[xpcListener.loginItem remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+              {
+                  //err msg
+                  logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to invoke USER XPC method: 'alertShow' (error: %@)", proxyError]);
+                  
+                  //save undelivered alert
+                  @synchronized(self.undeliveredAlerts)
+                  {
+                      //save
+                      [self.undeliveredAlerts addObject:alert];
+                  }
+                  
+                  //dbg msg
+                  logMsg(LOG_DEBUG, [NSString stringWithFormat:@"saved %@, will deliver when user (login item) connects", alert]);
+                  
+              }] alertShow:alert];
+        }
+        else
+        {
             //dbg msg
-            logMsg(LOG_DEBUG, [NSString stringWithFormat:@"saved %@, will deliver when user (login item) connects", alert]);
-        
-        }] alertShow:alert];
+            logMsg(LOG_DEBUG, @"no client (login item) is connected, so won't locally deliver alert");
+        }
     }
     //passive mode
     // just log a msg about this fact
@@ -930,20 +949,35 @@ bail:
 // send XPC message to user (login item) to take picture
 -(void)captureImageWithCompletion:(void (^ _Nonnull)(NSData * _Nullable))completion
 {
-    //request to user (login item) to take a picture
-    [[xpcListener.connection remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+    //connected client? (login item)
+    // request image capture of camera, via XPC
+    if(nil != xpcListener.loginItem)
     {
-        //err msg
-        logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to invoke USER XPC method: 'capture picture' (error: %@)", proxyError]);
+        //request to user (login item) to take a picture
+        [[xpcListener.loginItem remoteObjectProxyWithErrorHandler:^(NSError * proxyError)
+          {
+              //err msg
+              logMsg(LOG_ERR, [NSString stringWithFormat:@"failed to invoke USER XPC method: 'capture picture' (error: %@)", proxyError]);
+              
+              //error
+              completion(nil);
+              
+          }] captureImage:^(NSData* image)
+         {
+             //pass back to framework
+             completion(image);
+         }];
+    }
+    else
+    {
+        //dbg msg
+        logMsg(LOG_DEBUG, @"no client (login item) is connected, so can't capture image");
         
-        //error
+        //still, invoke callback
         completion(nil);
-        
-    }] captureImage:^(NSData* image)
-    {
-        //pass back to framework
-        completion(image);
-    }];
+    }
+    
+    
     
     return;
 }

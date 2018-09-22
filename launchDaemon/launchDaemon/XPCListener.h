@@ -19,8 +19,11 @@
 //XPC listener
 @property(nonatomic, retain)NSXPCListener* listener;
 
-//connection
-@property(weak)NSXPCConnection *connection;
+//XPC connection for login item
+@property(weak)NSXPCConnection* loginItem;
+
+//XPC connection for main app
+@property(weak)NSXPCConnection* mainApp;
 
 /* METHODS */
 

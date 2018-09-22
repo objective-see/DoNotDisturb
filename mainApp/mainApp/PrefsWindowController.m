@@ -250,9 +250,10 @@
         //reset
         self.deviceNames.string = @"";
 
-        //set background color
-        // dark mode: light gray
-        if(nil != [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"])
+        //not in mojave dark mode?
+        // make window color white
+        if( (YES != [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 14, 0}]) &&
+            (YES != [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"]) )
         {
             //light gray
             self.deviceNames.backgroundColor = [NSColor lightGrayColor];

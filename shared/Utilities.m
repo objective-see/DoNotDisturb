@@ -126,13 +126,6 @@ NSString* getAppVersion()
     return [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
 }
 
-//get OS version
-// note: this uses macOS 10.10+ methods
-NSOperatingSystemVersion getOSVersion()
-{
-    return [[NSProcessInfo processInfo] operatingSystemVersion];
-}
-
 //get path to (main) app
 // login item is in app bundle, so parse up to get main app
 NSString* getMainAppPath()
@@ -1061,4 +1054,34 @@ void requestCameraAccess()
 bail:
     
     return;
+}
+
+
+//check if (true) dark mode
+BOOL isDarkMode()
+{
+    //flag
+    BOOL darkMode = NO;
+    
+    //not mojave?
+    // bail, since not true dark mode
+    if(YES != [[NSProcessInfo processInfo] isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion){10, 14, 0}])
+    {
+        //bail
+        goto bail;
+    }
+    
+    //not dark mode?
+    if(YES != [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"])
+    {
+        //bail
+        goto bail;
+    }
+    
+    //ok, mojave dark mode it is!
+    darkMode = YES;
+    
+bail:
+    
+    return darkMode;
 }

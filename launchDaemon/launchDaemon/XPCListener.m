@@ -9,6 +9,7 @@
 
 #import "Consts.h"
 #import "Logging.h"
+#import "Utilities.h"
 #import "XPCDaemon.h"
 #import "XPCListener.h"
 #import "XPCUSERProto.h"
@@ -107,7 +108,7 @@ bail:
 #pragma mark NSXPCConnection method overrides
 
 //automatically invoked
-// allows NSXPCListener to configure/accept/resume a new connection
+// allows NSXPCListener to configure/accept/resume a new incoming NSXPCConnection
 // note: we only allow binaries signed by Objective-See to talk to this!
 -(BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
 {
@@ -118,10 +119,10 @@ bail:
     SecTaskRef taskRef = 0;
     
     //signing req string
-    NSString *requirementString = nil;
+    NSString* requirementString = nil;
     
-    //save
-    self.connection = newConnection;
+    //path of connecting app
+    NSString* path = nil;
     
     //dbg msg
     logMsg(LOG_DEBUG, @"received request to connect to XPC interface");
@@ -131,7 +132,7 @@ bail:
     
     //step 1: create task ref
     // uses NSXPCConnection's (private) 'auditToken' iVar
-    taskRef = SecTaskCreateWithAuditToken(NULL, ((ExtendedNSXPCConnection*)self.connection).auditToken);
+    taskRef = SecTaskCreateWithAuditToken(NULL, ((ExtendedNSXPCConnection*)newConnection).auditToken);
     if(NULL == taskRef)
     {
         //bail
@@ -145,26 +146,47 @@ bail:
         //bail
         goto bail;
     }
-
+    
     //set the interface that the exported object implements
-    self.connection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(XPCDaemonProtocol)];
+    newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(XPCDaemonProtocol)];
     
     //set object exported by connection
-    self.connection.exportedObject = [[XPCDaemon alloc] init];
+    newConnection.exportedObject = [[XPCDaemon alloc] init];
     
     //set type of remote object
-    // user (login) item will set this object
-    self.connection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol: @protocol(XPCUserProtocol)];
-
+    // user (login item/main app) will set this object
+    newConnection.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol: @protocol(XPCUserProtocol)];
+    
+    //get path
+    path = getProcessPath(newConnection.processIdentifier);
+    
+    //login item
+    // save connection and notify that new client has connected
+    if(YES == [path hasSuffix:LOGIN_ITEM_NAME])
+    {
+        //save
+        self.loginItem = newConnection;
+        
+        //in background
+        // notify that a new client connected
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0),
+        ^{
+           //notify
+           [[NSNotificationCenter defaultCenter] postNotificationName:USER_NOTIFICATION object:nil userInfo:nil];
+        });
+    }
+    //main app
+    else
+    {
+        //save
+        self.mainApp = newConnection;
+    }
+    
     //resume
-    [self.connection resume];
+    [newConnection resume];
     
     //dbg msg
-    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"allowed XPC connection: %@", newConnection.exportedObject]);
-    
-    //notify other part of app
-    // allows code to deliver any alerts notifications that occured while user was logged out, etc
-    [[NSNotificationCenter defaultCenter] postNotificationName:USER_NOTIFICATION object:nil userInfo:nil];
+    logMsg(LOG_DEBUG, [NSString stringWithFormat:@"allowed XPC connection from %@", path]);
     
     //happy
     shouldAccept = YES;

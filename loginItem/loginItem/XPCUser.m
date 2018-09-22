@@ -1,7 +1,7 @@
 //
-//  file: UserComms.m
-//  project: DND (launch daemon)
-//  description: interface for user componets
+//  file: XPCUser.m
+//  project: DND (login item)
+//  description: user XPC methods
 //
 //  created by Patrick Wardle
 //  copyright (c) 2018 Objective-See. All rights reserved.
@@ -12,9 +12,6 @@
 #import "Logging.h"
 #import "XPCUser.h"
 #import "AppDelegate.h"
-
-//signing auth
-//#define SIGNING_AUTH @"Developer ID Application: Objective-See, LLC (VBG97UB4TA)"
 
 @implementation XPCUser
 

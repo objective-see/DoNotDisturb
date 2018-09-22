@@ -18,9 +18,6 @@
 
 /* PROPERTIES */
 
-//remote deamon proxy object
-@property(nonatomic, retain) id <XPCDaemonProtocol> daemon;
-
 //xpc connection
 @property (atomic, strong, readwrite) NSXPCConnection* xpcServiceConnection;
 

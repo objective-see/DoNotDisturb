@@ -52,12 +52,6 @@
 //button title: next
 #define ACTION_NEXT @"Next »"
 
-//button title: no
-#define ACTION_NO @"No"
-
-//button title: yes
-#define ACTION_YES @"Yes!"
-
 //frame shift
 // for status msg to avoid activity indicator
 #define FRAME_SHIFT 45

@@ -96,10 +96,10 @@
     
     //make window front
     [NSApp activateIgnoringOtherApps:YES];
-    
-    //not in dark mode?
-    // make window white
-    if(YES != [[[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"] isEqualToString:@"Dark"])
+
+    //not in mojave dark mode?
+    // make window color white
+    if(YES != isDarkMode())
     {
         //make white
         self.window.backgroundColor = NSColor.whiteColor;
@@ -184,17 +184,22 @@
             //update overlay to take up entire window
             self.friendsView.frame = frame;
             
-            //set overlay's view color to white
-            self.friendsView.layer.backgroundColor = [NSColor whiteColor].CGColor;
+            //not in mojave dark mode?
+            // make window color white
+            if(YES != isDarkMode())
+            {
+                //set white
+                self.friendsView.layer.backgroundColor = [NSColor whiteColor].CGColor;
+            }
             
-            //nap for UI purposes
-            [NSThread sleepForTimeInterval:0.10f];
-            
-            //add to main window
-            [self.window.contentView addSubview:self.friendsView];
-            
+            //update config view
+            self.window.contentView = self.friendsView;
+    
             //show
             self.friendsView.hidden = NO;
+            
+            //draw
+            self.friendsView.needsDisplay = YES;
         }
         
         default:

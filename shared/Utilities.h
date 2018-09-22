@@ -40,10 +40,6 @@ NSBundle* loadFramework(NSString* name);
 // extracted from Info.plist
 NSString* getAppVersion(void);
 
-//get OS version
-// note: this uses macOS 10.10+ methods
-NSOperatingSystemVersion getOSVersion(void);
-
 //get path to (main) app
 // login item is in app bundle, so parse up to get main app
 NSString* getMainAppPath(void);
@@ -98,5 +94,8 @@ NSString* currentConsoleUser(SCDynamicStoreRef store);
 //macOS Mojave+
 // gotta request camera access
 void requestCameraAccess(void);
+
+//check if (true) dark mode
+BOOL isDarkMode(void);
 
 #endif

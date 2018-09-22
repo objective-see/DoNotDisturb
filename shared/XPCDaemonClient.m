@@ -18,7 +18,6 @@
 
 @implementation XPCDaemonClient
 
-@synthesize daemon;
 @synthesize xpcServiceConnection;
 
 //init
