@@ -50,6 +50,7 @@ extern XPCDaemonClient* xpcDaemonClient;
 #define BUTTON_NO_REMOTE_ALERTS_MODE 5
 #define BUTTON_EXECUTE_ACTION 6
 #define BUTTON_NO_UPDATE_MODE 7
+#define BUTTON_APPLE_WATCH_MODE 8
 
 //init 'general' view
 // add it, and make it selected
@@ -119,6 +120,7 @@ extern XPCDaemonClient* xpcDaemonClient;
             view = self.modesView;
             
             ((NSButton*)[view viewWithTag:BUTTON_NO_ICON_MODE]).state = [self.preferences[PREF_NO_ICON_MODE] boolValue];
+            ((NSButton*)[view viewWithTag:BUTTON_APPLE_WATCH_MODE]).state = [self.preferences[PREF_APPLE_WATCH_MODE] boolValue];
             ((NSButton*)[view viewWithTag:BUTTON_TOUCH_ID_MODE]).state = [self.preferences[PREF_TOUCH_ID_MODE] boolValue];
             
             break;
@@ -239,6 +241,11 @@ extern XPCDaemonClient* xpcDaemonClient;
         //touch id mode
         case BUTTON_TOUCH_ID_MODE:
             updatedPreferences[PREF_TOUCH_ID_MODE] = state;
+            break;
+        
+        //apple watch mode
+        case BUTTON_APPLE_WATCH_MODE:
+            updatedPreferences[PREF_APPLE_WATCH_MODE] = state;
             break;
             
         //include image mode

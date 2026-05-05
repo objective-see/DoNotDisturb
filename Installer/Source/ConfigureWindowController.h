@@ -49,6 +49,7 @@
 @property (strong) IBOutlet NSView *configureView;
 
 @property (weak) IBOutlet NSButton *passiveMode;
+@property (weak) IBOutlet NSButton *appleWatchMode;
 @property (weak) IBOutlet NSButton *touchIDMode;
 
 //preferences

@@ -163,6 +163,7 @@ extern os_log_t logHandle;
     if( (ACTION_SHOW_CONFIGURATION+1) == action) {
         self.preferences = @{
             PREF_PASSIVE_MODE: @(self.passiveMode.state),
+            PREF_APPLE_WATCH_MODE: @(self.appleWatchMode.state),
             PREF_TOUCH_ID_MODE: @(self.touchIDMode.state)
         };
     }
@@ -293,6 +294,7 @@ extern os_log_t logHandle;
             NSDictionary* preferences = [NSDictionary dictionaryWithContentsOfFile:[INSTALL_DIRECTORY stringByAppendingPathComponent:PREFS_FILE]];
             if(preferences) {
                 self.passiveMode.state = [preferences[PREF_PASSIVE_MODE] integerValue];
+                self.appleWatchMode.state = [preferences[PREF_APPLE_WATCH_MODE] integerValue];
                 self.touchIDMode.state = [preferences[PREF_TOUCH_ID_MODE] integerValue];
             }
             
@@ -345,6 +347,7 @@ extern os_log_t logHandle;
                 execTask(OPEN, @[[@"/Applications" stringByAppendingPathComponent:APP_NAME],
                                 @"--args", INITIAL_LAUNCH,
                                  PREF_PASSIVE_MODE, [self.preferences[PREF_PASSIVE_MODE] description],
+                                 PREF_APPLE_WATCH_MODE, [self.preferences[PREF_APPLE_WATCH_MODE] description],
                                  PREF_TOUCH_ID_MODE, [self.preferences[PREF_TOUCH_ID_MODE] description]],
                                  NO, NO);
             }
