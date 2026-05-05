@@ -66,7 +66,7 @@ XPCDaemonClient* xpcDaemonClient;
         
         NSArray* args = NSProcessInfo.processInfo.arguments;
         NSMutableDictionary* initialPreferences = [NSMutableDictionary dictionary];
-        NSArray* prefKeys = @[PREF_PASSIVE_MODE, PREF_TOUCH_ID_MODE];
+        NSArray* prefKeys = @[PREF_PASSIVE_MODE, PREF_TOUCH_ID_MODE, PREF_APPLE_WATCH_MODE];
             
         //extract set key/value pairs
         for(NSString* key in prefKeys) {

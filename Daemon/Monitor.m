@@ -107,17 +107,21 @@ static void pmDomainChange(void *refcon, io_service_t service, uint32_t messageT
         // log to file
         os_log_info(logHandle, "[NEW EVENT] lid state: open (sleep state: %d)", sleepState);
         
-        //touch id mode?
+        BOOL touchIdAllowed = YES == [preferences.preferences[PREF_TOUCH_ID_MODE] boolValue];
+        BOOL appleWatchAllowed = YES == [preferences.preferences[PREF_APPLE_WATCH_MODE] boolValue];
+        
+        //is a mode of secure authentication set to skip an alert?
         // wait up to 7 seconds, and ignore event if user auth'd via biometrics
-        if(YES == [preferences.preferences[PREF_TOUCH_ID_MODE] boolValue])
+        if(touchIdAllowed || appleWatchAllowed)
         {
             //dbg msg
-            os_log_debug(logHandle, "'touch ID' mode enabled, waiting for biometric auth event");
+            os_log_debug(logHandle, "'secure auth' mode enabled, waiting for event");
             
-            //wait for touch ID
-            if(YES == [monitor waitForTouchID:7.0])
+            //wait for a trustworthy authentication event
+            NSString* authMethodUsed = NULL;
+            if(YES == [monitor waitForSecureAuth:touchIdAllowed:appleWatchAllowed:7.0:authMethodUsed])
             {
-                os_log_info(logHandle, "user authenticated via touch ID, ignoring event");
+                os_log_info(logHandle, "user authenticated via %@, ignoring event", authMethodUsed);
                 goto bail;
             }
         }
@@ -250,8 +254,8 @@ bail:
         goto bail;
     }
     
-    //start touch ID monitoring
-    [self startTouchIDMonitor];
+    //start authentication monitoring
+    [self startAuthMonitor];
     
     //happy
     registered = YES;
@@ -285,8 +289,8 @@ bail:
     //mark stopped
     running = NO;
     
-    //stop touch id monitoring
-    [self stopTouchIDMonitor];
+    //stop authentication monitoring
+    [self stopAuthMonitor];
     
     //have a dispatch queue?
     // serialize teardown with in-flight callbacks
@@ -358,8 +362,8 @@ bail:
     return NO;
 }
 
-//start persistent ES client for touch ID auth monitoring
--(void)startTouchIDMonitor
+//start persistent ES client for authentication event monitoring
+-(void)startAuthMonitor
 {
     //already running?
     if(esAuthClient) return;
@@ -370,18 +374,29 @@ bail:
         //only care about auth events
         if(msg->event_type != ES_EVENT_TYPE_NOTIFY_AUTHENTICATION) return;
         
-        //only care about Touch ID successes
-        if(msg->event.authentication->type    != ES_AUTHENTICATION_TYPE_TOUCHID) return;
+        //only care about auth events that unlocked the account
         if(msg->event.authentication->success != YES) return;
         
-        //record timestamp
-        self.lastTouchIDAuth = [NSDate date];
-        
-        os_log_debug(logHandle, "touch ID auth detected");
+        // only care about Touch ID or Apple Watch successes
+        switch(msg->event.authentication->type) {
+            //record timestamp
+            case ES_AUTHENTICATION_TYPE_TOUCHID:
+                self.lastTouchIDAuth = [NSDate date];
+                os_log_debug(logHandle, "touch ID auth detected");
+                break;
+            case ES_AUTHENTICATION_TYPE_AUTO_UNLOCK:
+                //only care about when the Apple Watch unlocked the machine itself
+                if(msg->event.authentication->data.auto_unlock->type != ES_AUTO_UNLOCK_MACHINE_UNLOCK) return;
+                self.lastAppleWatchAuth = [NSDate date];
+                os_log_debug(logHandle, "apple watch auth detected");
+                break;
+            default:
+                return;
+        }
     });
     
     if(ES_NEW_CLIENT_RESULT_SUCCESS != result) {
-        os_log_error(logHandle, "ERROR: failed to create ES client for touch ID monitoring (result: %d)", result);
+        os_log_error(logHandle, "ERROR: failed to create ES client for authentication monitoring (result: %d)", result);
         esAuthClient = NULL;
         return;
     }
@@ -395,43 +410,56 @@ bail:
         return;
     }
     
-    os_log_debug(logHandle, "persistent touch ID monitor started");
+    os_log_debug(logHandle, "persistent authentication monitor started");
 }
 
 //stop persistent ES client
--(void)stopTouchIDMonitor
+-(void)stopAuthMonitor
 {
     if(esAuthClient) {
         es_unsubscribe_all(esAuthClient);
         es_delete_client(esAuthClient);
         esAuthClient = NULL;
-        os_log_debug(logHandle, "persistent touch ID monitor stopped");
+        os_log_debug(logHandle, "persistent authentication monitor stopped");
     }
 }
 
-//wait for a touch ID auth event
+//wait for a trustworhy auth event, Apple Watch or touch ID
 // polls the persistent ES client's timestamp
--(BOOL)waitForTouchID:(NSTimeInterval)timeout
+-(BOOL)waitForSecureAuth:(NSTimeInterval)timeout :(BOOL)touchIdAllowed :(BOOL)appleWatchAllowed :(NSString*) authMethodUsed
 {
     //no ES client?
     if(!esAuthClient) {
-        os_log_error(logHandle, "waitForTouchID: no ES client (FDA not granted?)");
+        os_log_error(logHandle, "waitForSecureAuth: no ES client (FDA not granted?)");
         return NO;
     }
     
     //reference time (lid just opened)
     NSDate* lidOpenTime = [NSDate date];
     
-    //poll for touch ID auth
+    //poll for auth
     NSTimeInterval elapsed = 0;
     while(elapsed < timeout)
     {
-        //check if a touch ID auth occurred after lid open
-        NSDate* authTime = self.lastTouchIDAuth;
+        NSDate* authTime = NULL;
+        NSString* authTypeFound = NULL;
+        if(touchIdAllowed) {
+            //check if a touch ID auth occurred after lid open
+            authTime = self.lastTouchIDAuth;
+            authTypeFound = @"touch ID";
+        }
+        
+        if(appleWatchAllowed) {
+            //check if an apple watch auth occured after lid open
+            authTime = self.lastAppleWatchAuth;
+            authTypeFound = @"Apple Watch";
+        }
+        
         if(authTime && [authTime timeIntervalSinceDate:lidOpenTime] >= 0)
         {
-            os_log_debug(logHandle, "touch ID auth detected (%.1fs relative to lid open)",
-                         [authTime timeIntervalSinceDate:lidOpenTime]);
+            authMethodUsed = authTypeFound;
+            os_log_debug(logHandle, "%@ auth detected (%.1fs relative to lid open)",
+                         authTypeFound, [authTime timeIntervalSinceDate:lidOpenTime]);
             return YES;
         }
         
@@ -440,7 +468,7 @@ bail:
         elapsed += 0.25;
     }
     
-    os_log_debug(logHandle, "waitForTouchID: timed out after %.1fs", timeout);
+    os_log_debug(logHandle, "waitForSecureAuth: timed out after %.1fs", timeout);
     return NO;
 }
 

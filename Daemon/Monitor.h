@@ -47,6 +47,8 @@
 
 //last touch ID auth timestamp (set by persistent ES client)
 @property(atomic, retain)NSDate* lastTouchIDAuth;
+// last Apple Watch auth timetstamp (set by persistent ES client)
+@property(atomic, retain)NSDate* lastAppleWatchAuth;
 
 /* METHODS */
 
@@ -54,6 +56,6 @@
 -(BOOL)start;
 -(BOOL)isExternalDisplayActive;
 -(void)processEvent:(NSString*)timestamp;
--(BOOL)waitForTouchID:(NSTimeInterval)timeout;
+-(BOOL)waitForSecureAuth:(NSTimeInterval)timeout :(BOOL)touchIdAllowed :(BOOL)appleWatchAllowed :(NSString*) authMethodUsed;
 
 @end

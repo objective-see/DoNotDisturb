@@ -104,6 +104,7 @@
 
 #define PREF_NO_ICON_MODE @"noIconMode"
 #define PREF_PASSIVE_MODE @"passiveMode"
+#define PREF_APPLE_WATCH_MODE @"appleWatchMode"
 #define PREF_TOUCH_ID_MODE @"touchIDMode"
 
 #define PREF_CHAT_ID @"telegramChatID"

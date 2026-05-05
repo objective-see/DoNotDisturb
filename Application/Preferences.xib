@@ -30,7 +30,7 @@
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <rect key="contentRect" x="196" y="240" width="600" height="432"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1410"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1512" height="949"/>
             <view key="contentView" wantsLayer="YES" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="600" height="432"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -84,11 +84,11 @@
             <point key="canvasLocation" x="-1654" y="211"/>
         </window>
         <customView id="K6i-xr-27e" userLabel="Modes">
-            <rect key="frame" x="0.0" y="0.0" width="600" height="220"/>
+            <rect key="frame" x="0.0" y="0.0" width="600" height="230"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button tag="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bog-hz-gcd">
-                    <rect key="frame" x="20" y="183" width="18" height="18"/>
+                    <rect key="frame" x="20" y="193" width="18" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Aaw-XT-TEt">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -99,7 +99,7 @@
                     </connections>
                 </button>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kjh-jc-STu">
-                    <rect key="frame" x="44" y="185" width="160" height="15"/>
+                    <rect key="frame" x="44" y="195" width="160" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="No Icon Mode" id="4EN-j2-enV">
                         <font key="font" size="13" name="Menlo-Bold"/>
@@ -108,7 +108,7 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="xaO-g8-rdS">
-                    <rect key="frame" x="44" y="167" width="475" height="15"/>
+                    <rect key="frame" x="44" y="177" width="475" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Run without showing an icon in the status menu bar." id="SG5-YM-BoV">
                         <font key="font" size="13" name="Menlo-Regular"/>
@@ -117,7 +117,7 @@
                     </textFieldCell>
                 </textField>
                 <button tag="2" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fCw-dO-UjA">
-                    <rect key="frame" x="20" y="127" width="18" height="18"/>
+                    <rect key="frame" x="20" y="137" width="18" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="cSM-qy-UBH">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -128,7 +128,7 @@
                     </connections>
                 </button>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6O1-eb-lIz">
-                    <rect key="frame" x="44" y="129" width="266" height="15"/>
+                    <rect key="frame" x="44" y="139" width="266" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Passive Mode" id="lOS-sK-Fxz">
                         <font key="font" size="13" name="Menlo-Bold"/>
@@ -137,7 +137,7 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="uaA-gL-8Kf">
-                    <rect key="frame" x="44" y="111" width="475" height="15"/>
+                    <rect key="frame" x="44" y="121" width="475" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Run without showing local alerts." id="poq-d5-agm">
                         <font key="font" size="13" name="Menlo-Regular"/>
@@ -145,8 +145,37 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button tag="2" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X81-1y-8Dw">
+                    <rect key="frame" x="20" y="84" width="18" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="ZJ6-1v-z1Y">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="menu" size="14"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="togglePreference:" target="-2" id="rqf-6r-0z5"/>
+                    </connections>
+                </button>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" id="L9f-BX-v8p">
+                    <rect key="frame" x="44" y="87" width="266" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Apple Watch Mode" id="Tbf-yG-ppD">
+                        <font key="font" size="13" name="Menlo-Bold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" id="Sg4-5J-u5e">
+                    <rect key="frame" x="44" y="64" width="475" height="15"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Ignore events if followed by Apple Watch authentication." id="vrK-mY-QZR">
+                        <font key="font" size="13" name="Menlo-Regular"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
                 <button tag="3" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SGy-OV-jnw">
-                    <rect key="frame" x="20" y="71" width="18" height="18"/>
+                    <rect key="frame" x="20" y="30" width="18" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="KBB-UE-Vou">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -157,7 +186,7 @@
                     </connections>
                 </button>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DA8-0T-xml">
-                    <rect key="frame" x="44" y="73" width="266" height="15"/>
+                    <rect key="frame" x="44" y="32" width="266" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Touch ID Mode" id="6NT-Rz-J4V">
                         <font key="font" size="13" name="Menlo-Bold"/>
@@ -166,7 +195,7 @@
                     </textFieldCell>
                 </textField>
                 <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" allowsCharacterPickerTouchBarItem="YES" preferredMaxLayoutWidth="471" translatesAutoresizingMaskIntoConstraints="NO" id="7Vs-Bo-OXu">
-                    <rect key="frame" x="44" y="56" width="475" height="15"/>
+                    <rect key="frame" x="44" y="10" width="475" height="15"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Ignore events if followed by biometric authentication." id="LYZ-UX-Ve7">
                         <font key="font" size="13" name="Menlo-Regular"/>
@@ -175,7 +204,7 @@
                     </textFieldCell>
                 </textField>
             </subviews>
-            <point key="canvasLocation" x="-986" y="26"/>
+            <point key="canvasLocation" x="-986" y="31"/>
         </customView>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
@@ -496,6 +525,15 @@ Install Telegram, create a free bot and paste your token below. Then scan the QR
             </subviews>
             <point key="canvasLocation" x="1011" y="46"/>
         </customView>
+        <button verticalHuggingPriority="750" id="bDj-wb-DQr">
+            <rect key="frame" x="0.0" y="0.0" width="61" height="18"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <buttonCell key="cell" type="check" title="Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="o5g-hn-BeZ">
+                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                <font key="font" metaFont="system"/>
+            </buttonCell>
+            <point key="canvasLocation" x="-1311" y="-148"/>
+        </button>
     </objects>
     <resources>
         <image name="PrefsAlerts" width="64" height="64"/>
