@@ -49,7 +49,7 @@
 @property (strong) IBOutlet NSView *configureView;
 
 @property (weak) IBOutlet NSButton *passiveMode;
-@property (weak) IBOutlet NSButton *touchIDMode;
+@property (weak) IBOutlet NSButton *trustedUnlockMode;
 
 //preferences
 @property (nonatomic, retain)NSDictionary* preferences;

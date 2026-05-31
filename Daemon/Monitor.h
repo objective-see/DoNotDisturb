@@ -45,8 +45,8 @@
 @property(nonatomic, retain)Telegram* telegram;
 @property(nonatomic, retain)XPCUserClient* xpcUserClient;
 
-//last touch ID auth timestamp (set by persistent ES client)
-@property(atomic, retain)NSDate* lastTouchIDAuth;
+//last trusted auth timestamp (set by persistent ES client)
+@property(atomic, retain)NSDate* lastTrustedAuth;
 
 /* METHODS */
 
@@ -54,6 +54,6 @@
 -(BOOL)start;
 -(BOOL)isExternalDisplayActive;
 -(void)processEvent:(NSString*)timestamp;
--(BOOL)waitForTouchID:(NSTimeInterval)timeout;
+-(BOOL)waitForTrustedAuth:(NSTimeInterval)timeout;
 
 @end

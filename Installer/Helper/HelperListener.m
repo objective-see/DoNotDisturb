@@ -97,7 +97,7 @@ bail:
     if(@available(macOS 13.0, *)) {
         
         //init requirement
-        requirement = [NSString stringWithFormat:@"anchor apple generic and identifier \"%@\" and certificate leaf [subject.CN] = \"%@\" and info [CFBundleShortVersionString] >= \"2.0.0\"", INSTALLER_ID, SIGNING_AUTH];
+        requirement = [NSString stringWithFormat:@"anchor apple generic and identifier \"%@\" and certificate leaf [subject.CN] = \"%@\" and info [CFBundleShortVersionString] >= \"2.1.0\"", INSTALLER_ID, SIGNING_AUTH];
         
         //set requirement
         [self.listener setConnectionCodeSigningRequirement:requirement];
@@ -200,7 +200,7 @@ bail:
         }
         
         //init signing req string
-        requirement = [NSString stringWithFormat:@"anchor apple generic and identifier \"%@\" and certificate leaf [subject.CN] = \"%@\" and info [CFBundleShortVersionString] >= \"2.0.0\"", INSTALLER_ID, SIGNING_AUTH];
+        requirement = [NSString stringWithFormat:@"anchor apple generic and identifier \"%@\" and certificate leaf [subject.CN] = \"%@\" and info [CFBundleShortVersionString] >= \"2.1.0\"", INSTALLER_ID, SIGNING_AUTH];
         
         //step 1: create task ref
         // uses NSXPCConnection's (private) 'auditToken' iVar

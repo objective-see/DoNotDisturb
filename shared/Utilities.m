@@ -317,7 +317,7 @@ OSStatus verifyApp(NSString* path, NSString* signingAuth)
     SecRequirementRef requirementRef = NULL;
     
     //init signing req string
-    requirement = [NSString stringWithFormat:@"anchor apple generic and identifier \"%@\" and certificate leaf [subject.CN] = \"%@\" and info [CFBundleShortVersionString] >= \"2.0.0\"", INSTALLER_ID, signingAuth];
+    requirement = [NSString stringWithFormat:@"anchor apple generic and identifier \"%@\" and certificate leaf [subject.CN] = \"%@\" and info [CFBundleShortVersionString] >= \"2.1.0\"", INSTALLER_ID, signingAuth];
     
     //create static code
     status = SecStaticCodeCreateWithPath((__bridge CFURLRef)([NSURL fileURLWithPath:path]), kSecCSDefaultFlags, &staticCode);

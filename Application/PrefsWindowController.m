@@ -45,7 +45,7 @@ extern XPCDaemonClient* xpcDaemonClient;
 //preferences' buttons
 #define BUTTON_NO_ICON_MODE 1
 #define BUTTON_PASSIVE_MODE 2
-#define BUTTON_TOUCH_ID_MODE 3
+#define BUTTON_TRUSTED_UNLOCK_MODE 3
 #define BUTTON_ALERT_IMAGE_MODE 4
 #define BUTTON_NO_REMOTE_ALERTS_MODE 5
 #define BUTTON_EXECUTE_ACTION 6
@@ -113,17 +113,17 @@ extern XPCDaemonClient* xpcDaemonClient;
     //assign view
     switch(tag)
     {
-            //modes
+        //modes
         case TOOLBAR_MODES:
             
             view = self.modesView;
             
             ((NSButton*)[view viewWithTag:BUTTON_NO_ICON_MODE]).state = [self.preferences[PREF_NO_ICON_MODE] boolValue];
-            ((NSButton*)[view viewWithTag:BUTTON_TOUCH_ID_MODE]).state = [self.preferences[PREF_TOUCH_ID_MODE] boolValue];
+            ((NSButton*)[view viewWithTag:BUTTON_TRUSTED_UNLOCK_MODE]).state = [self.preferences[PREF_TRUSTED_UNLOCK_MODE] boolValue];
             
             break;
             
-            //alerts
+        //alerts
         case TOOLBAR_ALERTS:
             
             view = self.alertsView;
@@ -154,7 +154,7 @@ extern XPCDaemonClient* xpcDaemonClient;
             
             break;
             
-            //actions
+        //actions
         case TOOLBAR_ACTIONS:
             
             view = self.actionsView;
@@ -169,7 +169,7 @@ extern XPCDaemonClient* xpcDaemonClient;
             
             break;
             
-            //updates
+        //updates
         case TOOLBAR_UPDATES:
             
             view = self.updateView;
@@ -236,9 +236,9 @@ extern XPCDaemonClient* xpcDaemonClient;
             updatedPreferences[PREF_NO_ICON_MODE] = state;
             break;
             
-        //touch id mode
-        case BUTTON_TOUCH_ID_MODE:
-            updatedPreferences[PREF_TOUCH_ID_MODE] = state;
+        //trusted unlock mode
+        case BUTTON_TRUSTED_UNLOCK_MODE:
+            updatedPreferences[PREF_TRUSTED_UNLOCK_MODE] = state;
             break;
             
         //include image mode

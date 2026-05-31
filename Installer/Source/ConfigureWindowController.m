@@ -163,7 +163,7 @@ extern os_log_t logHandle;
     if( (ACTION_SHOW_CONFIGURATION+1) == action) {
         self.preferences = @{
             PREF_PASSIVE_MODE: @(self.passiveMode.state),
-            PREF_TOUCH_ID_MODE: @(self.touchIDMode.state)
+            PREF_TRUSTED_UNLOCK_MODE: @(self.trustedUnlockMode.state)
         };
     }
     
@@ -293,7 +293,7 @@ extern os_log_t logHandle;
             NSDictionary* preferences = [NSDictionary dictionaryWithContentsOfFile:[INSTALL_DIRECTORY stringByAppendingPathComponent:PREFS_FILE]];
             if(preferences) {
                 self.passiveMode.state = [preferences[PREF_PASSIVE_MODE] integerValue];
-                self.touchIDMode.state = [preferences[PREF_TOUCH_ID_MODE] integerValue];
+                self.trustedUnlockMode.state = [preferences[PREF_TRUSTED_UNLOCK_MODE] integerValue];
             }
             
             //show view
@@ -345,7 +345,7 @@ extern os_log_t logHandle;
                 execTask(OPEN, @[[@"/Applications" stringByAppendingPathComponent:APP_NAME],
                                 @"--args", INITIAL_LAUNCH,
                                  PREF_PASSIVE_MODE, [self.preferences[PREF_PASSIVE_MODE] description],
-                                 PREF_TOUCH_ID_MODE, [self.preferences[PREF_TOUCH_ID_MODE] description]],
+                                 PREF_TRUSTED_UNLOCK_MODE, [self.preferences[PREF_TRUSTED_UNLOCK_MODE] description]],
                                  NO, NO);
             }
             
