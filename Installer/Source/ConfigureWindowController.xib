@@ -32,7 +32,7 @@
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" texturedBackground="YES"/>
             <rect key="contentRect" x="196" y="240" width="523" height="237"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1710" height="1073"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="770"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="523" height="237"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -552,7 +552,7 @@ Configure remote alerts via Telegram in the Settings pane.</string>
                 <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k3P-xC-7aq">
                     <rect key="frame" x="235" y="246" width="302" height="20"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Trusted Unlock" id="FaS-Ua-WXI">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Trusted Unlock Mode" id="FaS-Ua-WXI">
                         <font key="font" size="17" name="Menlo-Bold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -578,7 +578,7 @@ Configure remote alerts via Telegram in the Settings pane.</string>
     </objects>
     <resources>
         <image name="AppIcon" width="128" height="128"/>
-        <image name="AppText" width="800" height="103"/>
+        <image name="AppText" width="400" height="51.5"/>
         <image name="FriendsHuntress" width="800" height="198"/>
         <image name="FriendsIru" width="200" height="74"/>
         <image name="FriendsJamf" width="162" height="56"/>

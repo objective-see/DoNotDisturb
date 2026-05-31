@@ -36,7 +36,7 @@
     //monitoring active
     BOOL running;
     
-    //persistent ES client for touch ID monitoring
+    //persistent ES client for trusted auth monitoring
     es_client_t* esAuthClient;
 }
 
